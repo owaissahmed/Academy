@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "201604098487",
+    "project_id": "azhaar-ul-islam",
+    "storage_bucket": "azhaar-ul-islam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201604098487:android:656291ad6487f36d76e032",
+        "android_client_info": {
+          "package_name": "com.azhaarulislam"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJF3ChRey8JKczDFZFH7cERf8-1R3G8fI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
