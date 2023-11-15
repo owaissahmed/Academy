@@ -41,6 +41,7 @@ const Form = () => {
             style={styles.login}
             placeholder="Enter Your User Text"
             placeholderTextColor={'grey'}
+            autoFocus
           />
           <TextInput
             allowFontScaling={false}
@@ -50,35 +51,33 @@ const Form = () => {
           />
           <View>
             <PhoneInput
+            textInputProps={{
+              placeholderTextColor: 'grey',
+            }}
               containerStyle={{
                 width: responsiveWidth(80),
                 height: responsiveHeight(6),
-                marginTop: 20,
+                marginTop: responsiveHeight(3),
                 borderColor: '#36454F',
                 borderWidth: 1.5,
-                backgroundColor:'#FBFCF8'
-                // borderRadius: 8,
-                // backgroundColor: 'white',
+                backgroundColor: '#FBFCF8',
               }}
               flagButtonStyle={{
-               backgroundColor:'#FBFCF8'
+                backgroundColor: '#FBFCF8',
               }}
               textInputStyle={{
-                height: responsiveHeight(4),
+                height: responsiveHeight(6),
                 width: responsiveWidth(70),
-                // padding: 8,
                 color: '#36454F',
-                paddingTop:  responsiveHeight(0.2),
-                backgroundColor:'red',
-                // backgroundColor:'silver',
-                marginTop: responsiveHeight(0.3),
+                marginTop: responsiveHeight(0.2),
                 fontSize: responsiveFontSize(2),
+                textAlignVertical: 'center',
               }}
               codeTextStyle={{
+                color: '#36454F',
                 fontSize: responsiveFontSize(2),
-                // paddingBottom:  responsiveHeight(0.1),
-                height: 80,
-                fontWeight:'normal',
+                height: responsiveHeight(7),
+                fontWeight: 'normal',
                 textAlignVertical: 'center',
               }}
               ref={phoneInput}
@@ -94,11 +93,8 @@ const Form = () => {
                 setCountryCode(phoneInput.current?.getCountryCode() || '');
               }}
               countryPickerProps={{withAlphaFilter: true}}
-              disabled={disabled}
-              // withDarkTheme
-              withShadow
-              // autoFocus
-              // withDarkTheme
+              disabled={disabled}              
+              
             />
           </View>
           <TouchableOpacity style={styles.button}>
@@ -168,9 +164,10 @@ const styles = StyleSheet.create({
   submain: {
     borderColor: '#36454F',
     borderWidth: 1.5,
-    height: responsiveHeight(50),
+    // height: responsiveHeight(38),
     width: responsiveWidth(90),
     alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 12,
     marginTop: responsiveHeight(3),
   },
@@ -182,12 +179,12 @@ const styles = StyleSheet.create({
   login: {
     height: responsiveHeight(6),
     width: responsiveWidth(80),
-    backgroundColor:'#FBFCF8',
+    backgroundColor: '#FBFCF8',
     padding: 8,
     borderColor: '#36454F',
     color: '#36454F',
     borderWidth: 1.5,
-    marginTop: responsiveHeight(5),
+    marginTop: responsiveHeight(3),
     // borderRadius: 8,
     fontSize: responsiveFontSize(2),
   },
@@ -199,14 +196,15 @@ const styles = StyleSheet.create({
     borderColor: '#36454F',
     borderWidth: 1.5,
     marginTop: responsiveHeight(3),
-    backgroundColor:'#FBFCF8',
+    backgroundColor: '#FBFCF8',
     fontSize: responsiveFontSize(2),
   },
   button: {
     backgroundColor: '#36454F',
     color: 'white',
     padding: 6,
-    marginTop: responsiveHeight(3.5),
+    marginTop: responsiveHeight(3),
+    marginBottom: responsiveHeight(3),
     borderRadius: 8,
     width: responsiveWidth(30),
   },
