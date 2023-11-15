@@ -8,6 +8,7 @@ import {
   Text,
   Dimensions,
   ImageBackground,
+  Alert,
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import {StyleProp, TextStyle} from 'react-native';
@@ -25,10 +26,15 @@ const Form = () => {
   const [countryCode, setCountryCode] = useState('');
   const [formattedValue, setFormattedValue] = useState('');
   const [valid, setValid] = useState(false);
-  const [disabled, setDisabled] = useState(false);
-  // const [showMessage, setShowMessage] = useState(false);
-  // const phoneInput = useRef<PhoneInput>(null);
-  const phoneInput = useRef(null); // Use useRef hook
+  const phoneInput = useRef(null); 
+const Check = () => {
+  if (value) {
+    const checkValid = phoneInput.current?.isValidNumber(value);
+    setValid(checkValid ? checkValid : false);
+    setCountryCode(phoneInput.current?.getCountryCode() || '');
+    console.log(formattedValue);
+  } else Alert.alert('⚠️ WARNING', 'Please Fill All Inputs');
+}
   return (
     <ImageBackground
       resizeMode="cover"
@@ -51,9 +57,9 @@ const Form = () => {
           />
           <View>
             <PhoneInput
-            textInputProps={{
-              placeholderTextColor: 'grey',
-            }}
+              textInputProps={{
+                placeholderTextColor: 'grey',
+              }}
               containerStyle={{
                 width: responsiveWidth(80),
                 height: responsiveHeight(6),
@@ -93,15 +99,17 @@ const Form = () => {
                 setCountryCode(phoneInput.current?.getCountryCode() || '');
               }}
               countryPickerProps={{withAlphaFilter: true}}
-              disabled={disabled}              
-              
             />
           </View>
-          <TouchableOpacity style={styles.button}>
-            <Text allowFontScaling={false} style={styles.buttontext}>
-              LOGIN
-            </Text>
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={Check}>
+              <Text allowFontScaling={false} style={styles.buttontext}>
+                LOGIN
+              </Text>
+            </TouchableOpacity>
+          </>
         </SafeAreaView>
       </View>
     </ImageBackground>
