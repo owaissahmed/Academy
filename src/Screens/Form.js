@@ -22,19 +22,37 @@ const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 
 const Form = () => {
+  const [name, setname] = useState('');
+  const [father, setfather] = useState('');
   const [value, setValue] = useState('');
   const [countryCode, setCountryCode] = useState('');
   const [formattedValue, setFormattedValue] = useState('');
   const [valid, setValid] = useState(false);
-  const phoneInput = useRef(null); 
-const Check = () => {
-  if (value) {
-    const checkValid = phoneInput.current?.isValidNumber(value);
-    setValid(checkValid ? checkValid : false);
-    setCountryCode(phoneInput.current?.getCountryCode() || '');
-    console.log(formattedValue);
-  } else Alert.alert('⚠️ WARNING', 'Please Fill All Inputs');
-}
+  const phoneInput = useRef(null);
+
+  const NameChange = newname => {
+    setname(newname);
+  };
+  const FatherChange = newfather => {
+    setfather(newfather);
+  };
+  const Check = () => {
+    if (name.trim() === '') {
+      Alert.alert('⚠️ WARNING', 'Please Enter Your Name');
+    } else if (father.trim() === '') {
+      Alert.alert('⚠️ WARNING', 'Please Enter Your Father Name');
+    } else if (value === '') {
+      Alert.alert('⚠️ WARNING', 'Please Enter Your Phone No.');
+    } else {
+      const checkValid = phoneInput.current?.isValidNumber(value);
+      setValid(checkValid ? checkValid : false);
+      setCountryCode(phoneInput.current?.getCountryCode() || '');
+      Alert.alert('🎉 CONGTRATS', 'YOUR FORM HAS BEEN SUBMITTED');
+      console.log(formattedValue);
+      console.log(name);
+      console.log(father);
+    }
+  };
   return (
     <ImageBackground
       resizeMode="cover"
@@ -43,6 +61,7 @@ const Check = () => {
       <View>
         <SafeAreaView style={styles.submain}>
           <TextInput
+            onChangeText={NameChange}
             allowFontScaling={false}
             style={styles.login}
             placeholder="Enter Your User Text"
@@ -50,6 +69,7 @@ const Check = () => {
             autoFocus
           />
           <TextInput
+            onChangeText={FatherChange}
             allowFontScaling={false}
             style={styles.password}
             placeholder="Enter Your Password"
@@ -102,11 +122,9 @@ const Check = () => {
             />
           </View>
           <>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={Check}>
+            <TouchableOpacity style={styles.button} onPress={Check}>
               <Text allowFontScaling={false} style={styles.buttontext}>
-                LOGIN
+                SAVE
               </Text>
             </TouchableOpacity>
           </>
