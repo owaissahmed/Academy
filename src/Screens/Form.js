@@ -11,7 +11,7 @@ import {
   Alert,
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
-import {StyleProp, TextStyle} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -47,10 +47,12 @@ const Form = () => {
       const checkValid = phoneInput.current?.isValidNumber(value);
       setValid(checkValid ? checkValid : false);
       setCountryCode(phoneInput.current?.getCountryCode() || '');
+      const collectionRef = firestore().collection('users').add({
+        Name: name,
+        Fathername: father,
+        Phone: formattedValue,
+      });
       Alert.alert('🎉 CONGTRATS', 'YOUR FORM HAS BEEN SUBMITTED');
-      console.log(formattedValue);
-      console.log(name);
-      console.log(father);
     }
   };
   return (
@@ -58,21 +60,20 @@ const Form = () => {
       resizeMode="cover"
       style={styles.background}
       source={require('../Images/3.jpg')}>
-      <View>
+      <Animatable.View animation={'zoomIn'} duration={2000}>
         <SafeAreaView style={styles.submain}>
           <TextInput
             onChangeText={NameChange}
             allowFontScaling={false}
             style={styles.login}
-            placeholder="Enter Your User Text"
+            placeholder="Enter Your Name"
             placeholderTextColor={'grey'}
-            autoFocus
           />
           <TextInput
             onChangeText={FatherChange}
             allowFontScaling={false}
             style={styles.password}
-            placeholder="Enter Your Password"
+            placeholder="Enter Your Father Name"
             placeholderTextColor={'grey'}
           />
           <View>
@@ -110,7 +111,6 @@ const Form = () => {
               defaultValue={value}
               defaultCode="PK"
               layout="first"
-              backgroundColor="red"
               onChangeText={text => {
                 setValue(text);
               }}
@@ -129,7 +129,7 @@ const Form = () => {
             </TouchableOpacity>
           </>
         </SafeAreaView>
-      </View>
+      </Animatable.View>
     </ImageBackground>
   );
 };
@@ -137,7 +137,6 @@ const Form = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: 'silver',
   },
   wrapper: {
     flex: 1,
@@ -151,11 +150,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#7CDB8A',
-    // shadowColor: 'rgba(0,0,0,0.4)',
-    // shadowOffset: {
-    //   width: 1,
-    //   height: 5,
-    // },
     shadowOpacity: 0.34,
     shadowRadius: 6.27,
     elevation: 10,
@@ -190,7 +184,6 @@ const styles = StyleSheet.create({
   submain: {
     borderColor: '#36454F',
     borderWidth: 1.5,
-    // height: responsiveHeight(38),
     width: responsiveWidth(90),
     alignItems: 'center',
     justifyContent: 'center',
@@ -211,7 +204,6 @@ const styles = StyleSheet.create({
     color: '#36454F',
     borderWidth: 1.5,
     marginTop: responsiveHeight(3),
-    // borderRadius: 8,
     fontSize: responsiveFontSize(2),
   },
   password: {
