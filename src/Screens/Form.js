@@ -60,7 +60,7 @@ const Form = () => {
       resizeMode="cover"
       style={styles.background}
       source={require('../Images/background.jpg')}>
-      <Animatable.View animation={'zoomIn'} duration={2000}>
+      <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
         <SafeAreaView style={styles.submain}>
           <TextInput
             onChangeText={NameChange}
