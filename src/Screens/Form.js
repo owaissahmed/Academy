@@ -59,7 +59,7 @@ const Form = () => {
     <ImageBackground
       resizeMode="cover"
       style={styles.background}
-      source={require('../Images/3.jpg')}>
+      source={require('../Images/background.jpg')}>
       <Animatable.View animation={'zoomIn'} duration={2000}>
         <SafeAreaView style={styles.submain}>
           <TextInput

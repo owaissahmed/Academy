@@ -8,15 +8,15 @@ const Stack = createStackNavigator();
 export default function AppNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Form">
-      <Stack.Screen
-        name="Form"
-        component={Form}
-        options={{headerShown: false}}
-      />
+      <Stack.Navigator initialRouteName="First">
       <Stack.Screen
         name="First"
         component={First}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Form"
+        component={Form}
         options={{headerShown: false}}
       />
       </Stack.Navigator>

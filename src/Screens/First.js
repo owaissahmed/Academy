@@ -26,29 +26,23 @@ export default function First() {
       <ImageBackground
         resizeMode="cover"
         style={styles.background}
-        source={require('../Images/3.jpg')}>
-        <Animatable.View
-          animation={'zoomIn'}
-          duration={2000}
-          style={styles.submain}>
-          <TextInput
-            allowFontScaling={false}
-            style={styles.login}
-            placeholder="Enter Your User Text"
-            placeholderTextColor={'grey'}
+        source={require('../Images/background.jpg')}>
+        <View style={styles.div}>
+          <Animatable.Image
+            animation="fadeInDown"
+            duration={2000}
+            delay={250}
+            style={styles.calligraphy}
+            source={require('../Images/calligraphy(1).png')}
           />
-          <TextInput
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Your Password"
-            placeholderTextColor={'grey'}
-          />
-          <TouchableOpacity style={styles.button}>
-            <Text allowFontScaling={false} style={styles.buttontext}>
-              LOGIN
-            </Text>
-          </TouchableOpacity>
-        </Animatable.View>
+          <Animatable.Text
+            animation="fadeInUp"
+            duration={2000}
+            delay={250}
+            style={styles.Knowledge}>
+            The Knowledge Is Light
+          </Animatable.Text>
+        </View>
       </ImageBackground>
     </View>
   );
@@ -70,47 +64,18 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginTop: responsiveHeight(3),
   },
-  logo: {
-    height: responsiveHeight(15),
-    width: responsiveWidth(31),
-    marginTop: responsiveHeight(3),
+  div: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  login: {
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
-    // backgroundColor: "gray",
-    padding: 8,
-    borderColor: '#36454F',
-    color: '#36454F',
-    borderWidth: 1.5,
-    marginTop: responsiveHeight(5),
-    borderRadius: 8,
-    fontSize: responsiveFontSize(2),
+  calligraphy: {
+    height: responsiveHeight(26),
+    width: responsiveWidth(70),
   },
-  password: {
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
-    padding: 8,
-    color: '#36454F',
-    borderColor: '#36454F',
-    borderWidth: 1.5,
-    marginTop: responsiveHeight(3),
-    borderRadius: 8,
-    fontSize: responsiveFontSize(2),
-  },
-  button: {
-    backgroundColor: '#36454F',
-    color: 'white',
-    padding: 6,
-    marginTop: responsiveHeight(3.5),
-    borderRadius: 8,
-    width: responsiveWidth(30),
-  },
-  buttontext: {
-    color: '#fff',
-    fontWeight: '600',
-    letterSpacing: 0.7,
-    textAlign: 'center',
-    fontSize: responsiveFontSize(2.25),
+  Knowledge: {
+    fontFamily: 'good',
+    textTransform: 'uppercase',
+    color: '#2e4c60',
+    fontSize: responsiveFontSize(2.5),
   },
 });
