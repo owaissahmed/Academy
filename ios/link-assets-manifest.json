@@ -8,6 +8,10 @@
     {
       "path": "src/Fonts/mushaf.ttf",
       "sha1": "f5a9dba1b021f3cc00d3ad4c402555722c1f49bf"
+    },
+    {
+      "path": "src/Fonts/noto.ttf",
+      "sha1": "cc260a81d8d6d2f2b4b5aac57c1a27c311569127"
     }
   ]
 }
