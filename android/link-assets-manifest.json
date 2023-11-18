@@ -4,6 +4,10 @@
     {
       "path": "src/Fonts/good.ttf",
       "sha1": "6942510c7810d7a52411d7ae580efa385bddf9bf"
+    },
+    {
+      "path": "src/Fonts/mushaf.ttf",
+      "sha1": "f5a9dba1b021f3cc00d3ad4c402555722c1f49bf"
     }
   ]
 }

@@ -54,6 +54,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>good.ttf</string>
+		<string>mushaf.ttf</string>
 	</array>
 </dict>
 </plist>
