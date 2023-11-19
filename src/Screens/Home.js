@@ -43,24 +43,26 @@ export default function Home() {
         </View>
         <View>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>درس نظامی ہیلپ ڈیسک</Text>
+            <Text style={styles.buttonText}>DARS-e-NIZAMI HELP DESK</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}> شارٹ کورسز </Text>
+            <Text style={styles.buttonText}>SHORT COURSES</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>آن لائن ٹیوشن</Text>
+            <Text style={styles.buttonText}>ONLINE TUTION</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}> ہوم ٹیویشن</Text>
+            <Text style={styles.buttonText}>HOME TUTION</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>درس نظامی کورس</Text>
+            <Text style={styles.buttonText}>DARS-e-NIZAMI COURSE</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>درس نظامی کورس</Text>
-      </TouchableOpacity>
+        <View style={styles.bottom}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>ABOUT US</Text>
+          </TouchableOpacity>
+        </View>
       </ImageBackground>
     </View>
   );
@@ -71,12 +73,17 @@ const styles = StyleSheet.create({
     width: devicewidth,
     height: deviceheight,
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly', 
   },
   div: {
     // display:'flex',
     // justifyContent: 'center',
     // alignItems: 'center',
+  },
+  bottom:{
+    alignItems: 'center',
+    justifyContent:'center',
+    // alignSelf: 'flex-end',
   },
   topHeadingView: {
     // backgroundColor:'red'
@@ -87,6 +94,7 @@ const styles = StyleSheet.create({
     color: '#2e4c60',
     fontSize: responsiveFontSize(7.5),
     textAlign: 'center',
+    marginTop: responsiveHeight(5),
   },
   subHeading: {
     fontFamily: 'mushaf',
@@ -102,19 +110,20 @@ const styles = StyleSheet.create({
     // padding: 6,
     marginTop: responsiveHeight(1),
     borderRadius: 4,
-    height: responsiveHeight(6),
-    width: responsiveWidth(85),
+    height: responsiveHeight(5.75),
+    width: responsiveWidth(90),
     justifyContent: 'center',
     alignItems: 'center',
     textAlignVertical: 'center',
   },
   buttonText: {
-    // fontFamily: 'mushaf',
+    fontFamily: 'good',
     color: '#fff',
     // fontWeight: '600',
     // letterSpacing: 0.7,
     textAlign: 'center',
     fontSize: responsiveFontSize(2),
     alignContent: 'center',
+    letterSpacing: 1,
   },
 });

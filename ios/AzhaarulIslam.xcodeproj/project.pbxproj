@@ -17,6 +17,7 @@
 		1C3F9E6DCBE4459983614480 /* good.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6F8B62318A6E47B8976168AD /* good.ttf */; };
 		E1A2FC78A7FD4B6EB3FE1D98 /* mushaf.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6BD83BA618B04554B5DB03F5 /* mushaf.ttf */; };
 		259DBC9159924A4C8A0E96EB /* noto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1ECFC69A8B814F88A292A545 /* noto.ttf */; };
+		8BD7643C271846B1B4C9C90D /* majeed.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 349EC4848AAB4D6991E3D486 /* majeed.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		6F8B62318A6E47B8976168AD /* good.ttf */ = {isa = PBXFileReference; name = "good.ttf"; path = "../src/Fonts/good.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		6BD83BA618B04554B5DB03F5 /* mushaf.ttf */ = {isa = PBXFileReference; name = "mushaf.ttf"; path = "../src/Fonts/mushaf.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		1ECFC69A8B814F88A292A545 /* noto.ttf */ = {isa = PBXFileReference; name = "noto.ttf"; path = "../src/Fonts/noto.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		349EC4848AAB4D6991E3D486 /* majeed.ttf */ = {isa = PBXFileReference; name = "majeed.ttf"; path = "../src/Fonts/majeed.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 				6F8B62318A6E47B8976168AD /* good.ttf */,
 				6BD83BA618B04554B5DB03F5 /* mushaf.ttf */,
 				1ECFC69A8B814F88A292A545 /* noto.ttf */,
+				349EC4848AAB4D6991E3D486 /* majeed.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				1C3F9E6DCBE4459983614480 /* good.ttf in Resources */,
 				E1A2FC78A7FD4B6EB3FE1D98 /* mushaf.ttf in Resources */,
 				259DBC9159924A4C8A0E96EB /* noto.ttf in Resources */,
+				8BD7643C271846B1B4C9C90D /* majeed.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
