@@ -42,25 +42,25 @@ export default function Home() {
           </Animatable.Text>
         </View>
         <View>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>DARS-e-NIZAMI HELP DESK</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>SHORT COURSES</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>ONLINE TUTION</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>HOME TUTION</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>DARS-e-NIZAMI COURSE</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>درس  نظامی  ہیلپ  ڈیسک</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}> شارٹ  کورسز </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>آن  لائن  ٹیوشن</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}> ہوم  ٹیویشن</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>درس  نظامی کورس</Text>
+        </TouchableOpacity>
+      </View>
         <View style={styles.bottom}>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>ABOUT US</Text>
+            <Text style={styles.buttonTextlast}>کچھ ادارے  کے بارے میں</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -117,13 +117,23 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
   },
   buttonText: {
-    fontFamily: 'good',
+    fontFamily: 'majeed',
     color: '#fff',
     // fontWeight: '600',
     // letterSpacing: 0.7,
     textAlign: 'center',
-    fontSize: responsiveFontSize(2),
+    fontSize: responsiveFontSize(2.35),
     alignContent: 'center',
-    letterSpacing: 1,
+    // letterSpacing: 1,
+  },
+  buttonTextlast: {
+    fontFamily: 'majeed',
+    color: '#fff',
+    // fontWeight: '600',
+    // letterSpacing: 0.7,
+    textAlign: 'center',
+    fontSize: responsiveFontSize(2.35),
+    alignContent: 'center',
+    letterSpacing: 3,
   },
 });
