@@ -9,6 +9,7 @@ import {
   TextInput,
   Button,
   Alert,
+  Linking
 } from 'react-native';
 import React from 'react';
 import {
@@ -21,6 +22,11 @@ const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 
 export default function Home() {
+
+  const Youtube = () =>{
+    Linking.openURL('https://www.youtube.com/@azhar-ul-islam')
+  }
+
   return (
     <View>
       <ImageBackground
@@ -42,25 +48,25 @@ export default function Home() {
           </Animatable.Text>
         </View>
         <View>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>درس  نظامی  ہیلپ  ڈیسک</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}> شارٹ  کورسز </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>آن  لائن  ٹیوشن</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}> ہوم  ٹیویشن</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>درس  نظامی کورس</Text>
-        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={Youtube}>
+        <Text style={styles.buttonText}>DARS-e-NIZAMI HELP DESK</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>SHORT COURSES</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>ONLINE TUTION</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>HOME TUTION</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>DARS-e-NIZAMI COURSE</Text>
+      </TouchableOpacity>
       </View>
         <View style={styles.bottom}>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonTextlast}>کچھ ادارے  کے بارے میں</Text>
+          <Text style={styles.buttonText}>ABOUT US</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
@@ -117,23 +123,13 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
   },
   buttonText: {
-    fontFamily: 'majeed',
+    fontFamily: 'good',
     color: '#fff',
     // fontWeight: '600',
     // letterSpacing: 0.7,
     textAlign: 'center',
-    fontSize: responsiveFontSize(2.35),
+    fontSize: responsiveFontSize(2.15),
     alignContent: 'center',
-    // letterSpacing: 1,
-  },
-  buttonTextlast: {
-    fontFamily: 'majeed',
-    color: '#fff',
-    // fontWeight: '600',
-    // letterSpacing: 0.7,
-    textAlign: 'center',
-    fontSize: responsiveFontSize(2.35),
-    alignContent: 'center',
-    letterSpacing: 3,
+    letterSpacing: 0.25,
   },
 });
