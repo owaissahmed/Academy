@@ -43,7 +43,7 @@ export default function First({navigation}) {
             duration={3000}
             delay={250}
             style={styles.calligraphy}
-            source={require('../Images/calligraphy(1).png')}
+            source={require('../Images/calligraphy.png')}
           />
           <Animatable.Text
             animation="fadeInUp"
