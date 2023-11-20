@@ -11,20 +11,41 @@ import {
   Alert,
   Linking,
 } from 'react-native';
-import React from 'react';
+import {React,useEffect,useState} from 'react';
 import {
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import NetInfo from '@react-native-community/netinfo';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 
 export default function Home() {
-  const Youtube = () => {
-    Linking.openURL('https://www.youtube.com/@azhar-ul-islam');
-  };
+  const [isConnected, setIsConnected] = useState(false);
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      console.log('Connection type', state.type);
+      console.log('Is connected?', state.isConnected);
+      setIsConnected(state.isConnected);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  function Youtube() {
+    if (isConnected == true) {
+      Linking.openURL('https://www.youtube.com/@azhar-ul-islam');
+    } else Alert.alert('⚠️ WARNING', 'No Internet Connection');
+  }
+  // function gotosignup() {
+  //   if (isConnected == true) {
+  //     navigation.navigate('Signup');
+  //   } else Alert.alert('⚠️ WARNING', 'No Internet Connection');
+  // }
 
   return (
     <View>
@@ -50,7 +71,7 @@ export default function Home() {
             آن لائن دینی تعلیم کا مستند ادارہ
           </Animatable.Text>
         </Animatable.View>
-        <Animatable.View  animation="fadeInUp" duration={2000} delay={400}>
+        <Animatable.View animation="fadeInUp" duration={2000} delay={400}>
           <TouchableOpacity style={styles.button} onPress={Youtube}>
             <Text style={styles.buttonText}>DARS-e-NIZAMI HELP DESK</Text>
           </TouchableOpacity>
@@ -67,7 +88,11 @@ export default function Home() {
             <Text style={styles.buttonText}>DARS-e-NIZAMI COURSE</Text>
           </TouchableOpacity>
         </Animatable.View>
-        <Animatable.View  animation="fadeInUp" duration={2000} delay={600} style={styles.bottom}>
+        <Animatable.View
+          animation="fadeInUp"
+          duration={2000}
+          delay={600}
+          style={styles.bottom}>
           <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>ABOUT US</Text>
           </TouchableOpacity>
