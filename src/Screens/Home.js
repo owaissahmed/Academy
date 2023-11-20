@@ -26,8 +26,8 @@ export default function Home() {
   const [isConnected, setIsConnected] = useState(false);
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-      console.log('Connection type', state.type);
-      console.log('Is connected?', state.isConnected);
+      // console.log('Connection type', state.type);
+      // console.log('Is connected?', state.isConnected);
       setIsConnected(state.isConnected);
     });
 

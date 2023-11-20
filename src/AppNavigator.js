@@ -9,7 +9,12 @@ const Stack = createStackNavigator();
 export default function AppNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="First">
+      <Stack.Navigator initialRouteName="Form">
+      <Stack.Screen
+        name="Form"
+        component={Form}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="First"
         component={First}
@@ -18,11 +23,6 @@ export default function AppNavigator() {
       <Stack.Screen
         name="Home"
         component={Home}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="Form"
-        component={Form}
         options={{headerShown: false}}
       />
       </Stack.Navigator>

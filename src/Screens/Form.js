@@ -25,6 +25,7 @@ const Form = () => {
   const [name, setname] = useState('');
   const [father, setfather] = useState('');
   const [value, setValue] = useState('');
+  const [country, setcountry] = useState('');
   const [countryCode, setCountryCode] = useState('');
   const [formattedValue, setFormattedValue] = useState('');
   const [valid, setValid] = useState(false);
@@ -36,11 +37,16 @@ const Form = () => {
   const FatherChange = newfather => {
     setfather(newfather);
   };
+  const CountryChange = newcountry => {
+    setcountry(newcountry);
+  };
   const Check = () => {
     if (name.trim() === '') {
       Alert.alert('⚠️ WARNING', 'Please Enter Your Name');
     } else if (father.trim() === '') {
       Alert.alert('⚠️ WARNING', 'Please Enter Your Father Name');
+    } else if (country === '') {
+      Alert.alert('⚠️ WARNING', 'Please Enter Your Country');
     } else if (value === '') {
       Alert.alert('⚠️ WARNING', 'Please Enter Your Phone No.');
     } else {
@@ -51,6 +57,7 @@ const Form = () => {
         Name: name,
         Fathername: father,
         Phone: formattedValue,
+        Country:country
       });
       Alert.alert('🎉 CONGTRATS', 'YOUR FORM HAS BEEN SUBMITTED');
     }
@@ -74,6 +81,13 @@ const Form = () => {
             allowFontScaling={false}
             style={styles.password}
             placeholder="Enter Your Father Name"
+            placeholderTextColor={'grey'}
+          />
+          <TextInput
+            onChangeText={CountryChange}
+            allowFontScaling={false}
+            style={styles.password}
+            placeholder="Enter Your Country Name"
             placeholderTextColor={'grey'}
           />
           <View>
