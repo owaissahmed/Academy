@@ -9,7 +9,7 @@ import {
   TextInput,
   Button,
   Alert,
-  Linking
+  Linking,
 } from 'react-native';
 import React from 'react';
 import {
@@ -22,10 +22,9 @@ const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 
 export default function Home() {
-
-  const Youtube = () =>{
-    Linking.openURL('https://www.youtube.com/@azhar-ul-islam')
-  }
+  const Youtube = () => {
+    Linking.openURL('https://www.youtube.com/@azhar-ul-islam');
+  };
 
   return (
     <View>
@@ -33,7 +32,11 @@ export default function Home() {
         resizeMode="cover"
         style={styles.background}
         source={require('../Images/background.jpg')}>
-        <View style={styles.topHeadingView}>
+        <Animatable.View
+          duration={2000}
+          delay={250}
+          animation="fadeInUp"
+          style={styles.topHeadingView}>
           <Animatable.Text
             duration={2000}
             delay={250}
@@ -46,29 +49,29 @@ export default function Home() {
             style={styles.subHeading}>
             آن لائن دینی تعلیم کا مستند ادارہ
           </Animatable.Text>
-        </View>
-        <View>
-        <TouchableOpacity style={styles.button} onPress={Youtube}>
-        <Text style={styles.buttonText}>DARS-e-NIZAMI HELP DESK</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>SHORT COURSES</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>ONLINE TUTION</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>HOME TUTION</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>DARS-e-NIZAMI COURSE</Text>
-      </TouchableOpacity>
-      </View>
-        <View style={styles.bottom}>
-          <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>ABOUT US</Text>
+        </Animatable.View>
+        <Animatable.View  animation="fadeInUp" duration={2000} delay={400}>
+          <TouchableOpacity style={styles.button} onPress={Youtube}>
+            <Text style={styles.buttonText}>DARS-e-NIZAMI HELP DESK</Text>
           </TouchableOpacity>
-        </View>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>SHORT COURSES</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>ONLINE TUTION</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>HOME TUTION</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>DARS-e-NIZAMI COURSE</Text>
+          </TouchableOpacity>
+        </Animatable.View>
+        <Animatable.View  animation="fadeInUp" duration={2000} delay={600} style={styles.bottom}>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>ABOUT US</Text>
+          </TouchableOpacity>
+        </Animatable.View>
       </ImageBackground>
     </View>
   );
@@ -79,16 +82,16 @@ const styles = StyleSheet.create({
     width: devicewidth,
     height: deviceheight,
     alignItems: 'center',
-    justifyContent: 'space-evenly', 
+    justifyContent: 'space-evenly',
   },
   div: {
     // display:'flex',
     // justifyContent: 'center',
     // alignItems: 'center',
   },
-  bottom:{
+  bottom: {
     alignItems: 'center',
-    justifyContent:'center',
+    justifyContent: 'center',
     // alignSelf: 'flex-end',
   },
   topHeadingView: {

@@ -10,7 +10,7 @@ import {
   Button,
   Alert,
 } from 'react-native';
-import React from 'react';
+import {React, useLayoutEffect } from 'react';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -18,9 +18,19 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
+
 import * as Animatable from 'react-native-animatable';
 
-export default function First() {
+export default function First({navigation}) {
+  useLayoutEffect (() => {
+    gotoHome();
+  }, []);
+  function gotoHome() {
+    setTimeout(() => {
+      navigation.replace('Home');
+    }, 4000);
+  }
+
   return (
     <View>
       <ImageBackground
@@ -30,14 +40,14 @@ export default function First() {
         <View style={styles.div}>
           <Animatable.Image
             animation="fadeInDown"
-            duration={2000}
+            duration={3000}
             delay={250}
             style={styles.calligraphy}
             source={require('../Images/calligraphy(1).png')}
           />
           <Animatable.Text
             animation="fadeInUp"
-            duration={2000}
+            duration={3000}
             delay={250}
             style={styles.Knowledge}>
             The Knowledge Is Light
@@ -70,12 +80,14 @@ const styles = StyleSheet.create({
   },
   calligraphy: {
     height: responsiveHeight(26),
-    width: responsiveWidth(70),
+    width: responsiveWidth(75),
   },
   Knowledge: {
     fontFamily: 'good',
     textTransform: 'uppercase',
     color: '#2e4c60',
-    fontSize: responsiveFontSize(2.5),
+    fontSize: responsiveFontSize(2.6),
+    marginTop: responsiveHeight(1),
+    letterSpacing: 0.25,
   },
 });
