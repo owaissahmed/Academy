@@ -9,6 +9,7 @@ import {
   Dimensions,
   ImageBackground,
   Alert,
+  Linking,
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import firestore from '@react-native-firebase/firestore';
@@ -20,6 +21,7 @@ import {
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
+import FlashMessage, {showMessage} from 'react-native-flash-message';
 
 const Form = () => {
   const [name, setname] = useState('');
@@ -40,6 +42,7 @@ const Form = () => {
   const CountryChange = newcountry => {
     setcountry(newcountry);
   };
+
   const Check = () => {
     if (name.trim() === '') {
       Alert.alert('⚠️ WARNING', 'Please Enter Your Name');
@@ -57,8 +60,22 @@ const Form = () => {
         Name: name,
         Fathername: father,
         Phone: formattedValue,
-        Country:country
+        Country: country,
       });
+      const recipient = 'muhammadowais25122003@gmail.com'; // Replace with the recipient's email address
+      const subject = father;
+      const body = country;
+
+      // Construct the mailto URL
+      const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
+        subject,
+      )}&body=${encodeURIComponent(body)}`;
+
+      // Open the default email app
+      Linking.openURL(mailtoUrl).catch(err =>
+        console.error('Error opening email app:', err),
+      );
+
       Alert.alert('🎉 CONGTRATS', 'YOUR FORM HAS BEEN SUBMITTED');
     }
   };
@@ -67,6 +84,9 @@ const Form = () => {
       resizeMode="cover"
       style={styles.background}
       source={require('../Images/background.jpg')}>
+      <>
+        <FlashMessage statusBarHeight={responsiveHeight(1)}/>
+      </>
       <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
         <SafeAreaView style={styles.submain}>
           <TextInput
@@ -136,7 +156,9 @@ const Form = () => {
             />
           </View>
           <>
-            <TouchableOpacity style={styles.button} onPress={Check}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => showMessage({message: 'Hello World'})}>
               <Text allowFontScaling={false} style={styles.buttontext}>
                 SAVE
               </Text>
@@ -246,6 +268,9 @@ const styles = StyleSheet.create({
     letterSpacing: 0.7,
     textAlign: 'center',
     fontSize: responsiveFontSize(2.25),
+  },
+  highlight: {
+    fontWeight: '700',
   },
 });
 
