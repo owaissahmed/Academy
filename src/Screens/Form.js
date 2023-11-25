@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,11 +8,14 @@ import {
   Text,
   Dimensions,
   ImageBackground,
+  ActivityIndicator,
   Alert,
+  Modal,
   Linking,
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import firestore from '@react-native-firebase/firestore';
+import NetInfo from '@react-native-community/netinfo';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -23,15 +26,31 @@ const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 
-const Form = () => {
+const Form = ({navigation}) => {
   const [name, setname] = useState('');
   const [father, setfather] = useState('');
+  const [course, setcourse] = useState('');
   const [value, setValue] = useState('');
   const [country, setcountry] = useState('');
   const [countryCode, setCountryCode] = useState('');
   const [formattedValue, setFormattedValue] = useState('');
   const [valid, setValid] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
   const phoneInput = useRef(null);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      console.log('Connection type', state.type);
+      console.log('Is connected?', state.isConnected);
+      setIsConnected(state.isConnected);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const NameChange = newname => {
     setname(newname);
@@ -39,44 +58,112 @@ const Form = () => {
   const FatherChange = newfather => {
     setfather(newfather);
   };
+  const CourseChange = newcourse => {
+    setcourse(newcourse);
+  };
   const CountryChange = newcountry => {
     setcountry(newcountry);
   };
 
+  function show() {
+    showMessage({
+      message: '⚪️ Dont forget to send email after clicking on "SAVE" button',
+      backgroundColor: '#36454F',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2),
+        lineHeight: responsiveHeight(3),
+      },
+      duration: 5000,
+    });
+  }
+  function Submit() {
+    showMessage({
+      message: '⚪️ Your',
+      // backgroundColor: '#36454F',
+      type:'success',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2),
+        lineHeight: responsiveHeight(3),
+      },
+      duration: 5000,
+    });
+  }
+  function EmptyInput() {
+    showMessage({
+      message: '⚪️ Please Fill All Inputs',
+      // backgroundColor:'#36454F',
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      // duration: 5000,
+    });
+  }
+  function Internet() {
+    showMessage({
+      message: '⚪️ No Internet Connection',
+      // backgroundColor:'#36454F',
+      type: 'warning',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      // duration: 5000,
+    });
+  }
+
   const Check = () => {
-    if (name.trim() === '') {
-      Alert.alert('⚠️ WARNING', 'Please Enter Your Name');
-    } else if (father.trim() === '') {
-      Alert.alert('⚠️ WARNING', 'Please Enter Your Father Name');
-    } else if (country === '') {
-      Alert.alert('⚠️ WARNING', 'Please Enter Your Country');
-    } else if (value === '') {
-      Alert.alert('⚠️ WARNING', 'Please Enter Your Phone No.');
+    if (
+      name.trim() === '' ||
+      father.trim() === '' ||
+      course.trim() === '' ||
+      country.trim()=== '' ||
+      value === ''
+    ) {
+      EmptyInput();
+    } else if (isConnected == false){
+      Internet()
     } else {
-      const checkValid = phoneInput.current?.isValidNumber(value);
-      setValid(checkValid ? checkValid : false);
-      setCountryCode(phoneInput.current?.getCountryCode() || '');
-      const collectionRef = firestore().collection('users').add({
-        Name: name,
-        Fathername: father,
-        Phone: formattedValue,
-        Country: country,
-      });
-      const recipient = 'muhammadowais25122003@gmail.com'; // Replace with the recipient's email address
-      const subject = father;
-      const body = country;
+      setLoading(true);
+      setVisible(true);
+      show();
+      setTimeout(() => {
+        const checkValid = phoneInput.current?.isValidNumber(value);
+        setValid(checkValid ? checkValid : false);
+        setCountryCode(phoneInput.current?.getCountryCode() || '');
+        const collectionRef = firestore().collection('users').add({
+          Name: name,
+          Fathername: father,
+          Course: course,
+          Phone: formattedValue,
+          Country: country,
+        });
+        const recipient = 'muhammadowais25122003@gmail.com'; // Replace with the recipient's email address
+        const subject = father;
+        const body = country;
 
-      // Construct the mailto URL
-      const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
-        subject,
-      )}&body=${encodeURIComponent(body)}`;
+        // Construct the mailto URL
+        
+        const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
+          subject,
+        )}&body=${encodeURIComponent(body)}`;
 
-      // Open the default email app
-      Linking.openURL(mailtoUrl).catch(err =>
-        console.error('Error opening email app:', err),
-      );
-
-      Alert.alert('🎉 CONGTRATS', 'YOUR FORM HAS BEEN SUBMITTED');
+        // Open the default email app
+        Linking.openURL(mailtoUrl).catch(err =>
+          console.error('Error opening email app:', err),
+        );
+        navigation.navigate("Home")
+        Submit()
+      }, 5000);
     }
   };
   return (
@@ -84,8 +171,23 @@ const Form = () => {
       resizeMode="cover"
       style={styles.background}
       source={require('../Images/background.jpg')}>
+      <Modal visible={visible} animationType="fade" transparent={true}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          }}>
+          {loading ? (
+            <ActivityIndicator size="large" color="#ffffff" />
+          ) : (
+            <Text style={{color: '#ffffff'}}>Loading...</Text>
+          )}
+        </View>
+      </Modal>
       <>
-        <FlashMessage statusBarHeight={responsiveHeight(1)}/>
+        <FlashMessage position={'center'} />
       </>
       <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
         <SafeAreaView style={styles.submain}>
@@ -101,6 +203,13 @@ const Form = () => {
             allowFontScaling={false}
             style={styles.password}
             placeholder="Enter Your Father Name"
+            placeholderTextColor={'grey'}
+          />
+          <TextInput
+            onChangeText={CourseChange}
+            allowFontScaling={false}
+            style={styles.password}
+            placeholder="Enter Your Course"
             placeholderTextColor={'grey'}
           />
           <TextInput
@@ -156,9 +265,7 @@ const Form = () => {
             />
           </View>
           <>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => showMessage({message: 'Hello World'})}>
+            <TouchableOpacity style={styles.button} onPress={Check}>
               <Text allowFontScaling={false} style={styles.buttontext}>
                 SAVE
               </Text>
