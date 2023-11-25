@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   Alert,
   Modal,
+  Image,
   Linking,
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
@@ -191,6 +192,7 @@ const Form = ({navigation}) => {
       </>
       <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
         <SafeAreaView style={styles.submain}>
+        <Image style={styles.logo} source={require('../Images/logo.png')}/>
           <TextInput
             onChangeText={NameChange}
             allowFontScaling={false}
@@ -281,25 +283,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  wrapper: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  button: {
-    marginTop: 20,
-    height: 50,
-    width: 300,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#7CDB8A',
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-    elevation: 10,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 14,
+  logo:{
+  height: responsiveHeight(15),
+  width: responsiveWidth(40),
+  marginTop: responsiveHeight(2),
   },
   phoneinput: {
     justifyContent: 'center',
@@ -333,11 +320,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     marginTop: responsiveHeight(3),
   },
-  logo: {
-    height: responsiveHeight(15),
-    width: responsiveWidth(31),
-    marginTop: responsiveHeight(3),
-  },
   login: {
     height: responsiveHeight(6),
     width: responsiveWidth(80),
@@ -346,7 +328,7 @@ const styles = StyleSheet.create({
     borderColor: '#36454F',
     color: '#36454F',
     borderWidth: 1.5,
-    marginTop: responsiveHeight(3),
+    marginTop: responsiveHeight(2),
     fontSize: responsiveFontSize(2),
   },
   password: {
@@ -365,7 +347,7 @@ const styles = StyleSheet.create({
     color: 'white',
     padding: 6,
     marginTop: responsiveHeight(3),
-    marginBottom: responsiveHeight(3),
+    marginBottom: responsiveHeight(2),
     borderRadius: 8,
     width: responsiveWidth(30),
   },
