@@ -21,10 +21,22 @@ import {
 import NetInfo from '@react-native-community/netinfo';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
+import { useAppContext } from './AppContext';
+// import { useAppContext } from './AppContext';
+import FlashMessage from 'react-native-flash-message';
 import * as Animatable from 'react-native-animatable';
 
-export default function Home() {
+export default function Home({route,navigation }) {
   const [isConnected, setIsConnected] = useState(false);
+
+  const { showAlert } = useAppContext();
+
+  useEffect(() => {
+    if (showAlert) {
+      showAlert();
+    }
+  }, [showAlert]);
+
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
       setIsConnected(state.isConnected);
@@ -40,11 +52,13 @@ export default function Home() {
       Linking.openURL('https://www.youtube.com/@azhar-ul-islam');
     } else Alert.alert('⚠️ WARNING', 'No Internet Connection');
   }
-  // function gotosignup() {
-  //   if (isConnected == true) {
-  //     navigation.navigate('Signup');
-  //   } else Alert.alert('⚠️ WARNING', 'No Internet Connection');
-  // }
+
+  function Courses() {
+    if (isConnected == true) {
+    navigation.navigate('Form')
+    } else Alert.alert('⚠️ WARNING', 'No Internet Connection');
+  }
+ 
 
   return (
     <View>
@@ -83,7 +97,7 @@ export default function Home() {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={Courses}>
             <View
               style={styles.square}>
               <Image

@@ -24,6 +24,7 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
+import { useAppContext } from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 
@@ -122,7 +123,17 @@ const Form = ({navigation}) => {
     });
   }
 
-  const Check = () => {
+  const { setShowAlert } = useAppContext();
+
+  const GoBackHome = () => {
+    // Set the showAlert function in the context
+    setShowAlert(() => {
+      // Show the alert when this function is called
+      Alert.alert('⚫ Congrats', 'your Form has been Submitted!');
+    });
+  };
+
+  const Check = async () => {
     if (
       name.trim() === '' ||
       father.trim() === '' ||
@@ -162,8 +173,10 @@ const Form = ({navigation}) => {
         Linking.openURL(mailtoUrl).catch(err =>
           console.error('Error opening email app:', err),
         );
-        navigation.navigate("Home")
-        Submit()
+        navigation.navigate('Home');
+        setTimeout(() => {
+          GoBackHome ()
+        }, 1000);
       }, 5000);
     }
   };
