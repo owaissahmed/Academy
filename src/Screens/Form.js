@@ -80,20 +80,6 @@ const Form = ({navigation}) => {
       duration: 5000,
     });
   }
-  function Submit() {
-    showMessage({
-      message: '⚪️ Your',
-      // backgroundColor: '#36454F',
-      type:'success',
-      color: 'white',
-      position: 'bottom',
-      titleStyle: {
-        fontSize: responsiveFontSize(2),
-        lineHeight: responsiveHeight(3),
-      },
-      duration: 5000,
-    });
-  }
   function EmptyInput() {
     showMessage({
       message: '⚪️ Please Fill All Inputs',
@@ -141,7 +127,7 @@ const Form = ({navigation}) => {
       country.trim()=== '' ||
       value === ''
     ) {
-      EmptyInput();
+     EmptyInput()
     } else if (isConnected == false){
       Internet()
     } else {
@@ -191,10 +177,11 @@ const Form = ({navigation}) => {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            // marginBottom:responsiveHeight(5),
+            backgroundColor: 'rgba(0, 0, 0, 0.100)',
           }}>
           {loading ? (
-            <ActivityIndicator size="large" color="#ffffff" />
+            <ActivityIndicator size="larger" color="black" />
           ) : (
             <Text style={{color: '#ffffff'}}>Loading...</Text>
           )}
