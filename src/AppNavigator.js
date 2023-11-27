@@ -12,22 +12,22 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       <AppProvider>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator initialRouteName="Form">
+        <Stack.Screen
+          name="Form"
+          component={Form}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="First"
+          component={First}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="Home"
           component={Home}
           options={{headerShown: false}}
         />
-          <Stack.Screen
-            name="Form"
-            component={Form}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="First"
-            component={First}
-            options={{headerShown: false}}
-          />
         </Stack.Navigator>
       </AppProvider>
     </NavigationContainer>

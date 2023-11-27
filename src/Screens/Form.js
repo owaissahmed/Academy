@@ -77,7 +77,7 @@ const Form = ({navigation}) => {
         fontSize: responsiveFontSize(2),
         lineHeight: responsiveHeight(3),
       },
-      duration: 5000,
+      duration: 50000,
     });
   }
   function EmptyInput() {
@@ -159,7 +159,7 @@ const Form = ({navigation}) => {
         Linking.openURL(mailtoUrl).catch(err =>
           console.error('Error opening email app:', err),
         );
-        navigation.navigate('Home');
+        navigation.replace('Home');
         setTimeout(() => {
           GoBackHome ()
         }, 1000);

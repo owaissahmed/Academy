@@ -23,7 +23,7 @@ const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 import { useAppContext } from './AppContext';
 // import { useAppContext } from './AppContext';
-import FlashMessage from 'react-native-flash-message';
+import FlashMessage,{showMessage} from 'react-native-flash-message';
 import * as Animatable from 'react-native-animatable';
 
 export default function Home({route,navigation }) {
@@ -47,16 +47,31 @@ export default function Home({route,navigation }) {
     };
   }, []);
 
+  function Internet() {
+    showMessage({
+      message: '⚪️ No Internet Connection',
+      // backgroundColor:'#36454F',
+      type: 'warning',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      // duration: 5000,
+    });
+  }
+
   function Youtube() {
     if (isConnected == true) {
       Linking.openURL('https://www.youtube.com/@azhar-ul-islam');
-    } else Alert.alert('⚠️ WARNING', 'No Internet Connection');
+    } else Internet()
   }
 
   function Courses() {
     if (isConnected == true) {
     navigation.navigate('Form')
-    } else Alert.alert('⚠️ WARNING', 'No Internet Connection');
+    } else  Internet()
   }
  
 
@@ -66,6 +81,9 @@ export default function Home({route,navigation }) {
         resizeMode="cover"
         style={styles.background}
         source={require('../Images/background.jpg')}>
+        <>
+        <FlashMessage position={'center'} />
+      </>
         <View style={styles.submain}>
           <Animatable.View
             duration={2000}
