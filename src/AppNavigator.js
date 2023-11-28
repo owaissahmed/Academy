@@ -2,12 +2,12 @@ import React from 'react';
 import First from './Screens/First';
 import Form from './Screens/Form';
 import Home from './Screens/Home';
-import CourseForm from './Screens/CourseForm';
 import OnlineTuition from './Screens/OnlineTuition';
+import HomeTuition from './Screens/HomeTuition';
 import { AppProvider } from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-// import CourseForm from './Screens/CourseForm';
+// import HomeTuition from './Screens/HomeTuition';
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
@@ -31,13 +31,13 @@ export default function AppNavigator() {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="CourseForm"
-          component={CourseForm}
+          name="OnlineTuition"
+          component={OnlineTuition}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="OnlineTuition"
-          component={OnlineTuition}
+          name="HomeTuition"
+          component={HomeTuition}
           options={{headerShown: false}}
         />
         </Stack.Navigator>

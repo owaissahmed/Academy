@@ -24,11 +24,12 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
+// import { useAppContext } from './AppContext';
 import { useAppContext } from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import { useRoute } from '@react-navigation/native';
-const CourseForm = ({navigation}) => {
+const HomeTuition = ({navigation}) => {
   const [name, setname] = useState('');
   const [father, setfather] = useState('');
   const [course, setcourse] = useState('');
@@ -65,7 +66,7 @@ const CourseForm = ({navigation}) => {
   };
 
   const route = useRoute();
-  const buttonText = route.params?.buttonText || 'Online Tuition';
+  const buttonText = route.params?.TextHomeTuition || 'Home Tuition';
 
   function show() {
     showMessage({
@@ -140,13 +141,13 @@ const CourseForm = ({navigation}) => {
         const collectionRef = firestore().collection('users').add({
           Name: name,
           Fathername: father,
-          Course: course,
+          Course: 'Home Tuition',
           Phone: formattedValue,
           Country: country,
         });
         const recipient = 'muhammadowais25122003@gmail.com'; // Replace with the recipient's email address
-        const subject = father;
-        const body = country;
+        const subject = name;
+        const body = `Home Tuition \n ${formattedValue}`;
 
         // Construct the mailto URL
         
@@ -368,4 +369,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CourseForm;
+export default HomeTuition;

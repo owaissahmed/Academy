@@ -74,6 +74,13 @@ export default function Home({route}) {
     // Navigate to Page2 and pass the text as a parameter
     navigation.navigate('OnlineTuition', { buttonText: 'Online Tuition' });
   };
+  const HomeTuition = () => {
+    if (isConnected == false) {
+      Internet()
+    } else 
+    // Navigate to Page2 and pass the text as a parameter
+    navigation.navigate('HomeTuition', { TextHomeTuition: 'Home Tuition' });
+  };
   return (
     <View>
       <ImageBackground
@@ -132,7 +139,7 @@ export default function Home({route}) {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={HomeTuition}>
             <View style={styles.square}>
               <Image
                 style={styles.home}

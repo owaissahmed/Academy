@@ -146,7 +146,7 @@ const OnlineTuition = ({navigation}) => {
         });
         const recipient = 'muhammadowais25122003@gmail.com'; // Replace with the recipient's email address
         const subject = name;
-        const body = `Online Tuition' \n ${formattedValue}`;
+        const body = `Online Tuition \n ${formattedValue}`;
 
         // Construct the mailto URL
         
