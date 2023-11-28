@@ -48,18 +48,7 @@ export default function Home({route,navigation }) {
   }, []);
 
   function Internet() {
-    showMessage({
-      message: '⚪️ No Internet Connection',
-      // backgroundColor:'#36454F',
-      type: 'warning',
-      color: 'white',
-      position: 'bottom',
-      titleStyle: {
-        fontSize: responsiveFontSize(2.25),
-        lineHeight: responsiveHeight(3),
-      },
-      // duration: 5000,
-    });
+    Alert.alert('⚫ Warning', 'No INternet Connection!');
   }
 
   function Youtube() {
@@ -73,6 +62,11 @@ export default function Home({route,navigation }) {
     navigation.navigate('Form')
     } else  Internet()
   }
+  function CourseForm() {
+    if (isConnected == true) {
+    navigation.navigate('CourseForm')
+    } else  Internet()
+  }
  
 
   return (
@@ -81,9 +75,7 @@ export default function Home({route,navigation }) {
         resizeMode="cover"
         style={styles.background}
         source={require('../Images/background.jpg')}>
-        <>
-        <FlashMessage position={'center'} />
-      </>
+       
         <View style={styles.submain}>
           <Animatable.View
             duration={2000}
@@ -127,7 +119,7 @@ export default function Home({route,navigation }) {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={CourseForm}>
             <View
               style={styles.square}>
               <Image
