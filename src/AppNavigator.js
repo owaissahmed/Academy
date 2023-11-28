@@ -3,7 +3,7 @@ import First from './Screens/First';
 import Form from './Screens/Form';
 import Home from './Screens/Home';
 import CourseForm from './Screens/CourseForm';
-// import {AppProvider} from './AppContext';
+import OnlineTuition from './Screens/OnlineTuition';
 import { AppProvider } from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -33,6 +33,11 @@ export default function AppNavigator() {
         <Stack.Screen
           name="CourseForm"
           component={CourseForm}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="OnlineTuition"
+          component={OnlineTuition}
           options={{headerShown: false}}
         />
         </Stack.Navigator>

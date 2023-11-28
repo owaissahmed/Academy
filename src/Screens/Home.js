@@ -21,21 +21,13 @@ import {
 import NetInfo from '@react-native-community/netinfo';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import { useAppContext } from './AppContext';
-// import { useAppContext } from './AppContext';
-import FlashMessage,{showMessage} from 'react-native-flash-message';
+import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
-
-export default function Home({route,navigation }) {
+import { useNavigation } from '@react-navigation/native';
+export default function Home({route}) {
   const [isConnected, setIsConnected] = useState(false);
-
-  const { showAlert } = useAppContext();
-
-  useEffect(() => {
-    if (showAlert) {
-      showAlert();
-    }
-  }, [showAlert]);
+  const {showAlert} = useAppContext();
+  const navigation = useNavigation();
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -47,6 +39,12 @@ export default function Home({route,navigation }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (showAlert) {
+      showAlert();
+    }
+  }, [showAlert]);
+
   function Internet() {
     Alert.alert('⚫ Warning', 'No INternet Connection!');
   }
@@ -54,28 +52,34 @@ export default function Home({route,navigation }) {
   function Youtube() {
     if (isConnected == true) {
       Linking.openURL('https://www.youtube.com/@azhar-ul-islam');
-    } else Internet()
+    } else Internet();
   }
 
   function Courses() {
     if (isConnected == true) {
-    navigation.navigate('Form')
-    } else  Internet()
+      navigation.navigate('Form');
+    } else Internet();
   }
-  function CourseForm() {
-    if (isConnected == true) {
-    navigation.navigate('CourseForm')
-    } else  Internet()
-  }
- 
+  // function Online() {
+  //   if (isConnected == true) {
+  //     navigation.navigate('OnlineTuition');
+  //   } else Internet();
+  // }
 
+
+  const OnlineTuition = () => {
+    if (isConnected == false) {
+      Internet()
+    } else 
+    // Navigate to Page2 and pass the text as a parameter
+    navigation.navigate('OnlineTuition', { buttonText: 'Online Tuition' });
+  };
   return (
     <View>
       <ImageBackground
         resizeMode="cover"
         style={styles.background}
         source={require('../Images/background.jpg')}>
-       
         <View style={styles.submain}>
           <Animatable.View
             duration={2000}
@@ -96,8 +100,7 @@ export default function Home({route,navigation }) {
           animation="fadeInUp"
           style={styles.squarediv}>
           <TouchableOpacity onPress={Youtube}>
-            <View
-              style={styles.square}>
+            <View style={styles.square}>
               <Image
                 style={styles.youtube}
                 source={require('../Images/youtube.png')}
@@ -108,8 +111,7 @@ export default function Home({route,navigation }) {
             </View>
           </TouchableOpacity>
           <TouchableOpacity onPress={Courses}>
-            <View
-              style={styles.square}>
+            <View style={styles.square}>
               <Image
                 style={styles.books}
                 source={require('../Images/books.png')}
@@ -119,9 +121,8 @@ export default function Home({route,navigation }) {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={CourseForm}>
-            <View
-              style={styles.square}>
+          <TouchableOpacity onPress={OnlineTuition}>
+            <View style={styles.square}>
               <Image
                 style={styles.online}
                 source={require('../Images/online.png')}
@@ -132,8 +133,7 @@ export default function Home({route,navigation }) {
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
-            <View
-              style={styles.square}>
+            <View style={styles.square}>
               <Image
                 style={styles.home}
                 source={require('../Images/home.png')}
@@ -144,8 +144,7 @@ export default function Home({route,navigation }) {
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
-            <View
-              style={styles.square}>
+            <View style={styles.square}>
               <Image
                 style={styles.quran}
                 source={require('../Images/quran.png')}
@@ -156,8 +155,7 @@ export default function Home({route,navigation }) {
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
-            <View
-              style={styles.square}>
+            <View style={styles.square}>
               <Image
                 style={styles.info}
                 source={require('../Images/info.png')}

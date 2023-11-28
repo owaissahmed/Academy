@@ -28,7 +28,7 @@ import { useAppContext } from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import { useRoute } from '@react-navigation/native';
-const CourseForm = ({navigation}) => {
+const OnlineTuition = ({navigation}) => {
   const [name, setname] = useState('');
   const [father, setfather] = useState('');
   const [course, setcourse] = useState('');
@@ -140,13 +140,13 @@ const CourseForm = ({navigation}) => {
         const collectionRef = firestore().collection('users').add({
           Name: name,
           Fathername: father,
-          Course: course,
+          Course: 'Online Tuition',
           Phone: formattedValue,
           Country: country,
         });
         const recipient = 'muhammadowais25122003@gmail.com'; // Replace with the recipient's email address
-        const subject = father;
-        const body = country;
+        const subject = name;
+        const body = `Online Tuition' \n ${formattedValue}`;
 
         // Construct the mailto URL
         
@@ -368,4 +368,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CourseForm;
+export default OnlineTuition;
