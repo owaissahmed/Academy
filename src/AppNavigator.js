@@ -4,6 +4,7 @@ import Form from './Screens/Form';
 import Home from './Screens/Home';
 import OnlineTuition from './Screens/OnlineTuition';
 import HomeTuition from './Screens/HomeTuition';
+import DarseNizamiForm from './Screens/DarseNizamiForm';
 import { AppProvider } from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -38,6 +39,11 @@ export default function AppNavigator() {
         <Stack.Screen
           name="HomeTuition"
           component={HomeTuition}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="DarseNizamiForm"
+          component={DarseNizamiForm}
           options={{headerShown: false}}
         />
         </Stack.Navigator>
