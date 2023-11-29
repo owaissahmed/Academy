@@ -86,7 +86,7 @@ export default function Home({route}) {
       Internet()
     } else 
     // Navigate to Page2 and pass the text as a parameter
-    navigation.navigate('DarseNizamiForm', { TextHomeTuition: 'Dars-e-Nizami '});
+    navigation.navigate('DarseNizamiForm', { TextDarseNizami: 'Dars-e-Nizami'});
   };
   return (
     <View>
