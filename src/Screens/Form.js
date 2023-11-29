@@ -24,7 +24,7 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import { useAppContext } from './AppContext';
+import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 
@@ -33,7 +33,7 @@ const Form = ({navigation}) => {
   const [father, setfather] = useState('');
   const [course, setcourse] = useState('');
   const [value, setValue] = useState('');
-  const [country, setcountry] = useState('');
+  const [country, setCountry] = useState('Pakistan');
   const [countryCode, setCountryCode] = useState('');
   const [formattedValue, setFormattedValue] = useState('');
   const [valid, setValid] = useState(false);
@@ -63,8 +63,8 @@ const Form = ({navigation}) => {
   const CourseChange = newcourse => {
     setcourse(newcourse);
   };
-  const CountryChange = newcountry => {
-    setcountry(newcountry);
+  const handleOnCountryChange = country => {
+    setCountry(country);
   };
 
   function show() {
@@ -109,7 +109,7 @@ const Form = ({navigation}) => {
     });
   }
 
-  const { setShowAlert } = useAppContext();
+  const {setShowAlert} = useAppContext();
 
   const GoBackHome = () => {
     // Set the showAlert function in the context
@@ -124,12 +124,11 @@ const Form = ({navigation}) => {
       name.trim() === '' ||
       father.trim() === '' ||
       course.trim() === '' ||
-      country.trim()=== '' ||
       value === ''
     ) {
-     EmptyInput()
-    } else if (isConnected == false){
-      Internet()
+      EmptyInput();
+    } else if (isConnected == false) {
+      Internet();
     } else {
       setLoading(true);
       setVisible(true);
@@ -143,29 +142,28 @@ const Form = ({navigation}) => {
           Fathername: father,
           Course: course,
           Phone: formattedValue,
-          Country: country,
+          Country: country.name,
         });
+    
         const recipient = 'muhammadowais25122003@gmail.com'; // Replace with the recipient's email address
-        const subject = father;
-        const body = country;
+        const subject = name;
+        const body = `${course} \n ${country.name} \n ${formattedValue}`;
 
-        // Construct the mailto URL
-        
         const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
           subject,
         )}&body=${encodeURIComponent(body)}`;
 
-        // Open the default email app
         Linking.openURL(mailtoUrl).catch(err =>
           console.error('Error opening email app:', err),
         );
         navigation.replace('Home');
         setTimeout(() => {
-          GoBackHome ()
+          GoBackHome();
         }, 1000);
       }, 5000);
     }
   };
+
   return (
     <ImageBackground
       resizeMode="cover"
@@ -177,7 +175,6 @@ const Form = ({navigation}) => {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            // marginBottom:responsiveHeight(5),
             backgroundColor: 'rgba(0, 0, 0, 0.100)',
           }}>
           {loading ? (
@@ -192,7 +189,7 @@ const Form = ({navigation}) => {
       </>
       <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
         <SafeAreaView style={styles.submain}>
-        <Image style={styles.logo} source={require('../Images/logo.png')}/>
+          <Image style={styles.logo} source={require('../Images/logo.png')} />
           <TextInput
             onChangeText={NameChange}
             allowFontScaling={false}
@@ -214,13 +211,13 @@ const Form = ({navigation}) => {
             placeholder="Enter Your Course"
             placeholderTextColor={'grey'}
           />
-          <TextInput
-            onChangeText={CountryChange}
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Your Country Name"
-            placeholderTextColor={'grey'}
-          />
+          <Text style={styles.default}>
+            {country && country === 'Pakistan'
+              ? 'Pakistan'
+              : country
+              ? country.name
+              : ''}
+          </Text>
           <View>
             <PhoneInput
               textInputProps={{
@@ -252,6 +249,7 @@ const Form = ({navigation}) => {
                 fontWeight: 'normal',
                 textAlignVertical: 'center',
               }}
+              onChangeCountry={handleOnCountryChange}
               ref={phoneInput}
               defaultValue={value}
               defaultCode="PK"
@@ -283,10 +281,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  logo:{
-  height: responsiveHeight(15),
-  width: responsiveWidth(40),
-  marginTop: responsiveHeight(2),
+  logo: {
+    height: responsiveHeight(15),
+    width: responsiveWidth(40),
+    marginTop: responsiveHeight(2),
   },
   phoneinput: {
     justifyContent: 'center',
@@ -341,6 +339,18 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(3),
     backgroundColor: '#FBFCF8',
     fontSize: responsiveFontSize(2),
+  },
+  default: {
+    height: responsiveHeight(6),
+    width: responsiveWidth(80),
+    padding: 8,
+    color: '#36454F',
+    borderColor: '#36454F',
+    borderWidth: 1.5,
+    marginTop: responsiveHeight(3),
+    backgroundColor: '#FBFCF8',
+    fontSize: responsiveFontSize(2),
+    textAlignVertical: 'center',
   },
   button: {
     backgroundColor: '#36454F',

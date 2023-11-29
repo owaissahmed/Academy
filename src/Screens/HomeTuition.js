@@ -34,7 +34,7 @@ const HomeTuition = ({navigation}) => {
   const [father, setfather] = useState('');
   const [course, setcourse] = useState('');
   const [value, setValue] = useState('');
-  const [country, setcountry] = useState('');
+  const [country, setCountry] = useState('Pakistan');
   const [countryCode, setCountryCode] = useState('');
   const [formattedValue, setFormattedValue] = useState('');
   const [valid, setValid] = useState(false);
@@ -61,8 +61,8 @@ const HomeTuition = ({navigation}) => {
   const FatherChange = newfather => {
     setfather(newfather);
   };
-  const CountryChange = newcountry => {
-    setcountry(newcountry);
+  const handleOnCountryChange = country => {
+    setCountry(country);
   };
 
   const route = useRoute();
@@ -124,7 +124,6 @@ const HomeTuition = ({navigation}) => {
     if (
       name.trim() === '' ||
       father.trim() === '' ||
-      country.trim()=== '' ||
       value === ''
     ) {
      EmptyInput()
@@ -143,11 +142,11 @@ const HomeTuition = ({navigation}) => {
           Fathername: father,
           Course: 'Home Tuition',
           Phone: formattedValue,
-          Country: country,
+          Country: country.name,
         });
         const recipient = 'muhammadowais25122003@gmail.com'; // Replace with the recipient's email address
         const subject = name;
-        const body = `Home Tuition \n ${formattedValue}`;
+        const body = `Home Tuition \n ${country.name}\n ${formattedValue}`;
 
         // Construct the mailto URL
         
@@ -208,13 +207,13 @@ const HomeTuition = ({navigation}) => {
             placeholderTextColor={'grey'}
           />
           <Text style={styles.default}>{buttonText}</Text>
-          <TextInput
-            onChangeText={CountryChange}
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Your Country Name"
-            placeholderTextColor={'grey'}
-          />
+          <Text style={styles.default}>
+          {country && country === 'Pakistan'
+            ? 'Pakistan'
+            : country
+            ? country.name
+            : ''}
+        </Text>
           <View>
             <PhoneInput
               textInputProps={{
@@ -247,6 +246,7 @@ const HomeTuition = ({navigation}) => {
                 textAlignVertical: 'center',
               }}
               ref={phoneInput}
+              onChangeCountry={handleOnCountryChange}
               defaultValue={value}
               defaultCode="PK"
               layout="first"
