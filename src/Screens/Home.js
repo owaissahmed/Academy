@@ -23,7 +23,7 @@ const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 export default function Home({route}) {
   const [isConnected, setIsConnected] = useState(false);
   const {showAlert} = useAppContext();
@@ -66,27 +66,29 @@ export default function Home({route}) {
   //   } else Internet();
   // }
 
-
   const OnlineTuition = () => {
     if (isConnected == false) {
-      Internet()
-    } else 
+      Internet();
+    }
     // Navigate to Page2 and pass the text as a parameter
-    navigation.navigate('OnlineTuition', { buttonText: 'Online Tuition' });
+    else navigation.navigate('OnlineTuition', {buttonText: 'Online Tuition'});
   };
   const HomeTuition = () => {
     if (isConnected == false) {
-      Internet()
-    } else 
+      Internet();
+    }
     // Navigate to Page2 and pass the text as a parameter
-    navigation.navigate('HomeTuition', { TextHomeTuition: 'Home Tuition' });
+    else navigation.navigate('HomeTuition', {TextHomeTuition: 'Home Tuition'});
   };
   const DarseNizamiForm = () => {
     if (isConnected == false) {
-      Internet()
-    } else 
+      Internet();
+    }
     // Navigate to Page2 and pass the text as a parameter
-    navigation.navigate('DarseNizamiForm', { TextDarseNizami: 'Dars-e-Nizami'});
+    else
+      navigation.navigate('DarseNizamiForm', {
+        TextDarseNizami: 'Dars-e-Nizami',
+      });
   };
   return (
     <View>

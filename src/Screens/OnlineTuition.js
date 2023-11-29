@@ -24,10 +24,10 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import { useAppContext } from './AppContext';
+import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
-import { useRoute } from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 const OnlineTuition = ({navigation}) => {
   const [name, setname] = useState('');
   const [father, setfather] = useState('');
@@ -44,8 +44,8 @@ const OnlineTuition = ({navigation}) => {
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-      console.log('Connection type', state.type);
-      console.log('Is connected?', state.isConnected);
+      // console.log('Connection type', state.type);
+      // console.log('Is connected?', state.isConnected);
       setIsConnected(state.isConnected);
     });
 
@@ -109,7 +109,7 @@ const OnlineTuition = ({navigation}) => {
     });
   }
 
-  const { setShowAlert } = useAppContext();
+  const {setShowAlert} = useAppContext();
 
   const GoBackHome = () => {
     // Set the showAlert function in the context
@@ -120,14 +120,10 @@ const OnlineTuition = ({navigation}) => {
   };
 
   const Check = async () => {
-    if (
-      name.trim() === '' ||
-      father.trim() === '' ||
-      value === ''
-    ) {
-     EmptyInput()
-    } else if (isConnected == false){
-      Internet()
+    if (name.trim() === '' || father.trim() === '' || value === '') {
+      EmptyInput();
+    } else if (isConnected == false) {
+      Internet();
     } else {
       setLoading(true);
       setVisible(true);
@@ -148,7 +144,7 @@ const OnlineTuition = ({navigation}) => {
         const body = `Online Tuition \n ${country.name} \n ${formattedValue}`;
 
         // Construct the mailto URL
-        
+
         const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
           subject,
         )}&body=${encodeURIComponent(body)}`;
@@ -159,7 +155,7 @@ const OnlineTuition = ({navigation}) => {
         );
         navigation.replace('Home');
         setTimeout(() => {
-          GoBackHome ()
+          GoBackHome();
         }, 1000);
       }, 5000);
     }
@@ -181,7 +177,9 @@ const OnlineTuition = ({navigation}) => {
           {loading ? (
             <ActivityIndicator size="larger" color="black" />
           ) : (
-            <Text style={{color: '#ffffff'}}>Loading...</Text>
+            <Text allowFontScaling={false} style={{color: '#ffffff'}}>
+              Loading...
+            </Text>
           )}
         </View>
       </Modal>
@@ -190,7 +188,7 @@ const OnlineTuition = ({navigation}) => {
       </>
       <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
         <SafeAreaView style={styles.submain}>
-        <Image style={styles.logo} source={require('../Images/logo.png')}/>
+          <Image style={styles.logo} source={require('../Images/logo.png')} />
           <TextInput
             onChangeText={NameChange}
             allowFontScaling={false}
@@ -205,8 +203,10 @@ const OnlineTuition = ({navigation}) => {
             placeholder="Enter Your Father Name"
             placeholderTextColor={'grey'}
           />
-          <Text style={styles.default}>{buttonText}</Text>
-          <Text style={styles.default}>
+          <Text allowFontScaling={false} style={styles.default}>
+            {buttonText}
+          </Text>
+          <Text allowFontScaling={false} style={styles.default}>
             {country && country === 'Pakistan'
               ? 'Pakistan'
               : country
@@ -276,10 +276,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  logo:{
-  height: responsiveHeight(15),
-  width: responsiveWidth(40),
-  marginTop: responsiveHeight(2),
+  logo: {
+    height: responsiveHeight(15),
+    width: responsiveWidth(40),
+    marginTop: responsiveHeight(2),
   },
   phoneinput: {
     justifyContent: 'center',
@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(3),
     backgroundColor: '#FBFCF8',
     fontSize: responsiveFontSize(2),
-    textAlignVertical:"center"
+    textAlignVertical: 'center',
   },
   button: {
     backgroundColor: '#36454F',

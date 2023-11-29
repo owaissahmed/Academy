@@ -5,12 +5,8 @@ import {
   ImageBackground,
   Dimensions,
   StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  Button,
-  Alert,
 } from 'react-native';
-import {React, useLayoutEffect } from 'react';
+import {React, useLayoutEffect} from 'react';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -22,7 +18,7 @@ const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 
 export default function First({navigation}) {
-  useLayoutEffect (() => {
+  useLayoutEffect(() => {
     gotoHome();
   }, []);
   function gotoHome() {
@@ -48,6 +44,7 @@ export default function First({navigation}) {
           <Animatable.Text
             animation="fadeInUp"
             duration={3000}
+            allowFontScaling={false}
             delay={250}
             style={styles.Knowledge}>
             The Knowledge Is Light
@@ -86,7 +83,7 @@ const styles = StyleSheet.create({
     fontFamily: 'good',
     textTransform: 'uppercase',
     color: '#2e4c60',
-    fontSize: responsiveFontSize(2.6),
+    fontSize: responsiveFontSize(2.75),
     marginTop: responsiveHeight(1),
     letterSpacing: 0.25,
   },

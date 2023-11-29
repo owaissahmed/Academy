@@ -44,8 +44,8 @@ const Form = ({navigation}) => {
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-      console.log('Connection type', state.type);
-      console.log('Is connected?', state.isConnected);
+      // console.log('Connection type', state.type);
+      // console.log('Is connected?', state.isConnected);
       setIsConnected(state.isConnected);
     });
 
@@ -144,7 +144,7 @@ const Form = ({navigation}) => {
           Phone: formattedValue,
           Country: country.name,
         });
-    
+
         const recipient = 'muhammadowais25122003@gmail.com'; // Replace with the recipient's email address
         const subject = name;
         const body = `${course} \n ${country.name} \n ${formattedValue}`;
@@ -180,7 +180,9 @@ const Form = ({navigation}) => {
           {loading ? (
             <ActivityIndicator size="larger" color="black" />
           ) : (
-            <Text style={{color: '#ffffff'}}>Loading...</Text>
+            <Text allowFontScaling={false} style={{color: '#ffffff'}}>
+              Loading...
+            </Text>
           )}
         </View>
       </Modal>
@@ -211,7 +213,7 @@ const Form = ({navigation}) => {
             placeholder="Enter Your Course"
             placeholderTextColor={'grey'}
           />
-          <Text style={styles.default}>
+          <Text allowFontScaling={false} style={styles.default}>
             {country && country === 'Pakistan'
               ? 'Pakistan'
               : country

@@ -45,8 +45,8 @@ const DarseNizamiForm = ({navigation}) => {
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-      console.log('Connection type', state.type);
-      console.log('Is connected?', state.isConnected);
+    //   console.log('Connection type', state.type);
+    //   console.log('Is connected?', state.isConnected);
       setIsConnected(state.isConnected);
     });
 
@@ -182,7 +182,7 @@ const DarseNizamiForm = ({navigation}) => {
           {loading ? (
             <ActivityIndicator size="larger" color="black" />
           ) : (
-            <Text style={{color: '#ffffff'}}>Loading...</Text>
+            <Text  allowFontScaling={false} style={{color: '#ffffff'}}>Loading...</Text>
           )}
         </View>
       </Modal>
@@ -206,8 +206,8 @@ const DarseNizamiForm = ({navigation}) => {
             placeholder="Enter Your Father Name"
             placeholderTextColor={'grey'}
           />
-          <Text style={styles.default}>{buttonText}</Text>
-          <Text style={styles.default}>
+          <Text  allowFontScaling={false} style={styles.default}>{buttonText}</Text>
+          <Text  allowFontScaling={false} style={styles.default}>
           {country && country === 'Pakistan'
             ? 'Pakistan'
             : country

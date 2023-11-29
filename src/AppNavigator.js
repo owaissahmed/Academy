@@ -5,7 +5,7 @@ import Home from './Screens/Home';
 import OnlineTuition from './Screens/OnlineTuition';
 import HomeTuition from './Screens/HomeTuition';
 import DarseNizamiForm from './Screens/DarseNizamiForm';
-import { AppProvider } from './Screens/AppContext';
+import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
 // import HomeTuition from './Screens/HomeTuition';
@@ -16,36 +16,36 @@ export default function AppNavigator() {
     <NavigationContainer>
       <AppProvider>
         <Stack.Navigator initialRouteName="First">
-        <Stack.Screen
-          name="First"
-          component={First}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Form"
-          component={Form}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="OnlineTuition"
-          component={OnlineTuition}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="HomeTuition"
-          component={HomeTuition}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="DarseNizamiForm"
-          component={DarseNizamiForm}
-          options={{headerShown: false}}
-        />
+          <Stack.Screen
+            name="First"
+            component={First}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Form"
+            component={Form}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="OnlineTuition"
+            component={OnlineTuition}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="HomeTuition"
+            component={HomeTuition}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="DarseNizamiForm"
+            component={DarseNizamiForm}
+            options={{headerShown: false}}
+          />
         </Stack.Navigator>
       </AppProvider>
     </NavigationContainer>
