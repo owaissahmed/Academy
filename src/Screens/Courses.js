@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import Collapsible from 'react-native-collapsible';
 
 const AccordionItem = ({title, Videos, Price, isExpanded, onPress}) => {
@@ -10,50 +10,21 @@ const AccordionItem = ({title, Videos, Price, isExpanded, onPress}) => {
   return (
     <View>
       <TouchableOpacity onPress={onPress}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent:'center',
-            padding: 10,
-            backgroundColor: '#e0e0e0',
-          }}>
-          <Text>{title}</Text>
+        <View style={styles.TitleCollapse}>
+          <Text style={styles.TitleText}>{title}</Text>
         </View>
       </TouchableOpacity>
       <Collapsible collapsed={!isExpanded}>
         <View style={{padding: 10, backgroundColor: '#f0f0f0'}}>
-        <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-        }}>
-          <Text>{Videos}</Text>
-          <Text>{Price}</Text>
+          <View style={styles.V_P_View}>
+            <Text>{Videos}</Text>
+            <Text>{Price}</Text>
           </View>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-            }}>
-            <TouchableOpacity
-              onPress={handleButtonPress}
-              style={{
-                marginTop: 10,
-                backgroundColor: 'lightblue',
-                padding: 10,
-              }}>
+          <View style={styles.ButtonView}>
+            <TouchableOpacity onPress={handleButtonPress} style={styles.Button}>
               <Text>Demo Class</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={handleButtonPress}
-              style={{
-                marginTop: 10,
-                backgroundColor: 'lightblue',
-                padding: 10,
-              }}>
+            <TouchableOpacity onPress={handleButtonPress} style={styles.Button}>
               <Text>Addmission</Text>
             </TouchableOpacity>
           </View>
@@ -76,7 +47,12 @@ const Courses = ({navigation}) => {
       Videos: 'Videos : 92',
       Price: 'Price : 7500',
     },
-    {title: 'Item 2', Videos: 'Videos for Item 2', Price: 'Price : 7500'},
+    {
+      title: 'آسان اصول فقہ کورس مکمل ',
+      Videos: 'Videos : 92',
+      Price: 'Price : 7500',
+    },
+
     // Add more items as needed
   ];
 
@@ -95,5 +71,32 @@ const Courses = ({navigation}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  TitleCollapse: {
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: '#2e4c60',
+  },
+  TitleText: {
+    color: '#fff',
+    fontFamily: 'mushaf',
+  },
+  V_P_View: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  ButtonView: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
+  Button: {
+    marginTop: 10,
+    backgroundColor: 'lightblue',
+    padding: 10,
+  },
+});
 
 export default Courses;
