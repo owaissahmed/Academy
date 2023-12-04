@@ -57,7 +57,7 @@ export default function Home({route}) {
 
   function Courses() {
     if (isConnected == true) {
-      navigation.navigate('Form');
+      navigation.navigate('Courses');
     } else Internet();
   }
   // function Online() {

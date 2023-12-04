@@ -5,10 +5,11 @@ import Home from './Screens/Home';
 import OnlineTuition from './Screens/OnlineTuition';
 import HomeTuition from './Screens/HomeTuition';
 import DarseNizamiForm from './Screens/DarseNizamiForm';
+import Courses from './Screens/Courses';
 import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-// import HomeTuition from './Screens/HomeTuition';
+
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
@@ -44,6 +45,11 @@ export default function AppNavigator() {
           <Stack.Screen
             name="DarseNizamiForm"
             component={DarseNizamiForm}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Courses"
+            component={Courses}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
