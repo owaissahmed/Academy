@@ -1,85 +1,130 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  ImageBackground,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import Collapsible from 'react-native-collapsible';
+import {
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+  responsiveScreenFontSize,
+} from 'react-native-responsive-dimensions';
+import NetInfo from '@react-native-community/netinfo';
+const devicewidth = Dimensions.get('window').width;
+const deviceheight = Dimensions.get('window').height;
 
-const AccordionItem = ({title, Videos, Price, isExpanded, onPress}) => {
-  const handleButtonPress = () => {
-    // Implement the action you want to perform when the button is pressed
-    console.log(`Button pressed for ${title}`);
+const Accordion = ({id, title, Videos, Price, openAccordion, onToggle}) => {
+  const isOpen = openAccordion === id;
+
+  const toggleAccordion = () => {
+    onToggle(id);
   };
+
   return (
     <View>
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={toggleAccordion}>
         <View style={styles.TitleCollapse}>
           <Text style={styles.TitleText}>{title}</Text>
         </View>
       </TouchableOpacity>
-      <Collapsible collapsed={!isExpanded}>
-        <View style={{padding: 10, backgroundColor: '#f0f0f0'}}>
+      {isOpen && (
+        <View style={{padding: 10, backgroundColor: '#2e4c60'}}>
           <View style={styles.V_P_View}>
             <Text>{Videos}</Text>
             <Text>{Price}</Text>
           </View>
           <View style={styles.ButtonView}>
-            <TouchableOpacity onPress={handleButtonPress} style={styles.Button}>
-              <Text>Demo Class</Text>
+            <TouchableOpacity style={styles.Button}>
+              <Text style={styles.ButtonText}>Demo Class</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleButtonPress} style={styles.Button}>
-              <Text>Addmission</Text>
+            <TouchableOpacity style={styles.Button}>
+              <Text style={styles.ButtonText}>Addmission</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </Collapsible>
+      )}
     </View>
   );
 };
 
-const Courses = ({navigation}) => {
-  const [expandedIndex, setExpandedIndex] = useState(null);
+const Courses = () => {
+  const [openAccordion, setOpenAccordion] = useState(null);
 
-  const handleAccordionPress = index => {
-    setExpandedIndex(expandedIndex === index ? null : index);
+  const handleToggle = accordionId => {
+    setOpenAccordion(openAccordion === accordionId ? null : accordionId);
   };
 
-  const accordionItems = [
-    {
-      title: 'آسان اصول فقہ کورس مکمل ',
-      Videos: 'Videos : 92',
-      Price: 'Price : 7500',
-    },
-    {
-      title: 'آسان اصول فقہ کورس مکمل ',
-      Videos: 'Videos : 92',
-      Price: 'Price : 7500',
-    },
-
-    // Add more items as needed
-  ];
-
   return (
-    <View>
-      {accordionItems.map((item, index) => (
-        <AccordionItem
-          key={index}
-          title={item.title}
-          Videos={item.Videos}
-          Price={item.Price}
-          isExpanded={expandedIndex === index}
-          onPress={() => handleAccordionPress(index)}
+    <ImageBackground
+      resizeMode="cover"
+      style={styles.background}
+      source={require('../Images/background.jpg')}>
+      <View>
+        <Text style={styles.HeadingText}>AVAILIBLE COURSES</Text>
+      </View>
+      <ScrollView>
+        <Accordion
+          id={1}
+          title="آسان  اصول  فقہ  کورس  "
+          Videos="Videos : 92"
+          Price="Price : 7500"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
         />
-      ))}
-    </View>
+        <Accordion
+          id={2}
+          title="آسان اصول فقہ کورس 2 "
+          Videos="Videos : 92"
+          Price="Price : 7500"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+      </ScrollView>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  background: {
+    width: devicewidth,
+    height: deviceheight,
+    // alignItems: 'center',
+    // justifyContent: 'space-evenly',
+  },
   TitleCollapse: {
     alignItems: 'center',
-    padding: 10,
+    paddingVertical: responsiveHeight(0.5),
+    marginHorizontal: responsiveWidth(4),
     backgroundColor: '#2e4c60',
+  },
+  HeadingText: {
+    fontFamily: 'good',
+    color: '#2e4c60',
+    // backgroundColor: 'seagreen',
+    fontSize: responsiveFontSize(4),
+    textAlign: 'center',
+    marginTop: responsiveHeight(4),
+    marginBottom: responsiveHeight(3),
+    textTransform:'capitalize',
+    letterSpacing:1
+  },
+  TitleCollapse: {
+    alignItems: 'center',
+    paddingVertical: responsiveHeight(0.5),
+    marginHorizontal: responsiveWidth(4),
+    backgroundColor: '#2e4c60',
+    marginVertical:responsiveHeight(2)
   },
   TitleText: {
     color: '#fff',
+    fontSize: responsiveScreenFontSize(2.75),
     fontFamily: 'mushaf',
   },
   V_P_View: {
@@ -94,8 +139,11 @@ const styles = StyleSheet.create({
   },
   Button: {
     marginTop: 10,
-    backgroundColor: 'lightblue',
+    backgroundColor: '#fff',
     padding: 10,
+  },
+  ButtonText: {
+    color: '#2e4c60',
   },
 });
 
