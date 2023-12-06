@@ -35,10 +35,10 @@ const Accordion = ({id, title, Videos, Price, openAccordion, onToggle}) => {
         </View>
       </TouchableOpacity>
       {isOpen && (
-        <View style={{padding: 10, backgroundColor: '#2e4c60'}}>
+        <View style={styles.Description_View}>
           <View style={styles.V_P_View}>
-            <Text>{Videos}</Text>
-            <Text>{Price}</Text>
+            <Text style={styles.DescriptionText}>{Videos}</Text>
+            <Text style={styles.DescriptionText}>{Price}</Text>
           </View>
           <View style={styles.ButtonView}>
             <TouchableOpacity style={styles.Button}>
@@ -112,25 +112,44 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: responsiveHeight(4),
     marginBottom: responsiveHeight(3),
-    textTransform:'capitalize',
-    letterSpacing:1
+    textTransform: 'capitalize',
+    letterSpacing: 1,
   },
   TitleCollapse: {
     alignItems: 'center',
     paddingVertical: responsiveHeight(0.5),
     marginHorizontal: responsiveWidth(4),
     backgroundColor: '#2e4c60',
-    marginVertical:responsiveHeight(2)
+    marginVertical: responsiveHeight(2),
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   TitleText: {
     color: '#fff',
     fontSize: responsiveScreenFontSize(2.75),
     fontFamily: 'mushaf',
   },
+  Description_View: {
+    padding: 10,
+    marginHorizontal: responsiveWidth(4),
+    backgroundColor: 'white',
+    borderColor: '#2e4c60',
+    borderWidth: 2,
+    marginTop: responsiveHeight(-2),
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+  },
   V_P_View: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
+    // alignSelf:'center'
+  },
+  DescriptionText:{
+    color: '#2e4c60',
+    fontSize: responsiveScreenFontSize(2),
+    fontFamily: 'good',
+    letterSpacing: 1,
   },
   ButtonView: {
     display: 'flex',
@@ -139,11 +158,11 @@ const styles = StyleSheet.create({
   },
   Button: {
     marginTop: 10,
-    backgroundColor: '#fff',
+    backgroundColor: '#2e4c60',
     padding: 10,
   },
   ButtonText: {
-    color: '#2e4c60',
+    color: '#fff',
   },
 });
 
