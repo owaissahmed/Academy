@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {
   View,
   Text,
@@ -16,36 +16,58 @@ import {
   responsiveWidth,
   responsiveScreenFontSize,
 } from 'react-native-responsive-dimensions';
+import {useNavigation} from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 
 const Accordion = ({id, title, Videos, Price, openAccordion, onToggle}) => {
+  const [isConnected, setIsConnected] = useState(false);
+  const navigation = useNavigation();
   const isOpen = openAccordion === id;
 
   const toggleAccordion = () => {
     onToggle(id);
   };
 
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsConnected(state.isConnected);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+  function Internet() {
+    Alert.alert('⚫ Warning', 'No INternet Connection!');
+  }
+
+  function CoursesForm() {
+    if (isConnected == true) {
+      navigation.navigate('Form');
+    } else Internet();
+  }
+
   return (
     <View>
       <TouchableOpacity onPress={toggleAccordion}>
         <View style={styles.TitleCollapse}>
-          <Text style={styles.TitleText}>{title}</Text>
+          <Text allowFontScaling={false} style={styles.TitleText}>{title}</Text>
         </View>
       </TouchableOpacity>
       {isOpen && (
         <View style={styles.Description_View}>
           <View style={styles.V_P_View}>
-            <Text style={styles.DescriptionText}>{Videos}</Text>
-            <Text style={styles.DescriptionText}>{Price}</Text>
+            <Text allowFontScaling={false} style={styles.DescriptionText}>{Videos}</Text>
+            <Text allowFontScaling={false} style={styles.DescriptionText}>{Price}</Text>
           </View>
           <View style={styles.ButtonView}>
             <TouchableOpacity style={styles.Button}>
-              <Text style={styles.ButtonText}>Demo Class</Text>
+              <Text allowFontScaling={false}style={styles.ButtonText}>Demo Class</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.Button}>
-              <Text style={styles.ButtonText}>Addmission</Text>
+            <TouchableOpacity style={styles.Button} onPress={CoursesForm}>
+              <Text allowFontScaling={false} style={styles.ButtonText}>Addmission</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -54,7 +76,7 @@ const Accordion = ({id, title, Videos, Price, openAccordion, onToggle}) => {
   );
 };
 
-const Courses = () => {
+const Courses = ({navigation}) => {
   const [openAccordion, setOpenAccordion] = useState(null);
 
   const handleToggle = accordionId => {
@@ -67,7 +89,7 @@ const Courses = () => {
       style={styles.background}
       source={require('../Images/background.jpg')}>
       <View>
-        <Text style={styles.HeadingText}>COURSES</Text>
+        <Text allowFontScaling={false} style={styles.HeadingText}>COURSES</Text>
       </View>
       <ScrollView>
         <Accordion
