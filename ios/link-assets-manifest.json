@@ -6,16 +6,12 @@
       "sha1": "6942510c7810d7a52411d7ae580efa385bddf9bf"
     },
     {
-      "path": "src/Fonts/majeed.ttf",
-      "sha1": "ab53a8b4bd3735be3b9625fed87bc8c0aee9a031"
-    },
-    {
       "path": "src/Fonts/mushaf.ttf",
       "sha1": "f5a9dba1b021f3cc00d3ad4c402555722c1f49bf"
     },
     {
-      "path": "src/Fonts/noto.ttf",
-      "sha1": "cc260a81d8d6d2f2b4b5aac57c1a27c311569127"
+      "path": "src/Fonts/nunito.ttf",
+      "sha1": "b1029b1d966d1732e6241677773393a313585fb3"
     }
   ]
 }

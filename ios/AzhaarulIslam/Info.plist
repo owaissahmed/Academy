@@ -55,8 +55,7 @@
 	<array>
 		<string>good.ttf</string>
 		<string>mushaf.ttf</string>
-		<string>noto.ttf</string>
-		<string>majeed.ttf</string>
+		<string>nunito.ttf</string>
 	</array>
 </dict>
 </plist>

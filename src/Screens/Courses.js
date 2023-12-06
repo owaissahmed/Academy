@@ -67,12 +67,12 @@ const Courses = () => {
       style={styles.background}
       source={require('../Images/background.jpg')}>
       <View>
-        <Text style={styles.HeadingText}>AVAILIBLE COURSES</Text>
+        <Text style={styles.HeadingText}>COURSES</Text>
       </View>
       <ScrollView>
         <Accordion
           id={1}
-          title="آسان  اصول  فقہ  کورس  "
+          title="آسان  اصولِ  فقہ کورس  "
           Videos="Videos : 92"
           Price="Price : 7500"
           openAccordion={openAccordion}
@@ -80,9 +80,153 @@ const Courses = () => {
         />
         <Accordion
           id={2}
-          title="آسان اصول فقہ کورس 2 "
-          Videos="Videos : 92"
+          title="آسان  فہمِ  عقائد کورس"
+          Videos="Videos : 28"
+          Price="Price : 1500"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={3}
+          title="آسان  شرح  مائۃ  عامل کورس"
+          Videos="Videos : 29"
+          Price="Price : 1500"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={4}
+          title="آسان  فہمُ القرآن کورس"
+          Videos="Videos : 51"
+          Price="Price : 4500"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={5}
+          title="آسان  تراکیبِ  نحویہ کورس"
+          Videos="Videos : 46"
+          Price="Price : 4500"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={6}
+          title="تراکیبِ نحویہ کورس  پہلا پارہ"
+          Videos="Videos : 24"
+          Price="Price : 1500"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={7}
+          title="دورۂ  صرف  و نحو"
+          Videos="Videos : 44"
+          Price="Price : 1500"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={8}
+          title="دورۂ  منطق"
+          Videos="Videos : 16"
+          Price="Price : 1500"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={9}
+          title="آسان  علمِ  صرف کورس"
+          Videos="Videos : 35"
+          Price="Price : 3000"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={10}
+          title="آسان  علمِ  نحو کورس"
+          Videos="Videos : 62"
           Price="Price : 7500"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={11}
+          title="آسان  فہمِِ  بلاغت کورس (  علم المعانی  )"
+          Videos="Videos : 74"
+          Price="Price : 4500"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={12}
+          title="آسان  مبادیاتِ   فقہ کورس"
+          Videos="Videos : -"
+          Price="Price : 3000"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={13}
+          title="آسان  تدریسی  ٹیسٹ کورس"
+          Videos="Videos : -"
+          Price="Price : 3000"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={14}
+          title="آسان  فہمِ وراثت کورس"
+          Videos="Videos : -"
+          Price="Price : 3000"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={15}
+          title="آسان  اصولِ  حدیث کورس"
+          Videos="Videos : -"
+          Price="Price : 3000"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={16}
+          title="آسان  فہمِِ  بلاغت کورس (  علم البیان والبدیع  )"
+          Videos="Videos : 30"
+          Price="Price : 3000"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={17}
+          title="آسان  آدابِ  بحث  و مناظرہ کورس"
+          Videos="Videos : 06"
+          Price="Price : 500"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={18}
+          title="حلِ  عبارت  و ترجمہ کورس"
+          Videos="Videos : 30"
+          Price="Price : 2000"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={19}
+          title="اجراءُ  الصرف  فی  القرآن"
+          Videos="Videos : 28"
+          Price="Price : 3000"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={20}
+          title="کتابُ  البیوع  قدوری  شریف"
+          Videos="Videos : 52"
+          Price="Price : 5000"
           openAccordion={openAccordion}
           onToggle={handleToggle}
         />
@@ -108,12 +252,13 @@ const styles = StyleSheet.create({
     fontFamily: 'good',
     color: '#2e4c60',
     // backgroundColor: 'seagreen',
-    fontSize: responsiveFontSize(4),
+    fontSize: responsiveFontSize(5),
     textAlign: 'center',
-    marginTop: responsiveHeight(4),
-    marginBottom: responsiveHeight(3),
-    textTransform: 'capitalize',
-    letterSpacing: 1,
+    // marginVertical:responsiveHeight(),
+    marginTop: responsiveHeight(3),
+    // marginBottom: responsiveHeight(2),
+    textTransform: 'uppercase',
+    letterSpacing: 2,
   },
   TitleCollapse: {
     alignItems: 'center',
@@ -145,11 +290,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     // alignSelf:'center'
   },
-  DescriptionText:{
+  DescriptionText: {
     color: '#2e4c60',
     fontSize: responsiveScreenFontSize(2),
-    fontFamily: 'good',
-    letterSpacing: 1,
+    fontFamily: 'nunito',
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
+    marginVertical: responsiveHeight(0.25),
   },
   ButtonView: {
     display: 'flex',
@@ -157,12 +304,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   Button: {
-    marginTop: 10,
+    marginTop: responsiveHeight(1),
     backgroundColor: '#2e4c60',
-    padding: 10,
+    paddingVertical: responsiveHeight(0.75),
+    paddingHorizontal: responsiveWidth(3),
+    borderRadius: 8,
   },
   ButtonText: {
     color: '#fff',
+    fontSize: responsiveScreenFontSize(2),
+    fontFamily: 'nunito',
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
   },
 });
 
