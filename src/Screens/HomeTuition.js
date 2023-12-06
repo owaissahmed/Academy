@@ -207,13 +207,6 @@ const HomeTuition = ({navigation}) => {
           <Text allowFontScaling={false} style={styles.default}>
             {buttonText}
           </Text>
-          <Text allowFontScaling={false} style={styles.default}>
-            {country && country === 'Pakistan'
-              ? 'Pakistan'
-              : country
-              ? country.name
-              : ''}
-          </Text>
           <View>
             <PhoneInput
               textInputProps={{
@@ -260,6 +253,13 @@ const HomeTuition = ({navigation}) => {
               countryPickerProps={{withAlphaFilter: true}}
             />
           </View>
+          <Text allowFontScaling={false} style={styles.default}>
+          {country && country === 'Pakistan'
+            ? 'Pakistan'
+            : country
+            ? country.name
+            : ''}
+        </Text>
           <>
             <TouchableOpacity style={styles.button} onPress={Check}>
               <Text allowFontScaling={false} style={styles.buttontext}>

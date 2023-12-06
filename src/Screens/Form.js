@@ -213,15 +213,8 @@ const Form = ({navigation}) => {
             placeholder="Enter Your Course"
             placeholderTextColor={'grey'}
           />
-          <Text allowFontScaling={false} style={styles.default}>
-            {country && country === 'Pakistan'
-              ? 'Pakistan'
-              : country
-              ? country.name
-              : ''}
-          </Text>
           <View>
-            <PhoneInput
+          <PhoneInput
               textInputProps={{
                 placeholderTextColor: 'grey',
               }}
@@ -264,10 +257,17 @@ const Form = ({navigation}) => {
                 setCountryCode(phoneInput.current?.getCountryCode() || '');
               }}
               countryPickerProps={{withAlphaFilter: true}}
-            />
+              />
           </View>
+          <Text allowFontScaling={false} style={styles.default}>
+            {country && country === 'Pakistan'
+              ? 'Pakistan'
+              : country
+              ? country.name
+              : ''}
+          </Text>
           <>
-            <TouchableOpacity style={styles.button} onPress={Check}>
+          <TouchableOpacity style={styles.button} onPress={Check}>
               <Text allowFontScaling={false} style={styles.buttontext}>
                 SAVE
               </Text>
