@@ -264,12 +264,6 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
     // justifyContent: 'space-evenly',
   },
-  TitleCollapse: {
-    alignItems: 'center',
-    paddingVertical: responsiveHeight(0.5),
-    marginHorizontal: responsiveWidth(4),
-    backgroundColor: '#2e4c60',
-  },
   HeadingText: {
     fontFamily: 'good',
     color: '#2e4c60',
@@ -284,7 +278,9 @@ const styles = StyleSheet.create({
   },
   TitleCollapse: {
     alignItems: 'center',
-    paddingVertical: responsiveHeight(0.5),
+    // paddingVertical: responsiveHeight(0.5),
+    // paddingTop:responsiveHeight(0.25),
+    paddingBottom:responsiveHeight(0.75),
     marginHorizontal: responsiveWidth(4),
     backgroundColor: '#2e4c60',
     marginVertical: responsiveHeight(2),
@@ -293,8 +289,9 @@ const styles = StyleSheet.create({
   },
   TitleText: {
     color: '#fff',
-    fontSize: responsiveScreenFontSize(2.75),
+    fontSize: responsiveScreenFontSize(3),
     fontFamily: 'mushaf',
+    textAlignVertical:'center'
   },
   Description_View: {
     padding: 10,
@@ -310,14 +307,15 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    // alignSelf:'center'
+    paddingHorizontal: responsiveWidth(1),
+    borderRadius: 8
   },
   DescriptionText: {
     color: '#2e4c60',
-    fontSize: responsiveScreenFontSize(2),
+    fontSize: responsiveScreenFontSize(2.25),
     fontFamily: 'nunito',
     fontWeight: 'bold',
-    letterSpacing: 0.5,
+    letterSpacing: 0.25,
     marginVertical: responsiveHeight(0.25),
   },
   ButtonView: {
