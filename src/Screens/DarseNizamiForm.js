@@ -67,7 +67,7 @@ const DarseNizamiForm = ({navigation}) => {
 
   const route = useRoute();
   const buttonText = route.params?.TextDarseNizami || 'Dars-e-Nizami';
-
+  const countryName = country?.name || 'Pakistan';
   function show() {
     showMessage({
       message: '⚪️ Dont forget to send email after clicking on "SAVE" button',
@@ -142,11 +142,11 @@ const DarseNizamiForm = ({navigation}) => {
           Fathername: father,
           Course: 'Dars-e-Nizami',
           Phone: formattedValue,
-          Country: country.name,
+          Country: countryName,
         });
         const recipient = 'muhammadowais25122003@gmail.com'; // Replace with the recipient's email address
         const subject = name;
-        const body = `Dars-e-Nizami \n ${country.name}\n ${formattedValue}`;
+        const body = `Dars-e-Nizami \n ${countryName}\n ${formattedValue}`;
 
         // Construct the mailto URL
         

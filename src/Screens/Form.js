@@ -61,15 +61,16 @@ const Form = ({navigation}) => {
   const FatherChange = newfather => {
     setfather(newfather);
   };
-  const CourseChange = newcourse => {
-    setcourse(newcourse);
-  };
+  
   const handleOnCountryChange = country => {
     setCountry(country);
   };
 
+  const countryName = country?.name || 'Pakistan';
+
   const route = useRoute();
-  const buttonText = route.params?.TextHomeTuition;
+  
+  const buttonText = route.params?.TextHomeTuition || 'course';
 
   function show() {
     showMessage({
@@ -127,7 +128,6 @@ const Form = ({navigation}) => {
     if (
       name.trim() === '' ||
       father.trim() === '' ||
-      course.trim() === '' ||
       value === ''
     ) {
       EmptyInput();
@@ -138,20 +138,21 @@ const Form = ({navigation}) => {
       setVisible(true);
       show();
       setTimeout(() => {
+       
         const checkValid = phoneInput.current?.isValidNumber(value);
         setValid(checkValid ? checkValid : false);
         setCountryCode(phoneInput.current?.getCountryCode() || '');
         const collectionRef = firestore().collection('users').add({
           Name: name,
           Fathername: father,
-          Course: course,
+          Course: buttonText,
           Phone: formattedValue,
-          Country: country.name,
+          Country: countryName,
         });
 
         const recipient = 'muhammadowais25122003@gmail.com'; // Replace with the recipient's email address
         const subject = name;
-        const body = `${course} \n ${country.name} \n ${formattedValue}`;
+        const body = `${buttonText} \n ${countryName} \n ${formattedValue}`;
 
         const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
           subject,
@@ -210,7 +211,7 @@ const Form = ({navigation}) => {
             placeholder="Enter Your Father Name"
             placeholderTextColor={'grey'}
           />
-          <Text allowFontScaling={false} style={styles.default}>
+          <Text allowFontScaling={false} style={styles.defaultCourse}>
           {buttonText}
         </Text>
           <View>
@@ -351,9 +352,25 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     marginTop: responsiveHeight(3),
     backgroundColor: '#FBFCF8',
-    fontSize: responsiveFontSize(2.5),
+    fontSize: responsiveFontSize(2),
     textAlignVertical: 'center',
-    fontFamily:'mushaf'
+  },
+  defaultCourse: {
+    height: responsiveHeight(6),
+    width: responsiveWidth(80),
+    paddingHorizontal: 6,
+    paddingBottom:4,
+    // paddingVertical:-10,
+    color: '#36454F',
+    borderColor: '#36454F',
+    borderWidth: 1.5,
+    marginTop: responsiveHeight(3),
+    backgroundColor: '#FBFCF8',
+    fontSize: responsiveFontSize(2.8),
+    textAlignVertical: 'center',
+    fontFamily:'mushaf',
+    // backgroundColor:'red',
+    // textAlignVertical:'center'
   },
   button: {
     backgroundColor: '#36454F',
@@ -370,9 +387,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.7,
     textAlign: 'center',
     fontSize: responsiveFontSize(2.25),
-  },
-  highlight: {
-    fontWeight: '700',
   },
 });
 

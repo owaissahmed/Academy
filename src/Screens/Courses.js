@@ -51,18 +51,20 @@ const Accordion = ({id, title, Videos, Price, openAccordion, onToggle}) => {
   };
 
   function Internet() {
-    showMessage({
-      message: '⚪️ No Internet Connection',
-      // backgroundColor:'#36454F',
-      type: 'danger',
-      color: 'white',
-      position: 'bottom',
-      titleStyle: {
-        fontSize: responsiveFontSize(2.25),
-        lineHeight: responsiveHeight(3),
-      },
-      // duration: 5000,
-    });
+    Alert.alert('⚫ Warning', 'No INternet Connection!');
+  
+    // showMessage({
+    //   message: '⚪️ No Internet Connection',
+    //   // backgroundColor:'#36454F',
+    //   type: 'danger',
+    //   color: 'white',
+    //   position: 'bottom',
+    //   titleStyle: {
+    //     fontSize: responsiveFontSize(2.25),
+    //     lineHeight: responsiveHeight(3),
+    //   },
+    //   // duration: 5000,
+    // });
   }
 
   return (
@@ -114,9 +116,6 @@ const Courses = ({navigation}) => {
       resizeMode="cover"
       style={styles.background}
       source={require('../Images/background.jpg')}>
-      <>
-        <FlashMessage />
-      </>
       <View>
         <Text allowFontScaling={false} style={styles.HeadingText}>
           COURSES
@@ -330,7 +329,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: '#2e4c60',
     borderWidth: 2,
-    marginTop: responsiveHeight(-2),
+    marginTop: responsiveHeight(-2.25),
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },

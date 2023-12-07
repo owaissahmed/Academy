@@ -66,7 +66,7 @@ const OnlineTuition = ({navigation}) => {
 
   const route = useRoute();
   const buttonText = route.params?.buttonText || 'Online Tuition';
-
+ const countryName = country?.name || 'Pakistan';
   function show() {
     showMessage({
       message: '⚪️ Dont forget to send email after clicking on "SAVE" button',
@@ -137,11 +137,11 @@ const OnlineTuition = ({navigation}) => {
           Fathername: father,
           Course: 'Online Tuition',
           Phone: formattedValue,
-          Country: country.name,
+          Country: countryName,
         });
         const recipient = 'muhammadowais25122003@gmail.com'; // Replace with the recipient's email address
         const subject = name;
-        const body = `Online Tuition \n ${country.name} \n ${formattedValue}`;
+        const body = `Online Tuition \n ${countryName} \n ${formattedValue}`;
 
         // Construct the mailto URL
 
