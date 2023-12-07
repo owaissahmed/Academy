@@ -24,6 +24,7 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
+import {useRoute} from '@react-navigation/native';
 import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
@@ -66,6 +67,9 @@ const Form = ({navigation}) => {
   const handleOnCountryChange = country => {
     setCountry(country);
   };
+
+  const route = useRoute();
+  const buttonText = route.params?.TextHomeTuition;
 
   function show() {
     showMessage({
@@ -206,13 +210,9 @@ const Form = ({navigation}) => {
             placeholder="Enter Your Father Name"
             placeholderTextColor={'grey'}
           />
-          <TextInput
-            onChangeText={CourseChange}
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Your Course"
-            placeholderTextColor={'grey'}
-          />
+          <Text allowFontScaling={false} style={styles.default}>
+          {buttonText}
+        </Text>
           <View>
           <PhoneInput
               textInputProps={{
@@ -351,8 +351,9 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
     marginTop: responsiveHeight(3),
     backgroundColor: '#FBFCF8',
-    fontSize: responsiveFontSize(2),
+    fontSize: responsiveFontSize(2.5),
     textAlignVertical: 'center',
+    fontFamily:'mushaf'
   },
   button: {
     backgroundColor: '#36454F',

@@ -52,6 +52,7 @@ export default function AppNavigator() {
             component={Courses}
             options={{headerShown: false}}
           />
+         
         </Stack.Navigator>
       </AppProvider>
     </NavigationContainer>

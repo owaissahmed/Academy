@@ -42,6 +42,14 @@ const Accordion = ({id, title, Videos, Price, openAccordion, onToggle}) => {
     };
   }, []);
 
+  const CoursesForm = () => {
+    if (isConnected == false) {
+      Internet();
+    }
+    // Navigate to Page2 and pass the text as a parameter
+    else navigation.navigate('Form', {TextHomeTuition:title });
+  };
+
   function Internet() {
     showMessage({
       message: '⚪️ No Internet Connection',
@@ -55,11 +63,6 @@ const Accordion = ({id, title, Videos, Price, openAccordion, onToggle}) => {
       },
       // duration: 5000,
     });
-  }
-  function CoursesForm() {
-    if (isConnected == true) {
-      navigation.navigate('Form');
-    } else Internet();
   }
 
   return (
