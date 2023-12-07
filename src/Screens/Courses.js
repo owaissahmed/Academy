@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   ImageBackground,
   ScrollView,
   Dimensions,
+  Alert,
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import {
@@ -20,6 +21,7 @@ import {useNavigation} from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
+import FlashMessage, {showMessage} from 'react-native-flash-message';
 
 const Accordion = ({id, title, Videos, Price, openAccordion, onToggle}) => {
   const [isConnected, setIsConnected] = useState(false);
@@ -39,10 +41,21 @@ const Accordion = ({id, title, Videos, Price, openAccordion, onToggle}) => {
       unsubscribe();
     };
   }, []);
-  function Internet() {
-    Alert.alert('⚫ Warning', 'No INternet Connection!');
-  }
 
+  function Internet() {
+    showMessage({
+      message: '⚪️ No Internet Connection',
+      // backgroundColor:'#36454F',
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      // duration: 5000,
+    });
+  }
   function CoursesForm() {
     if (isConnected == true) {
       navigation.navigate('Form');
@@ -53,21 +66,31 @@ const Accordion = ({id, title, Videos, Price, openAccordion, onToggle}) => {
     <View>
       <TouchableOpacity onPress={toggleAccordion}>
         <View style={styles.TitleCollapse}>
-          <Text allowFontScaling={false} style={styles.TitleText}>{title}</Text>
+          <Text allowFontScaling={false} style={styles.TitleText}>
+            {title}
+          </Text>
         </View>
       </TouchableOpacity>
       {isOpen && (
         <View style={styles.Description_View}>
           <View style={styles.V_P_View}>
-            <Text allowFontScaling={false} style={styles.DescriptionText}>{Videos}</Text>
-            <Text allowFontScaling={false} style={styles.DescriptionText}>{Price}</Text>
+            <Text allowFontScaling={false} style={styles.DescriptionText}>
+              {Videos}
+            </Text>
+            <Text allowFontScaling={false} style={styles.DescriptionText}>
+              {Price}
+            </Text>
           </View>
           <View style={styles.ButtonView}>
             <TouchableOpacity style={styles.Button}>
-              <Text allowFontScaling={false}style={styles.ButtonText}>Demo Class</Text>
+              <Text allowFontScaling={false} style={styles.ButtonText}>
+                Demo Class
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.Button} onPress={CoursesForm}>
-              <Text allowFontScaling={false} style={styles.ButtonText}>Addmission</Text>
+              <Text allowFontScaling={false} style={styles.ButtonText}>
+                Addmission
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -88,8 +111,13 @@ const Courses = ({navigation}) => {
       resizeMode="cover"
       style={styles.background}
       source={require('../Images/background.jpg')}>
+      <>
+        <FlashMessage />
+      </>
       <View>
-        <Text allowFontScaling={false} style={styles.HeadingText}>COURSES</Text>
+        <Text allowFontScaling={false} style={styles.HeadingText}>
+          COURSES
+        </Text>
       </View>
       <ScrollView>
         <Accordion
@@ -280,7 +308,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     // paddingVertical: responsiveHeight(0.5),
     // paddingTop:responsiveHeight(0.25),
-    paddingBottom:responsiveHeight(0.75),
+    paddingBottom: responsiveHeight(0.75),
     marginHorizontal: responsiveWidth(4),
     backgroundColor: '#2e4c60',
     marginVertical: responsiveHeight(2),
@@ -291,7 +319,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: responsiveScreenFontSize(3),
     fontFamily: 'mushaf',
-    textAlignVertical:'center'
+    textAlignVertical: 'center',
   },
   Description_View: {
     padding: 10,
@@ -308,7 +336,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingHorizontal: responsiveWidth(1),
-    borderRadius: 8
+    borderRadius: 8,
   },
   DescriptionText: {
     color: '#2e4c60',
