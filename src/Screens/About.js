@@ -50,20 +50,16 @@ const About = ({navgation}) => {
           delay={100}
           animation="fadeInUp"
           style={styles.squarediv}>
-          <TouchableOpacity>
-            <View style={styles.square}>
-              <Text allowFontScaling={false} style={styles.squaretext__}>
-                DARS-e-NIZAMI HELP DESK
+          <TouchableOpacity style={styles.button}>
+              <Text allowFontScaling={false} style={styles.buttontext}>
+              پایہ   تکمیل   تک   پہنچنے   والے   منصوبے
               </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={styles.square}>
-              <Text allowFontScaling={false} style={styles.squaretext}>
-                SHORT COURSES
+            </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+              <Text allowFontScaling={false} style={styles.buttontext}>
+              مستقبل  قریب  کے  منصوبے
               </Text>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
         </Animatable.View>
       </ImageBackground>
     </View>
@@ -77,15 +73,7 @@ const styles = StyleSheet.create({
     width: devicewidth,
     height: deviceheight,
     alignItems: 'center',
-    justifyContent: 'space-evenly',
-  },
-  squarediv: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-    justifyContent: 'space-evenly',
-    width: responsiveWidth(95),
-    marginTop: responsiveHeight(-6),
+    justifyContent: 'center',
   },
   rectangletext: {
     fontFamily: 'mushaf',
@@ -101,31 +89,34 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(4.5),
     textAlign: 'center',
     marginTop: responsiveHeight(-3),
+    marginBottom: responsiveHeight(2),
   },
-  squaretext: {
-    fontSize: responsiveScreenFontSize(2.35),
-    color: '#2e4c60',
-    textAlign: 'center',
-    fontFamily: 'good',
-    marginTop: responsiveHeight(1),
-  },
-  squaretext__: {
-    fontSize: responsiveScreenFontSize(2),
-    color: '#2e4c60',
-    textAlign: 'center',
-    fontFamily: 'good',
-    marginTop: responsiveHeight(1),
-    lineHeight: 20,
-  },
-  square: {
-    marginTop: responsiveHeight(3),
-    borderColor: '#2e4c60',
-    borderWidth: 1.5,
-    height: responsiveHeight(19),
-    width: responsiveWidth(39),
-    justifyContent: 'center',
+  squarediv: {
+    display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
-    borderRadius: 12,
-    marginHorizontal: responsiveWidth(3),
+    justifyContent: 'center',
+    width: responsiveWidth(95),
+    //   marginTop: responsiveHeight(-6),
+  },
+
+  button: {
+    backgroundColor: '#2e4c60',
+    color: 'white',
+    // padding: 6,
+    marginTop: responsiveHeight(3),
+    // marginBottom: responsiveHeight(2),
+paddingBottom:responsiveHeight(1),
+    borderRadius: 8,
+    width: responsiveWidth(80),
+  },
+  buttontext: {
+    fontSize: responsiveScreenFontSize(4),
+    color: '#fff',
+    fontFamily: 'mushaf',
+    fontWeight: '600',
+    // letterSpacing: 0.7,
+    textAlign: 'center',
+    // fontSize: responsiveFontSize(2.25),
   },
 });
