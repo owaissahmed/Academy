@@ -6,6 +6,7 @@ import OnlineTuition from './Screens/OnlineTuition';
 import HomeTuition from './Screens/HomeTuition';
 import DarseNizamiForm from './Screens/DarseNizamiForm';
 import Courses from './Screens/Courses';
+import About from './Screens/About';
 import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -52,7 +53,11 @@ export default function AppNavigator() {
             component={Courses}
             options={{headerShown: false}}
           />
-         
+          <Stack.Screen
+            name="About"
+            component={About}
+            options={{headerShown: false}}
+          />
         </Stack.Navigator>
       </AppProvider>
     </NavigationContainer>

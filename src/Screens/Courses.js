@@ -46,25 +46,17 @@ const Accordion = ({id, title, Videos, Price, openAccordion, onToggle}) => {
     if (isConnected == false) {
       Internet();
     }
-    // Navigate to Page2 and pass the text as a parameter
     else navigation.navigate('Form', {TextHomeTuition:title });
   };
 
   function Internet() {
     Alert.alert('⚫ Warning', 'No INternet Connection!');
-  
-    // showMessage({
-    //   message: '⚪️ No Internet Connection',
-    //   // backgroundColor:'#36454F',
-    //   type: 'danger',
-    //   color: 'white',
-    //   position: 'bottom',
-    //   titleStyle: {
-    //     fontSize: responsiveFontSize(2.25),
-    //     lineHeight: responsiveHeight(3),
-    //   },
-    //   // duration: 5000,
-    // });
+  }
+
+  function one() {
+    if (isConnected == true) {
+      Linking.openURL('https://www.youtube.com/@azhar-ul-islam');
+    } else Internet();
   }
 
   return (
@@ -164,7 +156,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={6}
-          title="تراکیبِ نحویہ کورس  پہلا پارہ"
+          title="تراکیبِ   نحویہ کورس  پہلا پارہ"
           Videos="Videos : 24"
           Price="Price : 1500"
           openAccordion={openAccordion}

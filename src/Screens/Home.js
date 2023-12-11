@@ -60,36 +60,32 @@ export default function Home({route}) {
       navigation.navigate('Courses');
     } else Internet();
   }
-  // function Online() {
-  //   if (isConnected == true) {
-  //     navigation.navigate('OnlineTuition');
-  //   } else Internet();
-  // }
 
   const OnlineTuition = () => {
     if (isConnected == false) {
       Internet();
-    }
-    // Navigate to Page2 and pass the text as a parameter
-    else navigation.navigate('OnlineTuition', {buttonText: 'Online Tuition'});
+    } else navigation.navigate('OnlineTuition', {buttonText: 'Online Tuition'});
   };
+
   const HomeTuition = () => {
     if (isConnected == false) {
       Internet();
-    }
-    // Navigate to Page2 and pass the text as a parameter
-    else navigation.navigate('HomeTuition', {TextHomeTuition: 'Home Tuition'});
+    } else
+      navigation.navigate('HomeTuition', {TextHomeTuition: 'Home Tuition'});
   };
+
   const DarseNizamiForm = () => {
     if (isConnected == false) {
       Internet();
-    }
-    // Navigate to Page2 and pass the text as a parameter
-    else
+    } else
       navigation.navigate('DarseNizamiForm', {
         TextDarseNizami: 'Dars-e-Nizami',
       });
   };
+  const About = () => {
+    navigation.navigate('About');
+  };
+
   return (
     <View>
       <ImageBackground
@@ -170,7 +166,7 @@ export default function Home({route}) {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={About}>
             <View style={styles.square}>
               <Image
                 style={styles.info}
