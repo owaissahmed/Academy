@@ -9,6 +9,7 @@ import {
   ScrollView,
   Dimensions,
   Alert,
+  Linking,
 } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import {
@@ -23,7 +24,15 @@ const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 
-const Accordion = ({id, title, Videos, Price, openAccordion, onToggle}) => {
+const Accordion = ({
+  id,
+  title,
+  Videos,
+  Price,
+  openAccordion,
+  onToggle,
+  Link,
+}) => {
   const [isConnected, setIsConnected] = useState(false);
   const navigation = useNavigation();
   const isOpen = openAccordion === id;
@@ -45,19 +54,19 @@ const Accordion = ({id, title, Videos, Price, openAccordion, onToggle}) => {
   const CoursesForm = () => {
     if (isConnected == false) {
       Internet();
-    }
-    else navigation.navigate('Form', {TextHomeTuition:title });
+    } else navigation.navigate('Form', {TextHomeTuition: title});
   };
 
   function Internet() {
     Alert.alert('⚫ Warning', 'No INternet Connection!');
   }
 
-  function one() {
+  function Demo() {
     if (isConnected == true) {
-      Linking.openURL('https://www.youtube.com/@azhar-ul-islam');
+      Linking.openURL(Link);
     } else Internet();
   }
+
 
   return (
     <View>
@@ -79,7 +88,7 @@ const Accordion = ({id, title, Videos, Price, openAccordion, onToggle}) => {
             </Text>
           </View>
           <View style={styles.ButtonView}>
-            <TouchableOpacity style={styles.Button}>
+            <TouchableOpacity style={styles.Button} onPress={Demo}>
               <Text allowFontScaling={false} style={styles.ButtonText}>
                 Demo Class
               </Text>
@@ -121,6 +130,7 @@ const Courses = ({navigation}) => {
           Price="Price : 7500"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmU6Z_5d0yytWQYKmU7JBGJ2"
         />
         <Accordion
           id={2}
@@ -129,6 +139,7 @@ const Courses = ({navigation}) => {
           Price="Price : 1500"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+         Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmXGm2efMIaa2Qrrn_xPspSz"
         />
         <Accordion
           id={3}
@@ -137,6 +148,7 @@ const Courses = ({navigation}) => {
           Price="Price : 1500"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmXKIXbUwmikR88auMXna3i6"
         />
         <Accordion
           id={4}
@@ -145,6 +157,7 @@ const Courses = ({navigation}) => {
           Price="Price : 4500"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmXwfLOZIbGpM7ggcBxxQ8nk"
         />
         <Accordion
           id={5}
@@ -153,6 +166,7 @@ const Courses = ({navigation}) => {
           Price="Price : 4500"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmWHDaSRIwMLo0ewwCSp091J"
         />
         <Accordion
           id={6}
@@ -161,6 +175,7 @@ const Courses = ({navigation}) => {
           Price="Price : 1500"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmWLgXKeeqmmIIaY2HTX7yAl"
         />
         <Accordion
           id={7}
@@ -169,6 +184,7 @@ const Courses = ({navigation}) => {
           Price="Price : 1500"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmUXMWewmXwaARZrPaIksrEG"
         />
         <Accordion
           id={8}
@@ -177,6 +193,7 @@ const Courses = ({navigation}) => {
           Price="Price : 1500"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmWEbo5QBYLw4iSVFuf_sGZA"
         />
         <Accordion
           id={9}
@@ -185,6 +202,7 @@ const Courses = ({navigation}) => {
           Price="Price : 3000"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmUW02w9QuZKdSP3smmG9QI3"
         />
         <Accordion
           id={10}
@@ -193,6 +211,7 @@ const Courses = ({navigation}) => {
           Price="Price : 7500"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmVGpa1F-NDVTFXmiLyNhI07"
         />
         <Accordion
           id={11}
@@ -201,6 +220,7 @@ const Courses = ({navigation}) => {
           Price="Price : 4500"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmWZol1-RHpc3tIt2UE3ZFc2"
         />
         <Accordion
           id={12}
@@ -209,6 +229,7 @@ const Courses = ({navigation}) => {
           Price="Price : 3000"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmVSeMhMeLoX1AxjdnBaaBZL"
         />
         <Accordion
           id={13}
@@ -217,6 +238,7 @@ const Courses = ({navigation}) => {
           Price="Price : 3000"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmWuQrsygTSfae5OwG7qTyhn"
         />
         <Accordion
           id={14}
@@ -225,6 +247,7 @@ const Courses = ({navigation}) => {
           Price="Price : 3000"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmXH3LNHyYp1ZehQy4Y0tfR2"
         />
         <Accordion
           id={15}
@@ -233,6 +256,7 @@ const Courses = ({navigation}) => {
           Price="Price : 3000"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmUsxYPz0jUIqE4nn8xV5TMm"
         />
         <Accordion
           id={16}
@@ -241,6 +265,7 @@ const Courses = ({navigation}) => {
           Price="Price : 3000"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmXUrslrRFHmCxlBI6JMLVmH"
         />
         <Accordion
           id={17}
@@ -249,6 +274,7 @@ const Courses = ({navigation}) => {
           Price="Price : 500"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmVR0XAud2VF9mkoaUdpqYQS"
         />
         <Accordion
           id={18}
@@ -257,6 +283,7 @@ const Courses = ({navigation}) => {
           Price="Price : 2000"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmU_j_tW0NuhdmEpdupYKuDK"
         />
         <Accordion
           id={19}
@@ -265,6 +292,7 @@ const Courses = ({navigation}) => {
           Price="Price : 3000"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmXK1zwjZ8FBvIAvs-S1oFwa"
         />
         <Accordion
           id={20}
@@ -273,6 +301,7 @@ const Courses = ({navigation}) => {
           Price="Price : 5000"
           openAccordion={openAccordion}
           onToggle={handleToggle}
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmWdMPDdDObN4ssGMu134LSD"
         />
       </ScrollView>
     </ImageBackground>
