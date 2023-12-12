@@ -141,28 +141,30 @@ const CompletedProject = ({navigation}) => {
         <Accordion
           id={5}
           title="ریکارڈڈ  ویڈیو  کورسز"
-          Detail="جو طلبہ اکیڈمی کی لائیو کلاسز کسی مجبوری کی بنا پر نہیں لے سکتے ان کی سہولت کے لیے اکیڈمی نے ریکارڈ کورسز کا سلسلہ رکھا ہے جس میں درس نظامی کے طلبہ اور اساتذہ کے علمی رسوخ کے لیے مختلف فنون و علوم کو آسان فہم انداز میں ویڈیو ریکارڈ کورسز کے ذریعے سکھایا جاتا ہے، ان کورسز کا دورانیہ دو، تین اور چھ ماہ تک ہوتا ہے"
+          Detail="جو طلبہ اکیڈمی کی لائیو کلاسز کسی مجبوری کی بنا پر نہیں لے سکتے ان کی سہولت کے لیے اکیڈمی نے ریکارڈ کورسز کا سلسلہ رکھا ہے جس میں درس نظامی کے طلبہ اور اساتذکے علمی رسوخ کے لیے مختلف فنون و علوم کو آسان فہم انداز میں ویڈیو ریکارڈ کورسز کے ذریعے سکھایا جاتا ہے، ان کورسز کا دورانیہ دو، تین اور چھ ماہ تک ہوتا ہے"
           openAccordion={openAccordion}
           onToggle={handleToggle}
         />
         <Accordion
           id={6}
           title="آن  لائن  تعلیمی  ورکشاپ"
-          Detail="Detail : 24"
+          Detail="مختلف مواقع اور اہم امور کے سلسلے میں تربیتی ورکشاپ کا اہتمام کیا جاتا ہے جو          یوٹیوب چینل اور زوم ایپ کے ذریعے نشر ہوتا ہے جس میں علمی ترقی ، راہ علم کی رکاوٹیں اور علماء
+          کی ذمہ داریاں، معاشرتی واخلاقی پہلووں پر خصوصی توجہ دی جاتی ہے"
           openAccordion={openAccordion}
           onToggle={handleToggle}
         />
         <Accordion
           id={7}
           title="تحریری  نوٹس"
-          Detail="Detail : 44"
+          Detail="بہت سے طلبہ ویڈیو اور آڈیو کی بجائے تحریری منبع کو پسند کرتے ہیں ان کے  لیے تحریر کے ذریعے حصول علم آسان اور مفید ہوتا ہے ایسے طلبہ کی سہولت کے لیے اکیڈمی نے مختلف
+          فنون و اسباق کے نوٹس تیاری کیے ہیں جن کے ذریعے تشنگان علم کی سیرابی کا سامان ہوتا ہے"
           openAccordion={openAccordion}
           onToggle={handleToggle}
         />
         <Accordion
           id={8}
           title="کتب"
-          Detail="Detail : 16"
+          Detail="ادارے کے تحت تحریر و تصنیف کا کام بھی جاری ہے جس میں کتب ورسائل پر کام جاری ہے ایک کتاب بنام ازبار النحو  پبلش ہو کر مارکیٹ میں آچکی ہے جبکہ آسان اصول فقہ، آسان فہم عقائد اور مختلف کتب پر حواشی کا سلسلہ ہے عنقریب یہ کتب بھی منظر عام پر آجائیں گی    ان شاء اللہ"
           openAccordion={openAccordion}
           onToggle={handleToggle}
         />
@@ -185,12 +187,13 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(5),
     textAlign: 'center',
     // marginVertical:responsiveHeight(),
-    marginTop: responsiveHeight(3),
-    // marginBottom: responsiveHeight(2),
+    marginTop: responsiveHeight(4),
+    marginBottom: responsiveHeight(3),
     textTransform: 'uppercase',
     letterSpacing: 2,
   },
   TitleCollapse: {
+    // justifyContent:'center',
     alignItems: 'center',
     // paddingVertical: responsiveHeight(0.5),
     // paddingTop:responsiveHeight(0.25),
@@ -200,6 +203,8 @@ const styles = StyleSheet.create({
     marginVertical: responsiveHeight(2),
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+    // marginTop:re
+    // backgroundColor:'red'
   },
   TitleText: {
     color: '#fff',
