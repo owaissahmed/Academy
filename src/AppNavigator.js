@@ -7,10 +7,11 @@ import HomeTuition from './Screens/HomeTuition';
 import DarseNizamiForm from './Screens/DarseNizamiForm';
 import Courses from './Screens/Courses';
 import About from './Screens/About';
+import CompletedProject from './Screens/CompletedProject';
+import PendingProjects from './Screens/PendingProjects';
 import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import CompletedProject from './Screens/CompletedProject';
 
 const Stack = createStackNavigator();
 
@@ -62,6 +63,11 @@ export default function AppNavigator() {
           <Stack.Screen
             name="CompletedProject"
             component={CompletedProject}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="PendingProjects"
+            component={PendingProjects}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

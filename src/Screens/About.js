@@ -29,6 +29,9 @@ const About = ({navigation}) => {
 function Completed() {
   navigation.navigate('CompletedProject')
 }
+function Pending() {
+  navigation.navigate('PendingProjects')
+}
 
   return (
     <View>
@@ -60,7 +63,7 @@ function Completed() {
               پایہ   تکمیل   تک   پہنچنے   والے   منصوبے
               </Text>
             </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={Pending}>
               <Text allowFontScaling={false} style={styles.buttontext}>
               مستقبل  قریب  کے  منصوبے
               </Text>
