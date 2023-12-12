@@ -24,7 +24,12 @@ const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 import {useNavigation} from '@react-navigation/native';
 
-const About = ({navgation}) => {
+const About = ({navigation}) => {
+
+function Completed() {
+  navigation.navigate('CompletedProject')
+}
+
   return (
     <View>
       <ImageBackground
@@ -50,7 +55,7 @@ const About = ({navgation}) => {
           delay={100}
           animation="fadeInUp"
           style={styles.squarediv}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={Completed}>
               <Text allowFontScaling={false} style={styles.buttontext}>
               پایہ   تکمیل   تک   پہنچنے   والے   منصوبے
               </Text>

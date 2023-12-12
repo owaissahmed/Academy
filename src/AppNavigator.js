@@ -10,6 +10,7 @@ import About from './Screens/About';
 import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
+import CompletedProject from './Screens/CompletedProject';
 
 const Stack = createStackNavigator();
 
@@ -56,6 +57,11 @@ export default function AppNavigator() {
           <Stack.Screen
             name="About"
             component={About}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="CompletedProject"
+            component={CompletedProject}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
