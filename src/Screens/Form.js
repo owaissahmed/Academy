@@ -150,7 +150,7 @@ const Form = ({navigation}) => {
           Country: countryName,
         });
 
-        const recipient = 'muhammadowais25122003@gmail.com'; // Replace with the recipient's email address
+        const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
         const subject = name;
         const body = `${buttonText} \n ${countryName} \n ${formattedValue}`;
 
