@@ -9,6 +9,7 @@ import Courses from './Screens/Courses';
 import About from './Screens/About';
 import CompletedProject from './Screens/CompletedProject';
 import PendingProjects from './Screens/PendingProjects';
+import Account from './Screens/Account';
 import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -68,6 +69,11 @@ export default function AppNavigator() {
           <Stack.Screen
             name="PendingProjects"
             component={PendingProjects}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Account"
+            component={Account}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
