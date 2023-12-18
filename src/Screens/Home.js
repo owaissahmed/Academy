@@ -46,7 +46,7 @@ export default function Home({route}) {
   }, [showAlert]);
 
   function Internet() {
-    Alert.alert('⚫ Warning', 'No INternet Connection!');
+    Alert.alert('⚫ Warning', 'No Internet Connection!');
   }
 
   function Youtube() {
