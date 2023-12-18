@@ -60,6 +60,12 @@ export default function Home({route}) {
       navigation.navigate('Courses');
     } else Internet();
   }
+  function UserAccount() {
+    navigation.navigate('UserAccount');
+  }
+  function Admin() {
+    navigation.navigate('Admin');
+  }
 
   const OnlineTuition = () => {
     if (isConnected == false) {
@@ -93,11 +99,14 @@ export default function Home({route}) {
         style={styles.background}
         source={require('../Images/background.jpg')}>
         <View style={styles.navbar}>
-          <Image style={styles.logo} source={require('../Images/round.png')} />
-          <Image
-            style={styles.account}
-            source={require('../Images/account.png')}
-          />
+        <TouchableOpacity onPress={Admin}>
+          <Image style={styles.logo} source={require('../Images/round.png')} /></TouchableOpacity>
+          <TouchableOpacity onPress={UserAccount}>
+            <Image
+              style={styles.account}
+              source={require('../Images/account.png')}
+            />
+          </TouchableOpacity>
         </View>
         <View style={styles.submain}>
           <Animatable.View
@@ -169,7 +178,29 @@ export default function Home({route}) {
                 source={require('../Images/quran.png')}
               />
               <Text allowFontScaling={false} style={styles.squaretext__}>
-                DARS-e-NIZAMI COURSE
+              DARS-e-NIZAMI COURSE
+              </Text>
+              </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={DarseNizamiForm}>
+                <View style={styles.square}>
+                  <Image
+                    style={styles.quran}
+                    source={require('../Images/quran.png')}
+                  />
+                  <Text allowFontScaling={false} style={styles.squaretext__}> 
+                    UPCOMING COURSES
+                  </Text>
+                </View>
+              </TouchableOpacity>
+          <TouchableOpacity onPress={About}>
+            <View style={styles.square}>
+              <Image
+                style={styles.teacher}
+                source={require('../Images/teacher.png')}
+              />
+              <Text allowFontScaling={false} style={styles.squaretext}>
+              FOR TEACHERS
               </Text>
             </View>
           </TouchableOpacity>
@@ -201,7 +232,7 @@ const styles = StyleSheet.create({
     width: responsiveWidth(100),
     // height: responsiveHeight(10),
     // backgroundColor: 'white',
-    marginTop: responsiveHeight(-4),
+    marginTop: responsiveHeight(1),
     // padding: 10,
     paddingHorizontal: responsiveWidth(4),
     display: 'flex',
@@ -223,9 +254,9 @@ const styles = StyleSheet.create({
     // flexDirection:'row',
     justifyContent: 'center',
     alignItems: 'center',
-     height: responsiveHeight(16),
+    height: responsiveHeight(16),
     //  width: responsiveWidth(95),
-    marginTop: responsiveHeight(-4),
+    marginTop: responsiveHeight(-2),
   },
   squarediv: {
     display: 'flex',
@@ -233,7 +264,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-evenly',
     width: responsiveWidth(95),
-    marginTop: responsiveHeight(-6),
+    // marginTop: responsiveHeight(-6),
   },
   rectangletext: {
     fontFamily: 'mushaf',
@@ -243,6 +274,7 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(8.5),
     textAlign: 'center',
     // backgroundColor: 'pink',
+    marginBottom: responsiveHeight(-1),
   },
   rectangletext_: {
     fontFamily: 'mushaf',
@@ -251,38 +283,45 @@ const styles = StyleSheet.create({
     color: '#2e4c60',
     fontSize: responsiveFontSize(4.5),
     textAlign: 'center',
-    marginBottom: responsiveHeight(3),
+    // paddingBottom:responsiveHeight(-3),
+    marginBottom: responsiveHeight(2),
     // backgroundColor: 'yellow',
   },
   squaretext: {
-    fontSize: responsiveScreenFontSize(2.35),
+    fontSize: responsiveScreenFontSize(2),
     color: '#2e4c60',
     textAlign: 'center',
     fontFamily: 'good',
     marginTop: responsiveHeight(1),
+    // marginTop: responsiveHeight(0.5),
   },
   squaretext__: {
     fontSize: responsiveScreenFontSize(2),
     color: '#2e4c60',
     textAlign: 'center',
     fontFamily: 'good',
-    marginTop: responsiveHeight(1),
+    marginTop: responsiveHeight(0.5),
     lineHeight: 20,
   },
   square: {
-    marginTop: responsiveHeight(3),
+    marginTop: responsiveHeight(1.5),
     borderColor: '#2e4c60',
     borderWidth: 1.5,
-    height: responsiveHeight(19),
-    width: responsiveWidth(39),
+    //  backgroundColor: 'yellow',
+    height: responsiveHeight(16),
+    width: responsiveWidth(40),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
     marginHorizontal: responsiveWidth(3),
+    marginBottom:responsiveHeight(1)
   },
   info: {
     height: responsiveHeight(8),
     width: responsiveWidth(10),
+    // marginBottom: responsiveHeight(0.5),
+    // marginTop: responsiveHeight(0.5),
+    marginVertical:responsiveHeight(0.75)
   },
   quran: {
     height: responsiveHeight(8),
@@ -300,9 +339,14 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(1),
   },
   books: {
-    height: responsiveHeight(9),
-    width: responsiveWidth(20),
+    height: responsiveHeight(8),
+    width: responsiveWidth(19),
     marginTop: responsiveHeight(1),
+  },
+  teacher: {
+    height: responsiveHeight(9.5),
+    width: responsiveWidth(26),
+    // marginTop: responsiveHeight(1),
   },
   youtube: {
     height: responsiveHeight(9),

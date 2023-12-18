@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const Account = () => {
+const Admin = ({navigation}) => {
   return (
     <View>
-      <Text>Account</Text>
+      <Text>Admin</Text>
     </View>
   )
 }
 
-export default Account
+export default Admin
 
 const styles = StyleSheet.create({})
