@@ -92,6 +92,13 @@ export default function Home({route}) {
         resizeMode="cover"
         style={styles.background}
         source={require('../Images/background.jpg')}>
+        <View style={styles.navbar}>
+          <Image style={styles.logo} source={require('../Images/round.png')} />
+          <Image
+            style={styles.account}
+            source={require('../Images/account.png')}
+          />
+        </View>
         <View style={styles.submain}>
           <Animatable.View
             duration={2000}
@@ -190,6 +197,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
+  navbar: {
+    width: responsiveWidth(100),
+    // height: responsiveHeight(10),
+    // backgroundColor: 'white',
+    marginTop: responsiveHeight(-4),
+    // padding: 10,
+    paddingHorizontal: responsiveWidth(4),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  account: {
+    height: responsiveHeight(4.5),
+    width: responsiveWidth(9),
+  },
+  logo: {
+    height: responsiveHeight(4.5),
+    width: responsiveWidth(9),
+  },
+  rectangle: {
+    // backgroundColor: 'orange',
+    display: 'flex',
+    // flexDirection:'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+     height: responsiveHeight(16),
+    //  width: responsiveWidth(95),
+    marginTop: responsiveHeight(-4),
+  },
   squarediv: {
     display: 'flex',
     flexDirection: 'row',
@@ -200,18 +237,22 @@ const styles = StyleSheet.create({
   },
   rectangletext: {
     fontFamily: 'mushaf',
+    height: responsiveHeight(12.5),
     textTransform: 'uppercase',
     color: '#2e4c60',
     fontSize: responsiveFontSize(8.5),
     textAlign: 'center',
+    // backgroundColor: 'pink',
   },
   rectangletext_: {
     fontFamily: 'mushaf',
+    height: responsiveHeight(7),
     textTransform: 'uppercase',
     color: '#2e4c60',
     fontSize: responsiveFontSize(4.5),
     textAlign: 'center',
-    marginTop: responsiveHeight(-3),
+    marginBottom: responsiveHeight(3),
+    // backgroundColor: 'yellow',
   },
   squaretext: {
     fontSize: responsiveScreenFontSize(2.35),
