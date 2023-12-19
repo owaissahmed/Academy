@@ -185,8 +185,8 @@ export default function Home({route}) {
               <TouchableOpacity onPress={DarseNizamiForm}>
                 <View style={styles.square}>
                   <Image
-                    style={styles.quran}
-                    source={require('../Images/quran.png')}
+                    style={styles.comin}
+                    source={require('../Images/coming.png')}
                   />
                   <Text allowFontScaling={false} style={styles.squaretext__}> 
                     UPCOMING COURSES
@@ -326,6 +326,11 @@ const styles = StyleSheet.create({
   quran: {
     height: responsiveHeight(8),
     width: responsiveWidth(24),
+    marginTop: responsiveHeight(1),
+  },
+  comin: {
+    height: responsiveHeight(8),
+    width: responsiveWidth(28),
     marginTop: responsiveHeight(1),
   },
   online: {
