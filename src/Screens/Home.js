@@ -98,7 +98,6 @@ export default function Home({route}) {
     setModalVisible(!isModalVisible);
   };
   const openModal = () => {
-    console.log('first');
     setModalVisible(true);
   };
 
@@ -117,32 +116,32 @@ export default function Home({route}) {
           backdropTransitionInTiming={700}
           backdropTransitionOutTiming={700}>
           <View style={styles.modal}>
-          <ImageBackground
-          resizeMode="cover"
-          style={styles.modalBackground}
-          source={require('../Images/background.jpg')}>
-            <Image
-              style={styles.modalImage}
-              source={require('../Images/logo.png')}
-            />
-            <TextInput
-              allowFontScaling={false}
-              style={styles.login}
-              placeholder="Enter Password"
-              placeholderTextColor={'grey'}
-            />
-            <View style={styles.ModalButtonView}>
-              <TouchableOpacity style={styles.Btn} onPress={closeModal}>
-                <Text allowFontScaling={false} style={styles.BtnText}>
-                  Close
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.Btn}>
-                <Text allowFontScaling={false} style={styles.BtnText}>
-                  Next
-                </Text>
-              </TouchableOpacity>
-            </View>
+            <ImageBackground
+              resizeMode="cover"
+              style={styles.modalBackground}
+              source={require('../Images/background.jpg')}>
+              <Image
+                style={styles.modalImage}
+                source={require('../Images/logo.png')}
+              />
+              <TextInput
+                allowFontScaling={false}
+                style={styles.login}
+                placeholder="Enter Password"
+                placeholderTextColor={'grey'}
+              />
+              <View style={styles.ModalButtonView}>
+                <TouchableOpacity style={styles.Btn} onPress={closeModal}>
+                  <Text allowFontScaling={false} style={styles.BtnText}>
+                    Close
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.Btn}>
+                  <Text allowFontScaling={false} style={styles.BtnText}>
+                    Next
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </ImageBackground>
           </View>
         </Modal>
@@ -280,13 +279,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
- 
+
   navbar: {
     width: responsiveWidth(100),
-    // height: responsiveHeight(10),
-    // backgroundColor: 'white',
     marginTop: responsiveHeight(1),
-    // padding: 10,
     paddingHorizontal: responsiveWidth(4),
     display: 'flex',
     flexDirection: 'row',
@@ -302,13 +298,10 @@ const styles = StyleSheet.create({
     width: responsiveWidth(9),
   },
   rectangle: {
-    // backgroundColor: 'orange',
     display: 'flex',
-    // flexDirection:'row',
     justifyContent: 'center',
     alignItems: 'center',
     height: responsiveHeight(16),
-    //  width: responsiveWidth(95),
     marginTop: responsiveHeight(-2),
   },
   squarediv: {
@@ -317,7 +310,6 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-evenly',
     width: responsiveWidth(95),
-    // marginTop: responsiveHeight(-6),
   },
   rectangletext: {
     fontFamily: 'mushaf',
@@ -326,7 +318,6 @@ const styles = StyleSheet.create({
     color: '#2e4c60',
     fontSize: responsiveFontSize(8.5),
     textAlign: 'center',
-    // backgroundColor: 'pink',
     marginBottom: responsiveHeight(-1),
   },
   rectangletext_: {
@@ -336,9 +327,7 @@ const styles = StyleSheet.create({
     color: '#2e4c60',
     fontSize: responsiveFontSize(4.5),
     textAlign: 'center',
-    // paddingBottom:responsiveHeight(-3),
     marginBottom: responsiveHeight(2),
-    // backgroundColor: 'yellow',
   },
   squaretext: {
     fontSize: responsiveScreenFontSize(2),
@@ -346,7 +335,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'good',
     marginTop: responsiveHeight(1),
-    // marginTop: responsiveHeight(0.5),
   },
   squaretext__: {
     fontSize: responsiveScreenFontSize(2),
@@ -360,7 +348,6 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(1.5),
     borderColor: '#2e4c60',
     borderWidth: 1.5,
-    //  backgroundColor: 'yellow',
     height: responsiveHeight(16),
     width: responsiveWidth(40),
     justifyContent: 'center',
@@ -372,8 +359,6 @@ const styles = StyleSheet.create({
   info: {
     height: responsiveHeight(8),
     width: responsiveWidth(10),
-    // marginBottom: responsiveHeight(0.5),
-    // marginTop: responsiveHeight(0.5),
     marginVertical: responsiveHeight(0.75),
   },
   quran: {
@@ -404,28 +389,22 @@ const styles = StyleSheet.create({
   teacher: {
     height: responsiveHeight(9.5),
     width: responsiveWidth(26),
-    // marginTop: responsiveHeight(1),
   },
   youtube: {
     height: responsiveHeight(9),
     width: responsiveWidth(20),
     marginTop: responsiveHeight(0.5),
   },
- 
+
   modalBackground: {
     width: responsiveWidth(90),
     height: responsiveHeight(30),
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    // borderRadius: 20,
-    // marginVertical: responsiveHeight(1),
   },
   modal: {
     alignItems: 'center',
     justifyContent: 'space-between',
-    // backgroundColor: 'white',
-    // width: responsiveWidth(90),
-    // height: responsiveHeight(32),
     borderRadius: 20,
   },
   login: {
@@ -436,9 +415,9 @@ const styles = StyleSheet.create({
     borderColor: '#36454F',
     color: '#36454F',
     borderWidth: 1.5,
-    fontFamily:'good',
-    borderRadius:6,
-    letterSpacing:1,
+    fontFamily: 'good',
+    borderRadius: 6,
+    letterSpacing: 1,
     marginTop: responsiveHeight(0.5),
     fontSize: responsiveFontSize(2),
   },
@@ -448,16 +427,12 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(1),
   },
   ModalButtonView: {
-    // height: responsiveHeight(10),
-    // backgroundColor: 'yellow',
     marginTop: responsiveHeight(1),
-    // padding: 10,
-    // paddingHorizontal: responsiveWidth(4),
+
     width: responsiveWidth(85),
-    // height: responsiveHeight(10),
-    // backgroundColor: 'white',
+
     marginBottom: responsiveHeight(1),
-    // padding: 10,
+
     paddingHorizontal: responsiveWidth(4),
     display: 'flex',
     flexDirection: 'row',
@@ -468,8 +443,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#36454F',
     color: 'white',
     padding: 6,
-    // marginTop: responsiveHeight(3),
-    // marginBottom: responsiveHeight(2),
     borderRadius: 8,
     width: responsiveWidth(30),
   },
