@@ -18,6 +18,7 @@ import {
   responsiveWidth,
   responsiveScreenFontSize,
 } from 'react-native-responsive-dimensions';
+import Modal from 'react-native-modal';
 import NetInfo from '@react-native-community/netinfo';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
@@ -28,6 +29,7 @@ export default function Home({route}) {
   const [isConnected, setIsConnected] = useState(false);
   const {showAlert} = useAppContext();
   const navigation = useNavigation();
+  const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -92,15 +94,65 @@ export default function Home({route}) {
     navigation.navigate('About');
   };
 
+  const closeModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+  const openModal = () => {
+    console.log('first');
+    setModalVisible(true);
+  };
+
   return (
     <View>
       <ImageBackground
         resizeMode="cover"
         style={styles.background}
         source={require('../Images/background.jpg')}>
+        <Modal
+          isVisible={isModalVisible}
+          animationIn="zoomIn"
+          animationOut="zoomOut"
+          animationInTiming={700}
+          animationOutTiming={700}
+          backdropTransitionInTiming={700}
+          backdropTransitionOutTiming={700}>
+          <View style={styles.modal}>
+          <ImageBackground
+          resizeMode="cover"
+          style={styles.modalBackground}
+          source={require('../Images/background.jpg')}>
+            <Image
+              style={styles.modalImage}
+              source={require('../Images/logo.png')}
+            />
+            <TextInput
+              allowFontScaling={false}
+              style={styles.login}
+              placeholder="Enter Password"
+              placeholderTextColor={'grey'}
+            />
+            <View style={styles.ModalButtonView}>
+              <TouchableOpacity style={styles.Btn} onPress={closeModal}>
+                <Text allowFontScaling={false} style={styles.BtnText}>
+                  Close
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.Btn}>
+                <Text allowFontScaling={false} style={styles.BtnText}>
+                  Next
+                </Text>
+              </TouchableOpacity>
+            </View>
+            </ImageBackground>
+          </View>
+        </Modal>
         <View style={styles.navbar}>
-        <TouchableOpacity onPress={Admin}>
-          <Image style={styles.logo} source={require('../Images/round.png')} /></TouchableOpacity>
+          <TouchableOpacity onPress={Admin}>
+            <Image
+              style={styles.logo}
+              source={require('../Images/round.png')}
+            />
+          </TouchableOpacity>
           <TouchableOpacity onPress={UserAccount}>
             <Image
               style={styles.account}
@@ -178,29 +230,29 @@ export default function Home({route}) {
                 source={require('../Images/quran.png')}
               />
               <Text allowFontScaling={false} style={styles.squaretext__}>
-              DARS-e-NIZAMI COURSE
+                DARS-e-NIZAMI COURSE
               </Text>
-              </View>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={DarseNizamiForm}>
-                <View style={styles.square}>
-                  <Image
-                    style={styles.comin}
-                    source={require('../Images/coming.png')}
-                  />
-                  <Text allowFontScaling={false} style={styles.squaretext__}> 
-                    UPCOMING COURSES
-                  </Text>
-                </View>
-              </TouchableOpacity>
-          <TouchableOpacity onPress={About}>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={DarseNizamiForm}>
+            <View style={styles.square}>
+              <Image
+                style={styles.comin}
+                source={require('../Images/coming.png')}
+              />
+              <Text allowFontScaling={false} style={styles.squaretext__}>
+                UPCOMING COURSES
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={openModal}>
             <View style={styles.square}>
               <Image
                 style={styles.teacher}
                 source={require('../Images/teacher.png')}
               />
               <Text allowFontScaling={false} style={styles.squaretext}>
-              FOR TEACHERS
+                FOR TEACHERS
               </Text>
             </View>
           </TouchableOpacity>
@@ -228,6 +280,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
+ 
   navbar: {
     width: responsiveWidth(100),
     // height: responsiveHeight(10),
@@ -314,14 +367,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 12,
     marginHorizontal: responsiveWidth(3),
-    marginBottom:responsiveHeight(1)
+    marginBottom: responsiveHeight(1),
   },
   info: {
     height: responsiveHeight(8),
     width: responsiveWidth(10),
     // marginBottom: responsiveHeight(0.5),
     // marginTop: responsiveHeight(0.5),
-    marginVertical:responsiveHeight(0.75)
+    marginVertical: responsiveHeight(0.75),
   },
   quran: {
     height: responsiveHeight(8),
@@ -357,5 +410,74 @@ const styles = StyleSheet.create({
     height: responsiveHeight(9),
     width: responsiveWidth(20),
     marginTop: responsiveHeight(0.5),
+  },
+ 
+  modalBackground: {
+    width: responsiveWidth(90),
+    height: responsiveHeight(30),
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    // borderRadius: 20,
+    // marginVertical: responsiveHeight(1),
+  },
+  modal: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    // backgroundColor: 'white',
+    // width: responsiveWidth(90),
+    // height: responsiveHeight(32),
+    borderRadius: 20,
+  },
+  login: {
+    height: responsiveHeight(6),
+    width: responsiveWidth(80),
+    backgroundColor: '#FBFCF8',
+    padding: 8,
+    borderColor: '#36454F',
+    color: '#36454F',
+    borderWidth: 1.5,
+    fontFamily:'good',
+    borderRadius:6,
+    letterSpacing:1,
+    marginTop: responsiveHeight(0.5),
+    fontSize: responsiveFontSize(2),
+  },
+  modalImage: {
+    height: responsiveHeight(11),
+    width: responsiveWidth(24),
+    marginTop: responsiveHeight(1),
+  },
+  ModalButtonView: {
+    // height: responsiveHeight(10),
+    // backgroundColor: 'yellow',
+    marginTop: responsiveHeight(1),
+    // padding: 10,
+    // paddingHorizontal: responsiveWidth(4),
+    width: responsiveWidth(85),
+    // height: responsiveHeight(10),
+    // backgroundColor: 'white',
+    marginBottom: responsiveHeight(1),
+    // padding: 10,
+    paddingHorizontal: responsiveWidth(4),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  Btn: {
+    backgroundColor: '#36454F',
+    color: 'white',
+    padding: 6,
+    // marginTop: responsiveHeight(3),
+    // marginBottom: responsiveHeight(2),
+    borderRadius: 8,
+    width: responsiveWidth(30),
+  },
+  BtnText: {
+    color: '#fff',
+    fontWeight: '600',
+    letterSpacing: 0.7,
+    textAlign: 'center',
+    fontSize: responsiveFontSize(2.25),
   },
 });
