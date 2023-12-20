@@ -11,6 +11,7 @@ import CompletedProject from './Screens/CompletedProject';
 import PendingProjects from './Screens/PendingProjects';
 import UserAccount from './Screens/UserAccount';
 import Admin from './Screens/Admin';
+import TeacherForm from './Screens/TeacherForm';
 import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -80,6 +81,11 @@ export default function AppNavigator() {
           <Stack.Screen
             name="Admin"
             component={Admin}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="TeacherForm"
+            component={TeacherForm}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

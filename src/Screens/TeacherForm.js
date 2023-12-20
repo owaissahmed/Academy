@@ -25,14 +25,16 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-// import { useAppContext } from './AppContext';
-import { useAppContext } from './AppContext';
+import {useRoute} from '@react-navigation/native';
+import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
-import { useRoute } from '@react-navigation/native';
-const DarseNizamiForm = ({navigation}) => {
+
+const TeacherForm = ({navigation}) => {
   const [name, setname] = useState('');
   const [father, setfather] = useState('');
+  const [Jamia, setJamia] = useState('');
+  const [Experience, setExperience] = useState('');
   const [course, setcourse] = useState('');
   const [value, setValue] = useState('');
   const [country, setCountry] = useState('Pakistan');
@@ -46,8 +48,8 @@ const DarseNizamiForm = ({navigation}) => {
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-    //   console.log('Connection type', state.type);
-    //   console.log('Is connected?', state.isConnected);
+      // console.log('Connection type', state.type);
+      // console.log('Is connected?', state.isConnected);
       setIsConnected(state.isConnected);
     });
 
@@ -62,13 +64,20 @@ const DarseNizamiForm = ({navigation}) => {
   const FatherChange = newfather => {
     setfather(newfather);
   };
+  const JamiaChange = newJamia => {
+    setJamia(newJamia);
+  };
+  const ExperienceChange = newExperience => {
+    setExperience(newExperience);
+  };
+
   const handleOnCountryChange = country => {
     setCountry(country);
   };
 
-  const route = useRoute();
-  const buttonText = route.params?.TextDarseNizami || 'Dars-e-Nizami';
   const countryName = country?.name || 'Pakistan';
+
+
   function show() {
     showMessage({
       message: '⚪️ Dont forget to send email after clicking on "SAVE" button',
@@ -111,7 +120,7 @@ const DarseNizamiForm = ({navigation}) => {
     });
   }
 
-  const { setShowAlert } = useAppContext();
+  const {setShowAlert} = useAppContext();
 
   const GoBackHome = () => {
     // Set the showAlert function in the context
@@ -122,14 +131,10 @@ const DarseNizamiForm = ({navigation}) => {
   };
 
   const Check = async () => {
-    if (
-      name.trim() === '' ||
-      father.trim() === '' ||
-      value === ''
-    ) {
-     EmptyInput()
-    } else if (isConnected == false){
-      Internet()
+    if (name.trim() === '' || father.trim() === '' || Jamia.trim() === '' || Experience.trim() ===' ' || value === '') {
+      EmptyInput();
+    } else if (isConnected == false) {
+      Internet();
     } else {
       setLoading(true);
       setVisible(true);
@@ -138,35 +143,35 @@ const DarseNizamiForm = ({navigation}) => {
         const checkValid = phoneInput.current?.isValidNumber(value);
         setValid(checkValid ? checkValid : false);
         setCountryCode(phoneInput.current?.getCountryCode() || '');
-        const collectionRef = firestore().collection('users').add({
+        const collectionRef = firestore().collection('teachers').add({
           Name: name,
           Fathername: father,
-          Course: 'Dars-e-Nizami',
+          Jamia:Jamia,
+          Experience:Experience,
           Phone: formattedValue,
           Country: countryName,
-          CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          DayTime: firebase.firestore.FieldValue.serverTimestamp(),
         });
+
         const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
         const subject = name;
-        const body = `Dars-e-Nizami \n ${countryName}\n ${formattedValue}`;
+        const body = `Teacher \n ${Experience} \n ${Jamia} \n ${countryName} \n ${formattedValue}`;
 
-        // Construct the mailto URL
-        
         const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
           subject,
         )}&body=${encodeURIComponent(body)}`;
 
-        // Open the default email app
         Linking.openURL(mailtoUrl).catch(err =>
           console.error('Error opening email app:', err),
         );
         navigation.replace('Home');
         setTimeout(() => {
-          GoBackHome ()
+          GoBackHome();
         }, 1000);
       }, 5000);
     }
   };
+
   return (
     <ImageBackground
       resizeMode="cover"
@@ -178,13 +183,14 @@ const DarseNizamiForm = ({navigation}) => {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            // marginBottom:responsiveHeight(5),
             backgroundColor: 'rgba(0, 0, 0, 0.100)',
           }}>
           {loading ? (
             <ActivityIndicator size="larger" color="black" />
           ) : (
-            <Text  allowFontScaling={false} style={{color: '#ffffff'}}>Loading...</Text>
+            <Text allowFontScaling={false} style={{color: '#ffffff'}}>
+              Loading...
+            </Text>
           )}
         </View>
       </Modal>
@@ -193,7 +199,7 @@ const DarseNizamiForm = ({navigation}) => {
       </>
       <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
         <SafeAreaView style={styles.submain}>
-        <Image style={styles.logo} source={require('../Images/logo.png')}/>
+          <Image style={styles.logo} source={require('../Images/logo.png')} />
           <TextInput
             onChangeText={NameChange}
             allowFontScaling={false}
@@ -208,7 +214,20 @@ const DarseNizamiForm = ({navigation}) => {
             placeholder="Enter Your Father Name"
             placeholderTextColor={'grey'}
           />
-          <Text  allowFontScaling={false} style={styles.default}>{buttonText}</Text>
+          <TextInput
+            onChangeText={JamiaChange}
+            allowFontScaling={false}
+            style={styles.password}
+            placeholder="Enter Your Jamia Name"
+            placeholderTextColor={'grey'}
+          />
+          <TextInput
+            onChangeText={ExperienceChange}
+            allowFontScaling={false}
+            style={styles.password}
+            placeholder="Enter Your Teaching Experience"
+            placeholderTextColor={'grey'}
+          />
           <View>
             <PhoneInput
               textInputProps={{
@@ -240,8 +259,8 @@ const DarseNizamiForm = ({navigation}) => {
                 fontWeight: 'normal',
                 textAlignVertical: 'center',
               }}
-              ref={phoneInput}
               onChangeCountry={handleOnCountryChange}
+              ref={phoneInput}
               defaultValue={value}
               defaultCode="PK"
               layout="first"
@@ -255,13 +274,13 @@ const DarseNizamiForm = ({navigation}) => {
               countryPickerProps={{withAlphaFilter: true}}
             />
           </View>
-          <Text  allowFontScaling={false} style={styles.default}>
-          {country && country === 'Pakistan'
-            ? 'Pakistan'
-            : country
-            ? country.name
-            : ''}
-        </Text>
+          <Text allowFontScaling={false} style={styles.default}>
+            {country && country === 'Pakistan'
+              ? 'Pakistan'
+              : country
+              ? country.name
+              : ''}
+          </Text>
           <>
             <TouchableOpacity style={styles.button} onPress={Check}>
               <Text allowFontScaling={false} style={styles.buttontext}>
@@ -279,10 +298,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  logo:{
-  height: responsiveHeight(15),
-  width: responsiveWidth(40),
-  marginTop: responsiveHeight(2),
+  logo: {
+    height: responsiveHeight(15),
+    width: responsiveWidth(40),
+    marginTop: responsiveHeight(2),
   },
   phoneinput: {
     justifyContent: 'center',
@@ -348,7 +367,24 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(3),
     backgroundColor: '#FBFCF8',
     fontSize: responsiveFontSize(2),
-    textAlignVertical:"center"
+    textAlignVertical: 'center',
+  },
+  defaultCourse: {
+    height: responsiveHeight(6),
+    width: responsiveWidth(80),
+    paddingHorizontal: 6,
+    paddingBottom: 4,
+    // paddingVertical:-10,
+    color: '#36454F',
+    borderColor: '#36454F',
+    borderWidth: 1.5,
+    marginTop: responsiveHeight(3),
+    backgroundColor: '#FBFCF8',
+    fontSize: responsiveFontSize(2.8),
+    textAlignVertical: 'center',
+    fontFamily: 'mushaf',
+    // backgroundColor:'red',
+    // textAlignVertical:'center'
   },
   button: {
     backgroundColor: '#36454F',
@@ -366,9 +402,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: responsiveFontSize(2.25),
   },
-  highlight: {
-    fontWeight: '700',
-  },
 });
 
-export default DarseNizamiForm;
+export default TeacherForm;

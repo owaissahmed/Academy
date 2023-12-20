@@ -99,8 +99,11 @@ export default function Home({route}) {
     navigation.navigate('About');
   };
   const CheckPassword = () => {
-    if (name === '1234') {
-      navigation.navigate('Admin');
+    if (name === '1') {
+      setModalVisible(!isModalVisible);
+      setTimeout(() => {
+        navigation.navigate('TeacherForm');
+      }, 1000);
     } else {
       Alert.alert('⚫ Warning', 'Wrong Password!');
     }
@@ -110,7 +113,11 @@ export default function Home({route}) {
     setModalVisible(!isModalVisible);
   };
   const openModal = () => {
-    setModalVisible(true);
+    if (isConnected == false) {
+      Internet();
+    } else {
+      setModalVisible(true);
+    }
   };
 
   return (
@@ -249,7 +256,7 @@ export default function Home({route}) {
           <TouchableOpacity onPress={DarseNizamiForm}>
             <View style={styles.square}>
               <Image
-                style={styles.comin}
+                style={styles.coming}
                 source={require('../Images/coming.png')}
               />
               <Text allowFontScaling={false} style={styles.squaretext__}>
@@ -379,10 +386,10 @@ const styles = StyleSheet.create({
     width: responsiveWidth(24),
     marginTop: responsiveHeight(1),
   },
-  comin: {
-    height: responsiveHeight(8),
-    width: responsiveWidth(55),
-    marginTop: responsiveHeight(1),
+  coming: {
+    height: responsiveHeight(9),
+    width: responsiveWidth(30),
+    // marginTop: responsiveHeight(0.75),
   },
   online: {
     height: responsiveHeight(9),

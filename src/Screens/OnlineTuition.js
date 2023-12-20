@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import firestore from '@react-native-firebase/firestore';
+import firebase from '@react-native-firebase/app';
 import NetInfo from '@react-native-community/netinfo';
 import {
   responsiveFontSize,
@@ -138,6 +139,7 @@ const OnlineTuition = ({navigation}) => {
           Course: 'Online Tuition',
           Phone: formattedValue,
           Country: countryName,
+          CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
         });
         const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
         const subject = name;
