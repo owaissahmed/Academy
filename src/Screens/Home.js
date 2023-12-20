@@ -30,6 +30,7 @@ export default function Home({route}) {
   const {showAlert} = useAppContext();
   const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(false);
+  const [name, setname] = useState();
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -40,6 +41,10 @@ export default function Home({route}) {
       unsubscribe();
     };
   }, []);
+
+  const NameChange = newname => {
+    setname(newname);
+  };
 
   useEffect(() => {
     if (showAlert) {
@@ -93,6 +98,13 @@ export default function Home({route}) {
   const About = () => {
     navigation.navigate('About');
   };
+  const CheckPassword = () => {
+    if (name === '1234') {
+      navigation.navigate('Admin');
+    } else {
+      Alert.alert('⚫ Warning', 'Wrong Password!');
+    }
+  };
 
   const closeModal = () => {
     setModalVisible(!isModalVisible);
@@ -127,6 +139,7 @@ export default function Home({route}) {
               <TextInput
                 allowFontScaling={false}
                 style={styles.login}
+                onChangeText={NameChange}
                 placeholder="Enter Password"
                 placeholderTextColor={'grey'}
               />
@@ -136,7 +149,7 @@ export default function Home({route}) {
                     Close
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.Btn}>
+                <TouchableOpacity style={styles.Btn} onPress={CheckPassword}>
                   <Text allowFontScaling={false} style={styles.BtnText}>
                     Next
                   </Text>
@@ -368,7 +381,7 @@ const styles = StyleSheet.create({
   },
   comin: {
     height: responsiveHeight(8),
-    width: responsiveWidth(28),
+    width: responsiveWidth(55),
     marginTop: responsiveHeight(1),
   },
   online: {

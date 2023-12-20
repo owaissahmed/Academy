@@ -9,7 +9,7 @@ import Courses from './Screens/Courses';
 import About from './Screens/About';
 import CompletedProject from './Screens/CompletedProject';
 import PendingProjects from './Screens/PendingProjects';
-import UserAccount from './UserAccount';
+import UserAccount from './Screens/UserAccount';
 import Admin from './Screens/Admin';
 import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
