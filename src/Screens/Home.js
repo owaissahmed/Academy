@@ -67,6 +67,11 @@ export default function Home({route}) {
       navigation.navigate('Courses');
     } else Internet();
   }
+  function UpcomingCourses() {
+    if (isConnected == true) {
+      navigation.navigate('UpcomingCourses');
+    } else Internet();
+  }
   function UserAccount() {
     navigation.navigate('UserAccount');
   }
@@ -253,7 +258,7 @@ export default function Home({route}) {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={DarseNizamiForm}>
+          <TouchableOpacity onPress={UpcomingCourses}>
             <View style={styles.square}>
               <Image
                 style={styles.coming}
