@@ -29,7 +29,8 @@ export default function Home({route}) {
   const [isConnected, setIsConnected] = useState(false);
   const {showAlert} = useAppContext();
   const navigation = useNavigation();
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isTeacherModalVisible, setTeacherModalVisible] = useState(false);
+  const [isAdminModalVisible, setAdminModalVisible] = useState(false);
   const [name, setname] = useState();
 
   useEffect(() => {
@@ -42,8 +43,11 @@ export default function Home({route}) {
     };
   }, []);
 
-  const NameChange = newname => {
+  const TeacherChange = newname => {
     setname(newname);
+  };
+  const AdminChange = newadmin => {
+    setname(newadmin);
   };
 
   useEffect(() => {
@@ -105,7 +109,7 @@ export default function Home({route}) {
   };
   const CheckPassword = () => {
     if (name === '1') {
-      setModalVisible(!isModalVisible);
+      setTeacherModalVisible(!isTeacherModalVisible);
       setTimeout(() => {
         navigation.navigate('TeacherForm');
       }, 1000);
@@ -115,13 +119,34 @@ export default function Home({route}) {
   };
 
   const closeModal = () => {
-    setModalVisible(!isModalVisible);
+    setTeacherModalVisible(!isTeacherModalVisible);
   };
   const openModal = () => {
     if (isConnected == false) {
       Internet();
     } else {
-      setModalVisible(true);
+      setTeacherModalVisible(true);
+    }
+  };
+  const CheckPasswordAdmin = () => {
+    if (name === '2') {
+      setAdminModalVisible(!isAdminModalVisible);
+      setTimeout(() => {
+        navigation.navigate('Admin');
+      }, 1000);
+    } else {
+      Alert.alert('⚫ Warning', 'Wrong Password!');
+    }
+  };
+
+  const closeModalAdmin = () => {
+    setAdminModalVisible(!isAdminModalVisible);
+  };
+  const openModalAdmin = () => {
+    if (isConnected == false) {
+      Internet();
+    } else {
+      setAdminModalVisible(true);
     }
   };
 
@@ -131,47 +156,12 @@ export default function Home({route}) {
         resizeMode="cover"
         style={styles.background}
         source={require('../Images/background.jpg')}>
-        <Modal
-          isVisible={isModalVisible}
-          animationIn="zoomIn"
-          animationOut="zoomOut"
-          animationInTiming={700}
-          animationOutTiming={700}
-          backdropTransitionInTiming={700}
-          backdropTransitionOutTiming={700}>
-          <View style={styles.modal}>
-            <ImageBackground
-              resizeMode="cover"
-              style={styles.modalBackground}
-              source={require('../Images/background.jpg')}>
-              <Image
-                style={styles.modalImage}
-                source={require('../Images/logo.png')}
-              />
-              <TextInput
-                allowFontScaling={false}
-                style={styles.login}
-                onChangeText={NameChange}
-                placeholder="Enter Password"
-                placeholderTextColor={'grey'}
-              />
-              <View style={styles.ModalButtonView}>
-                <TouchableOpacity style={styles.Btn} onPress={closeModal}>
-                  <Text allowFontScaling={false} style={styles.BtnText}>
-                    Close
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.Btn} onPress={CheckPassword}>
-                  <Text allowFontScaling={false} style={styles.BtnText}>
-                    Next
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </ImageBackground>
-          </View>
-        </Modal>
-        <View style={styles.navbar}>
-          <TouchableOpacity onPress={Admin}>
+        <Animatable.View
+          duration={2000}
+          delay={100}
+          animation="fadeInDown"
+          style={styles.navbar}>
+          <TouchableOpacity onPress={openModalAdmin}>
             <Image
               style={styles.logo}
               source={require('../Images/round.png')}
@@ -183,7 +173,7 @@ export default function Home({route}) {
               source={require('../Images/account.png')}
             />
           </TouchableOpacity>
-        </View>
+        </Animatable.View>
         <View style={styles.submain}>
           <Animatable.View
             duration={2000}
@@ -291,6 +281,90 @@ export default function Home({route}) {
               </Text>
             </View>
           </TouchableOpacity>
+          <Modal
+            isVisible={isTeacherModalVisible}
+            animationIn="zoomIn"
+            animationOut="zoomOut"
+            animationInTiming={700}
+            animationOutTiming={700}
+            backdropTransitionInTiming={700}
+            backdropTransitionOutTiming={700}>
+            <View style={styles.modal}>
+              <ImageBackground
+                resizeMode="cover"
+                style={styles.modalBackground}
+                source={require('../Images/background.jpg')}>
+                <Image
+                  style={styles.modalImage}
+                  source={require('../Images/logo.png')}
+                />
+                <TextInput
+                  allowFontScaling={false}
+                  autoFocus
+                  style={styles.login}
+                  onChangeText={TeacherChange}
+                  placeholder="Enter Password"
+                  placeholderTextColor={'grey'}
+                />
+                <View style={styles.ModalButtonView}>
+                  <TouchableOpacity style={styles.Btn} onPress={closeModal}>
+                    <Text allowFontScaling={false} style={styles.BtnText}>
+                      Close
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.Btn} onPress={CheckPassword}>
+                    <Text allowFontScaling={false} style={styles.BtnText}>
+                      Next
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </ImageBackground>
+            </View>
+          </Modal>
+          <Modal
+            isVisible={isAdminModalVisible}
+            animationIn="zoomIn"
+            animationOut="zoomOut"
+            animationInTiming={700}
+            animationOutTiming={700}
+            backdropTransitionInTiming={700}
+            backdropTransitionOutTiming={700}>
+            <View style={styles.modal}>
+              <ImageBackground
+                resizeMode="cover"
+                style={styles.modalBackground}
+                source={require('../Images/background.jpg')}>
+                <Image
+                  style={styles.modalImage}
+                  source={require('../Images/logo.png')}
+                />
+                <TextInput
+                  allowFontScaling={false}
+                  autoFocus
+                  style={styles.login}
+                  onChangeText={AdminChange}
+                  placeholder="Enter Password"
+                  placeholderTextColor={'grey'}
+                />
+                <View style={styles.ModalButtonView}>
+                  <TouchableOpacity
+                    style={styles.Btn}
+                    onPress={closeModalAdmin}>
+                    <Text allowFontScaling={false} style={styles.BtnText}>
+                      Close
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.Btn}
+                    onPress={CheckPasswordAdmin}>
+                    <Text allowFontScaling={false} style={styles.BtnText}>
+                      Next
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </ImageBackground>
+            </View>
+          </Modal>
         </Animatable.View>
       </ImageBackground>
     </View>
