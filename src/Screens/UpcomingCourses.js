@@ -58,7 +58,7 @@ const UpcomingCourses = () => {
                 data={courses}
                 renderItem={({item}) => (
                   <>
-                    <View style={styles.V_P_View}>
+                    <View style={styles.DataView}>
                       <Text allowFontScaling={false} style={styles.Coursename}>
                         {item.CourseName}
                       </Text>
@@ -73,23 +73,40 @@ const UpcomingCourses = () => {
                           style={styles.DescriptionText}>
                           Fees : {item.Fees}
                         </Text>
+                        </View>
+                        <View style={styles.D_F_View}>
+                        <Text
+                          allowFontScaling={false}
+                          style={styles.DescriptionText}>
+                          Starting Date : {item.StartDate}
+                        </Text>
+                        <Text
+                          allowFontScaling={false}
+                          style={styles.DescriptionText}>
+                          Gender : {item.Gender}
+                        </Text>
+                        </View>
+                        <View style={styles.D_F_View}>
+                        <Text
+                          allowFontScaling={false}
+                          style={styles.DescriptionText}>
+                          Days : {item.Days}
+                        </Text>
+                        <Text
+                          allowFontScaling={false}
+                          style={styles.DescriptionText}>
+                          Timings : {item.Time}
+                        </Text>
                       </View>
-                    </View>
-                    <View style={styles.ButtonView}>
-                      <TouchableOpacity style={styles.Button}>
-                        <Text
-                          allowFontScaling={false}
-                          style={styles.ButtonText}>
-                          Demo Class
-                        </Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity style={styles.Button}>
-                        <Text
-                          allowFontScaling={false}
-                          style={styles.ButtonText}>
-                          Addmission
-                        </Text>
-                      </TouchableOpacity>
+                      <View style={styles.ButtonView}>
+                        <TouchableOpacity style={styles.Button}>
+                          <Text
+                            allowFontScaling={false}
+                            style={styles.ButtonText}>
+                            Addmission
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
                     </View>
                   </>
                 )}
@@ -124,15 +141,6 @@ const styles = StyleSheet.create({
   // },
   FlatListVIew: {
     width: responsiveWidth(90),
-  },
-  DataView: {
-    backgroundColor: '#135229',
-    borderRadius: 10,
-    paddingVertical: responsiveHeight(0.5),
-    marginVertical: responsiveHeight(0.5),
-    color: 'white',
-    textAlign: 'center',
-    fontSize: responsiveFontSize(2.25),
   },
   HeadingText: {
     fontFamily: 'good',
@@ -183,24 +191,25 @@ const styles = StyleSheet.create({
     height: responsiveHeight(5),
   },
   Description_View: {
-    padding: 10,
-    marginHorizontal: responsiveWidth(4),
     width: responsiveWidth(90),
-    backgroundColor: 'white',
-    borderColor: '#2e4c60',
-    borderWidth: 2,
-    height: responsiveHeight(20),
-    marginTop: responsiveHeight(-2.25),
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
   },
-  V_P_View: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: responsiveWidth(1),
-    borderRadius: 8,
+  // V_P_View: {
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   paddingHorizontal: responsiveWidth(1),
+  //   borderRadius: 8,
+  // },
+  DataView: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    paddingVertical: responsiveHeight(0.5),
+    marginVertical: responsiveHeight(0.5),
+    color: 'white',
+    textAlign: 'center',
+    height: responsiveHeight(30),
+    fontSize: responsiveFontSize(2.25),
   },
   D_F_View: {
     display: 'flex',
@@ -217,15 +226,17 @@ const styles = StyleSheet.create({
     fontSize: responsiveScreenFontSize(4),
     fontFamily: 'mushaf',
     // fontWeight: 'bold',
+    textAlign:'center',
     // letterSpacing: 0.25,
     marginVertical: responsiveHeight(-2),
   },
   DescriptionText: {
+    fontFamily:'good',
     color: '#2e4c60',
-    fontSize: responsiveScreenFontSize(2.25),
+    fontSize: responsiveScreenFontSize(2),
     marginHorizontal: responsiveWidth(4),
-    fontFamily: 'nunito',
-    fontWeight: 'bold',
+    // fontFamily: 'good',
+    // fontWeight: 'bold',
     // backgroundColor: 'lightgreen',
     letterSpacing: 0.25,
     marginTop: responsiveHeight(3),
@@ -245,14 +256,17 @@ const styles = StyleSheet.create({
     paddingVertical: responsiveHeight(0.75),
     paddingHorizontal: responsiveWidth(3),
     borderRadius: 8,
+    width:responsiveWidth(75)
   },
   ButtonText: {
     color: '#fff',
     fontSize: responsiveScreenFontSize(2),
     fontFamily: 'nunito',
     fontWeight: 'bold',
+    textAlign:'center',
     letterSpacing: 0.5,
   },
+  
 });
 
 export default UpcomingCourses;
