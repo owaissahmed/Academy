@@ -21,7 +21,7 @@ import firestore from '@react-native-firebase/firestore';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 
-const UpcomingCourses = () => {
+const UpcomingCourses = ({navigation}) => {
   const [courses, setcourses] = useState([]);
 
   useEffect(() => {
@@ -106,7 +106,11 @@ const UpcomingCourses = () => {
                           </Text>
                         </View>
                         <View style={styles.D_F_ButtonView}>
-                          <TouchableOpacity style={styles.Button}>
+                          <TouchableOpacity
+                            style={styles.Button}
+                            onPress={() => navigation.navigate('ComingCourseForm', {
+                              courseName: item.CourseName,
+                            })}>
                             <Text
                               allowFontScaling={false}
                               style={styles.ButtonText}>
@@ -139,7 +143,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
-  main:{
+  main: {
     alignItems: 'center',
     justifyContent: 'center',
   },
