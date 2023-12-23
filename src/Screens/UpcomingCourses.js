@@ -7,6 +7,7 @@ import {
   TextInput,
   FlatList,
   ImageBackground,
+  ScrollView,
   Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -45,11 +46,6 @@ const UpcomingCourses = () => {
       resizeMode="cover"
       style={styles.background}
       source={require('../Images/background.jpg')}>
-      <View>
-        <Text allowFontScaling={false} style={styles.HeadingText}>
-          COURSES
-        </Text>
-      </View>
       <View style={styles.main}>
         {courses.length > 0 ? (
           <View>
@@ -57,58 +53,71 @@ const UpcomingCourses = () => {
               <FlatList
                 data={courses}
                 renderItem={({item}) => (
-                  <>
-                    <View style={styles.DataView}>
-                      <Text allowFontScaling={false} style={styles.Coursename}>
-                        {item.CourseName}
-                      </Text>
-                      <View style={styles.D_F_View}>
-                        <Text
-                          allowFontScaling={false}
-                          style={styles.DescriptionText}>
-                          Duration : {item.Duration}
-                        </Text>
-                        <Text
-                          allowFontScaling={false}
-                          style={styles.DescriptionText}>
-                          Fees : {item.Fees}
-                        </Text>
-                        </View>
-                        <View style={styles.D_F_View}>
-                        <Text
-                          allowFontScaling={false}
-                          style={styles.DescriptionText}>
-                          Starting Date : {item.StartDate}
-                        </Text>
-                        <Text
-                          allowFontScaling={false}
-                          style={styles.DescriptionText}>
-                          Gender : {item.Gender}
-                        </Text>
-                        </View>
-                        <View style={styles.D_F_View}>
-                        <Text
-                          allowFontScaling={false}
-                          style={styles.DescriptionText}>
-                          Days : {item.Days}
-                        </Text>
-                        <Text
-                          allowFontScaling={false}
-                          style={styles.DescriptionText}>
-                          Timings : {item.Time}
-                        </Text>
-                      </View>
-                      <View style={styles.ButtonView}>
-                        <TouchableOpacity style={styles.Button}>
+                  <ScrollView>
+                    <>
+                      <View style={styles.DataView}>
+                        <View style={styles.D_F_CoursenameView}>
                           <Text
                             allowFontScaling={false}
-                            style={styles.ButtonText}>
-                            Addmission
+                            style={styles.Coursename}>
+                            {item.CourseName}
                           </Text>
-                        </TouchableOpacity>
+                        </View>
+                        <View style={styles.D_F_View}>
+                          <Text
+                            allowFontScaling={false}
+                            style={styles.DescriptionText}>
+                            • Duration : {item.Duration}
+                          </Text>
+                        </View>
+                        <View style={styles.D_F_View}>
+                          <Text
+                            allowFontScaling={false}
+                            style={styles.DescriptionText}>
+                            • Fees : {item.Fees}
+                          </Text>
+                        </View>
+                        <View style={styles.D_F_View}>
+                          <Text
+                            allowFontScaling={false}
+                            style={styles.DescriptionText}>
+                            • Starting Date : {item.StartDate}
+                          </Text>
+                        </View>
+                        <View style={styles.D_F_View}>
+                          <Text
+                            allowFontScaling={false}
+                            style={styles.DescriptionText}>
+                            • Gender : {item.Gender}
+                          </Text>
+                        </View>
+
+                        <View style={styles.D_F_View}>
+                          <Text
+                            allowFontScaling={false}
+                            style={styles.DescriptionText}>
+                            • Days : {item.Days}
+                          </Text>
+                        </View>
+                        <View style={styles.D_F_View}>
+                          <Text
+                            allowFontScaling={false}
+                            style={styles.DescriptionText}>
+                            • Timings : {item.Time}
+                          </Text>
+                        </View>
+                        <View style={styles.D_F_ButtonView}>
+                          <TouchableOpacity style={styles.Button}>
+                            <Text
+                              allowFontScaling={false}
+                              style={styles.ButtonText}>
+                              Addmission
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
                       </View>
-                    </View>
-                  </>
+                    </>
+                  </ScrollView>
                 )}
                 keyExtractor={item => item.id}
               />
@@ -131,28 +140,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
-  // main: {
-  //   backgroundColor: 'white',
-  //   width: devicewidth,
-  //   height: deviceheight,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   paddingVertical: responsiveHeight(10),
-  // },
+  main:{
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   FlatListVIew: {
     width: responsiveWidth(90),
-  },
-  HeadingText: {
-    fontFamily: 'good',
-    color: '#2e4c60',
-    // backgroundColor: 'seagreen',
-    fontSize: responsiveFontSize(5),
-    textAlign: 'center',
-    // marginVertical:responsiveHeight(),
-    marginTop: responsiveHeight(3),
-    // marginBottom: responsiveHeight(2),
-    textTransform: 'uppercase',
-    letterSpacing: 2,
   },
   Update: {
     backgroundColor: '#135229',
@@ -164,109 +157,85 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2.25),
     marginBottom: responsiveHeight(-0.5),
   },
-  Name: {
-    color: 'white',
-    fontSize: responsiveFontSize(2.25),
-    textAlign: 'center',
-  },
-  Phone: {
-    color: 'white',
-    fontSize: responsiveFontSize(2.25),
-    textAlign: 'center',
-  },
   NoData: {
     fontSize: responsiveFontSize(3),
     color: 'red',
   },
-  password: {
-    borderRadius: 10,
-    paddingVertical: responsiveHeight(0.5),
-    color: 'white',
-    textAlign: 'center',
-    fontSize: responsiveFontSize(2.25),
-    borderWidth: 1.5,
-    borderLeftWidth: 8,
-    borderColor: '#135229',
-    color: 'black',
-    height: responsiveHeight(5),
-  },
   Description_View: {
-    width: responsiveWidth(90),
+    width: responsiveWidth(95),
   },
-  // V_P_View: {
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   paddingHorizontal: responsiveWidth(1),
-  //   borderRadius: 8,
-  // },
   DataView: {
+    display: 'flex',
+    // flexDirection: 'column',
+    alignItems: 'center',
+    // justifyContent: 'center',
     backgroundColor: '#fff',
     borderRadius: 10,
-    paddingVertical: responsiveHeight(0.5),
-    marginVertical: responsiveHeight(0.5),
-    color: 'white',
+    paddingTop: responsiveHeight(0.5),
+    marginVertical: responsiveHeight(1),
     textAlign: 'center',
-    height: responsiveHeight(30),
+    height: 'auto',
     fontSize: responsiveFontSize(2.25),
   },
   D_F_View: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     width: responsiveWidth(90),
-    // backgroundColor: 'red',
     paddingHorizontal: responsiveWidth(1),
     borderRadius: 8,
   },
+  D_F_CoursenameView: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: responsiveWidth(95),
+    marginTop: responsiveHeight(-0.5),
+    backgroundColor: '#2e4c60',
+    paddingHorizontal: responsiveWidth(1),
+    borderColor: '#2e4c60',
+    borderTopEndRadius: 8,
+    borderTopStartRadius: 8,
+  },
   Coursename: {
-    color: '#2e4c60',
+    color: '#fff',
     fontSize: responsiveScreenFontSize(4),
     fontFamily: 'mushaf',
-    // fontWeight: 'bold',
-    textAlign:'center',
-    // letterSpacing: 0.25,
-    marginVertical: responsiveHeight(-2),
+    textAlign: 'center',
+    paddingBottom: responsiveHeight(1.25),
   },
   DescriptionText: {
-    fontFamily:'good',
+    fontFamily: 'good',
     color: '#2e4c60',
     fontSize: responsiveScreenFontSize(2),
     marginHorizontal: responsiveWidth(4),
-    // fontFamily: 'good',
-    // fontWeight: 'bold',
-    // backgroundColor: 'lightgreen',
-    letterSpacing: 0.25,
+    letterSpacing: 0.5,
     marginTop: responsiveHeight(3),
-    // paddingVertical: responsiveHeight(0.75),
-    // paddingHorizontal: responsiveWidth(1.5),
-    // borderBottomRightRadius: 10,
-    // borderTopRightRadius: 10
   },
-  ButtonView: {
+  D_F_ButtonView: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    width: responsiveWidth(90),
+    paddingHorizontal: responsiveWidth(1),
+    borderRadius: 8,
   },
   Button: {
-    marginTop: responsiveHeight(1),
+    marginTop: responsiveHeight(2),
     backgroundColor: '#2e4c60',
-    paddingVertical: responsiveHeight(0.75),
-    paddingHorizontal: responsiveWidth(3),
-    borderRadius: 8,
-    width:responsiveWidth(75)
+    paddingVertical: responsiveHeight(2),
+    borderBottomEndRadius: 8,
+    borderBottomStartRadius: 8,
+    width: responsiveWidth(95),
   },
   ButtonText: {
     color: '#fff',
-    fontSize: responsiveScreenFontSize(2),
-    fontFamily: 'nunito',
-    fontWeight: 'bold',
-    textAlign:'center',
-    letterSpacing: 0.5,
+    fontSize: responsiveScreenFontSize(2.25),
+    fontFamily: 'good',
+    textAlign: 'center',
+    letterSpacing: 1.75,
   },
-  
 });
 
 export default UpcomingCourses;
