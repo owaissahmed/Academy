@@ -11,6 +11,7 @@ import CompletedProject from './Screens/CompletedProject';
 import PendingProjects from './Screens/PendingProjects';
 import UserAccount from './Screens/UserAccount';
 import UpcomingCourses from './Screens/UpcomingCourses';
+import ComingCourseForm from './Screens/ComingCourseForm';
 import Admin from './Screens/Admin';
 import TeacherForm from './Screens/TeacherForm';
 import {AppProvider} from './Screens/AppContext';
@@ -92,6 +93,11 @@ export default function AppNavigator() {
           <Stack.Screen
             name="UpcomingCourses"
             component={UpcomingCourses}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="ComingCourseForm"
+            component={ComingCourseForm}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

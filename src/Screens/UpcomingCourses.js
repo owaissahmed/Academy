@@ -91,7 +91,6 @@ const UpcomingCourses = () => {
                             • Gender : {item.Gender}
                           </Text>
                         </View>
-
                         <View style={styles.D_F_View}>
                           <Text
                             allowFontScaling={false}
@@ -125,7 +124,7 @@ const UpcomingCourses = () => {
           </View>
         ) : (
           <Text allowFontScaling={false} style={styles.NoData}>
-            No Data!!
+            No Courses!!
           </Text>
         )}
       </View>
@@ -166,9 +165,7 @@ const styles = StyleSheet.create({
   },
   DataView: {
     display: 'flex',
-    // flexDirection: 'column',
     alignItems: 'center',
-    // justifyContent: 'center',
     backgroundColor: '#fff',
     borderRadius: 10,
     paddingTop: responsiveHeight(0.5),
