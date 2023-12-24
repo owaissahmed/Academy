@@ -27,8 +27,11 @@ import * as Animatable from 'react-native-animatable';
 import {useNavigation} from '@react-navigation/native';
 const Admin = ({navigation}) => {
 
-function gotoAddCourse(params) {
+function gotoAddCourse() {
   navigation.navigate('AddCourse')
+}
+function gotoStudentsData() {
+  navigation.navigate('StudentsData')
 }
 
   return (
@@ -50,7 +53,7 @@ function gotoAddCourse(params) {
             </Text>
           </Animatable.View>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={gotoStudentsData}>
           <View style={styles.square}>
             <Text allowFontScaling={false} style={styles.squaretext}>
              STUDENTS DATA
