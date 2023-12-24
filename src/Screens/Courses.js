@@ -67,7 +67,6 @@ const Accordion = ({
     } else Internet();
   }
 
-
   return (
     <View>
       <TouchableOpacity onPress={toggleAccordion}>
@@ -125,7 +124,7 @@ const Courses = ({navigation}) => {
       <ScrollView>
         <Accordion
           id={1}
-          title="آسان  اصولِ  فقہ کورس  "
+          title="آسان اصولِ فقہ کورس"
           Videos="Videos : 92"
           Price="Price : 7500"
           openAccordion={openAccordion}
@@ -134,16 +133,16 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={2}
-          title="آسان  فہمِ  عقائد کورس"
+          title="آسان فہمِ عقائد کورس"
           Videos="Videos : 28"
           Price="Price : 1500"
           openAccordion={openAccordion}
           onToggle={handleToggle}
-         Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmXGm2efMIaa2Qrrn_xPspSz"
+          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmXGm2efMIaa2Qrrn_xPspSz"
         />
         <Accordion
           id={3}
-          title="آسان  شرح  مائۃ  عامل کورس"
+          title="آسان شرح مائۃ عامل کورس"
           Videos="Videos : 29"
           Price="Price : 1500"
           openAccordion={openAccordion}
@@ -152,7 +151,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={4}
-          title="آسان  فہمُ القرآن کورس"
+          title="آسان فہمُ القرآن کورس"
           Videos="Videos : 51"
           Price="Price : 4500"
           openAccordion={openAccordion}
@@ -161,7 +160,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={5}
-          title="آسان  تراکیبِ  نحویہ کورس"
+          title="آسان تراکیبِ نحویہ کورس"
           Videos="Videos : 46"
           Price="Price : 4500"
           openAccordion={openAccordion}
@@ -170,7 +169,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={6}
-          title="تراکیبِ   نحویہ کورس  پہلا پارہ"
+          title="تراکیبِ نحویہ کورس پہلا پارہ"
           Videos="Videos : 24"
           Price="Price : 1500"
           openAccordion={openAccordion}
@@ -179,7 +178,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={7}
-          title="دورۂ  صرف  و نحو"
+          title="دورۂ صرف و نحو"
           Videos="Videos : 44"
           Price="Price : 1500"
           openAccordion={openAccordion}
@@ -188,7 +187,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={8}
-          title="دورۂ  منطق"
+          title="دورۂ منطق"
           Videos="Videos : 16"
           Price="Price : 1500"
           openAccordion={openAccordion}
@@ -197,7 +196,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={9}
-          title="آسان  علمِ  صرف کورس"
+          title="آسان علمِ صرف کورس"
           Videos="Videos : 35"
           Price="Price : 3000"
           openAccordion={openAccordion}
@@ -206,7 +205,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={10}
-          title="آسان  علمِ  نحو کورس"
+          title="آسان علمِ نحو کورس"
           Videos="Videos : 62"
           Price="Price : 7500"
           openAccordion={openAccordion}
@@ -215,7 +214,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={11}
-          title="آسان  فہمِِ  بلاغت کورس (  علم المعانی  )"
+          title="آسان فہمِِ بلاغت کورس (علم المعانی)"
           Videos="Videos : 74"
           Price="Price : 4500"
           openAccordion={openAccordion}
@@ -224,7 +223,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={12}
-          title="آسان  مبادیاتِ   فقہ کورس"
+          title="آسان مبادیاتِ  فقہ کورس"
           Videos="Videos : -"
           Price="Price : 3000"
           openAccordion={openAccordion}
@@ -233,7 +232,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={13}
-          title="آسان  تدریسی  ٹیسٹ کورس"
+          title="آسان تدریسی ٹیسٹ کورس"
           Videos="Videos : -"
           Price="Price : 3000"
           openAccordion={openAccordion}
@@ -242,7 +241,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={14}
-          title="آسان  فہمِ وراثت کورس"
+          title="آسان فہمِ وراثت کورس"
           Videos="Videos : -"
           Price="Price : 3000"
           openAccordion={openAccordion}
@@ -251,7 +250,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={15}
-          title="آسان  اصولِ  حدیث کورس"
+          title="آسان اصولِ حدیث کورس"
           Videos="Videos : -"
           Price="Price : 3000"
           openAccordion={openAccordion}
@@ -260,7 +259,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={16}
-          title="آسان  فہمِِ  بلاغت کورس (  علم البیان والبدیع  )"
+          title="آسان فہمِِ بلاغت کورس (علم البیان والبدیع)"
           Videos="Videos : 30"
           Price="Price : 3000"
           openAccordion={openAccordion}
@@ -269,7 +268,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={17}
-          title="آسان  آدابِ  بحث  و مناظرہ کورس"
+          title="آسان آدابِ بحث و مناظرہ کورس"
           Videos="Videos : 06"
           Price="Price : 500"
           openAccordion={openAccordion}
@@ -278,7 +277,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={18}
-          title="حلِ  عبارت  و ترجمہ کورس"
+          title="حلِ عبارت و ترجمہ کورس"
           Videos="Videos : 30"
           Price="Price : 2000"
           openAccordion={openAccordion}
@@ -287,7 +286,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={19}
-          title="اجراءُ  الصرف  فی  القرآن"
+          title="اجراءُ الصرف فی القرآن"
           Videos="Videos : 28"
           Price="Price : 3000"
           openAccordion={openAccordion}
@@ -296,7 +295,7 @@ const Courses = ({navigation}) => {
         />
         <Accordion
           id={20}
-          title="کتابُ  البیوع  قدوری  شریف"
+          title="کتابُ البیوع قدوری شریف"
           Videos="Videos : 52"
           Price="Price : 5000"
           openAccordion={openAccordion}

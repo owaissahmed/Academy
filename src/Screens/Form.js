@@ -146,7 +146,8 @@ const Form = ({navigation}) => {
         const collectionRef = firestore().collection('users').add({
           Name: name,
           Fathername: father,
-          Course: buttonText,
+          CourseName: buttonText,
+          Category:'Courses',
           Phone: formattedValue,
           Country: countryName,
           CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
