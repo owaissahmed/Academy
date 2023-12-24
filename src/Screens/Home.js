@@ -285,10 +285,10 @@ export default function Home({route}) {
             isVisible={isTeacherModalVisible}
             animationIn="zoomIn"
             animationOut="zoomOut"
-            animationInTiming={700}
-            animationOutTiming={700}
-            backdropTransitionInTiming={700}
-            backdropTransitionOutTiming={700}>
+            animationInTiming={1000}
+            animationOutTiming={1000}
+            backdropTransitionInTiming={1000}
+            backdropTransitionOutTiming={1000}>
             <View style={styles.modal}>
               <ImageBackground
                 resizeMode="cover"
@@ -325,10 +325,10 @@ export default function Home({route}) {
             isVisible={isAdminModalVisible}
             animationIn="zoomIn"
             animationOut="zoomOut"
-            animationInTiming={700}
-            animationOutTiming={700}
-            backdropTransitionInTiming={700}
-            backdropTransitionOutTiming={700}>
+            animationInTiming={1000}
+            animationOutTiming={1000}
+            backdropTransitionInTiming={1000}
+            backdropTransitionOutTiming={1000}>
             <View style={styles.modal}>
               <ImageBackground
                 resizeMode="cover"

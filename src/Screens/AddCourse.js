@@ -35,23 +35,14 @@ const AddCourse = ({navigation}) => {
   const [course, setcourse] = useState('');
   const [duration, setduration] = useState('');
   const [fee, setFee] = useState('');
-  // const [Experience, setExperience] = useState('');
-  // const [course, setcourse] = useState('');
   const [startDate, setstartDate] = useState('');
-  // const [country, setCountry] = useState('Pakistan');
   const [days, setdays] = useState('');
   const [time, settime] = useState('');
-  // const [valid, setValid] = useState(false);
-  // const [visible, setVisible] = useState(false);
-  // const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-  // const phoneInput = useRef(null);
   const [selectedValue, setSelectedValue] = useState('For Male');
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-      // console.log('Connection type', state.type);
-      // console.log('Is connected?', state.isConnected);
       setIsConnected(state.isConnected);
     });
 
@@ -81,15 +72,6 @@ const AddCourse = ({navigation}) => {
   const handleValueChange = value => {
     setSelectedValue(value);
   };
-  // const ExperienceChange = newExperience => {
-  //   setExperience(newExperience);
-  // };
-
-  // const handleOnCountryChange = country => {
-  //   setCountry(country);
-  // };
-
-  // const countryName = country?.name || 'Pakistan';
 
   function show() {
     showMessage({
@@ -105,20 +87,7 @@ const AddCourse = ({navigation}) => {
       duration: 50000,
     });
   }
-  // function EmptyInput() {
-  //   showMessage({
-  //     message: '⚪️ Please Fill All Inputs',
-  //     // backgroundColor:'#36454F',
-  //     type: 'danger',
-  //     color: 'white',
-  //     position: 'bottom',
-  //     titleStyle: {
-  //       fontSize: responsiveFontSize(2.25),
-  //       lineHeight: responsiveHeight(3),
-  //     },
-  //     // duration: 5000,
-  //   });
-  // }
+
   function Internet() {
     showMessage({
       message: '⚪️ No Internet Connection',
@@ -134,27 +103,10 @@ const AddCourse = ({navigation}) => {
     });
   }
 
-  // const {setShowAlert} = useAppContext();
-
-  // const GoBackHome = () => {
-  //   // Set the showAlert function in the context
-  //   setShowAlert(() => {
-  //     // Show the alert when this function is called
-  //     Alert.alert('⚫ Congrats', 'your Form has been Submitted!');
-  //   });
-  // };
-
   const Check = async () => {
     if (isConnected == false) {
       Internet();
     } else {
-      // setLoading(true);
-      // setVisible(true);
-      // show();
-      // setTimeout(() => {
-      // const checkValid = phoneInput.current?.isValidNumber(value);
-      // setValid(checkValid ? checkValid : false);
-      // setCountryCode(phoneInput.current?.getCountryCode() || '');
       const collectionRef = firestore().collection('New Course').add({
         CourseName: course,
         Duration: duration,
@@ -163,23 +115,8 @@ const AddCourse = ({navigation}) => {
         Time: time,
         StartDate: startDate,
         Gender: selectedValue,
-        // Experience:Experience,
-        // Phone: formattedValue,
-        // Country: countryName,
-        // DayTime: firebase.firestore.FieldValue.serverTimestamp(),
       });
 
-      // const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
-      // const subject = name;
-      // const body = `Teacher \n ${Experience} \n ${Jamia} \n ${countryName} \n ${formattedValue}`;
-
-      // const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
-      //   subject,
-      // )}&body=${encodeURIComponent(body)}`;
-
-      // Linking.openURL(mailtoUrl).catch(err =>
-      //   console.error('Error opening email app:', err),
-      // );
       show();
       setTimeout(() => {
         navigation.replace('Home');
