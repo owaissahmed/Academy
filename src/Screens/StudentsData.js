@@ -17,6 +17,7 @@ import {responsiveFontSize} from 'react-native-responsive-dimensions';
 import firestore from '@react-native-firebase/firestore';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
+import * as Animatable from 'react-native-animatable';
 
 const StudentsData = ({navigation}) => {
   const [online, setonline] = useState('');
@@ -90,44 +91,7 @@ const StudentsData = ({navigation}) => {
         });
         setcourse(courseData.length);
       });
-    // const mukamal = firestore()
-
-    //   .onSnapshot(querySnapshot => {
-    //     const mukammalData = [];
-    //     querySnapshot.forEach(documentSnapshot => {
-    //       mukammalData.push({
-    //         id: documentSnapshot.id,
-    //         ...documentSnapshot.data(),
-    //       });
-    //     });
-    //     setkhi1mukammal(mukammalData.length);
-    //   });
-    // const moqoof = firestore()
-
-    //   .onSnapshot(querySnapshot => {
-    //     const moqoofData = [];
-    //     querySnapshot.forEach(documentSnapshot => {
-    //       moqoofData.push({
-    //         id: documentSnapshot.id,
-    //         ...documentSnapshot.data(),
-    //       });
-    //     });
-    //     setkhi1moqoof(moqoofData.length);
-    //   });
-    // const chodgae = firestore()
-
-    //   .onSnapshot(querySnapshot => {
-    //     const chodgaeData = [];
-    //     querySnapshot.forEach(documentSnapshot => {
-    //       chodgaeData.push({
-    //         id: documentSnapshot.id,
-    //         ...documentSnapshot.data(),
-    //       });
-    //     });
-    //     setkhi1chodgae(chodgaeData.length);
-    //   });
   }, []);
-  // var total = aalimcourse + total + home + online + course;
 
   return (
     <View>
@@ -135,15 +99,15 @@ const StudentsData = ({navigation}) => {
         resizeMode="cover"
         style={styles.background}
         source={require('../Images/background.jpg')}>
-        <View style={styles.rectangle}>
+        <Animatable.View animation={'zoomIn'} delay={1000} duration={2000} style={styles.rectangle}>
           <Text allowFontScaling={false} style={styles.rectangletext}>
             Total Students
           </Text>
           <Text allowFontScaling={false} style={styles.rectangletext}>
             {total}
           </Text>
-        </View>
-        <View style={styles.squarediv}>
+        </Animatable.View>
+        <Animatable.View animation={'zoomIn'} delay={1000} duration={2000} style={styles.squarediv}>
           <TouchableOpacity>
             <View style={styles.square}>
               <Text allowFontScaling={false} style={styles.squaretext}>
@@ -166,7 +130,7 @@ const StudentsData = ({navigation}) => {
           </TouchableOpacity>
           <TouchableOpacity>
             <View style={styles.square}>
-              <Text allowFontScaling={false} style={styles.square3text}>
+              <Text allowFontScaling={false} style={styles.squaretext}>
                 Dars-e-Nizami
               </Text>
               <Text allowFontScaling={false} style={styles.squaretext}>
@@ -184,7 +148,7 @@ const StudentsData = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
-        </View>
+        </Animatable.View>
       </ImageBackground>
     </View>
   );
@@ -194,7 +158,6 @@ export default StudentsData;
 
 const styles = StyleSheet.create({
   background: {
-    // backgroundColor: 'white',
     width: devicewidth,
     height: deviceheight,
     alignItems: 'center',
@@ -204,49 +167,41 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    // alignItems: 'center',
     justifyContent: 'center',
-  },
-  submain: {
-    height: responsiveHeight(8),
-    width: responsiveWidth(90),
-    alignItems: 'center',
-  },
-  heading: {
-    fontSize: responsiveFontSize(3.5),
-    marginTop: responsiveHeight(1.5),
-    color: '#135229',
   },
   rectangle: {
-    // marginTop: responsiveHeight(5),
-    borderColor: '#135229',
+    backgroundColor: '#2e4c60',
     borderWidth: 1.5,
     height: responsiveHeight(15),
-    width: responsiveWidth(90),
-    justifyContent: 'center',
+    width: responsiveWidth(95),
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     borderRadius: 12,
   },
   rectangletext: {
-    fontSize: responsiveScreenFontSize(4.5),
-    color: '#135229',
+    fontSize: responsiveScreenFontSize(3),
+    color: '#fff',
+    textAlign: 'center',
+    fontFamily: 'good',
+    letterSpacing: 2,
+    textTransform:'uppercase',
   },
   squaretext: {
-    fontSize: responsiveScreenFontSize(3.5),
-    color: '#135229',
-  },
-  square3text: {
-    fontSize: responsiveScreenFontSize(3),
-    color: '#135229',
+    fontSize: responsiveScreenFontSize(2.5),
+    color: '#fff',
     textAlign: 'center',
+    fontFamily: 'good',
+    textTransform:'uppercase',
+    letterSpacing: 2,
   },
   square: {
-    marginTop: responsiveHeight(3),
-    borderColor: '#135229',
+    marginTop: responsiveHeight(2),
+    borderColor: '#2e4c60',
+    backgroundColor: '#2e4c60',
     borderWidth: 1.5,
-    height: responsiveHeight(15),
-    width: responsiveWidth(40),
-    justifyContent: 'center',
+    height: responsiveHeight(12),
+    width: responsiveWidth(85),
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     borderRadius: 12,
     marginHorizontal: responsiveWidth(3),
