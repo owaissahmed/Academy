@@ -13,6 +13,7 @@ import UserAccount from './Screens/UserAccount';
 import UpcomingCourses from './Screens/UpcomingCourses';
 import ComingCourseForm from './Screens/ComingCourseForm';
 import Admin from './Screens/Admin';
+import AddCourse from './Screens/AddCourse';
 import TeacherForm from './Screens/TeacherForm';
 import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -98,6 +99,11 @@ export default function AppNavigator() {
           <Stack.Screen
             name="ComingCourseForm"
             component={ComingCourseForm}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="AddCourse"
+            component={AddCourse}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
