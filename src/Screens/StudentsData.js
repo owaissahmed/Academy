@@ -25,10 +25,12 @@ const StudentsData = ({navigation}) => {
   const [home, sethome] = useState('');
   const [aalimcourse, setaalimcourse] = useState('');
   const [course, setcourse] = useState('');
+  const [left, setleft] = useState('');
 
   useEffect(() => {
     const totalStudents = firestore()
       .collection('users')
+
       .onSnapshot(querySnapshot => {
         const Total = [];
         querySnapshot.forEach(documentSnapshot => {
@@ -42,54 +44,72 @@ const StudentsData = ({navigation}) => {
     const Online = firestore()
       .collection('users')
       .where('Course', '==', 'Online Tuition')
+      .where('Status', '==', '')
       .onSnapshot(querySnapshot => {
-        const qafilaData = [];
+        const Students = [];
         querySnapshot.forEach(documentSnapshot => {
-          qafilaData.push({
+          Students.push({
             id: documentSnapshot.id,
             ...documentSnapshot.data(),
           });
         });
-        setonline(qafilaData.length);
+        setonline(Students.length);
       });
+
     const Home = firestore()
       .collection('users')
       .where('Course', '==', 'Home Tuition')
+      .where('Status', '==', '')
       .onSnapshot(querySnapshot => {
-        const DarussunnahData = [];
+        const Students = [];
         querySnapshot.forEach(documentSnapshot => {
-          DarussunnahData.push({
+          Students.push({
             id: documentSnapshot.id,
             ...documentSnapshot.data(),
           });
         });
-        sethome(DarussunnahData.length);
+        sethome(Students.length);
       });
     const DarseNizami = firestore()
       .collection('users')
       .where('Course', '==', 'Dars-e-Nizami')
+      .where('Status', '==', '')
       .onSnapshot(querySnapshot => {
-        const infiradiData = [];
+        const Students = [];
         querySnapshot.forEach(documentSnapshot => {
-          infiradiData.push({
+          Students.push({
             id: documentSnapshot.id,
             ...documentSnapshot.data(),
           });
         });
-        setaalimcourse(infiradiData.length);
+        setaalimcourse(Students.length);
       });
     const Courses = firestore()
       .collection('users')
       .where('Category', '==', 'Courses')
+      .where('Status', '==', '')
       .onSnapshot(querySnapshot => {
-        const courseData = [];
+        const Students = [];
         querySnapshot.forEach(documentSnapshot => {
-          courseData.push({
+          Students.push({
             id: documentSnapshot.id,
             ...documentSnapshot.data(),
           });
         });
-        setcourse(courseData.length);
+        setcourse(Students.length);
+      });
+    const Left = firestore()
+      .collection('users')
+      .where('Status', '==', 'Left')
+      .onSnapshot(querySnapshot => {
+        const Students = [];
+        querySnapshot.forEach(documentSnapshot => {
+          Students.push({
+            id: documentSnapshot.id,
+            ...documentSnapshot.data(),
+          });
+        });
+        setleft(Students.length);
       });
   }, []);
 
@@ -99,7 +119,11 @@ const StudentsData = ({navigation}) => {
         resizeMode="cover"
         style={styles.background}
         source={require('../Images/background.jpg')}>
-        <Animatable.View animation={'zoomIn'} delay={1000} duration={2000} style={styles.rectangle}>
+        <Animatable.View
+          animation={'zoomIn'}
+          delay={1000}
+          duration={2000}
+          style={styles.rectangle}>
           <Text allowFontScaling={false} style={styles.rectangletext}>
             Total Students
           </Text>
@@ -107,7 +131,11 @@ const StudentsData = ({navigation}) => {
             {total}
           </Text>
         </Animatable.View>
-        <Animatable.View animation={'zoomIn'} delay={1000} duration={2000} style={styles.squarediv}>
+        <Animatable.View
+          animation={'zoomIn'}
+          delay={1000}
+          duration={2000}
+          style={styles.squarediv}>
           <TouchableOpacity>
             <View style={styles.square}>
               <Text allowFontScaling={false} style={styles.squaretext}>
@@ -148,6 +176,16 @@ const StudentsData = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.square}>
+              <Text allowFontScaling={false} style={styles.squaretext}>
+                Left Students
+              </Text>
+              <Text allowFontScaling={false} style={styles.squaretext}>
+                {left}
+              </Text>
+            </View>
+          </TouchableOpacity>
         </Animatable.View>
       </ImageBackground>
     </View>
@@ -184,14 +222,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'good',
     letterSpacing: 2,
-    textTransform:'uppercase',
+    textTransform: 'uppercase',
   },
   squaretext: {
     fontSize: responsiveScreenFontSize(2.5),
     color: '#fff',
     textAlign: 'center',
     fontFamily: 'good',
-    textTransform:'uppercase',
+    textTransform: 'uppercase',
     letterSpacing: 2,
   },
   square: {
