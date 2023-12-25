@@ -30,6 +30,9 @@ const StudentsData = ({navigation}) => {
   function gotoOnlineData() {
     navigation.navigate('OnlineData')
   }
+  function gotoLeftStudents() {
+    navigation.navigate('LeftStudents')
+  }
 
   useEffect(() => {
     const totalStudents = firestore()
@@ -179,7 +182,7 @@ const StudentsData = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={gotoLeftStudents}>
             <View style={styles.square}>
               <Text allowFontScaling={false} style={styles.squaretext}>
                 Left Students
