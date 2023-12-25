@@ -27,10 +27,13 @@ const StudentsData = ({navigation}) => {
   const [course, setcourse] = useState('');
   const [left, setleft] = useState('');
 
+  function gotoOnlineData() {
+    navigation.navigate('OnlineData')
+  }
+
   useEffect(() => {
     const totalStudents = firestore()
       .collection('users')
-
       .onSnapshot(querySnapshot => {
         const Total = [];
         querySnapshot.forEach(documentSnapshot => {
@@ -136,7 +139,7 @@ const StudentsData = ({navigation}) => {
           delay={1000}
           duration={2000}
           style={styles.squarediv}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={gotoOnlineData}>
             <View style={styles.square}>
               <Text allowFontScaling={false} style={styles.squaretext}>
                 Online Tuition
