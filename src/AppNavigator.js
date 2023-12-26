@@ -19,6 +19,7 @@ import StudentsData from './Screens/StudentsData';
 import LeftStudents from './Screens/LeftStudents';
 import OnlineData from './Screens/OnlineData';
 import HomeData from './Screens/HomeData';
+import DarseNizamiData from './Screens/DarseNizamiData';
 import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -128,6 +129,11 @@ export default function AppNavigator() {
           <Stack.Screen
             name="HomeData"
             component={HomeData}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="DarseNizamiData"
+            component={DarseNizamiData}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

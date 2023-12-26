@@ -36,6 +36,9 @@ const StudentsData = ({navigation}) => {
   function gotoLeftStudents() {
     navigation.navigate('LeftStudents')
   }
+  function gotoDarseNizami() {
+    navigation.navigate('DarseNizamiData')
+  }
 
   useEffect(() => {
     const totalStudents = firestore()
@@ -165,7 +168,7 @@ const StudentsData = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={gotoDarseNizami}>
             <View style={styles.square}>
               <Text allowFontScaling={false} style={styles.squaretext}>
                 Dars-e-Nizami
