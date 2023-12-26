@@ -77,7 +77,9 @@ export default function Home({route}) {
     } else Internet();
   }
   function UserAccount() {
-    navigation.navigate('UserAccount');
+    if (isConnected == true) {
+      navigation.navigate('UserAccount');
+    } else Internet();
   }
   function Admin() {
     navigation.navigate('Admin');

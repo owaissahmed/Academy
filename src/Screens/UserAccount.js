@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, useSyncExternalStore} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -21,6 +21,7 @@ import NetInfo from '@react-native-community/netinfo';
 import {
   responsiveFontSize,
   responsiveHeight,
+  responsiveScreenWidth,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
@@ -31,7 +32,6 @@ import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 
 const UserAccount = ({navigation}) => {
-  
   const [value, setValue] = useState('');
   const [formattedValue, setFormattedValue] = useState('');
   const [country, setCountry] = useState('Pakistan');
@@ -43,9 +43,53 @@ const UserAccount = ({navigation}) => {
     setCountry(country);
   };
 
-  function ww() {
-    console.log(formattedValue);
+  function EmptyInput() {
+    showMessage({
+      message: '⚪️ Please Fill All Inputs',
+      // backgroundColor:'#36454F',
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      // duration: 5000,
+    });
   }
+  function Internet() {
+    showMessage({
+      message: '⚪️ No Internet Connection',
+      // backgroundColor:'#36454F',
+      type: 'warning',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      // duration: 5000,
+    });
+  }
+
+  // function Search() {
+  //   if (formattedValue.trim() != '') {
+  //     Alert.alert(formattedValue);
+  //   } else if (isConnected == false) {
+  //     EmptyInput();
+  //   } else {
+  //   Internet();
+  //   }
+  // }
+
+  // function Search() {
+  //   if (formattedValue.trim() === '') {
+  //     EmptyInput();
+  //   } else if (isConnected == false) {
+  //     Internet();
+  //   } else
+  //   Alert.alert(formattedValue);
+  // }
 
   return (
     <View>
@@ -53,14 +97,22 @@ const UserAccount = ({navigation}) => {
         resizeMode="cover"
         style={styles.background}
         source={require('../Images/background.jpg')}>
-        <View style={styles.main}>
+        <>
+          <FlashMessage position={'center'} />
+        </>
+        <Animatable.View
+          animation={'zoomIn'}
+          delay={1000}
+          duration={2000}
+          style={styles.main}>
+          <Text style={styles.Enter}>Enter Phone No. To See Your Requests</Text>
           <View>
             <PhoneInput
               textInputProps={{
                 placeholderTextColor: 'grey',
               }}
               containerStyle={{
-                width: responsiveWidth(80),
+                width: responsiveWidth(90),
                 height: responsiveHeight(6),
                 marginTop: responsiveHeight(3),
                 borderColor: '#36454F',
@@ -100,8 +152,12 @@ const UserAccount = ({navigation}) => {
               countryPickerProps={{withAlphaFilter: true}}
             />
           </View>
-          <Text onPress={ww}>Enter Your Phone No. To See Your Requests </Text>
-        </View>
+          <TouchableOpacity style={styles.button}>
+            <Text allowFontScaling={false} style={styles.buttontext}>
+              SEARCH
+            </Text>
+          </TouchableOpacity>
+        </Animatable.View>
       </ImageBackground>
     </View>
   );
@@ -116,21 +172,46 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
-  main:{
-    backgroundColor: 'red',
-    display:'flex',
+  main: {
+    backgroundColor: '#2e4c60',
+    height: 'auto',
+    display: 'flex',
     alignItems: 'center',
+    paddingTop: responsiveHeight(4),
+    paddingBottom: responsiveHeight(3),
+    // borderColor: '#‌fff',
+    borderRadius: 12,
     // justifyContent: 'space-evenly',
   },
-  login: {
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
-    backgroundColor: '#FBFCF8',
-    padding: 8,
-    borderColor: '#36454F',
-    color: '#36454F',
-    borderWidth: 1.5,
-    marginTop: responsiveHeight(2),
-    fontSize: responsiveFontSize(2),
+  Enter: {
+    fontSize: responsiveFontSize(2.5),
+    color: '#fff',
+    textAlign: 'center',
+    fontFamily: 'good',
+    paddingHorizontal: responsiveScreenWidth(2),
+    // paddingVertical: responsiveHeight(2),
+    width: responsiveWidth(95),
+    // height: responsiveHeight(6),
+    // textTransform: 'uppercase',
+    // backgroundColor:'lightblue',
+    letterSpacing: 1,
+    lineHeight: 25,
+    marginTop: responsiveHeight(-1),
+  },
+  button: {
+    backgroundColor: '#fff',
+    color: 'white',
+    padding: 6,
+    marginTop: responsiveHeight(3),
+    // marginBottom: responsiveHeight(),
+    borderRadius: 8,
+    width: responsiveWidth(30),
+  },
+  buttontext: {
+    color: '#2e4c60',
+    fontWeight: '600',
+    letterSpacing: 0.7,
+    textAlign: 'center',
+    fontSize: responsiveFontSize(2.25),
   },
 });

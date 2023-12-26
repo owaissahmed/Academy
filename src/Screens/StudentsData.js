@@ -250,13 +250,13 @@ const styles = StyleSheet.create({
   square: {
     marginTop: responsiveHeight(2),
     borderColor: '#2e4c60',
+    borderRadius: 12,
     backgroundColor: '#2e4c60',
     borderWidth: 1.5,
     height: responsiveHeight(12),
     width: responsiveWidth(85),
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    borderRadius: 12,
     marginHorizontal: responsiveWidth(3),
   },
 });
