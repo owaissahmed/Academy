@@ -161,13 +161,13 @@ export default function Home({route}) {
           delay={100}
           animation="fadeInDown"
           style={styles.navbar}>
-          <TouchableOpacity onPress={openModalAdmin}>
-            <Image
+          <TouchableOpacity style={{width:responsiveWidth(30),height:responsiveHeight(5)}} onPress={openModalAdmin}>
+            <Image 
               style={styles.logo}
               source={require('../Images/round.png')}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={UserAccount}>
+          <TouchableOpacity onPress={UserAccount} >
             <Image
               style={styles.account}
               source={require('../Images/account.png')}
@@ -381,12 +381,17 @@ const styles = StyleSheet.create({
 
   navbar: {
     width: responsiveWidth(100),
-    marginTop: responsiveHeight(1),
+    // marginTop: responsiveHeight(1),
     paddingHorizontal: responsiveWidth(4),
+    // backgroundColor:'red',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  btnNavbar:{
+    width: responsiveWidth(40),
+    backgroundColor:'blue',
   },
   account: {
     height: responsiveHeight(4.5),

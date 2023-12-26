@@ -18,6 +18,7 @@ import TeacherForm from './Screens/TeacherForm';
 import StudentsData from './Screens/StudentsData';
 import LeftStudents from './Screens/LeftStudents';
 import OnlineData from './Screens/OnlineData';
+import HomeData from './Screens/HomeData';
 import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -122,6 +123,11 @@ export default function AppNavigator() {
           <Stack.Screen
             name="LeftStudents"
             component={LeftStudents}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="HomeData"
+            component={HomeData}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

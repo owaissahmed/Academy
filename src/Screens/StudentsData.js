@@ -30,6 +30,9 @@ const StudentsData = ({navigation}) => {
   function gotoOnlineData() {
     navigation.navigate('OnlineData')
   }
+  function gotoHomeData() {
+    navigation.navigate('HomeData')
+  }
   function gotoLeftStudents() {
     navigation.navigate('LeftStudents')
   }
@@ -152,7 +155,7 @@ const StudentsData = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={gotoHomeData}>
             <View style={styles.square}>
               <Text allowFontScaling={false} style={styles.squaretext}>
                 Home Tuition
