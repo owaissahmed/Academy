@@ -20,6 +20,7 @@ import LeftStudents from './Screens/LeftStudents';
 import OnlineData from './Screens/OnlineData';
 import HomeData from './Screens/HomeData';
 import CoursesData from './Screens/CoursesData';
+import UserData from './Screens/UserData';
 import DarseNizamiData from './Screens/DarseNizamiData';
 import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -140,6 +141,11 @@ export default function AppNavigator() {
           <Stack.Screen
             name="CoursesData"
             component={CoursesData}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="UserData"
+            component={UserData}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

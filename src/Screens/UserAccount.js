@@ -31,7 +31,7 @@ import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 
-const UserAccount = ({navigation}) => {
+const UserAccount = ({navigation,route}) => {
   const [value, setValue] = useState('');
   const [formattedValue, setFormattedValue] = useState('');
   const [country, setCountry] = useState('Pakistan');
@@ -84,24 +84,13 @@ const UserAccount = ({navigation}) => {
     });
   }
 
-  // function Search() {
-  //   if (formattedValue.trim() != '' && isConnected == true ) {
-  //     Alert.alert(formattedValue);
-  //   } else if(formattedValue.trim() === '' && isConnected == false) {
-  //     Alert.alert('Internet');
-  //   }else
-  //   {
-  //     Alert.alert('Empty');
-  //   }
-  // }
-
   function Search() {
     if (formattedValue.trim() === '') {
       EmptyInput();
     } else if (isConnected == false) {
       Internet();
     } else
-    Alert.alert(formattedValue);
+    navigation.replace('UserData', {phoneNo: formattedValue})
   }
 
   return (

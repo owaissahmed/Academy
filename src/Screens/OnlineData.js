@@ -26,7 +26,7 @@ const OnlineData = ({navigation}) => {
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('users')
-      .where('Course', '==', 'Online Tuition')
+      .where('CourseName', '==', 'Online Tuition')
       .where('Status', '==', '')
       .onSnapshot(querySnapshot => {
         const onlineData = [];

@@ -58,7 +58,7 @@ const StudentsData = ({navigation}) => {
       });
     const Online = firestore()
       .collection('users')
-      .where('Course', '==', 'Online Tuition')
+      .where('CourseName', '==', 'Online Tuition')
       .where('Status', '==', '')
       .onSnapshot(querySnapshot => {
         const Students = [];
@@ -73,7 +73,7 @@ const StudentsData = ({navigation}) => {
 
     const Home = firestore()
       .collection('users')
-      .where('Course', '==', 'Home Tuition')
+      .where('CourseName', '==', 'Home Tuition')
       .where('Status', '==', '')
       .onSnapshot(querySnapshot => {
         const Students = [];
@@ -87,7 +87,7 @@ const StudentsData = ({navigation}) => {
       });
     const DarseNizami = firestore()
       .collection('users')
-      .where('Course', '==', 'Dars-e-Nizami')
+      .where('CourseName', '==', 'Dars-e-Nizami')
       .where('Status', '==', '')
       .onSnapshot(querySnapshot => {
         const Students = [];

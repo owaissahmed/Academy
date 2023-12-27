@@ -26,7 +26,7 @@ import {
     useEffect(() => {
       const unsubscribe = firestore()
         .collection('users')
-        .where('Course', '==', 'Home Tuition')
+        .where('CourseName', '==', 'Home Tuition')
         .where('Status', '==', '')
         .onSnapshot(querySnapshot => {
           const homeData = [];

@@ -19,28 +19,30 @@ import {
   const devicewidth = Dimensions.get('window').width;
   const deviceheight = Dimensions.get('window').height;
   import * as Animatable from 'react-native-animatable';
-  
-  const DarseNizamiData = ({navigation}) => {
-    const [DarseNizami, setDarseNizami] = useState([]);
+  import {useRoute} from '@react-navigation/native';
+  const UserData = ({navigation}) => {
+    const [online, setonline] = useState([]);
   
     useEffect(() => {
       const unsubscribe = firestore()
         .collection('users')
-        .where('CourseName', '==', 'Dars-e-Nizami')
-        .where('Status', '==', '')
+        .where('Phone', '==', phoneNo)
         .onSnapshot(querySnapshot => {
-          const DarseNizamiData = [];
+          const onlineData = [];
           querySnapshot.forEach(documentSnapshot => {
-            DarseNizamiData.push({
+            onlineData.push({
               id: documentSnapshot.id,
               ...documentSnapshot.data(),
             });
           });
-          setDarseNizami(DarseNizamiData);
+          setonline(onlineData);
         });
   
       return () => unsubscribe();
     }, []);
+
+    const route = useRoute();
+    const { phoneNo } = route.params;
   
     return (
       <View>
@@ -48,11 +50,11 @@ import {
           resizeMode="cover"
           style={styles.background}
           source={require('../Images/background.jpg')}>
-          {DarseNizami.length > 0 ? (
+          {online.length > 0 ? (
             <View>
               <View style={styles.FlatListVIew}>
                 <FlatList
-                  data={DarseNizami}
+                  data={online}
                   renderItem={({item}) => (
                     <TouchableOpacity style={styles.DataView}>
                       <View style={styles.DataView}>
@@ -63,10 +65,10 @@ import {
                           Father Name : {item.Fathername}
                         </Text>
                         <Text allowFontScaling={false} style={styles.Name}>
-                          Country : {item.Country}
+                        Cousre : {item.CourseName}
                         </Text>
                         <Text allowFontScaling={false} style={styles.Name}>
-                          Phone : {item.Phone}
+                        Phone : {phoneNo}
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -85,7 +87,7 @@ import {
     );
   };
   
-  export default DarseNizamiData;
+  export default UserData;
   
   const styles = StyleSheet.create({
     background: {
@@ -117,11 +119,11 @@ import {
       letterSpacing: 2,
     },
     NoData: {
-      fontSize: responsiveScreenFontSize(1.5),
+      fontSize: responsiveScreenFontSize(4),
       color: 'red',
       textAlign: 'center',
       fontFamily: 'good',
-      letterSpacing: 2,
+      letterSpacing: 3,
       textTransform: 'uppercase',
     },
   });
