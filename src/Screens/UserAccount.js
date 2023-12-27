@@ -39,6 +39,18 @@ const UserAccount = ({navigation}) => {
   const [isConnected, setIsConnected] = useState(false);
   const phoneInput = useRef(null);
 
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      // console.log('Connection type', state.type);
+      // console.log('Is connected?', state.isConnected);
+      setIsConnected(state.isConnected);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   const handleOnCountryChange = country => {
     setCountry(country);
   };
@@ -73,23 +85,24 @@ const UserAccount = ({navigation}) => {
   }
 
   // function Search() {
-  //   if (formattedValue.trim() != '') {
+  //   if (formattedValue.trim() != '' && isConnected == true ) {
   //     Alert.alert(formattedValue);
-  //   } else if (isConnected == false) {
-  //     EmptyInput();
-  //   } else {
-  //   Internet();
+  //   } else if(formattedValue.trim() === '' && isConnected == false) {
+  //     Alert.alert('Internet');
+  //   }else
+  //   {
+  //     Alert.alert('Empty');
   //   }
   // }
 
-  // function Search() {
-  //   if (formattedValue.trim() === '') {
-  //     EmptyInput();
-  //   } else if (isConnected == false) {
-  //     Internet();
-  //   } else
-  //   Alert.alert(formattedValue);
-  // }
+  function Search() {
+    if (formattedValue.trim() === '') {
+      EmptyInput();
+    } else if (isConnected == false) {
+      Internet();
+    } else
+    Alert.alert(formattedValue);
+  }
 
   return (
     <View>
@@ -152,7 +165,7 @@ const UserAccount = ({navigation}) => {
               countryPickerProps={{withAlphaFilter: true}}
             />
           </View>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={Search}>
             <Text allowFontScaling={false} style={styles.buttontext}>
               SEARCH
             </Text>
