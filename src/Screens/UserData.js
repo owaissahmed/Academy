@@ -68,7 +68,7 @@ import {
                         Cousre : {item.CourseName}
                         </Text>
                         <Text allowFontScaling={false} style={styles.Name}>
-                        Phone : {phoneNo}
+                        Response : {item.Response}
                         </Text>
                       </View>
                     </TouchableOpacity>
@@ -106,12 +106,12 @@ import {
       width: responsiveWidth(90),
       marginVertical:responsiveHeight(1),
       alignItems: 'center',
-      paddingVertical: responsiveHeight(1),
+      paddingVertical: responsiveHeight(0.75),
       borderRadius: 12,
     },
   
     Name: {
-      fontSize: responsiveScreenFontSize(2),
+      fontSize: responsiveScreenFontSize(2.25),
       color: '#fff',
       paddingVertical: responsiveHeight(1),
       textAlign: 'center',
