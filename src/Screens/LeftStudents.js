@@ -67,6 +67,9 @@ import {
                         <Text allowFontScaling={false} style={styles.Name}>
                           Phone : {item.Phone}
                         </Text>
+                        <Text allowFontScaling={false} style={styles.Name}>
+                          Course : {item.CourseName}
+                        </Text>
                       </View>
                     </TouchableOpacity>
                   )}

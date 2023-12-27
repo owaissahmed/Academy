@@ -151,6 +151,8 @@ const Form = ({navigation}) => {
           Phone: formattedValue,
           Country: countryName,
           CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          Status:'',
+          Response:'Pending',
         });
 
         const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address

@@ -137,10 +137,13 @@ const HomeTuition = ({navigation}) => {
         const collectionRef = firestore().collection('users').add({
           Name: name,
           Fathername: father,
-          Course: 'Home Tuition',
+          CourseName: 'Home Tuition',
           Phone: formattedValue,
           Country: countryName,
           CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          Category:'Tuition',
+          Status:'',
+          Response:'Pending',
         });
         const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
         const subject = name;
