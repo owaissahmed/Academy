@@ -107,6 +107,7 @@ const UserAccount = ({navigation,route}) => {
           delay={1000}
           duration={2000}
           style={styles.main}>
+          <Image style={styles.logo} source={require('../Images/logoWhite.jpeg')} />
           <Text style={styles.Enter}>Enter Phone No. To See Your Requests</Text>
           <View>
             <PhoneInput
@@ -116,7 +117,7 @@ const UserAccount = ({navigation,route}) => {
               containerStyle={{
                 width: responsiveWidth(90),
                 height: responsiveHeight(6),
-                marginTop: responsiveHeight(3),
+                marginTop: responsiveHeight(2),
                 borderColor: '#36454F',
                 borderWidth: 1.5,
                 backgroundColor: '#FBFCF8',
@@ -179,11 +180,16 @@ const styles = StyleSheet.create({
     height: 'auto',
     display: 'flex',
     alignItems: 'center',
-    paddingTop: responsiveHeight(4),
+    paddingTop: responsiveHeight(1.5),
     paddingBottom: responsiveHeight(3),
     // borderColor: '#‌fff',
     borderRadius: 12,
     // justifyContent: 'space-evenly',
+  },
+  logo: {
+    height: responsiveHeight(12),
+    width: responsiveWidth(40),
+    marginBottom: responsiveHeight(2),
   },
   Enter: {
     fontSize: responsiveFontSize(2.5),
@@ -198,7 +204,7 @@ const styles = StyleSheet.create({
     // backgroundColor:'lightblue',
     letterSpacing: 1,
     lineHeight: 25,
-    marginTop: responsiveHeight(-1),
+    // marginTop: responsiveHeight(-1),
   },
   button: {
     backgroundColor: '#fff',
