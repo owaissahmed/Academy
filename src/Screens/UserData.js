@@ -8,9 +8,10 @@ import {
   ImageBackground,
   FlatList,
   TextInput,
-  Alert
+  Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
+import FlashMessage, {showMessage} from 'react-native-flash-message';
 import {
   responsiveScreenFontSize,
   responsiveWidth,
@@ -42,7 +43,11 @@ const UserData = ({navigation}) => {
             ...documentSnapshot.data(),
           });
         });
+
         setonline(onlineData);
+        setTimeout(() => {
+          Alert.alert('⚫ Tap On Fees Paid , \n   To Update Your Paid Fees!!');
+        }, 3000);
       });
 
     return () => unsubscribe();
@@ -56,45 +61,51 @@ const UserData = ({navigation}) => {
     setSelectedUser(user);
   };
 
- 
-
   const handleUpdateName = async () => {
-    if (!selectedUser  === 'Select Value'|| name.trim() === '')  {
+    if (!selectedUser === 'Select Value' || name.trim() === '') {
       Alert.alert('Please select a value or Fill the Input');
       return;
     }
 
     const {id} = selectedUser;
     try {
-      await firestore()
-        .collection('users')
-        .doc(id)
-        .update({FeesPaid: name,});
+      await firestore().collection('users').doc(id).update({FeesPaid: name});
       setSelectedUser(null);
     } catch (error) {
       console.log('Error updating name:', error);
     }
-  }
+  };
 
   const route = useRoute();
   const {phoneNo} = route.params;
 
   return (
     <View>
+      <>
+        <FlashMessage position={'center'} />
+      </>
       <ImageBackground
         resizeMode="cover"
-        style={styles.background}
+        style={{
+          width: devicewidth,
+          height: deviceheight,
+          alignItems: 'center',
+          justifyContent: 'center',
+          paddingTop:
+            selectedUser == null ? responsiveHeight(0) : responsiveHeight(15),
+          paddingBottom:
+            selectedUser != null ? responsiveHeight(12) : responsiveHeight(0),
+        }}
         source={require('../Images/background.jpg')}>
         {selectedUser && (
-          <View
-            style={styles.ModalView}>
+          <View style={styles.ModalView}>
             <Text style={styles.ModalHeading}>Enter Your Paid Fees</Text>
             <TextInput
-            allowFontScaling={false}
-            style={styles.password}
-            value={name}
-            onChangeText={NameChange}
-          />
+              allowFontScaling={false}
+              style={styles.password}
+              value={name}
+              onChangeText={NameChange}
+            />
             <TouchableOpacity style={styles.button} onPress={handleUpdateName}>
               <Text allowFontScaling={false} style={styles.buttontext}>
                 Update
@@ -108,7 +119,7 @@ const UserData = ({navigation}) => {
               <FlatList
                 data={online}
                 renderItem={({item}) => (
-                  <TouchableOpacity style={styles.DataView} >
+                  <TouchableOpacity style={styles.DataView}>
                     <View style={styles.DataView}>
                       <Text allowFontScaling={false} style={styles.Name}>
                         Name : {item.Name}
@@ -123,22 +134,24 @@ const UserData = ({navigation}) => {
                         Response : {item.Response}
                       </Text>
                       <>
-                      {item.Response.toLowerCase() !== 'pending' ? (
-                        <TouchableOpacity style={{width:responsiveWidth(100)}} onPress={() => handleSelectUser(item)}>
-                        <Text allowFontScaling={false} style={styles.Name}>
-                          Teacher: {item.Teacher}
-                        </Text>
-                        <Text allowFontScaling={false} style={styles.Name}>
-                          Fees: {item.Fees}
-                        </Text>
-                        <Text allowFontScaling={false} style={styles.Name}>
-                          Fees Paid: {item.FeesPaid}
-                        </Text>
-                      </TouchableOpacity>
+                        {item.Response.toLowerCase() !== 'pending' ? (
+                          <TouchableOpacity
+                            style={{width: responsiveWidth(100)}}
+                            onPress={() => handleSelectUser(item)}>
+                            <Text allowFontScaling={false} style={styles.Name}>
+                              Teacher: {item.Teacher}
+                            </Text>
+                            <Text allowFontScaling={false} style={styles.Name}>
+                              Fees: {item.Fees}
+                            </Text>
+                            <Text allowFontScaling={false} style={styles.Name}>
+                              Fees Paid: {item.FeesPaid}
+                            </Text>
+                          </TouchableOpacity>
                         ) : (
                           console.log('Pending')
-                      )}
-                    </>                    
+                        )}
+                      </>
                     </View>
                   </TouchableOpacity>
                 )}
@@ -176,15 +189,18 @@ const styles = StyleSheet.create({
     marginVertical: responsiveHeight(1),
     alignItems: 'center',
     paddingVertical: responsiveHeight(0.75),
+
     borderRadius: 12,
   },
 
   Name: {
+    paddingHorizontal: responsiveWidth(8),
     fontSize: responsiveScreenFontSize(2.25),
     color: '#fff',
     paddingVertical: responsiveHeight(1),
     textAlign: 'center',
     fontFamily: 'good',
+    // lineHeight:25,
     letterSpacing: 2,
   },
   NoData: {
@@ -195,24 +211,25 @@ const styles = StyleSheet.create({
     letterSpacing: 3,
     textTransform: 'uppercase',
   },
-  ModalView:{
-    display:'flex',
-    backgroundColor:'white',
+  ModalView: {
+    display: 'flex',
+    position: 'relative',
+    backgroundColor: 'white',
     width: responsiveWidth(90),
     borderRadius: 10,
-    justifyContent:'center',
-    alignItems:'center',
-    height:'auto',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 'auto',
     marginBottom: responsiveHeight(1),
   },
-  ModalHeading:{
+  ModalHeading: {
     fontSize: responsiveScreenFontSize(2.25),
     // borderRadius: 10,
-    borderTopLeftRadius:10,
-    borderTopRightRadius:10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     color: '#fff',
-    width:responsiveWidth(90),
-    backgroundColor:'#2e4c60',
+    width: responsiveWidth(90),
+    backgroundColor: '#2e4c60',
     paddingVertical: responsiveHeight(1.5),
     textAlign: 'center',
     fontFamily: 'good',
@@ -222,43 +239,43 @@ const styles = StyleSheet.create({
   Phone: {
     fontSize: responsiveScreenFontSize(2.25),
     backgroundColor: '#2e4c60',
-    
+
     color: '#fff',
     // paddingVertical: responsiveHeight(1),
     textAlign: 'center',
     fontFamily: 'good',
     letterSpacing: 2,
     marginVertical: responsiveHeight(1.5),
-},
+  },
 
-button: {
-  backgroundColor: '#2e4c60',
-  color: 'white',
-  padding: 6,
-  marginTop: responsiveHeight(1),
-  marginBottom: responsiveHeight(1),
-  borderRadius: 8,
-  width: responsiveWidth(30),
-},
-buttontext: {
-  color: '#fff',
-  fontWeight: '600',
-  letterSpacing: 0.7,
-  textAlign: 'center',
-  fontSize: responsiveFontSize(2.25),
-},
-password: {
-  borderRadius: 10,
-  paddingVertical: responsiveHeight(0.5),
-  marginVertical: responsiveHeight(1),
-  marginHorizontal:responsiveWidth(3),
-  color: '#2e4c60',
-  width:responsiveWidth(80),
-  textAlign: 'center',
-  fontSize: responsiveFontSize(2.25),
-  borderWidth: 1.5,
-  borderColor: '#2e4c60',
-  color: 'black',
-  height: responsiveHeight(5),
-},
+  button: {
+    backgroundColor: '#2e4c60',
+    color: 'white',
+    padding: 6,
+    marginTop: responsiveHeight(1),
+    marginBottom: responsiveHeight(1),
+    borderRadius: 8,
+    width: responsiveWidth(30),
+  },
+  buttontext: {
+    color: '#fff',
+    fontWeight: '600',
+    letterSpacing: 0.7,
+    textAlign: 'center',
+    fontSize: responsiveFontSize(2.25),
+  },
+  password: {
+    borderRadius: 10,
+    paddingVertical: responsiveHeight(0.5),
+    marginVertical: responsiveHeight(1),
+    marginHorizontal: responsiveWidth(3),
+    color: '#2e4c60',
+    width: responsiveWidth(80),
+    textAlign: 'center',
+    fontSize: responsiveFontSize(2.25),
+    borderWidth: 1.5,
+    borderColor: '#2e4c60',
+    color: 'black',
+    height: responsiveHeight(5),
+  },
 });
