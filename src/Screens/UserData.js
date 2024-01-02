@@ -53,6 +53,20 @@ const UserData = ({navigation}) => {
     return () => unsubscribe();
   }, []);
 
+  function show() {
+    showMessage({
+      message: '⚪️ Dont forget to send email after clicking on "SAVE" button',
+      backgroundColor: '#36454F',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2),
+        lineHeight: responsiveHeight(3),
+      },
+      duration: 50000,
+    });
+  }
+
   const NameChange = newname => {
     setname(newname);
   };
@@ -63,7 +77,7 @@ const UserData = ({navigation}) => {
 
   const handleUpdateName = async () => {
     if (!selectedUser === 'Select Value' || name.trim() === '') {
-      Alert.alert('Please select a value or Fill the Input');
+      Alert.alert('⚫ Please Fill the Input');
       return;
     }
 
@@ -81,9 +95,6 @@ const UserData = ({navigation}) => {
 
   return (
     <View>
-      <>
-        <FlashMessage position={'center'} />
-      </>
       <ImageBackground
         resizeMode="cover"
         style={{
@@ -97,9 +108,14 @@ const UserData = ({navigation}) => {
             selectedUser != null ? responsiveHeight(12) : responsiveHeight(0),
         }}
         source={require('../Images/background.jpg')}>
+        <>
+          <FlashMessage position={'center'} />
+        </>
         {selectedUser && (
           <View style={styles.ModalView}>
-            <Text style={styles.ModalHeading}>Enter Your Paid Fees</Text>
+            <Text style={styles.ModalHeading}>
+              Enter Your Paid Fees Details
+            </Text>
             <TextInput
               allowFontScaling={false}
               style={styles.password}
@@ -121,14 +137,14 @@ const UserData = ({navigation}) => {
                 renderItem={({item}) => (
                   <TouchableOpacity style={styles.DataView}>
                     <View style={styles.DataView}>
+                      <Text allowFontScaling={false} style={styles.CourseName}>
+                        Cousre : {item.CourseName}
+                      </Text>
                       <Text allowFontScaling={false} style={styles.Name}>
                         Name : {item.Name}
                       </Text>
                       <Text allowFontScaling={false} style={styles.Name}>
                         Father Name : {item.Fathername}
-                      </Text>
-                      <Text allowFontScaling={false} style={styles.Name}>
-                        Cousre : {item.CourseName}
                       </Text>
                       <Text allowFontScaling={false} style={styles.Name}>
                         Response : {item.Response}
@@ -180,16 +196,15 @@ const styles = StyleSheet.create({
   },
 
   FlatListVIew: {
-    width: responsiveWidth(90),
+    width: responsiveWidth(95),
   },
   DataView: {
     backgroundColor: '#2e4c60',
     height: 'auto',
-    width: responsiveWidth(90),
+    width: responsiveWidth(95),
     marginVertical: responsiveHeight(1),
     alignItems: 'center',
     paddingVertical: responsiveHeight(0.75),
-
     borderRadius: 12,
   },
 
@@ -200,6 +215,20 @@ const styles = StyleSheet.create({
     paddingVertical: responsiveHeight(1),
     textAlign: 'center',
     fontFamily: 'good',
+    // lineHeight:25,
+    letterSpacing: 2,
+  },
+
+  CourseName: {
+    paddingHorizontal: responsiveWidth(8),
+    fontSize: responsiveScreenFontSize(2.25),
+    color: '#2e4c60',
+    backgroundColor: 'white',
+    paddingVertical: responsiveHeight(1),
+    marginBottom: responsiveHeight(1),
+    textAlign: 'center',
+    fontFamily: 'good',
+    borderRadius: 12,
     // lineHeight:25,
     letterSpacing: 2,
   },
@@ -223,7 +252,7 @@ const styles = StyleSheet.create({
     marginBottom: responsiveHeight(1),
   },
   ModalHeading: {
-    fontSize: responsiveScreenFontSize(2.25),
+    fontSize: responsiveScreenFontSize(2),
     // borderRadius: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
