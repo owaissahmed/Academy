@@ -153,7 +153,7 @@ const UserData = ({navigation}) => {
           </View>
         )}
         {userCourses.length > 0 ? (
-          <View>
+          <Animatable.View animation={'fadeInUp'} delay={1000} duration={2000}>
             <View style={styles.FlatListVIew}>
               <FlatList
                 data={userCourses}
@@ -200,7 +200,7 @@ const UserData = ({navigation}) => {
                 keyExtractor={item => item.id}
               />
             </View>
-          </View>
+          </Animatable.View>
         ) : (
           <>
             {loading == true ? (

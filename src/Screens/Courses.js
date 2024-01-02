@@ -89,9 +89,7 @@ const Courses = ({navigation}) => {
           </View>
         </Modal>
         {courses.length > 0 ? (
-          <Animatable.View   animation={'fadeInUp'}
-          delay={1000}
-          duration={2000}>
+          <Animatable.View animation={'fadeInUp'} delay={1000} duration={2000}>
             <View style={styles.FlatListVIew}>
               <FlatList
                 data={courses}
