@@ -1,392 +1,289 @@
-import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
   Image,
-  StyleSheet,
-  ImageBackground,
-  ScrollView,
   Dimensions,
-  Alert,
+  StyleSheet,
+  Modal,
+  ActivityIndicator,
   Linking,
+  TouchableOpacity,
+  ImageBackground,
+  FlatList,
+  TextInput,
+  Alert,
 } from 'react-native';
-import Collapsible from 'react-native-collapsible';
-import {
-  responsiveFontSize,
-  responsiveHeight,
-  responsiveWidth,
-  responsiveScreenFontSize,
-} from 'react-native-responsive-dimensions';
-import {useNavigation} from '@react-navigation/native';
-import NetInfo from '@react-native-community/netinfo';
-const devicewidth = Dimensions.get('window').width;
-const deviceheight = Dimensions.get('window').height;
+import React, {useEffect, useState} from 'react';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
+import {
+  responsiveScreenFontSize,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
+import {responsiveHeight} from 'react-native-responsive-dimensions';
+import {responsiveFontSize} from 'react-native-responsive-dimensions';
+import firestore from '@react-native-firebase/firestore';
+const devicewidth = Dimensions.get('window').width;
+import {Picker} from '@react-native-picker/picker';
+import NetInfo from '@react-native-community/netinfo';
+const deviceheight = Dimensions.get('window').height;
+import * as Animatable from 'react-native-animatable';
+import {useRoute} from '@react-navigation/native';
+const Courses = ({navigation}) => {
+  const [courses, setcourses] = useState([]);
+  const [visible, setVisible] = useState(true);
+  const [loading, setLoading] = useState(true);
 
-const Accordion = ({
-  id,
-  title,
-  Videos,
-  Price,
-  openAccordion,
-  onToggle,
-  Link,
-}) => {
-  const [isConnected, setIsConnected] = useState(false);
-  const navigation = useNavigation();
-  const isOpen = openAccordion === id;
-
-  const toggleAccordion = () => {
-    onToggle(id);
+  const CoursesForm = title => {
+    navigation.navigate('Form', {TextHomeTuition: title});
   };
+
+  function Demo(Link) {
+    Linking.openURL(Link);
+  }
 
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(state => {
-      setIsConnected(state.isConnected);
-    });
+    setTimeout(() => {
+      setLoading(false);
+      setVisible(false);
+    }, 1000);
 
-    return () => {
-      unsubscribe();
-    };
+    const unsubscribe = firestore()
+      .collection('Old Courses')
+      .onSnapshot(querySnapshot => {
+        const coursesData = [];
+        querySnapshot.forEach(documentSnapshot => {
+          coursesData.push({
+            id: documentSnapshot.id,
+            ...documentSnapshot.data(),
+          });
+        });
+
+        setcourses(coursesData);
+      });
+
+    return () => unsubscribe();
   }, []);
-
-  const CoursesForm = () => {
-    if (isConnected == false) {
-      Internet();
-    } else navigation.navigate('Form', {TextHomeTuition: title});
-  };
-
-  function Internet() {
-    Alert.alert('⚫ Warning', 'No INternet Connection!');
-  }
-
-  function Demo() {
-    if (isConnected == true) {
-      Linking.openURL(Link);
-    } else Internet();
-  }
 
   return (
     <View>
-      <TouchableOpacity onPress={toggleAccordion}>
-        <View style={styles.TitleCollapse}>
-          <Text allowFontScaling={false} style={styles.TitleText}>
-            {title}
-          </Text>
-        </View>
-      </TouchableOpacity>
-      {isOpen && (
-        <View style={styles.Description_View}>
-          <View style={styles.V_P_View}>
-            <Text allowFontScaling={false} style={styles.DescriptionText}>
-              {Videos}
-            </Text>
-            <Text allowFontScaling={false} style={styles.DescriptionText}>
-              {Price}
-            </Text>
-          </View>
-          <View style={styles.ButtonView}>
-            <TouchableOpacity style={styles.Button} onPress={Demo}>
-              <Text allowFontScaling={false} style={styles.ButtonText}>
-                Demo Class
+      <ImageBackground
+        resizeMode="cover"
+        style={styles.background}
+        source={require('../Images/background.jpg')}>
+        <Modal visible={visible} animationType="fade" transparent={true}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              // marginBottom:responsiveHeight(5),
+              backgroundColor: 'rgba(0, 0, 0, 0.100)',
+            }}>
+            {loading ? (
+              <ActivityIndicator size="larger" color="#2e4c60" />
+            ) : (
+              <Text allowFontScaling={false} style={{color: '#ffffff'}}>
+                Loading...
               </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.Button} onPress={CoursesForm}>
-              <Text allowFontScaling={false} style={styles.ButtonText}>
-                Addmission
-              </Text>
-            </TouchableOpacity>
+            )}
           </View>
-        </View>
-      )}
+        </Modal>
+        {courses.length > 0 ? (
+          <Animatable.View   animation={'fadeInUp'}
+          delay={1000}
+          duration={2000}>
+            <View style={styles.FlatListVIew}>
+              <FlatList
+                data={courses}
+                renderItem={({item}) => (
+                  <TouchableOpacity style={styles.DataView}>
+                    <View style={styles.DataView}>
+                      <Text allowFontScaling={false} style={styles.CourseName}>
+                        {item.CourseName}
+                      </Text>
+                      <Text allowFontScaling={false} style={styles.Name}>
+                        Videos: {item.Videos}
+                      </Text>
+                      <Text allowFontScaling={false} style={styles.Name}>
+                        Price : {item.Price}
+                      </Text>
+                      <View style={styles.ButtonView}>
+                        <TouchableOpacity
+                          style={styles.Button}
+                          onPress={() => Demo(item.Link)}>
+                          <Text
+                            allowFontScaling={false}
+                            style={styles.ButtonText}>
+                            Demo Class
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={styles.Button}
+                          onPress={() => CoursesForm(item.CourseName)}>
+                          <Text
+                            allowFontScaling={false}
+                            style={styles.ButtonText}>
+                            Addmission
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                )}
+                keyExtractor={item => item.id}
+              />
+            </View>
+          </Animatable.View>
+        ) : (
+          <>
+            {loading == true ? (
+              <Text allowFontScaling={false} style={styles.NoData}></Text>
+            ) : (
+              <Text allowFontScaling={false} style={styles.NoData}>
+                No Data!!
+              </Text>
+            )}
+          </>
+        )}
+      </ImageBackground>
     </View>
   );
 };
 
-const Courses = ({navigation}) => {
-  const [openAccordion, setOpenAccordion] = useState(null);
-
-  const handleToggle = accordionId => {
-    setOpenAccordion(openAccordion === accordionId ? null : accordionId);
-  };
-
-  return (
-    <ImageBackground
-      resizeMode="cover"
-      style={styles.background}
-      source={require('../Images/background.jpg')}>
-      <View>
-        <Text allowFontScaling={false} style={styles.HeadingText}>
-          COURSES
-        </Text>
-      </View>
-      <ScrollView>
-        <Accordion
-          id={1}
-          title="آسان اصولِ فقہ کورس"
-          Videos="Videos : 92"
-          Price="Price : 7500"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmU6Z_5d0yytWQYKmU7JBGJ2"
-        />
-        <Accordion
-          id={2}
-          title="آسان فہمِ عقائد کورس"
-          Videos="Videos : 28"
-          Price="Price : 1500"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmXGm2efMIaa2Qrrn_xPspSz"
-        />
-        <Accordion
-          id={3}
-          title="آسان شرح مائۃ عامل کورس"
-          Videos="Videos : 29"
-          Price="Price : 1500"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmXKIXbUwmikR88auMXna3i6"
-        />
-        <Accordion
-          id={4}
-          title="آسان فہمُ القرآن کورس"
-          Videos="Videos : 51"
-          Price="Price : 4500"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmXwfLOZIbGpM7ggcBxxQ8nk"
-        />
-        <Accordion
-          id={5}
-          title="آسان تراکیبِ نحویہ کورس"
-          Videos="Videos : 46"
-          Price="Price : 4500"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmWHDaSRIwMLo0ewwCSp091J"
-        />
-        <Accordion
-          id={6}
-          title="تراکیبِ نحویہ کورس پہلا پارہ"
-          Videos="Videos : 24"
-          Price="Price : 1500"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmWLgXKeeqmmIIaY2HTX7yAl"
-        />
-        <Accordion
-          id={7}
-          title="دورۂ صرف و نحو"
-          Videos="Videos : 44"
-          Price="Price : 1500"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmUXMWewmXwaARZrPaIksrEG"
-        />
-        <Accordion
-          id={8}
-          title="دورۂ منطق"
-          Videos="Videos : 16"
-          Price="Price : 1500"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmWEbo5QBYLw4iSVFuf_sGZA"
-        />
-        <Accordion
-          id={9}
-          title="آسان علمِ صرف کورس"
-          Videos="Videos : 35"
-          Price="Price : 3000"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmUW02w9QuZKdSP3smmG9QI3"
-        />
-        <Accordion
-          id={10}
-          title="آسان علمِ نحو کورس"
-          Videos="Videos : 62"
-          Price="Price : 7500"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmVGpa1F-NDVTFXmiLyNhI07"
-        />
-        <Accordion
-          id={11}
-          title="آسان فہمِِ بلاغت کورس (علم المعانی)"
-          Videos="Videos : 74"
-          Price="Price : 4500"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmWZol1-RHpc3tIt2UE3ZFc2"
-        />
-        <Accordion
-          id={12}
-          title="آسان مبادیاتِ  فقہ کورس"
-          Videos="Videos : -"
-          Price="Price : 3000"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmVSeMhMeLoX1AxjdnBaaBZL"
-        />
-        <Accordion
-          id={13}
-          title="آسان تدریسی ٹیسٹ کورس"
-          Videos="Videos : -"
-          Price="Price : 3000"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmWuQrsygTSfae5OwG7qTyhn"
-        />
-        <Accordion
-          id={14}
-          title="آسان فہمِ وراثت کورس"
-          Videos="Videos : -"
-          Price="Price : 3000"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmXH3LNHyYp1ZehQy4Y0tfR2"
-        />
-        <Accordion
-          id={15}
-          title="آسان اصولِ حدیث کورس"
-          Videos="Videos : -"
-          Price="Price : 3000"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmUsxYPz0jUIqE4nn8xV5TMm"
-        />
-        <Accordion
-          id={16}
-          title="آسان فہمِِ بلاغت کورس (علم البیان والبدیع)"
-          Videos="Videos : 30"
-          Price="Price : 3000"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmXUrslrRFHmCxlBI6JMLVmH"
-        />
-        <Accordion
-          id={17}
-          title="آسان آدابِ بحث و مناظرہ کورس"
-          Videos="Videos : 06"
-          Price="Price : 500"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmVR0XAud2VF9mkoaUdpqYQS"
-        />
-        <Accordion
-          id={18}
-          title="حلِ عبارت و ترجمہ کورس"
-          Videos="Videos : 30"
-          Price="Price : 2000"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmU_j_tW0NuhdmEpdupYKuDK"
-        />
-        <Accordion
-          id={19}
-          title="اجراءُ الصرف فی القرآن"
-          Videos="Videos : 28"
-          Price="Price : 3000"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmXK1zwjZ8FBvIAvs-S1oFwa"
-        />
-        <Accordion
-          id={20}
-          title="کتابُ البیوع قدوری شریف"
-          Videos="Videos : 52"
-          Price="Price : 5000"
-          openAccordion={openAccordion}
-          onToggle={handleToggle}
-          Link="https://www.youtube.com/playlist?list=PLN0T4WcAQQmWdMPDdDObN4ssGMu134LSD"
-        />
-      </ScrollView>
-    </ImageBackground>
-  );
-};
+export default Courses;
 
 const styles = StyleSheet.create({
   background: {
     width: devicewidth,
     height: deviceheight,
-    // alignItems: 'center',
-    // justifyContent: 'space-evenly',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  HeadingText: {
-    fontFamily: 'good',
-    color: '#2e4c60',
-    // backgroundColor: 'seagreen',
-    fontSize: responsiveFontSize(5),
+
+  FlatListVIew: {
+    width: responsiveWidth(95),
+  },
+  DataView: {
+    backgroundColor: '#2e4c60',
+    height: 'auto',
+    width: responsiveWidth(95),
+    marginVertical: responsiveHeight(1),
+    alignItems: 'center',
+    paddingVertical: responsiveHeight(0.75),
+    borderRadius: 12,
+  },
+
+  Name: {
+    paddingHorizontal: responsiveWidth(8),
+    fontSize: responsiveScreenFontSize(2.25),
+    color: '#fff',
+    paddingVertical: responsiveHeight(1),
     textAlign: 'center',
-    // marginVertical:responsiveHeight(),
-    marginTop: responsiveHeight(3),
-    // marginBottom: responsiveHeight(2),
-    textTransform: 'uppercase',
+    fontFamily: 'good',
+    // lineHeight:25,
     letterSpacing: 2,
   },
-  TitleCollapse: {
+
+  CourseName: {
+    // paddingHorizontal: responsiveWidth(4),
+    fontSize: responsiveScreenFontSize(3.25),
+    color: '#2e4c60',
+    backgroundColor: 'white',
+    // paddingVertical: responsiveHeight(1),
+    marginTop: responsiveHeight(-1),
+    marginBottom: responsiveHeight(1),
+    textAlign: 'center',
+    fontFamily: 'good',
+    borderRadius: 12,
+    width: responsiveWidth(90),
+    // letterSpacing: 2,
+    fontFamily: 'mushaf',
     alignItems: 'center',
     // paddingVertical: responsiveHeight(0.5),
     // paddingTop:responsiveHeight(0.25),
     paddingBottom: responsiveHeight(0.75),
-    marginHorizontal: responsiveWidth(4),
-    backgroundColor: '#2e4c60',
-    marginVertical: responsiveHeight(2),
+    // marginHorizontal: responsiveWidth(4),
+
+    // borderTopLeftRadius: 10,
+    // borderTopRightRadius: 10,
+  },
+  NoData: {
+    fontSize: responsiveScreenFontSize(4),
+    color: 'red',
+    textAlign: 'center',
+    fontFamily: 'good',
+    letterSpacing: 3,
+    textTransform: 'uppercase',
+  },
+  ModalView: {
+    display: 'flex',
+    position: 'relative',
+    backgroundColor: 'white',
+    width: responsiveWidth(90),
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 'auto',
+    marginBottom: responsiveHeight(1),
+  },
+  ModalHeading: {
+    fontSize: responsiveScreenFontSize(2),
+    // borderRadius: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-  },
-  TitleText: {
     color: '#fff',
-    fontSize: responsiveScreenFontSize(3),
-    fontFamily: 'mushaf',
-    textAlignVertical: 'center',
+    width: responsiveWidth(90),
+    backgroundColor: '#2e4c60',
+    paddingVertical: responsiveHeight(1.5),
+    textAlign: 'center',
+    fontFamily: 'good',
+    letterSpacing: 2,
+    marginBottom: responsiveHeight(1),
   },
-  Description_View: {
-    padding: 10,
-    marginHorizontal: responsiveWidth(4),
-    backgroundColor: 'white',
-    borderColor: '#2e4c60',
-    borderWidth: 2,
-    marginTop: responsiveHeight(-2.25),
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-  },
-  V_P_View: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingHorizontal: responsiveWidth(1),
-    borderRadius: 8,
-  },
-  DescriptionText: {
-    color: '#2e4c60',
+  Phone: {
     fontSize: responsiveScreenFontSize(2.25),
-    fontFamily: 'nunito',
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
-    marginVertical: responsiveHeight(0.25),
+    backgroundColor: '#2e4c60',
+
+    color: '#fff',
+    // paddingVertical: responsiveHeight(1),
+    textAlign: 'center',
+    fontFamily: 'good',
+    letterSpacing: 2,
+    marginVertical: responsiveHeight(1.5),
+  },
+
+  password: {
+    borderRadius: 10,
+    paddingVertical: responsiveHeight(0.5),
+    marginVertical: responsiveHeight(1),
+    marginHorizontal: responsiveWidth(3),
+    color: '#2e4c60',
+    width: responsiveWidth(80),
+    textAlign: 'center',
+    fontSize: responsiveFontSize(2.25),
+    borderWidth: 1.5,
+    borderColor: '#2e4c60',
+    color: 'black',
+    height: responsiveHeight(5),
   },
   ButtonView: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
+    width: responsiveWidth(100),
   },
   Button: {
     marginTop: responsiveHeight(1),
-    backgroundColor: '#2e4c60',
-    paddingVertical: responsiveHeight(0.75),
-    paddingHorizontal: responsiveWidth(3),
+    backgroundColor: '#fff',
+    paddingVertical: responsiveHeight(1),
+    paddingHorizontal: responsiveWidth(4),
     borderRadius: 8,
   },
   ButtonText: {
-    color: '#fff',
-    fontSize: responsiveScreenFontSize(2),
+    color: '#2e4c60',
+    fontSize: responsiveScreenFontSize(2.25),
     fontFamily: 'nunito',
     fontWeight: 'bold',
     letterSpacing: 0.5,
   },
 });
-
-export default Courses;

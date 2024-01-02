@@ -9,6 +9,8 @@ import {
   FlatList,
   TextInput,
   Alert,
+  ActivityIndicator,
+  Modal,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
@@ -21,33 +23,38 @@ import {responsiveFontSize} from 'react-native-responsive-dimensions';
 import firestore from '@react-native-firebase/firestore';
 const devicewidth = Dimensions.get('window').width;
 import {Picker} from '@react-native-picker/picker';
+
 const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 import {useRoute} from '@react-navigation/native';
 const UserData = ({navigation}) => {
-  const [online, setonline] = useState([]);
-  const [khi1chutti, setKhi1chutti] = useState([]);
+  const [userCourses, setuserCourses] = useState([]);
+  const [visible, setVisible] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
 
   const [name, setname] = useState('');
 
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+      setVisible(false);
+    }, 1000);
+
     const unsubscribe = firestore()
       .collection('users')
       .where('Phone', '==', phoneNo)
       .onSnapshot(querySnapshot => {
-        const onlineData = [];
+        const userCoursesData = [];
         querySnapshot.forEach(documentSnapshot => {
-          onlineData.push({
+          userCoursesData.push({
             id: documentSnapshot.id,
             ...documentSnapshot.data(),
           });
         });
 
-        setonline(onlineData);
-        setTimeout(() => {
-          Alert.alert('⚫ Tap On Fees Paid , \n   To Update Your Paid Fees!!');
-        }, 3000);
+        setuserCourses(userCoursesData);
+        
       });
 
     return () => unsubscribe();
@@ -108,9 +115,25 @@ const UserData = ({navigation}) => {
             selectedUser != null ? responsiveHeight(12) : responsiveHeight(0),
         }}
         source={require('../Images/background.jpg')}>
-        <>
-          <FlashMessage position={'center'} />
-        </>
+        <Modal visible={visible} animationType="fade" transparent={true}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              // marginBottom:responsiveHeight(5),
+              backgroundColor: 'rgba(0, 0, 0, 0.100)',
+            }}>
+            {loading ? (
+              <ActivityIndicator size="larger" color="#2e4c60" />
+            ) : (
+              <Text allowFontScaling={false} style={{color: '#ffffff'}}>
+                Loading...
+              </Text>
+            )}
+          </View>
+        </Modal>
+
         {selectedUser && (
           <View style={styles.ModalView}>
             <Text style={styles.ModalHeading}>
@@ -129,16 +152,16 @@ const UserData = ({navigation}) => {
             </TouchableOpacity>
           </View>
         )}
-        {online.length > 0 ? (
+        {userCourses.length > 0 ? (
           <View>
             <View style={styles.FlatListVIew}>
               <FlatList
-                data={online}
+                data={userCourses}
                 renderItem={({item}) => (
                   <TouchableOpacity style={styles.DataView}>
                     <View style={styles.DataView}>
                       <Text allowFontScaling={false} style={styles.CourseName}>
-                        Cousre : {item.CourseName}
+                        {item.CourseName}
                       </Text>
                       <Text allowFontScaling={false} style={styles.Name}>
                         Name : {item.Name}
@@ -151,9 +174,7 @@ const UserData = ({navigation}) => {
                       </Text>
                       <>
                         {item.Response.toLowerCase() !== 'pending' ? (
-                          <TouchableOpacity
-                            style={{width: responsiveWidth(100)}}
-                            onPress={() => handleSelectUser(item)}>
+                          <>
                             <Text allowFontScaling={false} style={styles.Name}>
                               Teacher: {item.Teacher}
                             </Text>
@@ -163,7 +184,12 @@ const UserData = ({navigation}) => {
                             <Text allowFontScaling={false} style={styles.Name}>
                               Fees Paid: {item.FeesPaid}
                             </Text>
-                          </TouchableOpacity>
+                            <TouchableOpacity
+                              style={{width: responsiveWidth(100)}}
+                              onPress={() => handleSelectUser(item)}>
+                              <Text style={styles.UpdButton}>Update Paid Fees</Text>
+                            </TouchableOpacity>
+                         </>
                         ) : (
                           console.log('Pending')
                         )}
@@ -176,9 +202,15 @@ const UserData = ({navigation}) => {
             </View>
           </View>
         ) : (
-          <Text allowFontScaling={false} style={styles.NoData}>
-            No Data!!
-          </Text>
+          <>
+            {loading == true ? (
+              <Text allowFontScaling={false} style={styles.NoData}></Text>
+            ) : (
+              <Text allowFontScaling={false} style={styles.NoData}>
+                No Data!!
+              </Text>
+            )}
+          </>
         )}
       </ImageBackground>
     </View>
@@ -221,11 +253,24 @@ const styles = StyleSheet.create({
 
   CourseName: {
     paddingHorizontal: responsiveWidth(8),
-    fontSize: responsiveScreenFontSize(2.25),
+    fontSize: responsiveScreenFontSize(2.5),
     color: '#2e4c60',
     backgroundColor: 'white',
     paddingVertical: responsiveHeight(1),
     marginBottom: responsiveHeight(1),
+    textAlign: 'center',
+    fontFamily: 'good',
+    borderRadius: 12,
+    // lineHeight:25,
+    letterSpacing: 2,
+  },
+  UpdButton: {
+    paddingHorizontal: responsiveWidth(8),
+    fontSize: responsiveScreenFontSize(2.25),
+    color: '#2e4c60',
+    backgroundColor: 'white',
+    paddingVertical: responsiveHeight(1),
+    marginTop: responsiveHeight(1),
     textAlign: 'center',
     fontFamily: 'good',
     borderRadius: 12,
