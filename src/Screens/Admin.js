@@ -26,13 +26,12 @@ import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import {useNavigation} from '@react-navigation/native';
 const Admin = ({navigation}) => {
-
-function gotoAddCourse() {
-  navigation.navigate('AddCourse')
-}
-function gotoStudentsData() {
-  navigation.navigate('StudentsData')
-}
+  function gotoAddCourse() {
+    navigation.navigate('AddCourse');
+  }
+  function gotoStudentsData() {
+    navigation.navigate('StudentsData');
+  }
 
   return (
     <View>
@@ -44,6 +43,7 @@ function gotoStudentsData() {
           <Animatable.View
             duration={2000}
             delay={100}
+            animation="fadeInUp"
             style={styles.rectangle}>
             <Text allowFontScaling={false} style={styles.rectangletext}>
               ازھارالاسلام اکیڈمی
@@ -53,27 +53,31 @@ function gotoStudentsData() {
             </Text>
           </Animatable.View>
         </View>
-        <TouchableOpacity onPress={gotoStudentsData}>
-          <View style={styles.square}>
-            <Text allowFontScaling={false} style={styles.squaretext}>
-             STUDENTS DATA
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <View style={styles.square}>
-            <Text allowFontScaling={false} style={styles.squaretext}>
-             TEACHERS DATA
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={gotoAddCourse}>
-          <View style={styles.square}>
-            <Text allowFontScaling={false} style={styles.squaretext}>
-            ADD NEW COURSE
-            </Text>
-          </View>
-        </TouchableOpacity>
+        <Animatable.View style={styles.squareView} duration={2000}
+        delay={100}
+        animation="fadeInDown">
+          <TouchableOpacity onPress={gotoStudentsData}>
+            <View style={styles.square}>
+              <Text allowFontScaling={false} style={styles.squaretext}>
+                STUDENTS DATA
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <View style={styles.square}>
+              <Text allowFontScaling={false} style={styles.squaretext}>
+                TEACHERS DATA
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={gotoAddCourse}>
+            <View style={styles.square}>
+              <Text allowFontScaling={false} style={styles.squaretext}>
+                ADD NEW COURSE
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </Animatable.View>
       </ImageBackground>
     </View>
   );
@@ -120,8 +124,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     fontFamily: 'good',
-    letterSpacing:2
+    letterSpacing: 2,
     // marginTop: responsiveHeight(1),
+  },
+  squareView:{
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height:responsiveHeight(50)
   },
   square: {
     marginTop: responsiveHeight(-6),
@@ -132,105 +142,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
-    backgroundColor:'#2e4c60',
+    backgroundColor: '#2e4c60',
     marginHorizontal: responsiveWidth(3),
     // marginBottom: responsiveHeight(1),
   },
-  info: {
-    height: responsiveHeight(8),
-    width: responsiveWidth(10),
-    marginVertical: responsiveHeight(0.75),
-  },
-  quran: {
-    height: responsiveHeight(8),
-    width: responsiveWidth(24),
-    marginTop: responsiveHeight(1),
-  },
-  coming: {
-    height: responsiveHeight(9),
-    width: responsiveWidth(30),
-    // marginTop: responsiveHeight(0.75),
-  },
-  online: {
-    height: responsiveHeight(9),
-    width: responsiveWidth(24),
-    marginBottom: responsiveHeight(0.5),
-  },
-  home: {
-    height: responsiveHeight(9),
-    width: responsiveWidth(35),
-    marginTop: responsiveHeight(1),
-  },
-  books: {
-    height: responsiveHeight(8),
-    width: responsiveWidth(19),
-    marginTop: responsiveHeight(1),
-  },
-  teacher: {
-    height: responsiveHeight(9.5),
-    width: responsiveWidth(26),
-  },
-  youtube: {
-    height: responsiveHeight(9),
-    width: responsiveWidth(20),
-    marginTop: responsiveHeight(0.5),
-  },
-
-  modalBackground: {
-    width: responsiveWidth(90),
-    height: responsiveHeight(30),
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-  },
-  modal: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderRadius: 20,
-  },
-  login: {
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
-    backgroundColor: '#FBFCF8',
-    padding: 8,
-    borderColor: '#36454F',
-    color: '#36454F',
-    borderWidth: 1.5,
-    fontFamily: 'good',
-    borderRadius: 6,
-    letterSpacing: 1,
-    marginTop: responsiveHeight(0.5),
-    fontSize: responsiveFontSize(2),
-  },
-  modalImage: {
-    height: responsiveHeight(11),
-    width: responsiveWidth(24),
-    marginTop: responsiveHeight(1),
-  },
-  ModalButtonView: {
-    marginTop: responsiveHeight(1),
-
-    width: responsiveWidth(85),
-
-    marginBottom: responsiveHeight(1),
-
-    paddingHorizontal: responsiveWidth(4),
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  Btn: {
-    backgroundColor: '#36454F',
-    color: 'white',
-    padding: 6,
-    borderRadius: 8,
-    width: responsiveWidth(30),
-  },
-  BtnText: {
-    color: '#fff',
-    fontWeight: '600',
-    letterSpacing: 0.7,
-    textAlign: 'center',
-    fontSize: responsiveFontSize(2.25),
-  },
+  
 });
