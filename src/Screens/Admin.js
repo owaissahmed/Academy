@@ -32,6 +32,9 @@ const Admin = ({navigation}) => {
   function gotoStudentsData() {
     navigation.navigate('StudentsData');
   }
+  function gotoTeachersData() {
+    navigation.navigate('TeachersData');
+  }
 
   return (
     <View>
@@ -53,9 +56,11 @@ const Admin = ({navigation}) => {
             </Text>
           </Animatable.View>
         </View>
-        <Animatable.View style={styles.squareView} duration={2000}
-        delay={100}
-        animation="fadeInDown">
+        <Animatable.View
+          style={styles.squareView}
+          duration={2000}
+          delay={100}
+          animation="fadeInDown">
           <TouchableOpacity onPress={gotoStudentsData}>
             <View style={styles.square}>
               <Text allowFontScaling={false} style={styles.squaretext}>
@@ -63,7 +68,7 @@ const Admin = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={gotoTeachersData}>
             <View style={styles.square}>
               <Text allowFontScaling={false} style={styles.squaretext}>
                 TEACHERS DATA
@@ -127,11 +132,11 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
     // marginTop: responsiveHeight(1),
   },
-  squareView:{
+  squareView: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height:responsiveHeight(50)
+    height: responsiveHeight(50),
   },
   square: {
     marginTop: responsiveHeight(-6),
@@ -146,5 +151,4 @@ const styles = StyleSheet.create({
     marginHorizontal: responsiveWidth(3),
     // marginBottom: responsiveHeight(1),
   },
-  
 });

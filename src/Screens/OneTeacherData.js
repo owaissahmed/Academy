@@ -7,12 +7,15 @@ import {
   TouchableOpacity,
   ImageBackground,
   FlatList,
+  Alert,
+  ScrollView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
   responsiveScreenFontSize,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import {useRoute} from '@react-navigation/native';
 import {responsiveHeight} from 'react-native-responsive-dimensions';
 import {responsiveFontSize} from 'react-native-responsive-dimensions';
 import firestore from '@react-native-firebase/firestore';
@@ -20,23 +23,24 @@ const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 
-const OnlineData = ({navigation}) => {
-  const [online, setonline] = useState([]);
-
+const OneTeacherData = ({navigation}) => {
+  const [teacher, setteacher] = useState([]);
+  const route = useRoute();
+  const TeacherName = route.params.TeacherName;
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('users')
-      .where('CourseName', '==', 'Online Tuition')
-      .where('Status', '==', '')
+      .where('Teacher', '==', TeacherName)
       .onSnapshot(querySnapshot => {
-        const onlineData = [];
+        const teacherData = [];
         querySnapshot.forEach(documentSnapshot => {
-          onlineData.push({
+          teacherData.push({
             id: documentSnapshot.id,
             ...documentSnapshot.data(),
           });
         });
-        setonline(onlineData);
+        setteacher(teacherData);
+        // Alert.alert(TeacherName);
       });
 
     return () => unsubscribe();
@@ -48,11 +52,30 @@ const OnlineData = ({navigation}) => {
         resizeMode="cover"
         style={styles.background}
         source={require('../Images/background.jpg')}>
-        {online.length > 0 ? (
+        {teacher.length > 0 ? (
+          <View style={styles.square}>
+            <Text allowFontScaling={false} style={styles.squaretext}>
+              Total Students
+            </Text>
+            <Text allowFontScaling={false} style={styles.squaretext}>
+              {TeacherName}
+            </Text>
+            <Text allowFontScaling={false} style={styles.squaretext}>
+              {teacher.length}
+            </Text>
+          </View>
+        ) : (
+          <View>
+            <Text allowFontScaling={false} style={styles.squaretext}>
+             
+            </Text>
+          </View>
+        )}
+        {teacher.length > 0 ? (
           <View>
             <View style={styles.FlatListVIew}>
               <FlatList
-                data={online}
+                data={teacher}
                 renderItem={({item}) => (
                   <TouchableOpacity style={styles.DataView}>
                     <View style={styles.DataView}>
@@ -60,16 +83,10 @@ const OnlineData = ({navigation}) => {
                         Name : {item.Name}
                       </Text>
                       <Text allowFontScaling={false} style={styles.Name}>
-                        Father Name : {item.Fathername}
-                      </Text>
-                      <Text allowFontScaling={false} style={styles.Name}>
-                        Country : {item.Country}
+                        Course Name : {item.CourseName}
                       </Text>
                       <Text allowFontScaling={false} style={styles.Name}>
                         Phone : {item.Phone}
-                      </Text>
-                      <Text allowFontScaling={false} style={styles.Name}>
-                        Teacher : {item.Teacher}
                       </Text>
                       <Text allowFontScaling={false} style={styles.Name}>
                         Fees : {item.Fees}
@@ -94,7 +111,7 @@ const OnlineData = ({navigation}) => {
   );
 };
 
-export default OnlineData;
+export default OneTeacherData;
 
 const styles = StyleSheet.create({
   background: {
@@ -105,20 +122,47 @@ const styles = StyleSheet.create({
   },
 
   FlatListVIew: {
-    width: responsiveWidth(90),
+    width: responsiveWidth(95),
+    marginBottom: responsiveHeight(16),
   },
   DataView: {
     backgroundColor: '#2e4c60',
     height: 'auto',
-    width: responsiveWidth(90),
-    marginVertical:responsiveHeight(1),
+    width: responsiveWidth(95),
+    marginVertical: responsiveHeight(1),
     alignItems: 'center',
     paddingVertical: responsiveHeight(1),
     borderRadius: 12,
+    // marginBottom: responsiveHeight(16),
   },
-
+  squaretext: {
+    fontSize: responsiveScreenFontSize(3),
+    color: '#2e4c60',
+    backgroundColor: '#fff',
+    textAlign: 'center',
+    fontFamily: 'good',
+    letterSpacing: 2,
+    lineHeight: 30,
+    // marginTop: responsiveHeight(1),
+  },
+  square: {
+    marginTop: responsiveHeight(16),
+    // borderColor: '#2e4c60',
+    borderWidth: 1.5,
+    height: 'auto',
+    width: responsiveWidth(90),
+    justifyContent: 'center',
+    alignItems: 'center',
+    // alignContent:'flex-start',
+    // alignSelf:
+    borderRadius: 12,
+    backgroundColor: '#fff',
+    paddingVertical: responsiveHeight(1),
+    // marginHorizontal: responsiveWidth(3),
+    // marginBottom: responsiveHeight(1),
+  },
   Name: {
-    fontSize: responsiveScreenFontSize(2),
+    fontSize: responsiveScreenFontSize(2.25),
     color: '#fff',
     paddingVertical: responsiveHeight(1),
     textAlign: 'center',

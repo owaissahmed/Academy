@@ -70,6 +70,15 @@ import {
                         <Text allowFontScaling={false} style={styles.Name}>
                           Course : {item.CourseName}
                         </Text>
+                        <Text allowFontScaling={false} style={styles.Name}>
+                        Teacher : {item.Teacher}
+                      </Text>
+                      <Text allowFontScaling={false} style={styles.Name}>
+                        Fees : {item.Fees}
+                      </Text>
+                      <Text allowFontScaling={false} style={styles.Name}>
+                        FeesPaid : {item.FeesPaid}
+                      </Text>
                       </View>
                     </TouchableOpacity>
                   )}
@@ -119,11 +128,11 @@ import {
       letterSpacing: 2,
     },
     NoData: {
-      fontSize: responsiveScreenFontSize(1.5),
+      fontSize: responsiveScreenFontSize(4),
       color: 'red',
       textAlign: 'center',
       fontFamily: 'good',
-      letterSpacing: 2,
+      letterSpacing: 3,
       textTransform: 'uppercase',
     },
   });

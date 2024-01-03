@@ -38,9 +38,13 @@ const Courses = ({navigation}) => {
   };
 
   function Demo(Link) {
-    Linking.openURL(Link);
+    if (Link != '') {
+      Linking.openURL(Link);
+    }else {
+      Alert.alert('No Class Availible')
+    }
   }
-
+  
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);

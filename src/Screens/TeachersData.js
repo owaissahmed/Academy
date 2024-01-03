@@ -20,27 +20,29 @@ const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 
-const OnlineData = ({navigation}) => {
-  const [online, setonline] = useState([]);
+const TeachersData = ({route,navigation}) => {
+  const [teacher, setteacher] = useState([]);
 
   useEffect(() => {
     const unsubscribe = firestore()
-      .collection('users')
-      .where('CourseName', '==', 'Online Tuition')
-      .where('Status', '==', '')
+      .collection('teachers')
       .onSnapshot(querySnapshot => {
-        const onlineData = [];
+        const teacherData = [];
         querySnapshot.forEach(documentSnapshot => {
-          onlineData.push({
+          teacherData.push({
             id: documentSnapshot.id,
             ...documentSnapshot.data(),
           });
         });
-        setonline(onlineData);
+        setteacher(teacherData);
       });
 
     return () => unsubscribe();
   }, []);
+
+function GoToOneTeacherData(TeacherName) {
+    navigation.navigate('OneTeacherData',{TeacherName: TeacherName})
+}
 
   return (
     <View>
@@ -48,41 +50,27 @@ const OnlineData = ({navigation}) => {
         resizeMode="cover"
         style={styles.background}
         source={require('../Images/background.jpg')}>
-        {online.length > 0 ? (
+        {teacher.length > 0 ? (
           <View>
-            <View style={styles.FlatListVIew}>
+            <Animatable.View
+              animation={'zoomIn'}
+              delay={1000}
+              duration={2000}
+              style={styles.FlatListVIew}>
               <FlatList
-                data={online}
+                data={teacher}
                 renderItem={({item}) => (
-                  <TouchableOpacity style={styles.DataView}>
+                  <TouchableOpacity style={styles.DataView} onPress={() => GoToOneTeacherData(item.Name)}>
                     <View style={styles.DataView}>
                       <Text allowFontScaling={false} style={styles.Name}>
-                        Name : {item.Name}
-                      </Text>
-                      <Text allowFontScaling={false} style={styles.Name}>
-                        Father Name : {item.Fathername}
-                      </Text>
-                      <Text allowFontScaling={false} style={styles.Name}>
-                        Country : {item.Country}
-                      </Text>
-                      <Text allowFontScaling={false} style={styles.Name}>
-                        Phone : {item.Phone}
-                      </Text>
-                      <Text allowFontScaling={false} style={styles.Name}>
-                        Teacher : {item.Teacher}
-                      </Text>
-                      <Text allowFontScaling={false} style={styles.Name}>
-                        Fees : {item.Fees}
-                      </Text>
-                      <Text allowFontScaling={false} style={styles.Name}>
-                        FeesPaid : {item.FeesPaid}
+                        {item.Name}
                       </Text>
                     </View>
                   </TouchableOpacity>
                 )}
                 keyExtractor={item => item.id}
               />
-            </View>
+            </Animatable.View>
           </View>
         ) : (
           <Text allowFontScaling={false} style={styles.NoData}>
@@ -94,7 +82,7 @@ const OnlineData = ({navigation}) => {
   );
 };
 
-export default OnlineData;
+export default TeachersData;
 
 const styles = StyleSheet.create({
   background: {
@@ -111,14 +99,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#2e4c60',
     height: 'auto',
     width: responsiveWidth(90),
-    marginVertical:responsiveHeight(1),
+    marginVertical: responsiveHeight(1),
     alignItems: 'center',
     paddingVertical: responsiveHeight(1),
     borderRadius: 12,
   },
 
   Name: {
-    fontSize: responsiveScreenFontSize(2),
+    fontSize: responsiveScreenFontSize(2.5),
     color: '#fff',
     paddingVertical: responsiveHeight(1),
     textAlign: 'center',

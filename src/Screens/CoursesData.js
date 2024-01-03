@@ -71,6 +71,15 @@ import {
                         <Text allowFontScaling={false} style={styles.Name}>
                           Course : {item.CourseName}
                         </Text>
+                        <Text allowFontScaling={false} style={styles.Name}>
+                        Teacher : {item.Teacher}
+                      </Text>
+                      <Text allowFontScaling={false} style={styles.Name}>
+                        Fees : {item.Fees}
+                      </Text>
+                      <Text allowFontScaling={false} style={styles.Name}>
+                        FeesPaid : {item.FeesPaid}
+                      </Text>
                       </View>
                     </TouchableOpacity>
                   )}
