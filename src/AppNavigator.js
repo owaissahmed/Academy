@@ -24,6 +24,7 @@ import TeachersData from './Screens/TeachersData';
 import UserData from './Screens/UserData';
 import DarseNizamiData from './Screens/DarseNizamiData';
 import OneTeacherData from './Screens/OneTeacherData';
+import AddOldCourse from './Screens/AddOldCourse';
 import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -158,6 +159,11 @@ export default function AppNavigator() {
           <Stack.Screen
             name="OneTeacherData"
             component={OneTeacherData}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="AddOldCourse"
+            component={AddOldCourse}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

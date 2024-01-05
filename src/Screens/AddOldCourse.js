@@ -31,15 +31,12 @@ const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 
-const AddCourse = ({navigation}) => {
+const AddOldCourse = ({navigation}) => {
   const [course, setcourse] = useState('');
-  const [duration, setduration] = useState('');
-  const [fee, setFee] = useState('');
-  const [startDate, setstartDate] = useState('');
-  const [days, setdays] = useState('');
-  const [time, settime] = useState('');
+  const [price, setprice] = useState('');
+  const [videos, setvideos] = useState('');
+  const [youtubeDemo, setyoutubeDemo] = useState('');
   const [isConnected, setIsConnected] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('For Male');
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -54,23 +51,15 @@ const AddCourse = ({navigation}) => {
   const CourseName = coursename => {
     setcourse(coursename);
   };
-  const Duration = duration => {
-    setduration(duration);
+
+  const priceChange = price => {
+    setprice(price);
   };
-  const FeeChange = fee => {
-    setFee(fee);
+  const LinkChange = day => {
+    setyoutubeDemo(day);
   };
-  const DayChange = day => {
-    setdays(day);
-  };
-  const TimeChange = time => {
-    settime(time);
-  };
-  const startDateChange = startDate => {
-    setstartDate(startDate);
-  };
-  const handleValueChange = value => {
-    setSelectedValue(value);
+  const videosChange = videos => {
+    setvideos(videos);
   };
 
   function show() {
@@ -107,14 +96,11 @@ const AddCourse = ({navigation}) => {
     if (isConnected == false) {
       Internet();
     } else {
-      const collectionRef = firestore().collection('New Course').add({
+      const collectionRef = firestore().collection('Old Courses').add({
         CourseName: course,
-        Duration: duration,
-        Fees: fee,
-        Days: days,
-        Time: time,
-        StartDate: startDate,
-        Gender: selectedValue,
+        Price: price,
+        Link: youtubeDemo,
+        Videos: videos,
       });
 
       show();
@@ -143,56 +129,31 @@ const AddCourse = ({navigation}) => {
             placeholderTextColor={'grey'}
           />
           <TextInput
-            onChangeText={Duration}
+            onChangeText={priceChange}
             allowFontScaling={false}
             style={styles.password}
-            placeholder="Enter Duration"
+            placeholder="Enter Price"
             placeholderTextColor={'grey'}
           />
           <TextInput
-            onChangeText={FeeChange}
+            onChangeText={LinkChange}
             allowFontScaling={false}
             style={styles.password}
-            placeholder="Enter Fees"
+            placeholder="Enter Youtube Demo Class Link"
             placeholderTextColor={'grey'}
           />
           <TextInput
-            onChangeText={DayChange}
+            onChangeText={videosChange}
             allowFontScaling={false}
             style={styles.password}
-            placeholder="Enter Class Days"
+            placeholder="Total Videos"
             placeholderTextColor={'grey'}
           />
-          <TextInput
-            onChangeText={TimeChange}
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Timings"
-            placeholderTextColor={'grey'}
-          />
-          <TextInput
-            onChangeText={startDateChange}
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Course Starting Date"
-            placeholderTextColor={'grey'}
-          />
-          <View style={styles.picker}>
-            <Picker
-              selectedValue={selectedValue}
-              onValueChange={handleValueChange}>
-              <Picker.Item label="For Male" value="For Male" />
-              <Picker.Item label="For Female" value="For Female" />
-              <Picker.Item label="For Both" value="For Both" />
-            </Picker>
-          </View>
-          <>
-            <TouchableOpacity style={styles.button} onPress={Check}>
-              <Text allowFontScaling={false} style={styles.buttontext}>
-                SAVE
-              </Text>
-            </TouchableOpacity>
-          </>
+          <TouchableOpacity style={styles.button} onPress={Check}>
+            <Text allowFontScaling={false} style={styles.buttontext}>
+              SAVE
+            </Text>
+          </TouchableOpacity>
         </SafeAreaView>
       </Animatable.View>
     </ImageBackground>
@@ -320,4 +281,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddCourse;
+export default AddOldCourse;

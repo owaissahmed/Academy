@@ -35,6 +35,9 @@ const Admin = ({navigation}) => {
   function gotoTeachersData() {
     navigation.navigate('TeachersData');
   }
+  function gotoAddOldCourse() {
+    navigation.navigate('AddOldCourse');
+  }
 
   return (
     <View>
@@ -79,6 +82,13 @@ const Admin = ({navigation}) => {
             <View style={styles.square}>
               <Text allowFontScaling={false} style={styles.squaretext}>
                 ADD NEW COURSE
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={gotoAddOldCourse}>
+            <View style={styles.square}>
+              <Text allowFontScaling={false} style={styles.squaretext}>
+                ADD OLD COURSE
               </Text>
             </View>
           </TouchableOpacity>
@@ -136,10 +146,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: responsiveHeight(50),
+    height: responsiveHeight(65),
   },
   square: {
-    marginTop: responsiveHeight(-6),
+    marginTop: responsiveHeight(-4),
     borderColor: '#2e4c60',
     borderWidth: 1.5,
     height: responsiveHeight(16),

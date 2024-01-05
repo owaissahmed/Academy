@@ -148,6 +148,9 @@ const DarseNizamiForm = ({navigation}) => {
           Category:'Aalim Course',
           Status:'',
           Response:'Pending',
+          Teacher:'',
+          Fees:'',
+          FeesPaid:''
         });
         const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
         const subject = name;

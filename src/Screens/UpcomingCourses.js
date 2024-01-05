@@ -9,6 +9,8 @@ import {
   ImageBackground,
   ScrollView,
   Alert,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
@@ -16,6 +18,7 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import {responsiveHeight} from 'react-native-responsive-dimensions';
+import * as Animatable from 'react-native-animatable';
 import {responsiveFontSize} from 'react-native-responsive-dimensions';
 import firestore from '@react-native-firebase/firestore';
 const devicewidth = Dimensions.get('window').width;
@@ -23,8 +26,15 @@ const deviceheight = Dimensions.get('window').height;
 
 const UpcomingCourses = ({navigation}) => {
   const [courses, setcourses] = useState([]);
+  const [visible, setVisible] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+      setVisible(false);
+    }, 500);
+
     const unsubscribe = firestore()
       .collection('New Course')
       .onSnapshot(querySnapshot => {
@@ -46,92 +56,117 @@ const UpcomingCourses = ({navigation}) => {
       resizeMode="cover"
       style={styles.background}
       source={require('../Images/background.jpg')}>
-      <View style={styles.main}>
-        {courses.length > 0 ? (
-          <View>
-            <View style={styles.Description_View}>
-              <FlatList
-                data={courses}
-                renderItem={({item}) => (
-                  <ScrollView>
-                    <>
-                      <View style={styles.DataView}>
-                        <View style={styles.D_F_CoursenameView}>
-                          <Text
-                            allowFontScaling={false}
-                            style={styles.Coursename}>
-                            {item.CourseName}
-                          </Text>
-                        </View>
-                        <View style={styles.D_F_View}>
-                          <Text
-                            allowFontScaling={false}
-                            style={styles.DescriptionText}>
-                            • Duration : {item.Duration}
-                          </Text>
-                        </View>
-                        <View style={styles.D_F_View}>
-                          <Text
-                            allowFontScaling={false}
-                            style={styles.DescriptionText}>
-                            • Fees : {item.Fees}
-                          </Text>
-                        </View>
-                        <View style={styles.D_F_View}>
-                          <Text
-                            allowFontScaling={false}
-                            style={styles.DescriptionText}>
-                            • Starting Date : {item.StartDate}
-                          </Text>
-                        </View>
-                        <View style={styles.D_F_View}>
-                          <Text
-                            allowFontScaling={false}
-                            style={styles.DescriptionText}>
-                            • Gender : {item.Gender}
-                          </Text>
-                        </View>
-                        <View style={styles.D_F_View}>
-                          <Text
-                            allowFontScaling={false}
-                            style={styles.DescriptionText}>
-                            • Days : {item.Days}
-                          </Text>
-                        </View>
-                        <View style={styles.D_F_View}>
-                          <Text
-                            allowFontScaling={false}
-                            style={styles.DescriptionText}>
-                            • Timings : {item.Time}
-                          </Text>
-                        </View>
-                        <View style={styles.D_F_ButtonView}>
-                          <TouchableOpacity
-                            style={styles.Button}
-                            onPress={() => navigation.navigate('ComingCourseForm', {
-                              courseName: item.CourseName,
-                            })}>
-                            <Text
-                              allowFontScaling={false}
-                              style={styles.ButtonText}>
-                              Addmission
-                            </Text>
-                          </TouchableOpacity>
-                        </View>
+      <Modal visible={visible} animationType="fade" transparent={true}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            // marginBottom:responsiveHeight(5),
+            backgroundColor: 'rgba(0, 0, 0, 0.100)',
+          }}>
+          {loading ? (
+            <ActivityIndicator size="larger" color="#2e4c60" />
+          ) : (
+            <Text allowFontScaling={false} style={{color: '#ffffff'}}>
+              Loading...
+            </Text>
+          )}
+        </View>
+      </Modal>
+
+      {courses.length > 0 ? (
+        <Animatable.View animation={'fadeInUp'} delay={1000} duration={2000}>
+          <View style={styles.Description_View}>
+            <FlatList
+              data={courses}
+              renderItem={({item}) => (
+                <ScrollView>
+                  <>
+                    <View style={styles.DataView}>
+                      <View style={styles.D_F_CoursenameView}>
+                        <Text
+                          allowFontScaling={false}
+                          style={styles.Coursename}>
+                          {item.CourseName}
+                        </Text>
                       </View>
-                    </>
-                  </ScrollView>
-                )}
-                keyExtractor={item => item.id}
-              />
-            </View>
+                      <View style={styles.D_F_View}>
+                        <Text
+                          allowFontScaling={false}
+                          style={styles.DescriptionText}>
+                          • Duration : {item.Duration}
+                        </Text>
+                      </View>
+                      <View style={styles.D_F_View}>
+                        <Text
+                          allowFontScaling={false}
+                          style={styles.DescriptionText}>
+                          • Fees : {item.Fees}
+                        </Text>
+                      </View>
+                      <View style={styles.D_F_View}>
+                        <Text
+                          allowFontScaling={false}
+                          style={styles.DescriptionText}>
+                          • Starting Date : {item.StartDate}
+                        </Text>
+                      </View>
+                      <View style={styles.D_F_View}>
+                        <Text
+                          allowFontScaling={false}
+                          style={styles.DescriptionText}>
+                          • Gender : {item.Gender}
+                        </Text>
+                      </View>
+                      <View style={styles.D_F_View}>
+                        <Text
+                          allowFontScaling={false}
+                          style={styles.DescriptionText}>
+                          • Days : {item.Days}
+                        </Text>
+                      </View>
+                      <View style={styles.D_F_View}>
+                        <Text
+                          allowFontScaling={false}
+                          style={styles.DescriptionText}>
+                          • Timings : {item.Time}
+                        </Text>
+                      </View>
+                      <View style={styles.D_F_ButtonView}>
+                        <TouchableOpacity
+                          style={styles.Button}
+                          onPress={() =>
+                            navigation.navigate('ComingCourseForm', {
+                              courseName: item.CourseName,
+                            })
+                          }>
+                          <Text
+                            allowFontScaling={false}
+                            style={styles.ButtonText}>
+                            Addmission
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </>
+                </ScrollView>
+              )}
+              keyExtractor={item => item.id}
+            />
           </View>
-        ) : (
-          <Text allowFontScaling={false} style={styles.NoData}>
-            No Courses!!
-          </Text>
-        )}
-      </View>
+        </Animatable.View>
+      ) : (
+        <>
+          {loading == true ? (
+            <Text allowFontScaling={false} style={styles.NoData}></Text>
+          ) : (
+            <Text allowFontScaling={false} style={styles.NoData}>
+              No Courses!!
+            </Text>
+          )}
+        </>
+      )}
     </ImageBackground>
   );
 };
@@ -143,10 +178,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
-  main: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  // main: {
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
   FlatListVIew: {
     width: responsiveWidth(90),
   },

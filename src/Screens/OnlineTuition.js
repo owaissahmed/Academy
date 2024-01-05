@@ -136,13 +136,16 @@ const OnlineTuition = ({navigation}) => {
         const collectionRef = firestore().collection('users').add({
           Name: name,
           Fathername: father,
-          CourseName: 'Online Tuition',
+          CourseName: 'Dars-e-Nizami',
           Phone: formattedValue,
           Country: countryName,
           CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          Category:'Tuition',
+          Category:'Aalim Course',
           Status:'',
           Response:'Pending',
+          Teacher:'',
+          Fees:'',
+          FeesPaid:''
         });
         const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
         const subject = name;

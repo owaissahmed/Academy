@@ -146,13 +146,16 @@ const Form = ({navigation}) => {
         const collectionRef = firestore().collection('users').add({
           Name: name,
           Fathername: father,
-          CourseName: buttonText,
-          Category:'Courses',
+          CourseName: 'Dars-e-Nizami',
           Phone: formattedValue,
           Country: countryName,
           CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          Category:'Aalim Course',
           Status:'',
           Response:'Pending',
+          Teacher:'',
+          Fees:'',
+          FeesPaid:''
         });
 
         const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address

@@ -84,7 +84,7 @@ const UserData = ({navigation}) => {
 
   const handleUpdateName = async () => {
     if (!selectedUser === 'Select Value' || name.trim() === '') {
-      Alert.alert('⚫ Please Fill the Input');
+      Alert.alert('Error','⚫ Please Fill the Input');
       return;
     }
 
@@ -169,11 +169,8 @@ const UserData = ({navigation}) => {
                       <Text allowFontScaling={false} style={styles.Name}>
                         Father Name : {item.Fathername}
                       </Text>
-                      <Text allowFontScaling={false} style={styles.Name}>
-                        Response : {item.Response}
-                      </Text>
                       <>
-                        {item.Response.toLowerCase() !== 'pending' ? (
+                        {item.Response !== 'Pending' ? (
                           <>
                             <Text allowFontScaling={false} style={styles.Name}>
                               Teacher: {item.Teacher}
@@ -191,7 +188,9 @@ const UserData = ({navigation}) => {
                             </TouchableOpacity>
                          </>
                         ) : (
-                          console.log('Pending')
+                          <Text allowFontScaling={false} style={styles.Name}>
+                        Response : {item.Response}
+                      </Text>
                         )}
                       </>
                     </View>

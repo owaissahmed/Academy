@@ -37,11 +37,20 @@ const Courses = ({navigation}) => {
     navigation.navigate('Form', {TextHomeTuition: title});
   };
 
-  function Demo(Link) {
-    if (Link != '') {
-      Linking.openURL(Link);
-    }else {
-      Alert.alert('No Class Availible')
+  async function Demo(Link) {
+    try {
+      if (Link !== '') {
+        await Linking.openURL(Link);
+      } else {
+        Alert.alert('Error','No Class Available');
+      }
+    } catch (error) {
+      if (error.message.includes("No Activity found to handle Intent")) {
+        Alert.alert('Error', 'No app is available to handle the URL.');
+      } else {
+        console.error('Error opening URL:', error);
+        Alert.alert('Error', 'Could not open the URL. Please try again later.');
+      }
     }
   }
   

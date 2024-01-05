@@ -57,7 +57,7 @@ const Accordion = ({
   };
 
   function Internet() {
-    Alert.alert('⚫ Warning', 'No INternet Connection!');
+    Alert.alert('⚫ Warning', 'No Internet Connection!');
   }
 
   function Demo() {

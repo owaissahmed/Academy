@@ -137,12 +137,18 @@ const ComingCourseForm = ({navigation}) => {
         setValid(checkValid ? checkValid : false);
         setCountryCode(phoneInput.current?.getCountryCode() || '');
         const collectionRef = firestore().collection('users').add({
-          Name: name,
-          Fathername: father,
-          Course: courseName,
-          Phone: formattedValue,
-          Country: countryName,
-          CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            Name: name,
+            Fathername: father,
+            CourseName: courseName,
+            Category:'Courses',
+            Phone: formattedValue,
+            Country: countryName,
+            CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            Status:'',
+            Response:'Pending',
+            Teacher:'',
+            Fees:'',
+            FeesPaid:''
         });
         const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
         const subject = name;
