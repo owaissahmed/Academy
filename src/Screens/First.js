@@ -23,7 +23,7 @@ export default function First({navigation}) {
   }, []);
   function gotoHome() {
     setTimeout(() => {
-      navigation.replace('Home');
+      navigation.replace('Auth');
     }, 4000);
   }
 

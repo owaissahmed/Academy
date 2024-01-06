@@ -441,6 +441,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'good',
     marginTop: responsiveHeight(1),
+    paddingHorizontal: responsiveWidth(0.25),
   },
   squaretext__: {
     fontSize: responsiveScreenFontSize(2),
