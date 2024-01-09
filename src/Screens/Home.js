@@ -25,8 +25,11 @@ const deviceheight = Dimensions.get('window').height;
 import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import {useNavigation} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
 export default function Home({route}) {
   const [isConnected, setIsConnected] = useState(false);
+  // const [user, setuser] = useState([]);
+  const [username, setusername] = useState([]);
   const {showAlert} = useAppContext();
   const navigation = useNavigation();
   const [isTeacherModalVisible, setTeacherModalVisible] = useState(false);
@@ -38,8 +41,16 @@ export default function Home({route}) {
       setIsConnected(state.isConnected);
     });
 
+    const subscriber = auth().onAuthStateChanged(user => {
+      if (user) {
+        const userEmail = user.email;
+        const uname = userEmail.split('@')[0];
+        setusername(uname);
+      }
+    });
+
     return () => {
-      unsubscribe();
+      subscriber, unsubscribe();
     };
   }, []);
 
@@ -79,6 +90,11 @@ export default function Home({route}) {
   function UserAccount() {
     if (isConnected == true) {
       navigation.navigate('UserAccount');
+    } else Internet();
+  }
+  function Login() {
+    if (isConnected == true) {
+      navigation.navigate('Auth');
     } else Internet();
   }
   function Admin() {
@@ -163,13 +179,14 @@ export default function Home({route}) {
           delay={100}
           animation="fadeInDown"
           style={styles.navbar}>
-          <TouchableOpacity style={{width:responsiveWidth(30),height:responsiveHeight(5)}} onPress={openModalAdmin}>
-            <Image 
+          <TouchableOpacity onPress={openModalAdmin}>
+            <Image
               style={styles.logo}
               source={require('../Images/round.png')}
             />
           </TouchableOpacity>
-          <TouchableOpacity onPress={UserAccount} >
+          <Text style={styles.Welcometext}> {username != ''? (`Hi, ${username}`) : null}</Text>
+          <TouchableOpacity onPress={Login}>
             <Image
               style={styles.account}
               source={require('../Images/account.png')}
@@ -391,9 +408,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  btnNavbar:{
+  btnNavbar: {
     width: responsiveWidth(40),
-    backgroundColor:'blue',
+    backgroundColor: 'blue',
   },
   account: {
     height: responsiveHeight(4.5),
@@ -442,6 +459,16 @@ const styles = StyleSheet.create({
     fontFamily: 'good',
     marginTop: responsiveHeight(1),
     paddingHorizontal: responsiveWidth(0.25),
+  },
+  Welcometext: {
+    fontSize: responsiveScreenFontSize(2),
+    color: '#2e4c60',
+    textAlign: 'center',
+    fontFamily: 'good',
+    letterSpacing: 1,
+    width: responsiveWidth(68),
+    // marginTop: responsiveHeight(1),
+    // paddingHorizontal: responsiveWidth(0.25),
   },
   squaretext__: {
     fontSize: responsiveScreenFontSize(2),

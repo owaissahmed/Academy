@@ -137,11 +137,11 @@ const HomeTuition = ({navigation}) => {
         const collectionRef = firestore().collection('users').add({
           Name: name,
           Fathername: father,
-          CourseName: 'Dars-e-Nizami',
+          CourseName:buttonText,
           Phone: formattedValue,
           Country: countryName,
           CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          Category:'Aalim Course',
+          Category:'Tuition',
           Status:'',
           Response:'Pending',
           Teacher:'',

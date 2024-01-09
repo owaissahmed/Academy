@@ -22,6 +22,7 @@ import {
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
+  responsiveScreenFontSize,
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
@@ -44,25 +45,6 @@ const Auth = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const phoneInput = useRef(null);
-
-  //   function login() {
-  //     auth()
-  //       .createUserWithEmailAndPassword(gmail, password)
-  //       .then(() => {
-  //         console.log('User account created & signed in!');
-  //       })
-  //       .catch(error => {
-  //         if (error.code === 'auth/email-already-in-use') {
-  //           console.log('That email address is already in use!');
-  //         }
-
-  //         if (error.code === 'auth/invalid-email') {
-  //           console.log('That email address is invalid!');
-  //         }
-
-  //         console.log(error);
-  //       });
-  //   }
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(user => {
@@ -90,7 +72,11 @@ const Auth = ({navigation}) => {
   };
 
   function GoToSignup() {
-    navigation.navigate('Signup');
+    navigation.replace('Signup');
+  }
+
+  function GoToHome() {
+    navigation.replace('Home');
   }
 
   function show() {
@@ -156,6 +142,9 @@ const Auth = ({navigation}) => {
             },
             // duration: 5000,
           });
+          setTimeout(() => {
+            GoToHome();
+          }, 2000);
           console.log('User account created & signed in!');
         })
         .catch(error => {
@@ -215,85 +204,12 @@ const Auth = ({navigation}) => {
     return user !== null;
   };
 
-  // const {setShowAlert} = useAppContext();
-
-  // const GoBackHome = () => {
-  //   // Set the showAlert function in the context
-  //   setShowAlert(() => {
-  //     // Show the alert when this function is called
-  //     Alert.alert('⚫ Congrats', 'your Form has been Submitted!');
-  //   });
-  // };
-
-  // const Check = async () => {
-  // if (gmail.trim() === '' || password.trim() === '' || value === '') {
-  //   EmptyInput();
-  // } else if (isConnected == false) {
-  //   Internet();
-  //   } else {
-  //     setLoading(true);
-  //     setVisible(true);
-  //     show();
-  //     setTimeout(() => {
-  //       const checkValid = phoneInput.current?.isValidNumber(value);
-  //       setValid(checkValid ? checkValid : false);
-  //       setCountryCode(phoneInput.current?.getCountryCode() || '');
-  //       const collectionRef = firestore().collection('users').add({
-  //         gmail: gmail,
-  //         passwordgmail: password,
-  //         Coursegmail: 'Dars-e-Nizami',
-  //         Phone: formattedValue,
-  //         Country: countrygmail,
-  //         CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-  //         Category: 'Aalim Course',
-  //         Status: '',
-  //         Response: 'Pending',
-  //         Teacher: '',
-  //         Fees: '',
-  //         FeesPaid: '',
-  //       });
-
-  //       const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
-  //       const subject = gmail;
-  //       const body = `${buttonText} \n ${countrygmail} \n ${formattedValue}`;
-
-  //       const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
-  //         subject,
-  //       )}&body=${encodeURIComponent(body)}`;
-
-  //       Linking.openURL(mailtoUrl).catch(err =>
-  //         console.error('Error opening email app:', err),
-  //       );
-  //       navigation.replace('Home');
-  //       setTimeout(() => {
-  //         GoBackHome();
-  //       }, 1000);
-  //     }, 5000);
-  //   }
-  // };
-
   return (
     <ImageBackground
       resizeMode="cover"
       style={styles.background}
       source={require('../Images/background.jpg')}>
-      <Modal visible={visible} animationType="fade" transparent={true}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'rgba(0, 0, 0, 0.100)',
-          }}>
-          {loading ? (
-            <ActivityIndicator size="larger" color="black" />
-          ) : (
-            <Text allowFontScaling={false} style={{color: '#ffffff'}}>
-              Loading...
-            </Text>
-          )}
-        </View>
-      </Modal>
+      
       <>
         <FlashMessage position={'center'} />
       </>
@@ -302,23 +218,12 @@ const Auth = ({navigation}) => {
           <Image style={styles.logo} source={require('../Images/logo.png')} />
           {isUserSignedIn() ? (
             <View style={{alignItems: 'center'}}>
-              <TextInput
-                onChangeText={gmailChange}
-                allowFontScaling={false}
-                style={styles.login}
-                value={gmail}
-                keyboardType="email-address"
-                placeholder="Enter Your Gmail"
-                placeholderTextColor={'grey'}
-              />
-              <TextInput
-                value={password}
-                onChangeText={passwordChange}
-                allowFontScaling={false}
-                style={styles.password}
-                placeholder="Enter Your Password"
-                placeholderTextColor={'grey'}
-              />
+              <Text style={styles.Welcometext}>{user.email}</Text>
+              <TouchableOpacity style={styles.Coursesbutton} >
+                <Text allowFontScaling={false} style={styles.Coursesbuttontext}>
+                  Your Courses
+                </Text>
+              </TouchableOpacity>
               <TouchableOpacity style={styles.button} onPress={Logout}>
                 <Text allowFontScaling={false} style={styles.buttontext}>
                   LOGOUT
@@ -332,6 +237,7 @@ const Auth = ({navigation}) => {
                 onChangeText={gmailChange}
                 allowFontScaling={false}
                 style={styles.login}
+                keyboardType="email-address"
                 placeholder="Enter Your Gmail"
                 placeholderTextColor={'grey'}
               />
@@ -348,16 +254,16 @@ const Auth = ({navigation}) => {
                   LOGIN
                 </Text>
               </TouchableOpacity>
+              <View>
+                <Text
+                  onPress={GoToSignup}
+                  allowFontScaling={false}
+                  style={styles.Createtext}>
+                  Create Account Now!!
+                </Text>
+              </View>
             </View>
           )}
-          <View>
-            <Text
-              onPress={GoToSignup}
-              allowFontScaling={false}
-              style={styles.Createtext}>
-              Create Account Now!!
-            </Text>
-          </View>
         </SafeAreaView>
       </Animatable.View>
     </ImageBackground>
@@ -396,6 +302,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+
   submain: {
     borderColor: '#2e4c60',
     borderWidth: 1.5,
@@ -404,6 +311,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 12,
     marginTop: responsiveHeight(3),
+  },
+  Welcometext: {
+    fontSize: responsiveFontSize(1.75),
+    color: '#fff',
+    textAlign: 'center',
+    fontFamily: 'good',
+    letterSpacing: 1,
+    marginTop: responsiveHeight(2),
+    width:responsiveWidth(90),
+    backgroundColor: '#2e4c60',
+    paddingHorizontal: responsiveWidth(0.25),
+    // marginHorizontal: responsiveWidth(5),
+    paddingVertical: responsiveHeight(2),
   },
   login: {
     height: responsiveHeight(6),
@@ -439,6 +359,22 @@ const styles = StyleSheet.create({
     width: responsiveWidth(30),
   },
   buttontext: {
+    color: '#fff',
+    fontWeight: '600',
+    letterSpacing: 0.7,
+    textAlign: 'center',
+    fontSize: responsiveFontSize(2.25),
+  },
+  Coursesbutton: {
+    backgroundColor: '#2e4c60',
+    color: 'white',
+    padding: 6,
+    marginTop: responsiveHeight(2),
+    // marginBottom: responsiveHeight(2),
+    borderRadius: 8,
+    width: responsiveWidth(50),
+  },
+  Coursesbuttontext: {
     color: '#fff',
     fontWeight: '600',
     letterSpacing: 0.7,
