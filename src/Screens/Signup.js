@@ -30,7 +30,7 @@ import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import auth from '@react-native-firebase/auth';
-const Auth = ({navigation}) => {
+const Signup = ({navigation}) => {
   const [gmail, setgmail] = useState('');
   const [password, setpassword] = useState('');
   const [user, setUser] = useState(null);
@@ -44,25 +44,6 @@ const Auth = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const phoneInput = useRef(null);
-
-  //   function login() {
-  //     auth()
-  //       .createUserWithEmailAndPassword(gmail, password)
-  //       .then(() => {
-  //         console.log('User account created & signed in!');
-  //       })
-  //       .catch(error => {
-  //         if (error.code === 'auth/email-already-in-use') {
-  //           console.log('That email address is already in use!');
-  //         }
-
-  //         if (error.code === 'auth/invalid-email') {
-  //           console.log('That email address is invalid!');
-  //         }
-
-  //         console.log(error);
-  //       });
-  //   }
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(user => {
@@ -89,8 +70,8 @@ const Auth = ({navigation}) => {
     setpassword(newpassword);
   };
 
-  function GoToSignup() {
-    navigation.navigate('Signup');
+  function GoToAuth() {
+    navigation.navigate('Auth');
   }
 
   function show() {
@@ -135,6 +116,25 @@ const Auth = ({navigation}) => {
     });
   }
 
+  //   function login() {
+  //     auth()
+  //       .createUserWithEmailAndPassword(gmail, password)
+  //       .then(() => {
+  //         console.log('User account created & signed in!');
+  //       })
+  //       .catch(error => {
+  //         if (error.code === 'auth/email-already-in-use') {
+  //           console.log('That email address is already in use!');
+  //         }
+
+  //         if (error.code === 'auth/invalid-email') {
+  //           console.log('That email address is invalid!');
+  //         }
+
+  //         console.log(error);
+  //       });
+  //   }
+
   function login() {
     if (gmail.trim() === '' || password.trim() === '') {
       EmptyInput();
@@ -142,7 +142,7 @@ const Auth = ({navigation}) => {
       Internet();
     } else {
       auth()
-        .signInWithEmailAndPassword(gmail, password)
+        .createUserWithEmailAndPassword(gmail, password)
         .then(() => {
           showMessage({
             message: '⚪️ Successfully Sign In!',
@@ -156,7 +156,7 @@ const Auth = ({navigation}) => {
             },
             // duration: 5000,
           });
-          console.log('User account created & signed in!');
+          console.log('User account created');
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
@@ -300,62 +300,35 @@ const Auth = ({navigation}) => {
       <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
         <SafeAreaView style={styles.submain}>
           <Image style={styles.logo} source={require('../Images/logo.png')} />
-          {isUserSignedIn() ? (
-            <View style={{alignItems: 'center'}}>
-              <TextInput
-                onChangeText={gmailChange}
-                allowFontScaling={false}
-                style={styles.login}
-                value={gmail}
-                keyboardType="email-address"
-                placeholder="Enter Your Gmail"
-                placeholderTextColor={'grey'}
-              />
-              <TextInput
-                value={password}
-                onChangeText={passwordChange}
-                allowFontScaling={false}
-                style={styles.password}
-                placeholder="Enter Your Password"
-                placeholderTextColor={'grey'}
-              />
-              <TouchableOpacity style={styles.button} onPress={Logout}>
-                <Text allowFontScaling={false} style={styles.buttontext}>
-                  LOGOUT
-                </Text>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <View style={{alignItems: 'center'}}>
-              <TextInput
-                value={gmail}
-                onChangeText={gmailChange}
-                allowFontScaling={false}
-                style={styles.login}
-                placeholder="Enter Your Gmail"
-                placeholderTextColor={'grey'}
-              />
-              <TextInput
-                onChangeText={passwordChange}
-                value={password}
-                allowFontScaling={false}
-                style={styles.password}
-                placeholder="Enter Your Password"
-                placeholderTextColor={'grey'}
-              />
-              <TouchableOpacity style={styles.button} onPress={login}>
-                <Text allowFontScaling={false} style={styles.buttontext}>
-                  LOGIN
-                </Text>
-              </TouchableOpacity>
-            </View>
-          )}
+          <View style={{alignItems: 'center'}}>
+            <TextInput
+              value={gmail}
+              onChangeText={gmailChange}
+              allowFontScaling={false}
+              style={styles.login}
+              placeholder="Enter Your Gmail"
+              placeholderTextColor={'grey'}
+            />
+            <TextInput
+              onChangeText={passwordChange}
+              value={password}
+              allowFontScaling={false}
+              style={styles.password}
+              placeholder="Enter Your Password"
+              placeholderTextColor={'grey'}
+            />
+            <TouchableOpacity style={styles.button} onPress={login}>
+              <Text allowFontScaling={false} style={styles.buttontext}>
+                Create Account
+              </Text>
+            </TouchableOpacity>
+          </View>
           <View>
             <Text
-              onPress={GoToSignup}
+              onPress={GoToAuth}
               allowFontScaling={false}
               style={styles.Createtext}>
-              Create Account Now!!
+              Already Have An Account!!
             </Text>
           </View>
         </SafeAreaView>
@@ -436,7 +409,7 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(3),
     marginBottom: responsiveHeight(2),
     borderRadius: 8,
-    width: responsiveWidth(30),
+    width: responsiveWidth(40),
   },
   buttontext: {
     color: '#fff',
@@ -455,4 +428,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Auth;
+export default Signup;
