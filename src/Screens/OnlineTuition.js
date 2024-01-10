@@ -29,6 +29,7 @@ import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import {useRoute} from '@react-navigation/native';
+import auth from '@react-native-firebase/auth';
 const OnlineTuition = ({navigation}) => {
   const [name, setname] = useState('');
   const [father, setfather] = useState('');
@@ -67,7 +68,7 @@ const OnlineTuition = ({navigation}) => {
 
   const route = useRoute();
   const buttonText = route.params?.buttonText || 'Online Tuition';
- const countryName = country?.name || 'Pakistan';
+  const countryName = country?.name || 'Pakistan';
   function show() {
     showMessage({
       message: '⚪️ Dont forget to send email after clicking on "SAVE" button',
@@ -121,52 +122,59 @@ const OnlineTuition = ({navigation}) => {
   };
 
   const Check = async () => {
-    if (name.trim() === '' || father.trim() === '' || value === '') {
-      EmptyInput();
-    } else if (isConnected == false) {
-      Internet();
-    } else {
-      setLoading(true);
-      setVisible(true);
-      show();
-      setTimeout(() => {
-        const checkValid = phoneInput.current?.isValidNumber(value);
-        setValid(checkValid ? checkValid : false);
-        setCountryCode(phoneInput.current?.getCountryCode() || '');
-        const collectionRef = firestore().collection('users').add({
-          Name: name,
-          Fathername: father,
-          CourseName: buttonText,
-          Phone: formattedValue,
-          Country: countryName,
-          CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          Category:'Tuition',
-          Status:'',
-          Response:'Pending',
-          Teacher:'',
-          Fees:'',
-          FeesPaid:''
-        });
-        const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
-        const subject = name;
-        const body = `Online Tuition \n ${countryName} \n ${formattedValue}`;
+    auth().onAuthStateChanged(user => {
+      if (user) {
+        if (name.trim() === '' || father.trim() === '' || value === '') {
+          EmptyInput();
+        } else if (isConnected == false) {
+          Internet();
+        } else {
+          setLoading(true);
+          setVisible(true);
+          show();
+          setTimeout(() => {
+            const checkValid = phoneInput.current?.isValidNumber(value);
+            setValid(checkValid ? checkValid : false);
+            setCountryCode(phoneInput.current?.getCountryCode() || '');
+            const collectionRef = firestore().collection('users').add({
+              Gmail: user.email,
+              Name: name,
+              Fathername: father,
+              CourseName: buttonText,
+              Phone: formattedValue,
+              Country: countryName,
+              CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+              Category: 'Tuition',
+              Status: '',
+              Response: 'Pending',
+              Teacher: '',
+              Fees: '',
+              FeesPaid: '',
+            });
+            const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
+            const subject = name;
+            const body = `Online Tuition \n ${countryName} \n ${formattedValue}`;
 
-        // Construct the mailto URL
+            // Construct the mailto URL
 
-        const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
-          subject,
-        )}&body=${encodeURIComponent(body)}`;
+            const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
+              subject,
+            )}&body=${encodeURIComponent(body)}`;
 
-        // Open the default email app
-        Linking.openURL(mailtoUrl).catch(err =>
-          console.error('Error opening email app:', err),
-        );
-        navigation.replace('Home');
-        setTimeout(() => {
-          GoBackHome();
-        }, 1000);
-      }, 5000);
-    }
+            // Open the default email app
+            Linking.openURL(mailtoUrl).catch(err =>
+              console.error('Error opening email app:', err),
+            );
+            navigation.replace('Home');
+            setTimeout(() => {
+              GoBackHome();
+            }, 1000);
+          }, 5000);
+        }
+      } else {
+        navigation.replace('Auth');
+      }
+    });
   };
   return (
     <ImageBackground
@@ -261,12 +269,12 @@ const OnlineTuition = ({navigation}) => {
             />
           </View>
           <Text allowFontScaling={false} style={styles.default}>
-          {country && country === 'Pakistan'
-            ? 'Pakistan'
-            : country
-            ? country.name
-            : ''}
-        </Text>
+            {country && country === 'Pakistan'
+              ? 'Pakistan'
+              : country
+              ? country.name
+              : ''}
+          </Text>
           <>
             <TouchableOpacity style={styles.button} onPress={Check}>
               <Text allowFontScaling={false} style={styles.buttontext}>

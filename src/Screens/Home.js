@@ -92,11 +92,25 @@ export default function Home({route}) {
       navigation.navigate('UserAccount');
     } else Internet();
   }
+
+  // function name(params) {
+  //   if (user && isConnected) {
+  //     navigation.navigate('Auth');
+  //   }
+  // }
+
   function Login() {
-    if (isConnected == true) {
-      navigation.navigate('Auth');
-    } else Internet();
+    navigation.navigate('Auth');
   }
+  // function Login() {
+  //   auth().onAuthStateChanged(user => {
+  //     if (user && isConnected) {
+  //       navigation.navigate('Auth');
+  //     } else if (!user && isConnected == true) {
+  //       navigation.navigate('Auth');
+  //     } else Internet();
+  //   });
+  // }
   function Admin() {
     navigation.navigate('Admin');
   }
@@ -185,7 +199,9 @@ export default function Home({route}) {
               source={require('../Images/round.png')}
             />
           </TouchableOpacity>
-          <Text style={styles.Welcometext}> {username != ''? (`Hi, ${username}`) : null}</Text>
+          <Text style={styles.Welcometext}>
+            {username != '' ? `Hi, ${username}` : null}
+          </Text>
           <TouchableOpacity onPress={Login}>
             <Image
               style={styles.account}
