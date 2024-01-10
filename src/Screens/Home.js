@@ -34,6 +34,7 @@ export default function Home({route}) {
   const navigation = useNavigation();
   const [isTeacherModalVisible, setTeacherModalVisible] = useState(false);
   const [isAdminModalVisible, setAdminModalVisible] = useState(false);
+  const [isUserModalVisible, setUserModalVisible] = useState(false);
   const [name, setname] = useState();
 
   useEffect(() => {
@@ -46,6 +47,8 @@ export default function Home({route}) {
         const userEmail = user.email;
         const uname = userEmail.split('@')[0];
         setusername(uname);
+      } else {
+        setusername('');
       }
     });
 
@@ -99,18 +102,18 @@ export default function Home({route}) {
   //   }
   // }
 
-  function Login() {
-    navigation.navigate('Auth');
-  }
   // function Login() {
-  //   auth().onAuthStateChanged(user => {
-  //     if (user && isConnected) {
-  //       navigation.navigate('Auth');
-  //     } else if (!user && isConnected == true) {
-  //       navigation.navigate('Auth');
-  //     } else Internet();
-  //   });
+  //   navigation.navigate('Auth');
   // }
+  function Login() {
+    auth().onAuthStateChanged(user => {
+      if (user && isConnected) {
+        navigation.navigate('UserData');
+      } else if (!user && isConnected == true) {
+        navigation.navigate('Auth');
+      } else Internet();
+    });
+  }
   function Admin() {
     navigation.navigate('Admin');
   }
@@ -139,6 +142,23 @@ export default function Home({route}) {
   const About = () => {
     navigation.navigate('About');
   };
+
+  const logout = async () => {
+    if (isConnected == false) {
+      Internet();
+    } else {
+      try {
+        await auth().signOut();
+      setTimeout(() => {
+        navigation.replace('First')
+      }, 2000);
+        console.log('banda shaat');
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+  };
+
   const CheckPassword = () => {
     if (name === '1') {
       setTeacherModalVisible(!isTeacherModalVisible);
@@ -153,11 +173,21 @@ export default function Home({route}) {
   const closeModal = () => {
     setTeacherModalVisible(!isTeacherModalVisible);
   };
+  const closeAdminModal = () => {
+    setUserModalVisible(!isUserModalVisible);
+  };
   const openModal = () => {
     if (isConnected == false) {
       Internet();
     } else {
       setTeacherModalVisible(true);
+    }
+  };
+  const UseropenModal = () => {
+    if (isConnected == false) {
+      Internet();
+    } else {
+      setUserModalVisible(true);
     }
   };
   const CheckPasswordAdmin = () => {
@@ -199,7 +229,7 @@ export default function Home({route}) {
               source={require('../Images/round.png')}
             />
           </TouchableOpacity>
-          <Text style={styles.Welcometext}>
+          <Text style={styles.Welcometext} onPress={UseropenModal}>
             {username != '' ? `Hi, ${username}` : null}
           </Text>
           <TouchableOpacity onPress={Login}>
@@ -350,6 +380,44 @@ export default function Home({route}) {
                   <TouchableOpacity style={styles.Btn} onPress={CheckPassword}>
                     <Text allowFontScaling={false} style={styles.BtnText}>
                       Next
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </ImageBackground>
+            </View>
+          </Modal>
+          <Modal
+            isVisible={isUserModalVisible}
+            animationIn="zoomIn"
+            animationOut="zoomOut"
+            animationInTiming={1000}
+            animationOutTiming={1000}
+            backdropTransitionInTiming={1000}
+            backdropTransitionOutTiming={1000}>
+            <View style={styles.modal}>
+              <ImageBackground
+                resizeMode="cover"
+                style={styles.logoutmodalBackground}
+                source={require('../Images/background.jpg')}>
+                <Image
+                  style={styles.modalImage}
+                  source={require('../Images/logo.png')}
+                />
+                <Text allowFontScaling={false} style={styles.LogOutText}>
+                  Are You Sure To LogOut ?
+                </Text>
+                <TextInput />
+                <View style={styles.LogOutModalButtonView}>
+                  <TouchableOpacity
+                    style={styles.Btn}
+                    onPress={closeAdminModal}>
+                    <Text allowFontScaling={false} style={styles.BtnText}>
+                      Close
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.Btn} onPress={logout}>
+                    <Text allowFontScaling={false} style={styles.BtnText}>
+                      LOGOUT
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -546,6 +614,12 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(0.5),
   },
 
+  logoutmodalBackground: {
+    width: responsiveWidth(90),
+    height: responsiveHeight(28),
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
   modalBackground: {
     width: responsiveWidth(90),
     height: responsiveHeight(30),
@@ -571,6 +645,21 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(0.5),
     fontSize: responsiveFontSize(2),
   },
+  LogOutText: {
+    // height: responsiveHeight(6),
+    width: responsiveWidth(80),
+    // backgroundColor: '#FBFCF8',
+    // padding: 8,
+    // borderColor: '#36454F',
+    color: '#2e4c60',
+    // borderWidth: 1.5,
+    fontFamily: 'good',
+    borderRadius: 6,
+    letterSpacing: 1,
+    textAlign: 'center',
+    marginTop: responsiveHeight(4),
+    fontSize: responsiveFontSize(2.5),
+  },
   modalImage: {
     height: responsiveHeight(11),
     width: responsiveWidth(24),
@@ -582,6 +671,19 @@ const styles = StyleSheet.create({
     width: responsiveWidth(85),
 
     marginBottom: responsiveHeight(1),
+
+    paddingHorizontal: responsiveWidth(4),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  LogOutModalButtonView: {
+    // marginTop: responsiveHeight(1),
+
+    width: responsiveWidth(85),
+
+    marginBottom: responsiveHeight(2),
 
     paddingHorizontal: responsiveWidth(4),
     display: 'flex',

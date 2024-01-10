@@ -148,9 +148,6 @@ const Auth = ({navigation}) => {
           console.log('User account created & signed in!');
         })
         .catch(error => {
-          if (error.code === 'auth/email-already-in-use') {
-            console.log('That email address is already in use!');
-          }
           if (
             error.code === 'auth/invalid-email' ||
             'auth/invalid-credential'
@@ -209,7 +206,6 @@ const Auth = ({navigation}) => {
       resizeMode="cover"
       style={styles.background}
       source={require('../Images/background.jpg')}>
-      
       <>
         <FlashMessage position={'center'} />
       </>
@@ -219,7 +215,7 @@ const Auth = ({navigation}) => {
           {isUserSignedIn() ? (
             <View style={{alignItems: 'center'}}>
               <Text style={styles.Welcometext}>{user.email}</Text>
-              <TouchableOpacity style={styles.Coursesbutton} >
+              <TouchableOpacity style={styles.Coursesbutton}>
                 <Text allowFontScaling={false} style={styles.Coursesbuttontext}>
                   Your Courses
                 </Text>
@@ -319,7 +315,7 @@ const styles = StyleSheet.create({
     fontFamily: 'good',
     letterSpacing: 1,
     marginTop: responsiveHeight(2),
-    width:responsiveWidth(90),
+    width: responsiveWidth(90),
     backgroundColor: '#2e4c60',
     paddingHorizontal: responsiveWidth(0.25),
     // marginHorizontal: responsiveWidth(5),

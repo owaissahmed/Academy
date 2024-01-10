@@ -110,6 +110,20 @@ const OnlineTuition = ({navigation}) => {
       // duration: 5000,
     });
   }
+  function LogIn() {
+    showMessage({
+      message: '⚪️ You Need to Logged In First',
+      // backgroundColor:'#36454F',
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      duration: 2000,
+    });
+  }
 
   const {setShowAlert} = useAppContext();
 
@@ -122,59 +136,71 @@ const OnlineTuition = ({navigation}) => {
   };
 
   const Check = async () => {
-    auth().onAuthStateChanged(user => {
-      if (user) {
-        if (name.trim() === '' || father.trim() === '' || value === '') {
-          EmptyInput();
-        } else if (isConnected == false) {
-          Internet();
-        } else {
-          setLoading(true);
-          setVisible(true);
-          show();
-          setTimeout(() => {
-            const checkValid = phoneInput.current?.isValidNumber(value);
-            setValid(checkValid ? checkValid : false);
-            setCountryCode(phoneInput.current?.getCountryCode() || '');
-            const collectionRef = firestore().collection('users').add({
-              Gmail: user.email,
-              Name: name,
-              Fathername: father,
-              CourseName: buttonText,
-              Phone: formattedValue,
-              Country: countryName,
-              CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-              Category: 'Tuition',
-              Status: '',
-              Response: 'Pending',
-              Teacher: '',
-              Fees: '',
-              FeesPaid: '',
-            });
-            const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
-            const subject = name;
-            const body = `Online Tuition \n ${countryName} \n ${formattedValue}`;
+    const currentUser = auth().currentUser;
 
-            // Construct the mailto URL
-
-            const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
-              subject,
-            )}&body=${encodeURIComponent(body)}`;
-
-            // Open the default email app
-            Linking.openURL(mailtoUrl).catch(err =>
-              console.error('Error opening email app:', err),
-            );
-            navigation.replace('Home');
-            setTimeout(() => {
-              GoBackHome();
-            }, 1000);
-          }, 5000);
-        }
-      } else {
+    if (!currentUser) {
+      LogIn();
+      setTimeout(() => {
         navigation.replace('Auth');
-      }
-    });
+      }, 2000);
+      return;
+    }
+
+    if (name.trim() === '' || father.trim() === '' || value === '') {
+      EmptyInput();
+      return;
+    }
+
+    if (!isConnected) {
+      Internet();
+      return;
+    }
+
+    setLoading(true);
+    setVisible(true);
+    show();
+
+    setTimeout(() => {
+      const checkValid = phoneInput.current?.isValidNumber(value);
+      setValid(checkValid ? checkValid : false);
+      setCountryCode(phoneInput.current?.getCountryCode() || '');
+
+      const collectionRef = firestore().collection('users').add({
+        Gmail: currentUser.email,
+        Name: name,
+        Fathername: father,
+        CourseName: buttonText,
+        Phone: formattedValue,
+        Country: countryName,
+        CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        Category: 'Tuition',
+        Status: '',
+        Response: 'Pending',
+        Teacher: '',
+        Fees: '',
+        FeesPaid: '',
+      });
+
+      const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
+      const subject = name;
+      const body = `Online Tuition \n ${countryName} \n ${formattedValue}`;
+
+      // Construct the mailto URL
+      const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
+        subject,
+      )}&body=${encodeURIComponent(body)}`;
+
+      // Open the default email app
+      Linking.openURL(mailtoUrl).catch(err =>
+        console.error('Error opening email app:', err),
+      );
+
+      navigation.replace('Home');
+
+      setTimeout(() => {
+        GoBackHome();
+      }, 1000);
+    }, 5000);
   };
   return (
     <ImageBackground

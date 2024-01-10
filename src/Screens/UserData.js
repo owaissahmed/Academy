@@ -23,7 +23,7 @@ import {responsiveFontSize} from 'react-native-responsive-dimensions';
 import firestore from '@react-native-firebase/firestore';
 const devicewidth = Dimensions.get('window').width;
 import {Picker} from '@react-native-picker/picker';
-
+import auth from '@react-native-firebase/auth';
 const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 import {useRoute} from '@react-navigation/native';
@@ -32,7 +32,7 @@ const UserData = ({navigation}) => {
   const [visible, setVisible] = useState(true);
   const [loading, setLoading] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
-
+  const [user, setUser] = useState(null);
   const [name, setname] = useState('');
 
   useEffect(() => {
@@ -41,23 +41,27 @@ const UserData = ({navigation}) => {
       setVisible(false);
     }, 1000);
 
-    const unsubscribe = firestore()
-      .collection('users')
-      .where('Phone', '==', phoneNo)
-      .onSnapshot(querySnapshot => {
-        const userCoursesData = [];
-        querySnapshot.forEach(documentSnapshot => {
-          userCoursesData.push({
-            id: documentSnapshot.id,
-            ...documentSnapshot.data(),
+    const subscriber = auth().onAuthStateChanged(user => {
+      if (user) {
+        setUser(user.email);
+        firestore()
+          .collection('users')
+          .where('Gmail', '==', user.email)
+          .onSnapshot(querySnapshot => {
+            const userCoursesData = [];
+            querySnapshot.forEach(documentSnapshot => {
+              userCoursesData.push({
+                id: documentSnapshot.id,
+                ...documentSnapshot.data(),
+              });
+            });
+
+            setuserCourses(userCoursesData);
           });
-        });
+      }
+    });
 
-        setuserCourses(userCoursesData);
-        
-      });
-
-    return () => unsubscribe();
+    return () => subscriber();
   }, []);
 
   function show() {
@@ -84,7 +88,7 @@ const UserData = ({navigation}) => {
 
   const handleUpdateName = async () => {
     if (!selectedUser === 'Select Value' || name.trim() === '') {
-      Alert.alert('Error','⚫ Please Fill the Input');
+      Alert.alert('Error', '⚫ Please Fill the Input');
       return;
     }
 
@@ -98,7 +102,7 @@ const UserData = ({navigation}) => {
   };
 
   const route = useRoute();
-  const {phoneNo} = route.params;
+  // const {phoneNo} = route.params;
 
   return (
     <View>
@@ -184,13 +188,15 @@ const UserData = ({navigation}) => {
                             <TouchableOpacity
                               style={{width: responsiveWidth(100)}}
                               onPress={() => handleSelectUser(item)}>
-                              <Text style={styles.UpdButton}>Update Paid Fees</Text>
+                              <Text style={styles.UpdButton}>
+                                Update Paid Fees
+                              </Text>
                             </TouchableOpacity>
-                         </>
+                          </>
                         ) : (
                           <Text allowFontScaling={false} style={styles.Name}>
-                        Response : {item.Response}
-                      </Text>
+                            Response : {item.Response}
+                          </Text>
                         )}
                       </>
                     </View>
@@ -320,7 +326,19 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
     marginVertical: responsiveHeight(1.5),
   },
-
+  Welcometext: {
+    fontSize: responsiveFontSize(1.75),
+    color: '#fff',
+    textAlign: 'center',
+    fontFamily: 'good',
+    letterSpacing: 1,
+    marginTop: responsiveHeight(2),
+    width: responsiveWidth(90),
+    backgroundColor: '#2e4c60',
+    paddingHorizontal: responsiveWidth(0.25),
+    // marginHorizontal: responsiveWidth(5),
+    paddingVertical: responsiveHeight(2),
+  },
   button: {
     backgroundColor: '#2e4c60',
     color: 'white',
