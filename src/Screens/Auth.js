@@ -13,6 +13,7 @@ import {
   Modal,
   Image,
   Linking,
+  FlatList,
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import firestore from '@react-native-firebase/firestore';
@@ -45,22 +46,49 @@ const Auth = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const phoneInput = useRef(null);
+  const [userCourses, setuserCourses] = useState([]);
+  const [visiblE, setVisiblE] = useState(true);
+  const [loadinG, setLoadinG] = useState(true);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [USER, setUSER] = useState(null);
+  const [name, setname] = useState('');
 
   useEffect(() => {
+    setTimeout(() => {
+      setLoadinG(false);
+      setVisiblE(false);
+    }, 1000);
+
+    const Subscriber = auth().onAuthStateChanged(user => {
+      if (user) {
+        setUSER(user.email);
+        firestore()
+          .collection('users')
+          .where('Gmail', '==', user.email)
+          .onSnapshot(querySnapshot => {
+            const userCoursesData = [];
+            querySnapshot.forEach(documentSnapshot => {
+              userCoursesData.push({
+                id: documentSnapshot.id,
+                ...documentSnapshot.data(),
+              });
+            });
+
+            setuserCourses(userCoursesData);
+          });
+      }
+    });
+
     const subscriber = auth().onAuthStateChanged(user => {
       setUser(user);
     });
 
-    // Unsubscribe on component unmount
-
     const unsubscribe = NetInfo.addEventListener(state => {
-      // console.log('Connection type', state.type);
-      // console.log('Is connected?', state.isConnected);
       setIsConnected(state.isConnected);
     });
 
     return () => {
-      unsubscribe, subscriber();
+      Subscriber, unsubscribe, subscriber();
     };
   }, []);
 
@@ -76,7 +104,7 @@ const Auth = ({navigation}) => {
   }
 
   function GoToHome() {
-    navigation.replace('Home');
+    navigation.navigate('First');
   }
 
   function show() {
@@ -130,6 +158,7 @@ const Auth = ({navigation}) => {
       auth()
         .signInWithEmailAndPassword(gmail, password)
         .then(() => {
+          navigation.navigate('First')
           showMessage({
             message: '⚪️ Successfully Sign In!',
             // backgroundColor: '#2e4c60',
@@ -142,9 +171,15 @@ const Auth = ({navigation}) => {
             },
             // duration: 5000,
           });
-          setTimeout(() => {
-            GoToHome();
-          }, 2000);
+          setgmail('');
+          setpassword('');
+          // setTimeout(() => {
+            // setLoadinG(false);
+            // setVisiblE(false);
+          // }, 1000);
+          // setTimeout(() => {
+          // GoToHome();
+          // }, 2000);
           console.log('User account created & signed in!');
         })
         .catch(error => {
@@ -170,30 +205,26 @@ const Auth = ({navigation}) => {
     }
   }
 
-  const Logout = async () => {
-    if (isConnected == false) {
-      Internet();
-    } else {
-      try {
-        await auth().signOut();
-        setgmail('');
-        setpassword('');
-        showMessage({
-          message: '⚪️ Successfully LogOut!',
-          // backgroundColor: '#2e4c60',
-          color: 'white',
-          position: 'bottom',
-          type: 'success',
-          titleStyle: {
-            fontSize: responsiveFontSize(2),
-            lineHeight: responsiveHeight(3),
-          },
-          // duration: 5000,
-        });
-        console.log('banda shaat');
-      } catch (error) {
-        console.log(error.message);
-      }
+  const NameChange = newname => {
+    setname(newname);
+  };
+
+  const handleSelectUser = user => {
+    setSelectedUser(user);
+  };
+
+  const handleUpdateName = async () => {
+    if (!selectedUser === 'Select Value' || name.trim() === '') {
+      Alert.alert('Error', '⚫ Please Fill the Input');
+      return;
+    }
+
+    const {id} = selectedUser;
+    try {
+      await firestore().collection('users').doc(id).update({FeesPaid: name});
+      setSelectedUser(null);
+    } catch (error) {
+      console.log('Error updating name:', error);
     }
   };
 
@@ -202,67 +233,189 @@ const Auth = ({navigation}) => {
   };
 
   return (
-    <ImageBackground
-      resizeMode="cover"
-      style={styles.background}
-      source={require('../Images/background.jpg')}>
-      <>
-        <FlashMessage position={'center'} />
-      </>
-      <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
-        <SafeAreaView style={styles.submain}>
-          <Image style={styles.logo} source={require('../Images/logo.png')} />
-          {isUserSignedIn() ? (
-            <View style={{alignItems: 'center'}}>
-              <Text style={styles.Welcometext}>{user.email}</Text>
-              <TouchableOpacity style={styles.Coursesbutton}>
-                <Text allowFontScaling={false} style={styles.Coursesbuttontext}>
-                  Your Courses
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={Logout}>
-                <Text allowFontScaling={false} style={styles.buttontext}>
-                  LOGOUT
-                </Text>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <View style={{alignItems: 'center'}}>
-              <TextInput
-                value={gmail}
-                onChangeText={gmailChange}
-                allowFontScaling={false}
-                style={styles.login}
-                keyboardType="email-address"
-                placeholder="Enter Your Gmail"
-                placeholderTextColor={'grey'}
-              />
-              <TextInput
-                onChangeText={passwordChange}
-                value={password}
-                allowFontScaling={false}
-                style={styles.password}
-                placeholder="Enter Your Password"
-                placeholderTextColor={'grey'}
-              />
-              <TouchableOpacity style={styles.button} onPress={login}>
-                <Text allowFontScaling={false} style={styles.buttontext}>
-                  LOGIN
-                </Text>
-              </TouchableOpacity>
-              <View>
-                <Text
-                  onPress={GoToSignup}
-                  allowFontScaling={false}
-                  style={styles.Createtext}>
-                  Create Account Now!!
-                </Text>
+    <>
+      {isUserSignedIn() ? (
+        <View>
+          <ImageBackground
+            resizeMode="cover"
+            style={{
+              width: devicewidth,
+              height: deviceheight,
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingTop:
+                selectedUser == null
+                  ? responsiveHeight(0)
+                  : responsiveHeight(15),
+              paddingBottom:
+                selectedUser != null
+                  ? responsiveHeight(12)
+                  : responsiveHeight(0),
+            }}
+            source={require('../Images/background.jpg')}>
+            <Modal visible={visiblE} animationType="fade" transparent={true}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: 'rgba(0, 0, 0, 0.100)',
+                }}>
+                {loadinG ? (
+                  <ActivityIndicator size="larger" color="#2e4c60" />
+                ) : (
+                  <Text allowFontScaling={false} style={{color: '#ffffff'}}>
+                    Loading...
+                  </Text>
+                )}
               </View>
-            </View>
-          )}
-        </SafeAreaView>
-      </Animatable.View>
-    </ImageBackground>
+            </Modal>
+
+            {selectedUser && (
+              <View style={styles.ModalView}>
+                <Text style={styles.ModalHeading}>
+                  Enter Your Paid Fees Details
+                </Text>
+                <TextInput
+                  allowFontScaling={false}
+                  style={styles.password}
+                  value={name}
+                  onChangeText={NameChange}
+                />
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={handleUpdateName}>
+                  <Text allowFontScaling={false} style={styles.buttontext}>
+                    Update
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
+
+            {userCourses.length > 0 ? (
+              <Animatable.View
+                animation={'fadeInUp'}
+                delay={1000}
+                duration={2000}>
+                <View style={styles.FlatListVIew}>
+                  <FlatList
+                    data={userCourses}
+                    renderItem={({item}) => (
+                      <TouchableOpacity style={styles.DataView}>
+                        <View style={styles.DataView}>
+                          <Text
+                            allowFontScaling={false}
+                            style={styles.CourseName}>
+                            {item.CourseName}
+                          </Text>
+                          <Text allowFontScaling={false} style={styles.Name}>
+                            Name : {item.Name}
+                          </Text>
+                          <Text allowFontScaling={false} style={styles.Name}>
+                            Father Name : {item.Fathername}
+                          </Text>
+
+                          {item.Response !== 'Pending' ? (
+                            <>
+                              <Text
+                                allowFontScaling={false}
+                                style={styles.Name}>
+                                Teacher: {item.Teacher}
+                              </Text>
+                              <Text
+                                allowFontScaling={false}
+                                style={styles.Name}>
+                                Fees: {item.Fees}
+                              </Text>
+                              <Text
+                                allowFontScaling={false}
+                                style={styles.Name}>
+                                Fees Paid: {item.FeesPaid}
+                              </Text>
+                              <TouchableOpacity
+                                style={{width: responsiveWidth(100)}}
+                                onPress={() => handleSelectUser(item)}>
+                                <Text style={styles.UpdButton}>
+                                  Update Paid Fees
+                                </Text>
+                              </TouchableOpacity>
+                            </>
+                          ) : (
+                            <Text allowFontScaling={false} style={styles.Name}>
+                              Response : {item.Response}
+                            </Text>
+                          )}
+                        </View>
+                      </TouchableOpacity>
+                    )}
+                    keyExtractor={item => item.id}
+                  />
+                </View>
+              </Animatable.View>
+            ) : (
+              <>
+                {loadinG === true ? (
+                  <Text allowFontScaling={false} style={styles.NoData}></Text>
+                ) : (
+                  <Text allowFontScaling={false} style={styles.NoData}>
+                    No Data!!
+                  </Text>
+                )}
+              </>
+            )}
+          </ImageBackground>
+        </View>
+      ) : (
+        <ImageBackground
+          resizeMode="cover"
+          style={styles.background}
+          source={require('../Images/background.jpg')}>
+          <>
+            <FlashMessage position={'center'} />
+          </>
+          <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
+            <SafeAreaView style={styles.submain}>
+              <Image
+                style={styles.logo}
+                source={require('../Images/logo.png')}
+              />
+              <View style={{alignItems: 'center'}}>
+                <TextInput
+                  value={gmail}
+                  onChangeText={gmailChange}
+                  allowFontScaling={false}
+                  style={styles.login}
+                  keyboardType="email-address"
+                  placeholder="Enter Your Gmail"
+                  placeholderTextColor={'grey'}
+                />
+                <TextInput
+                  onChangeText={passwordChange}
+                  value={password}
+                  allowFontScaling={false}
+                  style={styles.passwordGmail}
+                  placeholder="Enter Your Password"
+                  placeholderTextColor={'grey'}
+                />
+                <TouchableOpacity style={styles.buttonGmail} onPress={login}>
+                  <Text allowFontScaling={false} style={styles.buttontextGmail}>
+                    LOGIN
+                  </Text>
+                </TouchableOpacity>
+                <View>
+                  <Text
+                    onPress={GoToSignup}
+                    allowFontScaling={false}
+                    style={styles.Createtext}>
+                    Create Account Now!!
+                  </Text>
+                </View>
+              </View>
+            </SafeAreaView>
+          </Animatable.View>
+        </ImageBackground>
+      )}
+    </>
   );
 };
 
@@ -333,7 +486,7 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(2),
     fontSize: responsiveFontSize(2),
   },
-  password: {
+  passwordGmail: {
     height: responsiveHeight(6),
     width: responsiveWidth(80),
     padding: 8,
@@ -345,7 +498,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FBFCF8',
     fontSize: responsiveFontSize(2),
   },
-  button: {
+  buttonGmail: {
     backgroundColor: '#2e4c60',
     color: 'white',
     padding: 6,
@@ -354,7 +507,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: responsiveWidth(30),
   },
-  buttontext: {
+  buttontextGmail: {
     color: '#fff',
     fontWeight: '600',
     letterSpacing: 0.7,
@@ -384,6 +537,150 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: responsiveFontSize(2.25),
     marginBottom: responsiveHeight(1),
+  },
+  background: {
+    width: devicewidth,
+    height: deviceheight,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  FlatListVIew: {
+    width: responsiveWidth(95),
+  },
+  DataView: {
+    backgroundColor: '#2e4c60',
+    height: 'auto',
+    width: responsiveWidth(95),
+    marginVertical: responsiveHeight(1),
+    alignItems: 'center',
+    paddingVertical: responsiveHeight(0.75),
+    borderRadius: 12,
+  },
+
+  Name: {
+    paddingHorizontal: responsiveWidth(8),
+    fontSize: responsiveScreenFontSize(2.25),
+    color: '#fff',
+    paddingVertical: responsiveHeight(1),
+    textAlign: 'center',
+    fontFamily: 'good',
+    // lineHeight:25,
+    letterSpacing: 2,
+  },
+
+  CourseName: {
+    paddingHorizontal: responsiveWidth(8),
+    fontSize: responsiveScreenFontSize(2.5),
+    color: '#2e4c60',
+    backgroundColor: 'white',
+    paddingVertical: responsiveHeight(1),
+    marginBottom: responsiveHeight(1),
+    textAlign: 'center',
+    fontFamily: 'good',
+    borderRadius: 12,
+    // lineHeight:25,
+    letterSpacing: 2,
+  },
+  UpdButton: {
+    paddingHorizontal: responsiveWidth(8),
+    fontSize: responsiveScreenFontSize(2.25),
+    color: '#2e4c60',
+    backgroundColor: 'white',
+    paddingVertical: responsiveHeight(1),
+    marginTop: responsiveHeight(1),
+    textAlign: 'center',
+    fontFamily: 'good',
+    borderRadius: 12,
+    // lineHeight:25,
+    letterSpacing: 2,
+  },
+  NoData: {
+    fontSize: responsiveScreenFontSize(4),
+    color: 'red',
+    textAlign: 'center',
+    fontFamily: 'good',
+    letterSpacing: 3,
+    textTransform: 'uppercase',
+  },
+  ModalView: {
+    display: 'flex',
+    position: 'relative',
+    backgroundColor: 'white',
+    width: responsiveWidth(90),
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 'auto',
+    marginBottom: responsiveHeight(1),
+  },
+  ModalHeading: {
+    fontSize: responsiveScreenFontSize(2),
+    // borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    color: '#fff',
+    width: responsiveWidth(90),
+    backgroundColor: '#2e4c60',
+    paddingVertical: responsiveHeight(1.5),
+    textAlign: 'center',
+    fontFamily: 'good',
+    letterSpacing: 2,
+    marginBottom: responsiveHeight(1),
+  },
+  Phone: {
+    fontSize: responsiveScreenFontSize(2.25),
+    backgroundColor: '#2e4c60',
+
+    color: '#fff',
+    // paddingVertical: responsiveHeight(1),
+    textAlign: 'center',
+    fontFamily: 'good',
+    letterSpacing: 2,
+    marginVertical: responsiveHeight(1.5),
+  },
+  Welcometext: {
+    fontSize: responsiveFontSize(1.75),
+    color: '#fff',
+    textAlign: 'center',
+    fontFamily: 'good',
+    letterSpacing: 1,
+    marginTop: responsiveHeight(2),
+    width: responsiveWidth(90),
+    backgroundColor: '#2e4c60',
+    paddingHorizontal: responsiveWidth(0.25),
+    // marginHorizontal: responsiveWidth(5),
+    paddingVertical: responsiveHeight(2),
+  },
+  button: {
+    backgroundColor: '#2e4c60',
+    color: 'white',
+    padding: 6,
+    marginTop: responsiveHeight(1),
+    marginBottom: responsiveHeight(1),
+    borderRadius: 8,
+    width: responsiveWidth(30),
+  },
+  buttontext: {
+    color: '#fff',
+    fontWeight: '600',
+    letterSpacing: 0.7,
+    textAlign: 'center',
+    fontSize: responsiveFontSize(2.25),
+  },
+  password: {
+    borderRadius: 10,
+    paddingVertical: responsiveHeight(0.5),
+    marginVertical: responsiveHeight(1),
+    marginHorizontal: responsiveWidth(3),
+    color: '#2e4c60',
+    width: responsiveWidth(80),
+    textAlign: 'center',
+    fontSize: responsiveFontSize(2.25),
+    borderWidth: 1.5,
+    borderColor: '#2e4c60',
+    color: 'black',
+    height: responsiveHeight(5),
   },
 });
 

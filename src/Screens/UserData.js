@@ -29,21 +29,21 @@ import * as Animatable from 'react-native-animatable';
 import {useRoute} from '@react-navigation/native';
 const UserData = ({navigation}) => {
   const [userCourses, setuserCourses] = useState([]);
-  const [visible, setVisible] = useState(true);
-  const [loading, setLoading] = useState(true);
+  const [visiblE, setVisiblE] = useState(true);
+  const [loadinG, setLoadinG] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [user, setUser] = useState(null);
+  const [USER, setUSER] = useState(null);
   const [name, setname] = useState('');
 
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
-      setVisible(false);
+      setLoadinG(false);
+      setVisiblE(false);
     }, 1000);
 
     const subscriber = auth().onAuthStateChanged(user => {
       if (user) {
-        setUser(user.email);
+        setUSER(user.email);
         firestore()
           .collection('users')
           .where('Gmail', '==', user.email)
@@ -101,7 +101,7 @@ const UserData = ({navigation}) => {
     }
   };
 
-  const route = useRoute();
+  // const route = useRoute();
   // const {phoneNo} = route.params;
 
   return (
@@ -119,7 +119,7 @@ const UserData = ({navigation}) => {
             selectedUser != null ? responsiveHeight(12) : responsiveHeight(0),
         }}
         source={require('../Images/background.jpg')}>
-        <Modal visible={visible} animationType="fade" transparent={true}>
+        <Modal visible={visiblE} animationType="fade" transparent={true}>
           <View
             style={{
               flex: 1,
@@ -128,7 +128,7 @@ const UserData = ({navigation}) => {
               // marginBottom:responsiveHeight(5),
               backgroundColor: 'rgba(0, 0, 0, 0.100)',
             }}>
-            {loading ? (
+            {loadinG ? (
               <ActivityIndicator size="larger" color="#2e4c60" />
             ) : (
               <Text allowFontScaling={false} style={{color: '#ffffff'}}>
@@ -208,7 +208,7 @@ const UserData = ({navigation}) => {
           </Animatable.View>
         ) : (
           <>
-            {loading == true ? (
+            {loadinG == true ? (
               <Text allowFontScaling={false} style={styles.NoData}></Text>
             ) : (
               <Text allowFontScaling={false} style={styles.NoData}>

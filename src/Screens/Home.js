@@ -45,7 +45,7 @@ export default function Home({route}) {
     const subscriber = auth().onAuthStateChanged(user => {
       if (user) {
         const userEmail = user.email;
-        const uname = userEmail.split('@')[0];
+        const uname = userEmail.split(/\d/)[0] || userEmail.split('@')[0];
         setusername(uname);
       } else {
         setusername('');
@@ -96,23 +96,12 @@ export default function Home({route}) {
     } else Internet();
   }
 
-  // function name(params) {
-  //   if (user && isConnected) {
-  //     navigation.navigate('Auth');
-  //   }
-  // }
-
-  // function Login() {
-  //   navigation.navigate('Auth');
-  // }
   function Login() {
-    auth().onAuthStateChanged(user => {
-      if (user && isConnected) {
-        navigation.navigate('UserData');
-      } else if (!user && isConnected == true) {
-        navigation.navigate('Auth');
-      } else Internet();
-    });
+    // auth().onAuthStateChanged(user => {
+    // if (user && isConnected) {
+    navigation.navigate('Auth');
+    // } else Internet();
+    // });
   }
   function Admin() {
     navigation.navigate('Admin');
@@ -143,21 +132,41 @@ export default function Home({route}) {
     navigation.navigate('About');
   };
 
-  const logout = async () => {
+  const LogingOut = async () => {
     if (isConnected == false) {
       Internet();
     } else {
       try {
-        await auth().signOut();
-      setTimeout(() => {
-        navigation.replace('First')
-      }, 2000);
-        console.log('banda shaat');
+        setUserModalVisible(!isUserModalVisible);
+        setTimeout(async () => {
+          navigation.replace('First');
+          await auth().signOut();
+        }, 200);
+        //       // navigation.replace('First');
+        //       console.log('banda shaat');
       } catch (error) {
         console.log(error.message);
       }
     }
   };
+
+  // const logout = async () => {
+  //   if (isConnected == false) {
+  //     Internet();
+  //   } else {
+  //     try {
+  //       setUserModalVisible(!isUserModalVisible);
+  //       // setTimeout(async () => {
+  //         await auth().signOut();
+  //         // navigation.replace('First');
+  //       // }, 500);
+  //       // navigation.replace('First');
+  //       console.log('banda shaat');
+  //     } catch (error) {
+  //       console.log(error.message);
+  //     }
+  //   }
+  // };
 
   const CheckPassword = () => {
     if (name === '1') {
@@ -229,9 +238,25 @@ export default function Home({route}) {
               source={require('../Images/round.png')}
             />
           </TouchableOpacity>
-          <Text style={styles.Welcometext} onPress={UseropenModal}>
-            {username != '' ? `Hi, ${username}` : null}
-          </Text>
+          {username != '' ? (
+            <TouchableOpacity onPress={UseropenModal}>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  width: responsiveWidth(70),
+                }}>
+                <Text style={styles.Welcometext}>
+                  {username != '' ? `Hi, ${username}` : null}
+                </Text>
+                <Image
+                  style={styles.down}
+                  source={require('../Images/down.png')}
+                />
+              </View>
+            </TouchableOpacity>
+          ) : null}
           <TouchableOpacity onPress={Login}>
             <Image
               style={styles.account}
@@ -391,9 +416,9 @@ export default function Home({route}) {
             animationIn="zoomIn"
             animationOut="zoomOut"
             animationInTiming={1000}
-            animationOutTiming={1000}
+            animationOutTiming={500}
             backdropTransitionInTiming={1000}
-            backdropTransitionOutTiming={1000}>
+            backdropTransitionOutTiming={500}>
             <View style={styles.modal}>
               <ImageBackground
                 resizeMode="cover"
@@ -415,7 +440,7 @@ export default function Home({route}) {
                       Close
                     </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.Btn} onPress={logout}>
+                  <TouchableOpacity style={styles.Btn} onPress={LogingOut}>
                     <Text allowFontScaling={false} style={styles.BtnText}>
                       LOGOUT
                     </Text>
@@ -504,6 +529,10 @@ const styles = StyleSheet.create({
     height: responsiveHeight(4.5),
     width: responsiveWidth(9),
   },
+  down: {
+    height: responsiveHeight(3),
+    width: responsiveWidth(6),
+  },
   rectangle: {
     display: 'flex',
     justifyContent: 'center',
@@ -550,9 +579,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'good',
     letterSpacing: 1,
-    width: responsiveWidth(68),
+    // backgroundColor: 'blue',
+    // width: responsiveWidth(68),
     // marginTop: responsiveHeight(1),
-    // paddingHorizontal: responsiveWidth(0.25),
+    paddingHorizontal: responsiveWidth(2.25),
   },
   squaretext__: {
     fontSize: responsiveScreenFontSize(2),
