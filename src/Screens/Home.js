@@ -10,6 +10,8 @@ import {
   Button,
   Alert,
   Linking,
+  ActivityIndicator
+  // Modal
 } from 'react-native';
 import {React, useEffect, useState} from 'react';
 import {
@@ -36,16 +38,21 @@ export default function Home({route}) {
   const [isAdminModalVisible, setAdminModalVisible] = useState(false);
   const [isUserModalVisible, setUserModalVisible] = useState(false);
   const [name, setname] = useState();
+  const [visiblE,setVisiblE] = useState(true);
+  const [loadinG,setloadinG] = useState(true);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
       setIsConnected(state.isConnected);
     });
-
+    setloadinG(false);
+    setVisiblE(false);
     const subscriber = auth().onAuthStateChanged(user => {
       if (user) {
         const userEmail = user.email;
-        const uname = userEmail.split(/\d/)[0] || userEmail.split('@')[0];
+        // const uname = userEmail.split(/\d/)[0] || ('@')[0];
+        // const uname = userEmail.split(/\d/)[0] || userEmail.split('@')[0];
+        const uname = userEmail.split(/\d|@/)[0];
         setusername(uname);
       } else {
         setusername('');
@@ -138,10 +145,12 @@ export default function Home({route}) {
     } else {
       try {
         setUserModalVisible(!isUserModalVisible);
+        setloadinG(true);
+        setVisiblE(true);
         setTimeout(async () => {
-          navigation.replace('First');
           await auth().signOut();
-        }, 200);
+          navigation.replace('First');
+        }, 1000);
         //       // navigation.replace('First');
         //       console.log('banda shaat');
       } catch (error) {
@@ -223,6 +232,21 @@ export default function Home({route}) {
 
   return (
     <View>
+    <Modal visible={visiblE} animationType="fade" transparent={true}>
+    <View
+      style={{
+        flex: 1,
+        // width:devicewidth,
+        // height:deviceheight,
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: 'rgba(0, 0, 0, 0.100)',
+      }}>
+      {loadinG ? (
+        <ActivityIndicator size="larger" color="#2e4c60" />
+      ) : null}
+    </View>
+  </Modal>
       <ImageBackground
         resizeMode="cover"
         style={styles.background}
@@ -232,6 +256,7 @@ export default function Home({route}) {
           delay={100}
           animation="fadeInDown"
           style={styles.navbar}>
+          
           <TouchableOpacity onPress={openModalAdmin}>
             <Image
               style={styles.logo}
@@ -278,6 +303,7 @@ export default function Home({route}) {
             </Text>
           </Animatable.View>
         </View>
+        
         <Animatable.View
           duration={2000}
           delay={100}
@@ -416,9 +442,9 @@ export default function Home({route}) {
             animationIn="zoomIn"
             animationOut="zoomOut"
             animationInTiming={1000}
-            animationOutTiming={500}
+            animationOutTiming={1000}
             backdropTransitionInTiming={1000}
-            backdropTransitionOutTiming={500}>
+            backdropTransitionOutTiming={1000}>
             <View style={styles.modal}>
               <ImageBackground
                 resizeMode="cover"

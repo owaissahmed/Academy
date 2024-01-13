@@ -21,12 +21,11 @@ import OnlineData from './Screens/OnlineData';
 import HomeData from './Screens/HomeData';
 import CoursesData from './Screens/CoursesData';
 import TeachersData from './Screens/TeachersData';
-import UserData from './Screens/UserData';
 import DarseNizamiData from './Screens/DarseNizamiData';
 import OneTeacherData from './Screens/OneTeacherData';
 import AddOldCourse from './Screens/AddOldCourse';
 import Auth from './Screens/Auth';
-import Signup from './Screens/Signup';
+import UserSignup from './Screens/UserSignup';
 import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -149,11 +148,6 @@ export default function AppNavigator() {
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="UserData"
-            component={UserData}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
             name="TeachersData"
             component={TeachersData}
             options={{headerShown: false}}
@@ -173,9 +167,10 @@ export default function AppNavigator() {
             component={Auth}
             options={{headerShown: false}}
           />
+          
           <Stack.Screen
-            name="Signup"
-            component={Signup}
+            name="UserSignup"
+            component={UserSignup}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

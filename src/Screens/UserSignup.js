@@ -28,12 +28,13 @@ const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import auth from '@react-native-firebase/auth';
-const Signup = ({navigation}) => {
+const UserSignup = ({navigation}) => {
   const [gmail, setgmail] = useState('');
   const [password, setpassword] = useState('');
   const [user, setUser] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
-
+  const [visible, setVisible] = useState(true);
+  const [loading, setloading] = useState(true);
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(user => {
       setUser(user);
@@ -46,6 +47,9 @@ const Signup = ({navigation}) => {
       // console.log('Is connected?', state.isConnected);
       setIsConnected(state.isConnected);
     });
+
+    setloading(false);
+    setVisible(false);
 
     return () => {
       unsubscribe, subscriber();
@@ -66,7 +70,7 @@ const Signup = ({navigation}) => {
     navigation.replace('Home');
   }
 
-  function EmptyInput() {
+  function Empty() {
     showMessage({
       message: '⚪️ Please Fill All Inputs',
       // backgroundColor:'#2e4c60',
@@ -97,7 +101,7 @@ const Signup = ({navigation}) => {
 
   function login() {
     if (gmail.trim() === '' || password.trim() === '') {
-      EmptyInput();
+      Empty();
       console.log('That email EmptyInput is already in use!');
     } else if (isConnected == false) {
       Internet();
@@ -105,6 +109,8 @@ const Signup = ({navigation}) => {
       auth()
         .createUserWithEmailAndPassword(gmail, password)
         .then(() => {
+          setloading(true);
+          setVisible(true);
           showMessage({
             message: '⚪️ Successfully Account Create!',
             // backgroundColor: '#2e4c60',
@@ -118,6 +124,8 @@ const Signup = ({navigation}) => {
             // duration: 5000,
           });
           setTimeout(() => {
+            setloading(false);
+            setVisible(false);
             GoToHome();
           }, 2000);
           console.log('User account created');
@@ -156,6 +164,20 @@ const Signup = ({navigation}) => {
       <>
         <FlashMessage position={'center'} />
       </>
+      <Modal visible={visible} animationType="fade" transparent={true}>
+        <View
+          style={{
+            flex: 1,
+            // width:devicewidth,
+            // height:deviceheight,
+            justifyContent: 'center',
+            alignItems: 'center',
+            // backgroundColor: 'rgba(0, 0, 0, 0.100)',
+          }}>
+          {loading ? <ActivityIndicator size="larger" color="#2e4c60" /> : null}
+        </View>
+      </Modal>
+
       <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
         <SafeAreaView style={styles.submain}>
           <Image style={styles.logo} source={require('../Images/logo.png')} />
@@ -183,6 +205,7 @@ const Signup = ({navigation}) => {
               </Text>
             </TouchableOpacity>
           </View>
+
           <View>
             <Text
               onPress={GoToAuth}
@@ -288,4 +311,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Signup;
+export default UserSignup;

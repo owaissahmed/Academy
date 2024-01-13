@@ -15,9 +15,7 @@ import {
   Linking,
   FlatList,
 } from 'react-native';
-import PhoneInput from 'react-native-phone-number-input';
 import firestore from '@react-native-firebase/firestore';
-import firebase from '@react-native-firebase/app';
 import NetInfo from '@react-native-community/netinfo';
 import {
   responsiveFontSize,
@@ -27,8 +25,6 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import {useRoute} from '@react-navigation/native';
-import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import auth from '@react-native-firebase/auth';
@@ -36,26 +32,17 @@ const Auth = ({navigation}) => {
   const [gmail, setgmail] = useState('');
   const [password, setpassword] = useState('');
   const [user, setUser] = useState(null);
-  const [course, setcourse] = useState('');
-  const [value, setValue] = useState('');
-  const [country, setCountry] = useState('Pakistan');
-  const [countryCode, setCountryCode] = useState('');
-  const [formattedValue, setFormattedValue] = useState('');
-  const [valid, setValid] = useState(false);
-  const [visible, setVisible] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-  const phoneInput = useRef(null);
   const [userCourses, setuserCourses] = useState([]);
   const [visiblE, setVisiblE] = useState(true);
-  const [loadinG, setLoadinG] = useState(true);
+  const [loadinG, setloadinG] = useState(true);
   const [selectedUser, setSelectedUser] = useState(null);
   const [USER, setUSER] = useState(null);
   const [name, setname] = useState('');
 
   useEffect(() => {
     setTimeout(() => {
-      setLoadinG(false);
+      setloadinG(false);
       setVisiblE(false);
     }, 1000);
 
@@ -100,30 +87,12 @@ const Auth = ({navigation}) => {
   };
 
   function GoToSignup() {
-    navigation.replace('Signup');
+    navigation.replace('UserSignup');
   }
 
-  function GoToHome() {
-    navigation.navigate('First');
-  }
-
-  function show() {
-    showMessage({
-      message: '⚪️ Dont forget to send email after clicking on "SAVE" button',
-      backgroundColor: '#2e4c60',
-      color: 'white',
-      position: 'bottom',
-      titleStyle: {
-        fontSize: responsiveFontSize(2),
-        lineHeight: responsiveHeight(3),
-      },
-      // duration: 50000,
-    });
-  }
   function EmptyInput() {
     showMessage({
       message: '⚪️ Please Fill All Inputs',
-      // backgroundColor:'#2e4c60',
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -131,13 +100,11 @@ const Auth = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
     });
   }
   function Internet() {
     showMessage({
       message: '⚪️ No Internet Connection',
-      // backgroundColor:'#2e4c60',
       type: 'warning',
       color: 'white',
       position: 'bottom',
@@ -145,7 +112,6 @@ const Auth = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
     });
   }
 
@@ -158,10 +124,9 @@ const Auth = ({navigation}) => {
       auth()
         .signInWithEmailAndPassword(gmail, password)
         .then(() => {
-          navigation.navigate('First')
+          navigation.navigate('First');
           showMessage({
             message: '⚪️ Successfully Sign In!',
-            // backgroundColor: '#2e4c60',
             color: 'white',
             position: 'bottom',
             type: 'success',
@@ -169,27 +134,15 @@ const Auth = ({navigation}) => {
               fontSize: responsiveFontSize(2),
               lineHeight: responsiveHeight(3),
             },
-            // duration: 5000,
           });
           setgmail('');
           setpassword('');
-          // setTimeout(() => {
-            // setLoadinG(false);
-            // setVisiblE(false);
-          // }, 1000);
-          // setTimeout(() => {
-          // GoToHome();
-          // }, 2000);
           console.log('User account created & signed in!');
         })
         .catch(error => {
-          if (
-            error.code === 'auth/invalid-email' ||
-            'auth/invalid-credential'
-          ) {
+          if (error.code === 'auth/invalid-email') {
             showMessage({
-              message: '⚪️ Invalid-Email / Password',
-              // backgroundColor:'#2e4c60',
+              message: '⚪️ Invalid-Email',
               type: 'warning',
               color: 'white',
               position: 'bottom',
@@ -197,7 +150,17 @@ const Auth = ({navigation}) => {
                 fontSize: responsiveFontSize(2.25),
                 lineHeight: responsiveHeight(3),
               },
-              // duration: 5000,
+            });
+          } else if (error.code === 'auth/invalid-credential') {
+            showMessage({
+              message: '⚪️ Invalid-Password',
+              type: 'warning',
+              color: 'white',
+              position: 'bottom',
+              titleStyle: {
+                fontSize: responsiveFontSize(2.25),
+                lineHeight: responsiveHeight(3),
+              },
             });
           }
           console.log(error);
@@ -354,9 +317,7 @@ const Auth = ({navigation}) => {
               </Animatable.View>
             ) : (
               <>
-                {loadinG === true ? (
-                  <Text allowFontScaling={false} style={styles.NoData}></Text>
-                ) : (
+                {loadinG === true ? null : (
                   <Text allowFontScaling={false} style={styles.NoData}>
                     No Data!!
                   </Text>
@@ -471,7 +432,6 @@ const styles = StyleSheet.create({
     width: responsiveWidth(90),
     backgroundColor: '#2e4c60',
     paddingHorizontal: responsiveWidth(0.25),
-    // marginHorizontal: responsiveWidth(5),
     paddingVertical: responsiveHeight(2),
   },
   login: {
@@ -519,7 +479,6 @@ const styles = StyleSheet.create({
     color: 'white',
     padding: 6,
     marginTop: responsiveHeight(2),
-    // marginBottom: responsiveHeight(2),
     borderRadius: 8,
     width: responsiveWidth(50),
   },
@@ -565,7 +524,6 @@ const styles = StyleSheet.create({
     paddingVertical: responsiveHeight(1),
     textAlign: 'center',
     fontFamily: 'good',
-    // lineHeight:25,
     letterSpacing: 2,
   },
 
@@ -579,7 +537,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'good',
     borderRadius: 12,
-    // lineHeight:25,
     letterSpacing: 2,
   },
   UpdButton: {
@@ -592,7 +549,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'good',
     borderRadius: 12,
-    // lineHeight:25,
     letterSpacing: 2,
   },
   NoData: {
@@ -616,7 +572,6 @@ const styles = StyleSheet.create({
   },
   ModalHeading: {
     fontSize: responsiveScreenFontSize(2),
-    // borderRadius: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     color: '#fff',
@@ -631,9 +586,7 @@ const styles = StyleSheet.create({
   Phone: {
     fontSize: responsiveScreenFontSize(2.25),
     backgroundColor: '#2e4c60',
-
     color: '#fff',
-    // paddingVertical: responsiveHeight(1),
     textAlign: 'center',
     fontFamily: 'good',
     letterSpacing: 2,
@@ -649,7 +602,6 @@ const styles = StyleSheet.create({
     width: responsiveWidth(90),
     backgroundColor: '#2e4c60',
     paddingHorizontal: responsiveWidth(0.25),
-    // marginHorizontal: responsiveWidth(5),
     paddingVertical: responsiveHeight(2),
   },
   button: {
