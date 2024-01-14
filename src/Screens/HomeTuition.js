@@ -18,6 +18,7 @@ import PhoneInput from 'react-native-phone-number-input';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
 import NetInfo from '@react-native-community/netinfo';
+import auth from '@react-native-firebase/auth';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -121,53 +122,87 @@ const HomeTuition = ({navigation}) => {
     });
   };
 
+  function LogIn() {
+    showMessage({
+      message: '⚪️ You Need to Logged In First',
+      // backgroundColor:'#36454F',
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      duration: 2000,
+    });
+  }
+
   const Check = async () => {
+    const currentUser = auth().currentUser;
+
+    if (!currentUser) {
+      LogIn();
+      setTimeout(() => {
+        navigation.replace('Auth');
+      }, 2000);
+      return;
+    }
+
     if (name.trim() === '' || father.trim() === '' || value === '') {
       EmptyInput();
-    } else if (isConnected == false) {
-      Internet();
-    } else {
-      setLoading(true);
-      setVisible(true);
-      show();
-      setTimeout(() => {
-        const checkValid = phoneInput.current?.isValidNumber(value);
-        setValid(checkValid ? checkValid : false);
-        setCountryCode(phoneInput.current?.getCountryCode() || '');
-        const collectionRef = firestore().collection('users').add({
-          Name: name,
-          Fathername: father,
-          CourseName:buttonText,
-          Phone: formattedValue,
-          Country: countryName,
-          CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          Category:'Tuition',
-          Status:'',
-          Response:'Pending',
-          Teacher:'',
-          Fees:'',
-          FeesPaid:''
-        });
-        const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
-        const subject = name;
-        const body = `Home Tuition \n ${countryName}\n ${formattedValue}`;
-
-        // Construct the mailto URL
-
-        const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
-          subject,
-        )}&body=${encodeURIComponent(body)}`;
-
-        // Open the default email app
-        Linking.openURL(mailtoUrl).catch(err =>
-          console.error('Error opening email app:', err),
-        );
-        navigation.replace('Home');
-        setTimeout(() => {
-          GoBackHome();
-        }, 1000);
-      }, 5000);
+      return;
     }
+
+    if (!isConnected) {
+      Internet();
+      return;
+    }
+
+    setLoading(true);
+    setVisible(true);
+    show();
+
+    setTimeout(() => {
+      const checkValid = phoneInput.current?.isValidNumber(value);
+      setValid(checkValid ? checkValid : false);
+      setCountryCode(phoneInput.current?.getCountryCode() || '');
+
+      const collectionRef = firestore().collection('users').add({
+        Gmail: currentUser.email,
+        Name: name,
+        Fathername: father,
+        CourseName: buttonText,
+        Phone: formattedValue,
+        Country: countryName,
+        CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        Category: 'Tuition',
+        Status: '',
+        Response: 'Pending',
+        Teacher: '',
+        Fees: '',
+        FeesPaid: '',
+      });
+
+      const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
+      const subject = name;
+      const body = `Home Tuition \n ${countryName} \n ${formattedValue}`;
+
+      // Construct the mailto URL
+      const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
+        subject,
+      )}&body=${encodeURIComponent(body)}`;
+
+      // Open the default email app
+      Linking.openURL(mailtoUrl).catch(err =>
+        console.error('Error opening email app:', err),
+      );
+
+      navigation.replace('Home');
+
+      setTimeout(() => {
+        GoBackHome();
+      }, 1000);
+    }, 5000);
   };
   return (
     <ImageBackground

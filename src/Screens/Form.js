@@ -29,6 +29,7 @@ import {useRoute} from '@react-navigation/native';
 import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
+import auth from '@react-native-firebase/auth';
 
 const Form = ({navigation}) => {
   const [name, setname] = useState('');
@@ -125,56 +126,87 @@ const Form = ({navigation}) => {
     });
   };
 
+  function LogIn() {
+    showMessage({
+      message: '⚪️ You Need to Logged In First',
+      // backgroundColor:'#36454F',
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      duration: 2000,
+    });
+  }
+
   const Check = async () => {
-    if (
-      name.trim() === '' ||
-      father.trim() === '' ||
-      value === ''
-    ) {
-      EmptyInput();
-    } else if (isConnected == false) {
-      Internet();
-    } else {
-      setLoading(true);
-      setVisible(true);
-      show();
+    const currentUser = auth().currentUser;
+
+    if (!currentUser) {
+      LogIn();
       setTimeout(() => {
-       
-        const checkValid = phoneInput.current?.isValidNumber(value);
-        setValid(checkValid ? checkValid : false);
-        setCountryCode(phoneInput.current?.getCountryCode() || '');
-        const collectionRef = firestore().collection('users').add({
-          Name: name,
-          Fathername: father,
-          CourseName: buttonText,
-          Phone: formattedValue,
-          Country: countryName,
-          CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-          Category:'Courses',
-          Status:'',
-          Response:'Pending',
-          Teacher:'',
-          Fees:'',
-          FeesPaid:''
-        });
-
-        const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
-        const subject = name;
-        const body = `${buttonText} \n ${countryName} \n ${formattedValue}`;
-
-        const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
-          subject,
-        )}&body=${encodeURIComponent(body)}`;
-
-        Linking.openURL(mailtoUrl).catch(err =>
-          console.error('Error opening email app:', err),
-        );
-        navigation.replace('Home');
-        setTimeout(() => {
-          GoBackHome();
-        }, 1000);
-      }, 5000);
+        navigation.replace('Auth');
+      }, 2000);
+      return;
     }
+
+    if (name.trim() === '' || father.trim() === '' || value === '') {
+      EmptyInput();
+      return;
+    }
+
+    if (!isConnected) {
+      Internet();
+      return;
+    }
+
+    setLoading(true);
+    setVisible(true);
+    show();
+
+    setTimeout(() => {
+      const checkValid = phoneInput.current?.isValidNumber(value);
+      setValid(checkValid ? checkValid : false);
+      setCountryCode(phoneInput.current?.getCountryCode() || '');
+
+      const collectionRef = firestore().collection('users').add({
+        Gmail: currentUser.email,
+        Name: name,
+        Fathername: father,
+        CourseName: buttonText,
+        Phone: formattedValue,
+        Country: countryName,
+        CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        Category: 'Courses',
+        Status: '',
+        Response: 'Pending',
+        Teacher: '',
+        Fees: '',
+        FeesPaid: '',
+      });
+
+      const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
+      const subject = name;
+      const body = `${buttonText} \n ${countryName} \n ${formattedValue}`;
+
+      // Construct the mailto URL
+      const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
+        subject,
+      )}&body=${encodeURIComponent(body)}`;
+
+      // Open the default email app
+      Linking.openURL(mailtoUrl).catch(err =>
+        console.error('Error opening email app:', err),
+      );
+
+      navigation.replace('Home');
+
+      setTimeout(() => {
+        GoBackHome();
+      }, 1000);
+    }, 5000);
   };
 
   return (
