@@ -233,6 +233,12 @@ const HomeTuition = ({navigation}) => {
       <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
         <SafeAreaView style={styles.submain}>
           <Image style={styles.logo} source={require('../Images/logo.png')} />
+          <View style={{ display:'flex',flexDirection:'row',backgroundColor:'blue'}}>
+          <Image style={{width:responsiveWidth(10.25),height:responsiveHeight(5)}} source={require('../Images/fb.png')} />
+          <Image style={{width:responsiveWidth(10.25),height:responsiveHeight(5)}} source={require('../Images/instagram.png')} />
+          <Image style={{width:responsiveWidth(10.25),height:responsiveHeight(5)}} source={require('../Images/whatsapp.png')} />
+          <Image style={{width:responsiveWidth(10.25),height:responsiveHeight(5)}} source={require('../Images/telegram.png')} />
+        </View>
           <TextInput
             onChangeText={NameChange}
             allowFontScaling={false}
@@ -297,12 +303,12 @@ const HomeTuition = ({navigation}) => {
             />
           </View>
           <Text allowFontScaling={false} style={styles.default}>
-          {country && country === 'Pakistan'
-            ? 'Pakistan'
-            : country
-            ? country.name
-            : ''}
-        </Text>
+            {country && country === 'Pakistan'
+              ? 'Pakistan'
+              : country
+              ? country.name
+              : ''}
+          </Text>
           <>
             <TouchableOpacity style={styles.button} onPress={Check}>
               <Text allowFontScaling={false} style={styles.buttontext}>
@@ -310,6 +316,7 @@ const HomeTuition = ({navigation}) => {
               </Text>
             </TouchableOpacity>
           </>
+          
         </SafeAreaView>
       </Animatable.View>
     </ImageBackground>
