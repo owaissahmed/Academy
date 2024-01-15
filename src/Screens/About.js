@@ -33,6 +33,59 @@ function Pending() {
   navigation.navigate('PendingProjects')
 }
 
+const openInstagram = () => {
+  const username = 'allama_azhar_ali_madani'; // Replace with the actual Instagram username
+  const url = `https://www.instagram.com/${username}`;
+
+  Linking.openURL(url)
+    .then(data => {
+      console.log('Instagram Opened: ', data);
+    })
+    .catch(() => {
+      console.log('Error opening Instagram');
+    });
+};
+
+const openFacebook = () => {
+  const username = 'allamaazharalimadani'; // Replace with the actual Facebook page username
+  const url = `https://www.facebook.com/${username}`;
+
+  Linking.openURL(url)
+    .then(data => {
+      console.log('Facebook Opened: ', data);
+    })
+    .catch(() => {
+      console.log('Error opening Facebook');
+    });
+};
+
+const openWhatsApp = () => {
+  // Replace with your actual or dummy WhatsApp phone number
+  const phoneNumber = "1234567890";
+  const url = `whatsapp://send?phone=${phoneNumber}`;
+  
+  Linking.openURL(url)
+    .then((data) => {
+      console.log('WhatsApp Opened: ', data);
+    })
+    .catch(() => {
+      console.log('Error opening WhatsApp');
+    });
+};
+
+const openTelegram = () => {
+  const username = "owais_s"; // Replace with the actual Telegram username
+  const url = `https://t.me/${username}`;
+
+  Linking.openURL(url)
+    .then((data) => {
+      console.log('Telegram Opened: ', data);
+    })
+    .catch(() => {
+      console.log('Error opening Telegram');
+    });
+};
+
   return (
     <View>
       <ImageBackground
@@ -68,6 +121,56 @@ function Pending() {
               مستقبل  قریب  کے  منصوبے
               </Text>
             </TouchableOpacity>
+            <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: responsiveWidth(55),
+              justifyContent: 'space-evenly',
+              marginTop: responsiveHeight(6),
+            }}>
+            <TouchableOpacity onPress={openFacebook}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/fb.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openInstagram}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/instagram.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openWhatsApp}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/whatsapp.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openTelegram}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/telegram.png')}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{marginTop: responsiveHeight(1)}}>
+            <Text style={{color: '#2e4c60', fontWeight: 'bold'}}>
+              CONTACT US
+            </Text>
+          </View>
         </Animatable.View>
       </ImageBackground>
     </View>

@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   submain: {
-    borderColor: '#36454F',
+    borderColor: '#2e4c60',
     borderWidth: 1.5,
     height: responsiveHeight(50),
     width: responsiveWidth(90),

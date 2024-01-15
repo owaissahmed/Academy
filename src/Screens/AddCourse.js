@@ -76,7 +76,7 @@ const AddCourse = ({navigation}) => {
   function show() {
     showMessage({
       message: '⚪️ Course Added',
-      // backgroundColor: '#36454F',
+      // backgroundColor: '#2e4c60',
       type: 'success',
       color: 'white',
       position: 'bottom',
@@ -91,7 +91,7 @@ const AddCourse = ({navigation}) => {
   function Internet() {
     showMessage({
       message: '⚪️ No Internet Connection',
-      // backgroundColor:'#36454F',
+      // backgroundColor:'#2e4c60',
       type: 'warning',
       color: 'white',
       position: 'bottom',
@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   submain: {
-    borderColor: '#36454F',
+    borderColor: '#2e4c60',
     borderWidth: 1.5,
     width: responsiveWidth(90),
     alignItems: 'center',
@@ -245,8 +245,8 @@ const styles = StyleSheet.create({
     width: responsiveWidth(80),
     backgroundColor: '#FBFCF8',
     padding: 8,
-    borderColor: '#36454F',
-    color: '#36454F',
+    borderColor: '#2e4c60',
+    color: '#2e4c60',
     borderWidth: 1.5,
     marginTop: responsiveHeight(2),
     fontSize: responsiveFontSize(2),
@@ -255,8 +255,8 @@ const styles = StyleSheet.create({
     height: responsiveHeight(6),
     width: responsiveWidth(80),
     padding: 8,
-    color: '#36454F',
-    borderColor: '#36454F',
+    color: '#2e4c60',
+    borderColor: '#2e4c60',
     borderWidth: 1.5,
     marginTop: responsiveHeight(3),
     backgroundColor: '#FBFCF8',
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
   picker: {
     backgroundColor: 'white',
     width: responsiveWidth(80),
-    borderColor: '#36454F',
+    borderColor: '#2e4c60',
     backgroundColor: '#FBFCF8',
     fontSize: responsiveFontSize(2),
     borderWidth: 1.5,
@@ -277,8 +277,8 @@ const styles = StyleSheet.create({
     height: responsiveHeight(6),
     width: responsiveWidth(80),
     padding: 8,
-    color: '#36454F',
-    borderColor: '#36454F',
+    color: '#2e4c60',
+    borderColor: '#2e4c60',
     borderWidth: 1.5,
     marginTop: responsiveHeight(3),
     backgroundColor: '#FBFCF8',
@@ -291,8 +291,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingBottom: 4,
     // paddingVertical:-10,
-    color: '#36454F',
-    borderColor: '#36454F',
+    color: '#2e4c60',
+    borderColor: '#2e4c60',
     borderWidth: 1.5,
     marginTop: responsiveHeight(3),
     backgroundColor: '#FBFCF8',
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     // textAlignVertical:'center'
   },
   button: {
-    backgroundColor: '#36454F',
+    backgroundColor: '#2e4c60',
     color: 'white',
     padding: 6,
     marginTop: responsiveHeight(3),

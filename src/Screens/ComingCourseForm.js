@@ -74,7 +74,7 @@ const ComingCourseForm = ({navigation}) => {
   function show() {
     showMessage({
       message: '⚪️ Dont forget to send email after clicking on "SAVE" button',
-      backgroundColor: '#36454F',
+      backgroundColor: '#2e4c60',
       color: 'white',
       position: 'bottom',
       titleStyle: {
@@ -87,7 +87,7 @@ const ComingCourseForm = ({navigation}) => {
   function EmptyInput() {
     showMessage({
       message: '⚪️ Please Fill All Inputs',
-      // backgroundColor:'#36454F',
+      // backgroundColor:'#2e4c60',
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -101,7 +101,7 @@ const ComingCourseForm = ({navigation}) => {
   function Internet() {
     showMessage({
       message: '⚪️ No Internet Connection',
-      // backgroundColor:'#36454F',
+      // backgroundColor:'#2e4c60',
       type: 'warning',
       color: 'white',
       position: 'bottom',
@@ -121,6 +121,59 @@ const ComingCourseForm = ({navigation}) => {
       // Show the alert when this function is called
       Alert.alert('⚫ Congrats', 'your Form has been Submitted!');
     });
+  };
+
+  const openInstagram = () => {
+    const username = 'allama_azhar_ali_madani'; // Replace with the actual Instagram username
+    const url = `https://www.instagram.com/${username}`;
+
+    Linking.openURL(url)
+      .then(data => {
+        console.log('Instagram Opened: ', data);
+      })
+      .catch(() => {
+        console.log('Error opening Instagram');
+      });
+  };
+
+  const openFacebook = () => {
+    const username = 'allamaazharalimadani'; // Replace with the actual Facebook page username
+    const url = `https://www.facebook.com/${username}`;
+
+    Linking.openURL(url)
+      .then(data => {
+        console.log('Facebook Opened: ', data);
+      })
+      .catch(() => {
+        console.log('Error opening Facebook');
+      });
+  };
+
+  const openWhatsApp = () => {
+    // Replace with your actual or dummy WhatsApp phone number
+    const phoneNumber = "1234567890";
+    const url = `whatsapp://send?phone=${phoneNumber}`;
+    
+    Linking.openURL(url)
+      .then((data) => {
+        console.log('WhatsApp Opened: ', data);
+      })
+      .catch(() => {
+        console.log('Error opening WhatsApp');
+      });
+  };
+
+  const openTelegram = () => {
+    const username = "owais_s"; // Replace with the actual Telegram username
+    const url = `https://t.me/${username}`;
+
+    Linking.openURL(url)
+      .then((data) => {
+        console.log('Telegram Opened: ', data);
+      })
+      .catch(() => {
+        console.log('Error opening Telegram');
+      });
   };
 
   const Check = async () => {
@@ -226,7 +279,7 @@ const ComingCourseForm = ({navigation}) => {
                 width: responsiveWidth(80),
                 height: responsiveHeight(6),
                 marginTop: responsiveHeight(3),
-                borderColor: '#36454F',
+                borderColor: '#2e4c60',
                 borderWidth: 1.5,
                 backgroundColor: '#FBFCF8',
               }}
@@ -236,13 +289,13 @@ const ComingCourseForm = ({navigation}) => {
               textInputStyle={{
                 height: responsiveHeight(6),
                 width: responsiveWidth(70),
-                color: '#36454F',
+                color: '#2e4c60',
                 marginTop: responsiveHeight(0.2),
                 fontSize: responsiveFontSize(2),
                 textAlignVertical: 'center',
               }}
               codeTextStyle={{
-                color: '#36454F',
+                color: '#2e4c60',
                 fontSize: responsiveFontSize(2),
                 height: responsiveHeight(7),
                 fontWeight: 'normal',
@@ -277,6 +330,56 @@ const ComingCourseForm = ({navigation}) => {
               </Text>
             </TouchableOpacity>
           </>
+          <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            width: responsiveWidth(55),
+            justifyContent: 'space-evenly',
+            marginBottom: responsiveHeight(1),
+          }}>
+          <TouchableOpacity onPress={openFacebook}>
+            <Image
+              style={{
+                width: responsiveWidth(7.25),
+                height: responsiveHeight(3.5),
+              }}
+              source={require('../Images/fb.png')}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={openInstagram}>
+            <Image
+              style={{
+                width: responsiveWidth(7.25),
+                height: responsiveHeight(3.5),
+              }}
+              source={require('../Images/instagram.png')}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={openWhatsApp}>
+            <Image
+              style={{
+                width: responsiveWidth(7.25),
+                height: responsiveHeight(3.5),
+              }}
+              source={require('../Images/whatsapp.png')}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={openTelegram}>
+            <Image
+              style={{
+                width: responsiveWidth(7.25),
+                height: responsiveHeight(3.5),
+              }}
+              source={require('../Images/telegram.png')}
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={{marginBottom: responsiveHeight(1)}}>
+          <Text style={{color: '#2e4c60', fontWeight: 'bold'}}>
+            CONTACT US
+          </Text>
+        </View>
         </SafeAreaView>
       </Animatable.View>
     </ImageBackground>
@@ -316,7 +419,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   submain: {
-    borderColor: '#36454F',
+    borderColor: '#2e4c60',
     borderWidth: 1.5,
     width: responsiveWidth(90),
     alignItems: 'center',
@@ -329,8 +432,8 @@ const styles = StyleSheet.create({
     width: responsiveWidth(80),
     backgroundColor: '#FBFCF8',
     padding: 8,
-    borderColor: '#36454F',
-    color: '#36454F',
+    borderColor: '#2e4c60',
+    color: '#2e4c60',
     borderWidth: 1.5,
     marginTop: responsiveHeight(2),
     fontSize: responsiveFontSize(2),
@@ -339,8 +442,8 @@ const styles = StyleSheet.create({
     height: responsiveHeight(6),
     width: responsiveWidth(80),
     padding: 8,
-    color: '#36454F',
-    borderColor: '#36454F',
+    color: '#2e4c60',
+    borderColor: '#2e4c60',
     borderWidth: 1.5,
     marginTop: responsiveHeight(3),
     backgroundColor: '#FBFCF8',
@@ -350,8 +453,8 @@ const styles = StyleSheet.create({
     height: responsiveHeight(6),
     width: responsiveWidth(80),
     padding: 8,
-    color: '#36454F',
-    borderColor: '#36454F',
+    color: '#2e4c60',
+    borderColor: '#2e4c60',
     borderWidth: 1.5,
     marginTop: responsiveHeight(3),
     backgroundColor: '#FBFCF8',
@@ -359,7 +462,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
   },
   button: {
-    backgroundColor: '#36454F',
+    backgroundColor: '#2e4c60',
     color: 'white',
     padding: 6,
     marginTop: responsiveHeight(3),

@@ -81,7 +81,7 @@ const TeacherForm = ({navigation}) => {
   function show() {
     showMessage({
       message: '⚪️ Dont forget to send email after clicking on "SAVE" button',
-      backgroundColor: '#36454F',
+      backgroundColor: '#2e4c60',
       color: 'white',
       position: 'bottom',
       titleStyle: {
@@ -94,7 +94,7 @@ const TeacherForm = ({navigation}) => {
   function EmptyInput() {
     showMessage({
       message: '⚪️ Please Fill All Inputs',
-      // backgroundColor:'#36454F',
+      // backgroundColor:'#2e4c60',
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -108,7 +108,7 @@ const TeacherForm = ({navigation}) => {
   function Internet() {
     showMessage({
       message: '⚪️ No Internet Connection',
-      // backgroundColor:'#36454F',
+      // backgroundColor:'#2e4c60',
       type: 'warning',
       color: 'white',
       position: 'bottom',
@@ -237,7 +237,7 @@ const TeacherForm = ({navigation}) => {
                 width: responsiveWidth(80),
                 height: responsiveHeight(6),
                 marginTop: responsiveHeight(3),
-                borderColor: '#36454F',
+                borderColor: '#2e4c60',
                 borderWidth: 1.5,
                 backgroundColor: '#FBFCF8',
               }}
@@ -247,13 +247,13 @@ const TeacherForm = ({navigation}) => {
               textInputStyle={{
                 height: responsiveHeight(6),
                 width: responsiveWidth(70),
-                color: '#36454F',
+                color: '#2e4c60',
                 marginTop: responsiveHeight(0.2),
                 fontSize: responsiveFontSize(2),
                 textAlignVertical: 'center',
               }}
               codeTextStyle={{
-                color: '#36454F',
+                color: '#2e4c60',
                 fontSize: responsiveFontSize(2),
                 height: responsiveHeight(7),
                 fontWeight: 'normal',
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   submain: {
-    borderColor: '#36454F',
+    borderColor: '#2e4c60',
     borderWidth: 1.5,
     width: responsiveWidth(90),
     alignItems: 'center',
@@ -340,8 +340,8 @@ const styles = StyleSheet.create({
     width: responsiveWidth(80),
     backgroundColor: '#FBFCF8',
     padding: 8,
-    borderColor: '#36454F',
-    color: '#36454F',
+    borderColor: '#2e4c60',
+    color: '#2e4c60',
     borderWidth: 1.5,
     marginTop: responsiveHeight(2),
     fontSize: responsiveFontSize(2),
@@ -350,8 +350,8 @@ const styles = StyleSheet.create({
     height: responsiveHeight(6),
     width: responsiveWidth(80),
     padding: 8,
-    color: '#36454F',
-    borderColor: '#36454F',
+    color: '#2e4c60',
+    borderColor: '#2e4c60',
     borderWidth: 1.5,
     marginTop: responsiveHeight(3),
     backgroundColor: '#FBFCF8',
@@ -361,8 +361,8 @@ const styles = StyleSheet.create({
     height: responsiveHeight(6),
     width: responsiveWidth(80),
     padding: 8,
-    color: '#36454F',
-    borderColor: '#36454F',
+    color: '#2e4c60',
+    borderColor: '#2e4c60',
     borderWidth: 1.5,
     marginTop: responsiveHeight(3),
     backgroundColor: '#FBFCF8',
@@ -375,8 +375,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingBottom: 4,
     // paddingVertical:-10,
-    color: '#36454F',
-    borderColor: '#36454F',
+    color: '#2e4c60',
+    borderColor: '#2e4c60',
     borderWidth: 1.5,
     marginTop: responsiveHeight(3),
     backgroundColor: '#FBFCF8',
@@ -387,7 +387,7 @@ const styles = StyleSheet.create({
     // textAlignVertical:'center'
   },
   button: {
-    backgroundColor: '#36454F',
+    backgroundColor: '#2e4c60',
     color: 'white',
     padding: 6,
     marginTop: responsiveHeight(3),

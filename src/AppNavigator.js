@@ -25,6 +25,7 @@ import DarseNizamiData from './Screens/DarseNizamiData';
 import OneTeacherData from './Screens/OneTeacherData';
 import AddOldCourse from './Screens/AddOldCourse';
 import Auth from './Screens/Auth';
+
 import UserSignup from './Screens/UserSignup';
 import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -173,6 +174,7 @@ export default function AppNavigator() {
             component={UserSignup}
             options={{headerShown: false}}
           />
+          
         </Stack.Navigator>
       </AppProvider>
     </NavigationContainer>

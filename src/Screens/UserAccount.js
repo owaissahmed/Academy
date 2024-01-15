@@ -58,7 +58,7 @@ const UserAccount = ({navigation,route}) => {
   function EmptyInput() {
     showMessage({
       message: '⚪️ Please Fill All Inputs',
-      // backgroundColor:'#36454F',
+      // backgroundColor:'#2e4c60',
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -72,7 +72,7 @@ const UserAccount = ({navigation,route}) => {
   function Internet() {
     showMessage({
       message: '⚪️ No Internet Connection',
-      // backgroundColor:'#36454F',
+      // backgroundColor:'#2e4c60',
       type: 'warning',
       color: 'white',
       position: 'bottom',
@@ -118,7 +118,7 @@ const UserAccount = ({navigation,route}) => {
                 width: responsiveWidth(90),
                 height: responsiveHeight(6),
                 marginTop: responsiveHeight(2),
-                borderColor: '#36454F',
+                borderColor: '#2e4c60',
                 borderWidth: 1.5,
                 backgroundColor: '#FBFCF8',
               }}
@@ -128,13 +128,13 @@ const UserAccount = ({navigation,route}) => {
               textInputStyle={{
                 height: responsiveHeight(6),
                 width: responsiveWidth(70),
-                color: '#36454F',
+                color: '#2e4c60',
                 marginTop: responsiveHeight(0.2),
                 fontSize: responsiveFontSize(2),
                 textAlignVertical: 'center',
               }}
               codeTextStyle={{
-                color: '#36454F',
+                color: '#2e4c60',
                 fontSize: responsiveFontSize(2),
                 height: responsiveHeight(7),
                 fontWeight: 'normal',
