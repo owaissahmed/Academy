@@ -63,7 +63,7 @@ const Form = ({navigation}) => {
   const FatherChange = newfather => {
     setfather(newfather);
   };
-  
+
   const handleOnCountryChange = country => {
     setCountry(country);
   };
@@ -71,7 +71,7 @@ const Form = ({navigation}) => {
   const countryName = country?.name || 'Pakistan';
 
   const route = useRoute();
-  
+
   const buttonText = route.params?.TextHomeTuition || 'course';
 
   function show() {
@@ -90,6 +90,20 @@ const Form = ({navigation}) => {
   function EmptyInput() {
     showMessage({
       message: '⚪️ Please Fill All Inputs',
+      // backgroundColor:'#2e4c60',
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      // duration: 5000,
+    });
+  }
+  function Error(app) {
+    showMessage({
+      message: `Error In Opening ${app}`,
       // backgroundColor:'#2e4c60',
       type: 'danger',
       color: 'white',
@@ -150,47 +164,49 @@ const Form = ({navigation}) => {
         console.log('Instagram Opened: ', data);
       })
       .catch(() => {
-        console.log('Error opening Instagram');
+        Error('Instagram');
       });
   };
 
   const openFacebook = () => {
-    const username = 'allamaazharalimadani'; // Replace with the actual Facebook page username
-    const url = `https://www.facebook.com/${username}`;
+    if (isConnected) {
+      const username = 'allamaazharalimadani'; // Replace with the actual Facebook page username
+      const url = `https://www.facebook.com/${username}`;
 
-    Linking.openURL(url)
-      .then(data => {
-        console.log('Facebook Opened: ', data);
-      })
-      .catch(() => {
-        console.log('Error opening Facebook');
-      });
+      Linking.openURL(url)
+        .then(data => {
+          console.log('Facebook Opened: ', data);
+        })
+        .catch(() => {
+          Error('Facebook');
+        });
+    } else Internet();
   };
 
   const openWhatsApp = () => {
     // Replace with your actual or dummy WhatsApp phone number
-    const phoneNumber = "1234567890";
+    const phoneNumber = '+923154411997';
     const url = `whatsapp://send?phone=${phoneNumber}`;
-    
+
     Linking.openURL(url)
-      .then((data) => {
+      .then(data => {
         console.log('WhatsApp Opened: ', data);
       })
       .catch(() => {
-        console.log('Error opening WhatsApp');
+        Error('Whatsapp');
       });
   };
 
   const openTelegram = () => {
-    const username = "owais_s"; // Replace with the actual Telegram username
+    const username = 'owais_s'; // Replace with the actual Telegram username
     const url = `https://t.me/${username}`;
 
     Linking.openURL(url)
-      .then((data) => {
+      .then(data => {
         console.log('Telegram Opened: ', data);
       })
       .catch(() => {
-        console.log('Error opening Telegram');
+        Error('Telegram');
       });
   };
 
@@ -305,10 +321,10 @@ const Form = ({navigation}) => {
             placeholderTextColor={'grey'}
           />
           <Text allowFontScaling={false} style={styles.defaultCourse}>
-          {buttonText}
-        </Text>
+            {buttonText}
+          </Text>
           <View>
-          <PhoneInput
+            <PhoneInput
               textInputProps={{
                 placeholderTextColor: 'grey',
               }}
@@ -351,7 +367,7 @@ const Form = ({navigation}) => {
                 setCountryCode(phoneInput.current?.getCountryCode() || '');
               }}
               countryPickerProps={{withAlphaFilter: true}}
-              />
+            />
           </View>
           <Text allowFontScaling={false} style={styles.default}>
             {country && country === 'Pakistan'
@@ -361,62 +377,62 @@ const Form = ({navigation}) => {
               : ''}
           </Text>
           <>
-          <TouchableOpacity style={styles.button} onPress={Check}>
+            <TouchableOpacity style={styles.button} onPress={Check}>
               <Text allowFontScaling={false} style={styles.buttontext}>
                 SAVE
               </Text>
             </TouchableOpacity>
           </>
           <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            width: responsiveWidth(55),
-            justifyContent: 'space-evenly',
-            marginBottom: responsiveHeight(1),
-          }}>
-          <TouchableOpacity onPress={openFacebook}>
-            <Image
-              style={{
-                width: responsiveWidth(7.25),
-                height: responsiveHeight(3.5),
-              }}
-              source={require('../Images/fb.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={openInstagram}>
-            <Image
-              style={{
-                width: responsiveWidth(7.25),
-                height: responsiveHeight(3.5),
-              }}
-              source={require('../Images/instagram.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={openWhatsApp}>
-            <Image
-              style={{
-                width: responsiveWidth(7.25),
-                height: responsiveHeight(3.5),
-              }}
-              source={require('../Images/whatsapp.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={openTelegram}>
-            <Image
-              style={{
-                width: responsiveWidth(7.25),
-                height: responsiveHeight(3.5),
-              }}
-              source={require('../Images/telegram.png')}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={{marginBottom: responsiveHeight(1)}}>
-          <Text style={{color: '#2e4c60', fontWeight: 'bold'}}>
-            CONTACT US
-          </Text>
-        </View>
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: responsiveWidth(55),
+              justifyContent: 'space-evenly',
+              marginBottom: responsiveHeight(1),
+            }}>
+            <TouchableOpacity onPress={openFacebook}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/fb.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openInstagram}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/instagram.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openWhatsApp}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/whatsapp.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openTelegram}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/telegram.png')}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{marginBottom: responsiveHeight(1)}}>
+            <Text style={{color: '#2e4c60', fontWeight: 'bold'}}>
+              CONTACT US
+            </Text>
+          </View>
         </SafeAreaView>
       </Animatable.View>
     </ImageBackground>
@@ -502,7 +518,7 @@ const styles = StyleSheet.create({
     height: responsiveHeight(6),
     width: responsiveWidth(80),
     paddingHorizontal: 6,
-    paddingBottom:4,
+    paddingBottom: 4,
     // paddingVertical:-10,
     color: '#2e4c60',
     borderColor: '#2e4c60',
@@ -511,7 +527,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FBFCF8',
     fontSize: responsiveFontSize(2.8),
     textAlignVertical: 'center',
-    fontFamily:'mushaf',
+    fontFamily: 'mushaf',
     // backgroundColor:'red',
     // textAlignVertical:'center'
   },

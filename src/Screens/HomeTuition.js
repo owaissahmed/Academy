@@ -140,6 +140,21 @@ const HomeTuition = ({navigation}) => {
     });
   }
 
+  function Error(app) {
+    showMessage({
+      message: `Error In Opening ${app}`,
+      // backgroundColor:'#2e4c60',
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      // duration: 5000,
+    });
+  }
+
   const openInstagram = () => {
     const username = 'allama_azhar_ali_madani'; // Replace with the actual Instagram username
     const url = `https://www.instagram.com/${username}`;
@@ -149,7 +164,7 @@ const HomeTuition = ({navigation}) => {
         console.log('Instagram Opened: ', data);
       })
       .catch(() => {
-        console.log('Error opening Instagram');
+        Error('Instagram');
       });
   };
 
@@ -162,13 +177,13 @@ const HomeTuition = ({navigation}) => {
         console.log('Facebook Opened: ', data);
       })
       .catch(() => {
-        console.log('Error opening Facebook');
+        Error('Facebook');
       });
   };
 
   const openWhatsApp = () => {
     // Replace with your actual or dummy WhatsApp phone number
-    const phoneNumber = "1234567890";
+    const phoneNumber = "+923154411997";
     const url = `whatsapp://send?phone=${phoneNumber}`;
     
     Linking.openURL(url)
@@ -176,7 +191,7 @@ const HomeTuition = ({navigation}) => {
         console.log('WhatsApp Opened: ', data);
       })
       .catch(() => {
-        console.log('Error opening WhatsApp');
+        Error('WhatsApp');
       });
   };
 
@@ -189,7 +204,7 @@ const HomeTuition = ({navigation}) => {
         console.log('Telegram Opened: ', data);
       })
       .catch(() => {
-        console.log('Error opening Telegram');
+        Error('Telegram');
       });
   };
   

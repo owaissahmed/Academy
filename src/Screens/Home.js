@@ -159,23 +159,7 @@ export default function Home({route}) {
     }
   };
 
-  // const logout = async () => {
-  //   if (isConnected == false) {
-  //     Internet();
-  //   } else {
-  //     try {
-  //       setUserModalVisible(!isUserModalVisible);
-  //       // setTimeout(async () => {
-  //         await auth().signOut();
-  //         // navigation.replace('First');
-  //       // }, 500);
-  //       // navigation.replace('First');
-  //       console.log('banda shaat');
-  //     } catch (error) {
-  //       console.log(error.message);
-  //     }
-  //   }
-  // };
+ 
 
   const CheckPassword = () => {
     if (name === '1') {
