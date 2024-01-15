@@ -27,6 +27,8 @@ const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 import {useRoute} from '@react-navigation/native';
 import {useAppContext} from './AppContext';
+import {launchImageLibrary} from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 
@@ -45,7 +47,9 @@ const TeacherForm = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const phoneInput = useRef(null);
-
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [profile, setprofile] = useState('');
+  const [uploadpic, setuploadpic] = useState(false);
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
       // console.log('Connection type', state.type);
@@ -75,8 +79,51 @@ const TeacherForm = ({navigation}) => {
     setCountry(country);
   };
 
-  const countryName = country?.name || 'Pakistan';
+  const selectImage = () => {
+    const options = {
+      title: 'Select an image',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        // set the selected image
+        setSelectedImage(response);
+        // console.log(response);
+      }
+    });
+  };
 
+  const UploadnewImage = async () => {
+    console.log(selectedImage);
+    if (isConnected == true) {
+      if (selectedImage) {
+        setuploadpic(true);
+        const reference = storage().ref(selectedImage.assets[0].fileName);
+        const pathToFile = selectedImage.assets[0].uri;
+        await reference.putFile(pathToFile);
+      }
+      if (selectedImage) {
+        const profilepic = await storage()
+          .ref(selectedImage.assets[0].fileName)
+          .getDownloadURL();
+        setprofile(profilepic);
+        console.log(profile);
+      } else {
+        selectPic();
+      }
+    } else {
+      Internet();
+    }
+  };
+
+  const countryName = country?.name || 'Pakistan';
 
   function show() {
     showMessage({
@@ -94,6 +141,20 @@ const TeacherForm = ({navigation}) => {
   function EmptyInput() {
     showMessage({
       message: '⚪️ Please Fill All Inputs',
+      // backgroundColor:'#2e4c60',
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      // duration: 5000,
+    });
+  }
+  function selectPic() {
+    showMessage({
+      message: '⚪️ First Select The Picture Then Click On Upload',
       // backgroundColor:'#2e4c60',
       type: 'danger',
       color: 'white',
@@ -131,7 +192,7 @@ const TeacherForm = ({navigation}) => {
   };
 
   const Check = async () => {
-    if (name.trim() === '' || father.trim() === '' || Jamia.trim() === '' || Experience.trim() ===' ' || value === '') {
+    if (name.trim() === '' || father.trim() === '' || value === '') {
       EmptyInput();
     } else if (isConnected == false) {
       Internet();
@@ -146,8 +207,7 @@ const TeacherForm = ({navigation}) => {
         const collectionRef = firestore().collection('teachers').add({
           Name: name,
           Fathername: father,
-          Jamia:Jamia,
-          Experience:Experience,
+          picture: profile,
           Phone: formattedValue,
           Country: countryName,
           DayTime: firebase.firestore.FieldValue.serverTimestamp(),
@@ -214,20 +274,6 @@ const TeacherForm = ({navigation}) => {
             placeholder="Enter Your Father Name"
             placeholderTextColor={'grey'}
           />
-          <TextInput
-            onChangeText={JamiaChange}
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Your Jamia Name"
-            placeholderTextColor={'grey'}
-          />
-          <TextInput
-            onChangeText={ExperienceChange}
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Your Teaching Experience"
-            placeholderTextColor={'grey'}
-          />
           <View>
             <PhoneInput
               textInputProps={{
@@ -281,13 +327,60 @@ const TeacherForm = ({navigation}) => {
               ? country.name
               : ''}
           </Text>
-          <>
-            <TouchableOpacity style={styles.button} onPress={Check}>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              width:responsiveWidth(80),
+              justifyContent:'space-between',
+              marginTop: responsiveHeight(1),
+            }}>
+            <TouchableOpacity onPress={selectImage} style={styles.button}>
               <Text allowFontScaling={false} style={styles.buttontext}>
-                SAVE
+                Select Picture
               </Text>
             </TouchableOpacity>
-          </>
+            <TouchableOpacity
+              onPress={() => {
+                UploadnewImage();
+              }}
+              style={styles.button}>
+              <Text allowFontScaling={false} style={styles.buttontext}>
+                Upload Picture
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            {selectedImage ? (
+              <Image
+                source={{uri: selectedImage.assets[0].uri}}
+                style={{
+                  width: responsiveWidth(30),
+                  marginVertical: responsiveHeight(1),
+                  // height: 100,
+                  height: responsiveHeight(15),
+                }}
+              />
+            ) : null}
+          </View>
+          <View>
+            <TouchableOpacity style={{
+              // backgroundColor:'lightblue',
+              marginVertical:responsiveHeight(1)
+            }}
+              onPress={() => {
+                Check();
+              }}>
+              <Image
+                style={{
+                  width: responsiveWidth(10),
+                  height: responsiveHeight(4),
+                }}
+                source={require('../Images/arrow.png')}
+              />
+            </TouchableOpacity>
+          </View>
         </SafeAreaView>
       </Animatable.View>
     </ImageBackground>
@@ -390,17 +483,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#2e4c60',
     color: 'white',
     padding: 6,
-    marginTop: responsiveHeight(3),
-    marginBottom: responsiveHeight(2),
+    marginVertical: responsiveHeight(2),
+    // marginTop: responsiveHeight(2),
+    // marginBottom: responsiveHeight(2),
     borderRadius: 8,
-    width: responsiveWidth(30),
+    width: responsiveWidth(38),
   },
   buttontext: {
     color: '#fff',
     fontWeight: '600',
     letterSpacing: 0.7,
     textAlign: 'center',
-    fontSize: responsiveFontSize(2.25),
+    fontSize: responsiveFontSize(2),
   },
 });
 
