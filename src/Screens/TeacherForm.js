@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {
-  SafeAreaView,
+  ScrollView,
   StyleSheet,
   View,
   TextInput,
@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
 import NetInfo from '@react-native-community/netinfo';
 import {
@@ -35,9 +36,10 @@ import FlashMessage, {showMessage} from 'react-native-flash-message';
 const TeacherForm = ({navigation}) => {
   const [name, setname] = useState('');
   const [father, setfather] = useState('');
-  const [Jamia, setJamia] = useState('');
+  const [Cnic, setCnic] = useState('');
   const [Experience, setExperience] = useState('');
-  const [course, setcourse] = useState('');
+  const [islamiceducation, setislamiceducation] = useState('');
+  const [education, setEducation] = useState('');
   const [value, setValue] = useState('');
   const [country, setCountry] = useState('Pakistan');
   const [countryCode, setCountryCode] = useState('');
@@ -68,8 +70,14 @@ const TeacherForm = ({navigation}) => {
   const FatherChange = newfather => {
     setfather(newfather);
   };
-  const JamiaChange = newJamia => {
-    setJamia(newJamia);
+  const CninChange = newCnic => {
+    setCnic(newCnic);
+  };
+  const EducationChange = newEducation => {
+    setEducation(newEducation);
+  };
+  const IslamicChange = newIslamic => {
+    setislamiceducation(newIslamic);
   };
   const ExperienceChange = newExperience => {
     setExperience(newExperience);
@@ -158,6 +166,74 @@ const TeacherForm = ({navigation}) => {
     });
   }
 
+  function LogIn() {
+    showMessage({
+      message: '⚪️ You Need to Logged In First',
+      // backgroundColor:'#2e4c60',
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      duration: 2000,
+    });
+  }
+
+  const openInstagram = () => {
+    const username = 'allama_azhar_ali_madani'; // Replace with the actual Instagram username
+    const url = `https://www.instagram.com/${username}`;
+
+    Linking.openURL(url)
+      .then(data => {
+        console.log('Instagram Opened: ', data);
+      })
+      .catch(() => {
+        Error('Instagram');
+      });
+  };
+
+  const openFacebook = () => {
+    const username = 'allamaazharalimadani'; // Replace with the actual Facebook page username
+    const url = `https://www.facebook.com/${username}`;
+
+    Linking.openURL(url)
+      .then(data => {
+        console.log('Facebook Opened: ', data);
+      })
+      .catch(() => {
+        Error('Facebook');
+      });
+  };
+
+  const openWhatsApp = () => {
+    // Replace with your actual or dummy WhatsApp phone number
+    const phoneNumber = '+923154411997';
+    const url = `whatsapp://send?phone=${phoneNumber}`;
+
+    Linking.openURL(url)
+      .then(data => {
+        console.log('WhatsApp Opened: ', data);
+      })
+      .catch(() => {
+        Error('WhatsApp');
+      });
+  };
+
+  const openTelegram = () => {
+    const username = 'owais_s'; // Replace with the actual Telegram username
+    const url = `https://t.me/${username}`;
+
+    Linking.openURL(url)
+      .then(data => {
+        console.log('Telegram Opened: ', data);
+      })
+      .catch(() => {
+        Error('Telegram');
+      });
+  };
+
   const {setShowAlert} = useAppContext();
 
   const GoBackHome = () => {
@@ -167,154 +243,92 @@ const TeacherForm = ({navigation}) => {
       Alert.alert('⚫ Congrats', 'your Form has been Submitted!');
     });
   };
-  const UploadnewImage = async () => {
-    console.log(selectedImage);
-    if (isConnected == true) {
+
+  const Check = async () => {
+    if (!currentUser) {
+      LogIn();
+      setTimeout(() => {
+        navigation.replace('Auth');
+      }, 2000);
+      return;
+    }
+
+    if (
+      name.trim() === '' ||
+      father.trim() === '' ||
+      Experience.trim() === '' ||
+      islamiceducation.trim() === '' ||
+      Cnic.trim() === '' ||
+      education.trim() === '' ||
+      value === ''
+    ) {
+      EmptyInput();
+    } else if (isConnected == false) {
+      Internet();
+    } else if (!selectedImage) {
+      selectPic();
+    } else {
+      setLoading(true);
+      setVisible(true);
+
       if (selectedImage) {
         setuploadpic(true);
         const reference = storage().ref(selectedImage.assets[0].fileName);
         const pathToFile = selectedImage.assets[0].uri;
         await reference.putFile(pathToFile);
       }
+
       if (selectedImage) {
         const profilepic = await storage()
           .ref(selectedImage.assets[0].fileName)
           .getDownloadURL();
         setprofile(profilepic);
         console.log(profile);
-      } else {
-        selectPic();
-      }
-    } else {
-      Internet();
-    }
-  };
 
-  const uploadAndCheck = async () => {
-    console.log(selectedImage);
-    if (name.trim() === '' || father.trim() === '' || value === '') {
-      EmptyInput();
-    } else if (isConnected === false) {
-      Internet();
-    } else {
-      setuploadpic(true);
-      if (selectedImage) {
-        const reference = storage().ref(selectedImage.assets[0].fileName);
-        const pathToFile = selectedImage.assets[0].uri;
-        await reference.putFile(pathToFile);
-
-        const profilepic = await storage()
-          .ref(selectedImage.assets[0].fileName)
-          .getDownloadURL();
-        setprofile(profilepic);
-        console.log(profile);
-      } else {
-        selectPic();
-      }
-
-      setLoading(true);
-      setVisible(true);
-      show();
-
-      setTimeout(() => {
-        const checkValid = phoneInput.current?.isValidNumber(value);
-        setValid(checkValid ? checkValid : false);
-        setCountryCode(phoneInput.current?.getCountryCode() || '');
-
-        const collectionRef = firestore().collection('teachers').add({
-          Name: name,
-          Fathername: father,
-          picture: profile,
-          Phone: formattedValue,
-          Country: countryName,
-          DayTime: firebase.firestore.FieldValue.serverTimestamp(),
-        });
-
-        const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
-        const subject = name;
-        const body = `Teacher \n ${Experience} \n ${Jamia} \n ${countryName} \n ${formattedValue}`;
-
-        const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
-          subject,
-        )}&body=${encodeURIComponent(body)}`;
-
-        Linking.openURL(mailtoUrl).catch(err =>
-          console.error('Error opening email app:', err),
-        );
-
-        navigation.replace('Home');
-        setTimeout(() => {
-          GoBackHome();
-        }, 1000);
-      }, 5000);
-    }
-  };
-
- const Check = async () => {
-  if (name.trim() === '' || father.trim() === '' || value === '') {
-    EmptyInput();
-  } else if (isConnected == false) {
-    Internet();
-  } else if (!selectedImage) {
-    selectPic();
-  } else {
-    setLoading(true);
-    setVisible(true);
-
-    if (selectedImage) {
-      setuploadpic(true);
-      const reference = storage().ref(selectedImage.assets[0].fileName);
-      const pathToFile = selectedImage.assets[0].uri;
-      await reference.putFile(pathToFile);
-    }
-
-    if (selectedImage) {
-      const profilepic = await storage()
-        .ref(selectedImage.assets[0].fileName)
-        .getDownloadURL();
-      setprofile(profilepic);
-      console.log(profile);
-
-      if (profilepic) {
-        show();
-        setTimeout(() => {
-          const checkValid = phoneInput.current?.isValidNumber(value);
-          setValid(checkValid ? checkValid : false);
-          setCountryCode(phoneInput.current?.getCountryCode() || '');
-          const collectionRef = firestore().collection('teachers').add({
-            Name: name,
-            Fathername: father,
-            picture: profilepic,
-            Phone: formattedValue,
-            Country: countryName,
-            DayTime: firebase.firestore.FieldValue.serverTimestamp(),
-          });
-
-          const recipient = 'izhar2526@gmail.com';
-          const subject = name;
-          const body = `Teacher \n ${Experience} \n ${Jamia} \n ${countryName} \n ${formattedValue}`;
-
-          const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
-            subject,
-          )}&body=${encodeURIComponent(body)}`;
-
-          Linking.openURL(mailtoUrl).catch(err =>
-            console.error('Error opening email app:', err),
-          );
-          navigation.replace('Home');
+        if (profilepic) {
+          show();
           setTimeout(() => {
-            GoBackHome();
-          }, 1000);
-        }, 5000);
-      } else {
-        // Handle the case when there is no profile URL
-        // For example, you can display an error message or take other actions
-        console.log("Profile URL is empty");
+            const checkValid = phoneInput.current?.isValidNumber(value);
+            setValid(checkValid ? checkValid : false);
+            setCountryCode(phoneInput.current?.getCountryCode() || '');
+            const collectionRef = firestore().collection('teachers').add({
+              Name: name,
+              Gmail: currentUser.email,
+              Fathername: father,
+              picture: profilepic,
+              Cnic: Cnic,
+              Education: education,
+              IslamicEducation: islamiceducation,
+              Experience: Experience,
+              Phone: formattedValue,
+              Country: countryName,
+              DayTime: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+
+            const recipient = 'izhar2526@gmail.com';
+            const subject = name;
+            const body = `Teacher \n ${Experience} \n ${countryName} \n ${formattedValue}`;
+
+            const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
+              subject,
+            )}&body=${encodeURIComponent(body)}`;
+
+            Linking.openURL(mailtoUrl).catch(err =>
+              console.error('Error opening email app:', err),
+            );
+            navigation.replace('Home');
+            setTimeout(() => {
+              GoBackHome();
+            }, 1000);
+          }, 5000);
+        } else {
+          // Handle the case when there is no profile URL
+          // For example, you can display an error message or take other actions
+          console.log('Profile URL is empty');
+        }
       }
     }
-  }
-};
-
+  };
 
   return (
     <ImageBackground
@@ -341,123 +355,197 @@ const TeacherForm = ({navigation}) => {
       <>
         <FlashMessage position={'center'} />
       </>
-      <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
-        <SafeAreaView style={styles.submain}>
-          <Image style={styles.logo} source={require('../Images/logo.png')} />
-          <TextInput
-            onChangeText={NameChange}
-            allowFontScaling={false}
-            style={styles.login}
-            placeholder="Enter Your Name"
-            placeholderTextColor={'grey'}
-          />
-          <TextInput
-            onChangeText={FatherChange}
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Your Father Name"
-            placeholderTextColor={'grey'}
-          />
-          <View>
-            <PhoneInput
-              textInputProps={{
-                placeholderTextColor: 'grey',
-              }}
-              containerStyle={{
-                width: responsiveWidth(80),
-                height: responsiveHeight(6),
-                marginTop: responsiveHeight(3),
-                borderColor: '#2e4c60',
-                borderWidth: 1.5,
-                backgroundColor: '#FBFCF8',
-              }}
-              flagButtonStyle={{
-                backgroundColor: '#FBFCF8',
-              }}
-              textInputStyle={{
-                height: responsiveHeight(6),
-                width: responsiveWidth(70),
-                color: '#2e4c60',
-                marginTop: responsiveHeight(0.2),
-                fontSize: responsiveFontSize(2),
-                textAlignVertical: 'center',
-              }}
-              codeTextStyle={{
-                color: '#2e4c60',
-                fontSize: responsiveFontSize(2),
-                height: responsiveHeight(7),
-                fontWeight: 'normal',
-                textAlignVertical: 'center',
-              }}
-              onChangeCountry={handleOnCountryChange}
-              ref={phoneInput}
-              defaultValue={value}
-              defaultCode="PK"
-              layout="first"
-              onChangeText={text => {
-                setValue(text);
-              }}
-              onChangeFormattedText={text => {
-                setFormattedValue(text);
-                setCountryCode(phoneInput.current?.getCountryCode() || '');
-              }}
-              countryPickerProps={{withAlphaFilter: true}}
+      <Animatable.View
+        style={{height: responsiveHeight(75)}}
+        animation={'zoomIn'}
+        delay={1000}
+        duration={2000}>
+        <ScrollView>
+          <View style={styles.submain}>
+            <Image style={styles.logo} source={require('../Images/logo.png')} />
+            <TextInput
+              onChangeText={NameChange}
+              allowFontScaling={false}
+              style={styles.login}
+              placeholder="Enter Your Name"
+              placeholderTextColor={'grey'}
             />
-          </View>
-          <Text allowFontScaling={false} style={styles.default}>
-            {country && country === 'Pakistan'
-              ? 'Pakistan'
-              : country
-              ? country.name
-              : ''}
-          </Text>
-          <View
+            <TextInput
+              onChangeText={FatherChange}
+              allowFontScaling={false}
+              style={styles.password}
+              placeholder="Enter Your Father Name"
+              placeholderTextColor={'grey'}
+            />
+            <TextInput
+              onChangeText={CninChange}
+              allowFontScaling={false}
+              keyboardType="numeric"
+              style={styles.login}
+              placeholder="Enter Your CNIC"
+              placeholderTextColor={'grey'}
+            />
+            <TextInput
+              onChangeText={EducationChange}
+              allowFontScaling={false}
+              style={styles.password}
+              placeholder="Enter Your Education"
+              placeholderTextColor={'grey'}
+            />
+            <TextInput
+              onChangeText={IslamicChange}
+              allowFontScaling={false}
+              style={styles.login}
+              placeholder="Enter Your Islamic Education"
+              placeholderTextColor={'grey'}
+            />
+            <TextInput
+              onChangeText={ExperienceChange}
+              allowFontScaling={false}
+              style={styles.password}
+              placeholder="Enter Your Teaching Experience"
+              placeholderTextColor={'grey'}
+            />
+            <View>
+              <PhoneInput
+                textInputProps={{
+                  placeholderTextColor: 'grey',
+                }}
+                containerStyle={{
+                  width: responsiveWidth(80),
+                  height: responsiveHeight(6),
+                  marginTop: responsiveHeight(3),
+                  borderColor: '#2e4c60',
+                  borderWidth: 1.5,
+                  backgroundColor: '#FBFCF8',
+                }}
+                flagButtonStyle={{
+                  backgroundColor: '#FBFCF8',
+                }}
+                textInputStyle={{
+                  height: responsiveHeight(6),
+                  width: responsiveWidth(70),
+                  color: '#2e4c60',
+                  marginTop: responsiveHeight(0.2),
+                  fontSize: responsiveFontSize(2),
+                  textAlignVertical: 'center',
+                }}
+                codeTextStyle={{
+                  color: '#2e4c60',
+                  fontSize: responsiveFontSize(2),
+                  height: responsiveHeight(7),
+                  fontWeight: 'normal',
+                  textAlignVertical: 'center',
+                }}
+                onChangeCountry={handleOnCountryChange}
+                ref={phoneInput}
+                defaultValue={value}
+                defaultCode="PK"
+                layout="first"
+                onChangeText={text => {
+                  setValue(text);
+                }}
+                onChangeFormattedText={text => {
+                  setFormattedValue(text);
+                  setCountryCode(phoneInput.current?.getCountryCode() || '');
+                }}
+                countryPickerProps={{withAlphaFilter: true}}
+              />
+            </View>
+            <Text allowFontScaling={false} style={styles.default}>
+              {country && country === 'Pakistan'
+                ? 'Pakistan'
+                : country
+                ? country.name
+                : ''}
+            </Text>
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: responsiveWidth(80),
+                justifyContent: selectedImage ? 'space-between' : 'center',
+                marginTop: responsiveHeight(1),
+              }}>
+              <TouchableOpacity onPress={selectImage} style={styles.button}>
+                <Text allowFontScaling={false} style={styles.buttontext}>
+                  Select Picture
+                </Text>
+              </TouchableOpacity>
+              <View>
+                {selectedImage ? (
+                  <Image
+                    source={{uri: selectedImage.assets[0].uri}}
+                    style={{
+                      width: responsiveWidth(30),
+                      marginVertical: responsiveHeight(1),
+                      // height: 100,
+                      height: responsiveHeight(15),
+                    }}
+                  />
+                ) : null}
+              </View>
+            </View>
+            <View>
+              <TouchableOpacity onPress={Check} style={styles.button}>
+                <Text allowFontScaling={false} style={styles.buttontext}>
+                  NEXT
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View
             style={{
               display: 'flex',
               flexDirection: 'row',
-              alignItems: 'center',
-              width: responsiveWidth(80),
-              justifyContent: 'space-between',
-              marginTop: responsiveHeight(1),
+              width: responsiveWidth(55),
+              justifyContent: 'space-evenly',
+              marginBottom: responsiveHeight(1),
             }}>
-            <TouchableOpacity onPress={selectImage} style={styles.button}>
-              <Text allowFontScaling={false} style={styles.buttontext}>
-                Select Picture
-              </Text>
-            </TouchableOpacity>
-            <View>
-              {selectedImage ? (
-                <Image
-                  source={{uri: selectedImage.assets[0].uri}}
-                  style={{
-                    width: responsiveWidth(30),
-                    marginVertical: responsiveHeight(1),
-                    // height: 100,
-                    height: responsiveHeight(15),
-                  }}
-                />
-              ) : null}
-            </View>
-          </View>
-          <View>
-            <TouchableOpacity
-              style={{
-                // backgroundColor:'lightblue',
-                marginVertical: responsiveHeight(1),
-              }}
-              onPress={() => {
-                Check();
-              }}>
+            <TouchableOpacity onPress={openFacebook}>
               <Image
                 style={{
-                  width: responsiveWidth(10),
-                  height: responsiveHeight(4),
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
                 }}
-                source={require('../Images/arrow.png')}
+                source={require('../Images/fb.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openInstagram}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/instagram.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openWhatsApp}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/whatsapp.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openTelegram}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/telegram.png')}
               />
             </TouchableOpacity>
           </View>
-        </SafeAreaView>
+          <View style={{marginBottom: responsiveHeight(1)}}>
+            <Text style={{color: '#2e4c60', fontWeight: 'bold'}}>
+              CONTACT US
+            </Text>
+          </View>
+          </View>
+        </ScrollView>
       </Animatable.View>
     </ImageBackground>
   );

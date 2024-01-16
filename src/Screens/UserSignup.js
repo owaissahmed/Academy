@@ -132,6 +132,18 @@ const UserSignup = ({navigation}) => {
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
+            showMessage({
+              message: '⚪️ That email address is already in use!',
+              // backgroundColor:'#2e4c60',
+              type: 'warning',
+              color: 'white',
+              position: 'bottom',
+              titleStyle: {
+                fontSize: responsiveFontSize(2.25),
+                lineHeight: responsiveHeight(3),
+              },
+              // duration: 5000,
+            });
             console.log('That email address is already in use!');
           }
           if (

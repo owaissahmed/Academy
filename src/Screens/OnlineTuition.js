@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
 import NetInfo from '@react-native-community/netinfo';
 import {
@@ -29,7 +30,6 @@ import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import {useRoute} from '@react-navigation/native';
-import auth from '@react-native-firebase/auth';
 const OnlineTuition = ({navigation}) => {
   const [name, setname] = useState('');
   const [father, setfather] = useState('');
