@@ -245,6 +245,7 @@ const TeacherForm = ({navigation}) => {
   };
 
   const Check = async () => {
+    const currentUser = auth().currentUser;
     if (!currentUser) {
       LogIn();
       setTimeout(() => {
