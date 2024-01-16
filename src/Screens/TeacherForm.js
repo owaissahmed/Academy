@@ -100,29 +100,6 @@ const TeacherForm = ({navigation}) => {
     });
   };
 
-  const UploadnewImage = async () => {
-    console.log(selectedImage);
-    if (isConnected == true) {
-      if (selectedImage) {
-        setuploadpic(true);
-        const reference = storage().ref(selectedImage.assets[0].fileName);
-        const pathToFile = selectedImage.assets[0].uri;
-        await reference.putFile(pathToFile);
-      }
-      if (selectedImage) {
-        const profilepic = await storage()
-          .ref(selectedImage.assets[0].fileName)
-          .getDownloadURL();
-        setprofile(profilepic);
-        console.log(profile);
-      } else {
-        selectPic();
-      }
-    } else {
-      Internet();
-    }
-  };
-
   const countryName = country?.name || 'Pakistan';
 
   function show() {
@@ -154,7 +131,7 @@ const TeacherForm = ({navigation}) => {
   }
   function selectPic() {
     showMessage({
-      message: '⚪️ First Select The Picture Then Click On Upload',
+      message: '⚪️ Please Select The Picture',
       // backgroundColor:'#2e4c60',
       type: 'danger',
       color: 'white',
@@ -190,20 +167,60 @@ const TeacherForm = ({navigation}) => {
       Alert.alert('⚫ Congrats', 'your Form has been Submitted!');
     });
   };
+  const UploadnewImage = async () => {
+    console.log(selectedImage);
+    if (isConnected == true) {
+      if (selectedImage) {
+        setuploadpic(true);
+        const reference = storage().ref(selectedImage.assets[0].fileName);
+        const pathToFile = selectedImage.assets[0].uri;
+        await reference.putFile(pathToFile);
+      }
+      if (selectedImage) {
+        const profilepic = await storage()
+          .ref(selectedImage.assets[0].fileName)
+          .getDownloadURL();
+        setprofile(profilepic);
+        console.log(profile);
+      } else {
+        selectPic();
+      }
+    } else {
+      Internet();
+    }
+  };
 
-  const Check = async () => {
+  const uploadAndCheck = async () => {
+    console.log(selectedImage);
     if (name.trim() === '' || father.trim() === '' || value === '') {
       EmptyInput();
-    } else if (isConnected == false) {
+    } else if (isConnected === false) {
       Internet();
     } else {
+      setuploadpic(true);
+      if (selectedImage) {
+        const reference = storage().ref(selectedImage.assets[0].fileName);
+        const pathToFile = selectedImage.assets[0].uri;
+        await reference.putFile(pathToFile);
+
+        const profilepic = await storage()
+          .ref(selectedImage.assets[0].fileName)
+          .getDownloadURL();
+        setprofile(profilepic);
+        console.log(profile);
+      } else {
+        selectPic();
+      }
+
       setLoading(true);
       setVisible(true);
       show();
+
       setTimeout(() => {
         const checkValid = phoneInput.current?.isValidNumber(value);
         setValid(checkValid ? checkValid : false);
         setCountryCode(phoneInput.current?.getCountryCode() || '');
+
         const collectionRef = firestore().collection('teachers').add({
           Name: name,
           Fathername: father,
@@ -224,6 +241,7 @@ const TeacherForm = ({navigation}) => {
         Linking.openURL(mailtoUrl).catch(err =>
           console.error('Error opening email app:', err),
         );
+
         navigation.replace('Home');
         setTimeout(() => {
           GoBackHome();
@@ -231,6 +249,72 @@ const TeacherForm = ({navigation}) => {
       }, 5000);
     }
   };
+
+ const Check = async () => {
+  if (name.trim() === '' || father.trim() === '' || value === '') {
+    EmptyInput();
+  } else if (isConnected == false) {
+    Internet();
+  } else if (!selectedImage) {
+    selectPic();
+  } else {
+    setLoading(true);
+    setVisible(true);
+
+    if (selectedImage) {
+      setuploadpic(true);
+      const reference = storage().ref(selectedImage.assets[0].fileName);
+      const pathToFile = selectedImage.assets[0].uri;
+      await reference.putFile(pathToFile);
+    }
+
+    if (selectedImage) {
+      const profilepic = await storage()
+        .ref(selectedImage.assets[0].fileName)
+        .getDownloadURL();
+      setprofile(profilepic);
+      console.log(profile);
+
+      if (profilepic) {
+        show();
+        setTimeout(() => {
+          const checkValid = phoneInput.current?.isValidNumber(value);
+          setValid(checkValid ? checkValid : false);
+          setCountryCode(phoneInput.current?.getCountryCode() || '');
+          const collectionRef = firestore().collection('teachers').add({
+            Name: name,
+            Fathername: father,
+            picture: profilepic,
+            Phone: formattedValue,
+            Country: countryName,
+            DayTime: firebase.firestore.FieldValue.serverTimestamp(),
+          });
+
+          const recipient = 'izhar2526@gmail.com';
+          const subject = name;
+          const body = `Teacher \n ${Experience} \n ${Jamia} \n ${countryName} \n ${formattedValue}`;
+
+          const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
+            subject,
+          )}&body=${encodeURIComponent(body)}`;
+
+          Linking.openURL(mailtoUrl).catch(err =>
+            console.error('Error opening email app:', err),
+          );
+          navigation.replace('Home');
+          setTimeout(() => {
+            GoBackHome();
+          }, 1000);
+        }, 5000);
+      } else {
+        // Handle the case when there is no profile URL
+        // For example, you can display an error message or take other actions
+        console.log("Profile URL is empty");
+      }
+    }
+  }
+};
+
 
   return (
     <ImageBackground
@@ -246,7 +330,7 @@ const TeacherForm = ({navigation}) => {
             backgroundColor: 'rgba(0, 0, 0, 0.100)',
           }}>
           {loading ? (
-            <ActivityIndicator size="larger" color="black" />
+            <ActivityIndicator size="larger" color="#2e4c60" />
           ) : (
             <Text allowFontScaling={false} style={{color: '#ffffff'}}>
               Loading...
@@ -332,8 +416,8 @@ const TeacherForm = ({navigation}) => {
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'center',
-              width:responsiveWidth(80),
-              justifyContent:'space-between',
+              width: responsiveWidth(80),
+              justifyContent: 'space-between',
               marginTop: responsiveHeight(1),
             }}>
             <TouchableOpacity onPress={selectImage} style={styles.button}>
@@ -341,34 +425,26 @@ const TeacherForm = ({navigation}) => {
                 Select Picture
               </Text>
             </TouchableOpacity>
+            <View>
+              {selectedImage ? (
+                <Image
+                  source={{uri: selectedImage.assets[0].uri}}
+                  style={{
+                    width: responsiveWidth(30),
+                    marginVertical: responsiveHeight(1),
+                    // height: 100,
+                    height: responsiveHeight(15),
+                  }}
+                />
+              ) : null}
+            </View>
+          </View>
+          <View>
             <TouchableOpacity
-              onPress={() => {
-                UploadnewImage();
+              style={{
+                // backgroundColor:'lightblue',
+                marginVertical: responsiveHeight(1),
               }}
-              style={styles.button}>
-              <Text allowFontScaling={false} style={styles.buttontext}>
-                Upload Picture
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View>
-            {selectedImage ? (
-              <Image
-                source={{uri: selectedImage.assets[0].uri}}
-                style={{
-                  width: responsiveWidth(30),
-                  marginVertical: responsiveHeight(1),
-                  // height: 100,
-                  height: responsiveHeight(15),
-                }}
-              />
-            ) : null}
-          </View>
-          <View>
-            <TouchableOpacity style={{
-              // backgroundColor:'lightblue',
-              marginVertical:responsiveHeight(1)
-            }}
               onPress={() => {
                 Check();
               }}>
