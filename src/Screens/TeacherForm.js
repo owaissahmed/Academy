@@ -14,7 +14,9 @@ import {
   Image,
   Linking,
 } from 'react-native';
+
 import PhoneInput from 'react-native-phone-number-input';
+import {Picker} from '@react-native-picker/picker';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
@@ -44,6 +46,7 @@ const TeacherForm = ({navigation}) => {
   const [country, setCountry] = useState('Pakistan');
   const [countryCode, setCountryCode] = useState('');
   const [formattedValue, setFormattedValue] = useState('');
+  const [Subject, setSubject] = useState('Select Subject');
   const [valid, setValid] = useState(false);
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -180,6 +183,20 @@ const TeacherForm = ({navigation}) => {
       duration: 2000,
     });
   }
+  function SelectSubject() {
+    showMessage({
+      message: '⚪️ Select Subject For Teaching',
+      // backgroundColor:'#2e4c60',
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      duration: 2000,
+    });
+  }
 
   const openInstagram = () => {
     const username = 'allama_azhar_ali_madani'; // Replace with the actual Instagram username
@@ -236,6 +253,7 @@ const TeacherForm = ({navigation}) => {
 
   const {setShowAlert} = useAppContext();
 
+  
   const GoBackHome = () => {
     // Set the showAlert function in the context
     setShowAlert(() => {
@@ -264,6 +282,8 @@ const TeacherForm = ({navigation}) => {
       value === ''
     ) {
       EmptyInput();
+    } else if (Subject === 'Select Subject') {
+      SelectSubject();
     } else if (isConnected == false) {
       Internet();
     } else if (!selectedImage) {
@@ -303,6 +323,7 @@ const TeacherForm = ({navigation}) => {
               Experience: Experience,
               Phone: formattedValue,
               Country: countryName,
+              Subject: Subject,
               DayTime: firebase.firestore.FieldValue.serverTimestamp(),
             });
 
@@ -362,8 +383,10 @@ const TeacherForm = ({navigation}) => {
         delay={1000}
         duration={2000}>
         <ScrollView>
+         
           <View style={styles.submain}>
             <Image style={styles.logo} source={require('../Images/logo.png')} />
+
             <TextInput
               onChangeText={NameChange}
               allowFontScaling={false}
@@ -407,6 +430,31 @@ const TeacherForm = ({navigation}) => {
               placeholder="Enter Your Teaching Experience"
               placeholderTextColor={'grey'}
             />
+            <View style={styles.pickergroup}>
+              <Picker
+                selectedValue={Subject}
+                dropdownIconColor={'#2e4c60'}
+                onValueChange={itemValue => setSubject(itemValue)}
+                style={styles.picker}>
+                <Picker.Item
+                  label="What Do You Want To Teach"
+                  value="Select Subject"
+                />
+                <Picker.Item label="نحو" value="نحو" />
+                <Picker.Item label="حدیث" value="حدیث" />
+                <Picker.Item label="صرف" value="صرف" />
+                <Picker.Item label="اصولِ فقہ" value="اصولِ فقہ" />
+                <Picker.Item label="فقہ" value="فقہ" />
+                <Picker.Item label="عقائد" value="عقائد" />
+                <Picker.Item label="بلاغت" value="بلاغت" />
+                <Picker.Item label="مناظرہ" value="مناظرہ" />
+                <Picker.Item label="تفسیر" value="تفسیر" />
+                <Picker.Item label="وراثت" value="وراثت" />
+                <Picker.Item label="منطق" value="منطق" />
+                <Picker.Item label="اصولِ حدیث" value="اصولِ حدیث" />
+                <Picker.Item label="اصولِ تفسیر" value="اصولِ تفسیر" />
+              </Picker>
+            </View>
             <View>
               <PhoneInput
                 textInputProps={{
@@ -496,55 +544,55 @@ const TeacherForm = ({navigation}) => {
               </TouchableOpacity>
             </View>
             <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              width: responsiveWidth(55),
-              justifyContent: 'space-evenly',
-              marginBottom: responsiveHeight(1),
-            }}>
-            <TouchableOpacity onPress={openFacebook}>
-              <Image
-                style={{
-                  width: responsiveWidth(7.25),
-                  height: responsiveHeight(3.5),
-                }}
-                source={require('../Images/fb.png')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={openInstagram}>
-              <Image
-                style={{
-                  width: responsiveWidth(7.25),
-                  height: responsiveHeight(3.5),
-                }}
-                source={require('../Images/instagram.png')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={openWhatsApp}>
-              <Image
-                style={{
-                  width: responsiveWidth(7.25),
-                  height: responsiveHeight(3.5),
-                }}
-                source={require('../Images/whatsapp.png')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={openTelegram}>
-              <Image
-                style={{
-                  width: responsiveWidth(7.25),
-                  height: responsiveHeight(3.5),
-                }}
-                source={require('../Images/telegram.png')}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{marginBottom: responsiveHeight(1)}}>
-            <Text style={{color: '#2e4c60', fontWeight: 'bold'}}>
-              CONTACT US
-            </Text>
-          </View>
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: responsiveWidth(55),
+                justifyContent: 'space-evenly',
+                marginBottom: responsiveHeight(1),
+              }}>
+              <TouchableOpacity onPress={openFacebook}>
+                <Image
+                  style={{
+                    width: responsiveWidth(7.25),
+                    height: responsiveHeight(3.5),
+                  }}
+                  source={require('../Images/fb.png')}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={openInstagram}>
+                <Image
+                  style={{
+                    width: responsiveWidth(7.25),
+                    height: responsiveHeight(3.5),
+                  }}
+                  source={require('../Images/instagram.png')}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={openWhatsApp}>
+                <Image
+                  style={{
+                    width: responsiveWidth(7.25),
+                    height: responsiveHeight(3.5),
+                  }}
+                  source={require('../Images/whatsapp.png')}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={openTelegram}>
+                <Image
+                  style={{
+                    width: responsiveWidth(7.25),
+                    height: responsiveHeight(3.5),
+                  }}
+                  source={require('../Images/telegram.png')}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{marginBottom: responsiveHeight(1)}}>
+              <Text style={{color: '#2e4c60', fontWeight: 'bold'}}>
+                CONTACT US
+              </Text>
+            </View>
           </View>
         </ScrollView>
       </Animatable.View>
@@ -626,6 +674,35 @@ const styles = StyleSheet.create({
     backgroundColor: '#FBFCF8',
     fontSize: responsiveFontSize(2),
     textAlignVertical: 'center',
+  },
+  pickergroup: {
+    // width: responsiveWidth(100),
+    // paddingLeft:10,
+    // paddingRight:10,
+    // paddingHorizontal:10,
+    // padding:20,
+    alignItems: 'center',
+    backgroundColor: '#FBFCF8',
+    // overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: responsiveHeight(6),
+    width: responsiveWidth(80),
+    // borderRadius: 8,
+    marginTop: responsiveHeight(3),
+    borderColor: '#2e4c60',
+    borderWidth: 1.5,
+    // color:'#2e4c60'
+    // borderLeftWidth: 8,
+  },
+  picker: {
+    color: '#2e4c60',
+    // padding:20,
+    height: responsiveHeight(5.5),
+    width: responsiveWidth(84),
+    // paddingHorizontal:20,
+    // fontSize: responsiveFontSize(2),
+    // allowFontScaling: false,
   },
   defaultCourse: {
     height: responsiveHeight(6),
