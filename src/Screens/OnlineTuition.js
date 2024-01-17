@@ -43,16 +43,35 @@ const OnlineTuition = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const phoneInput = useRef(null);
+  const [online, setonline] = useState([]);
+  const [subject, setsubject] = useState('مناظرہ');
 
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(state => {
-      // console.log('Connection type', state.type);
-      // console.log('Is connected?', state.isConnected);
-      setIsConnected(state.isConnected);
-    });
 
-    return () => {
-      unsubscribe();
+    const subscribe = firestore()
+      .collection('teachers')
+      .where('Subject', '==', subject)
+      .onSnapshot(querySnapshot => {
+        const onlineData = [];
+        querySnapshot.forEach(documentSnapshot => {
+          onlineData.push({
+            id: documentSnapshot.id,
+            ...documentSnapshot.data(),
+          });
+        });
+        setonline(onlineData);
+      });
+
+      
+      const unsubscribe = NetInfo.addEventListener(state => {
+        // console.log('Connection type', state.type);
+        // console.log('Is connected?', state.isConnected);
+        setIsConnected(state.isConnected);
+      });
+      
+      return () => {
+ 
+      subscribe, unsubscribe();
     };
   }, []);
 
@@ -83,6 +102,8 @@ const OnlineTuition = ({navigation}) => {
     });
   }
   function EmptyInput() {
+    const subjects = online.map(obj => obj.Name);
+    console.log(subjects);
     showMessage({
       message: '⚪️ Please Fill All Inputs',
       // backgroundColor:'#2e4c60',
@@ -178,11 +199,11 @@ const OnlineTuition = ({navigation}) => {
 
   const openWhatsApp = () => {
     // Replace with your actual or dummy WhatsApp phone number
-    const phoneNumber = "+923154411997";
+    const phoneNumber = '+923154411997';
     const url = `whatsapp://send?phone=${phoneNumber}`;
-    
+
     Linking.openURL(url)
-      .then((data) => {
+      .then(data => {
         console.log('WhatsApp Opened: ', data);
       })
       .catch(() => {
@@ -191,11 +212,11 @@ const OnlineTuition = ({navigation}) => {
   };
 
   const openTelegram = () => {
-    const username = "owais_s"; // Replace with the actual Telegram username
+    const username = 'owais_s'; // Replace with the actual Telegram username
     const url = `https://t.me/${username}`;
 
     Linking.openURL(url)
-      .then((data) => {
+      .then(data => {
         console.log('Telegram Opened: ', data);
       })
       .catch(() => {
@@ -213,8 +234,9 @@ const OnlineTuition = ({navigation}) => {
       }, 2000);
       return;
     }
-
+    
     if (name.trim() === '' || father.trim() === '' || value === '') {
+      
       EmptyInput();
       return;
     }
@@ -223,7 +245,6 @@ const OnlineTuition = ({navigation}) => {
       Internet();
       return;
     }
-
     setLoading(true);
     setVisible(true);
     show();
@@ -377,55 +398,55 @@ const OnlineTuition = ({navigation}) => {
             </TouchableOpacity>
           </>
           <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            width: responsiveWidth(55),
-            justifyContent: 'space-evenly',
-            marginBottom: responsiveHeight(1),
-          }}>
-          <TouchableOpacity onPress={openFacebook}>
-            <Image
-              style={{
-                width: responsiveWidth(7.25),
-                height: responsiveHeight(3.5),
-              }}
-              source={require('../Images/fb.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={openInstagram}>
-            <Image
-              style={{
-                width: responsiveWidth(7.25),
-                height: responsiveHeight(3.5),
-              }}
-              source={require('../Images/instagram.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={openWhatsApp}>
-            <Image
-              style={{
-                width: responsiveWidth(7.25),
-                height: responsiveHeight(3.5),
-              }}
-              source={require('../Images/whatsapp.png')}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={openTelegram}>
-            <Image
-              style={{
-                width: responsiveWidth(7.25),
-                height: responsiveHeight(3.5),
-              }}
-              source={require('../Images/telegram.png')}
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={{marginBottom: responsiveHeight(1)}}>
-          <Text style={{color: '#2e4c60', fontWeight: 'bold'}}>
-            CONTACT US
-          </Text>
-        </View>
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: responsiveWidth(55),
+              justifyContent: 'space-evenly',
+              marginBottom: responsiveHeight(1),
+            }}>
+            <TouchableOpacity onPress={openFacebook}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/fb.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openInstagram}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/instagram.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openWhatsApp}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/whatsapp.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openTelegram}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/telegram.png')}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{marginBottom: responsiveHeight(1)}}>
+            <Text style={{color: '#2e4c60', fontWeight: 'bold'}}>
+              CONTACT US
+            </Text>
+          </View>
         </SafeAreaView>
       </Animatable.View>
     </ImageBackground>
