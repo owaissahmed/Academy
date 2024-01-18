@@ -10,10 +10,10 @@ import {
   ImageBackground,
   ActivityIndicator,
   Alert,
-  Modal,
   Image,
   Linking,
 } from 'react-native';
+import Modal from 'react-native-modal';
 import PhoneInput from 'react-native-phone-number-input';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -24,6 +24,7 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import {Picker} from '@react-native-picker/picker';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 import {useAppContext} from './AppContext';
@@ -31,6 +32,7 @@ import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import {useRoute} from '@react-navigation/native';
 const OnlineTuition = ({navigation}) => {
+  const [isTeacherModalVisible, setTeacherModalVisible] = useState(false);
   const [name, setname] = useState('');
   const [father, setfather] = useState('');
   const [course, setcourse] = useState('');
@@ -44,45 +46,74 @@ const OnlineTuition = ({navigation}) => {
   const [isConnected, setIsConnected] = useState(false);
   const phoneInput = useRef(null);
   const [online, setonline] = useState([]);
-  const [subject, setsubject] = useState('مناظرہ');
-
+  const [subject, setsubject] = useState('');
+  const [selectedValue, setSelectedValue] = useState('');
+  const [TeacherselectedValue, setTeacherSelectedValue] = useState('');
   useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      // console.log('Connection type', state.type);
+      // console.log('Is connected?', state.isConnected);
+      setIsConnected(state.isConnected);
+    });
 
-    const subscribe = firestore()
-      .collection('teachers')
-      .where('Subject', '==', subject)
-      .onSnapshot(querySnapshot => {
-        const onlineData = [];
-        querySnapshot.forEach(documentSnapshot => {
-          onlineData.push({
-            id: documentSnapshot.id,
-            ...documentSnapshot.data(),
-          });
-        });
-        setonline(onlineData);
-      });
-
-      
-      const unsubscribe = NetInfo.addEventListener(state => {
-        // console.log('Connection type', state.type);
-        // console.log('Is connected?', state.isConnected);
-        setIsConnected(state.isConnected);
-      });
-      
-      return () => {
- 
-      subscribe, unsubscribe();
+    return () => {
+      unsubscribe();
     };
   }, []);
 
   const NameChange = newname => {
     setname(newname);
   };
+  // const SubjectChange = newsubject => {
+  //   setsubject(newsubject);
+  // };
   const FatherChange = newfather => {
     setfather(newfather);
   };
   const handleOnCountryChange = country => {
     setCountry(country);
+  };
+
+  const SubjectChange = newSubject => {
+    setsubject(newSubject);
+    console.log(newSubject); // Log the new subject, not the state
+  };
+
+  const fetchData = async () => {
+    try {
+      const querySnapshot = await firestore()
+        .collection('teachers')
+        .where('Subject', '==', subject)
+        .get();
+
+      const onlineData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setonline(onlineData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const CheckPassword = () => {
+    fetchData();
+    setTeacherModalVisible(!isTeacherModalVisible);
+  };
+
+  // Use useEffect to trigger data fetching when the subject changes
+  useEffect(() => {
+    fetchData();
+    console.log(online, subject);
+  }, [subject]);
+
+  const openModal = () => {
+    if (isConnected == false) {
+      Internet();
+    } else {
+      setTeacherModalVisible(true);
+    }
   };
 
   const route = useRoute();
@@ -102,8 +133,9 @@ const OnlineTuition = ({navigation}) => {
     });
   }
   function EmptyInput() {
-    const subjects = online.map(obj => obj.Name);
-    console.log(subjects);
+    // const subjects = online.map(obj => obj.Name);
+    // console.log(subjects);
+
     showMessage({
       message: '⚪️ Please Fill All Inputs',
       // backgroundColor:'#2e4c60',
@@ -234,9 +266,9 @@ const OnlineTuition = ({navigation}) => {
       }, 2000);
       return;
     }
-    
+
     if (name.trim() === '' || father.trim() === '' || value === '') {
-      
+      // console.log(online);
       EmptyInput();
       return;
     }
@@ -320,6 +352,7 @@ const OnlineTuition = ({navigation}) => {
       <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
         <SafeAreaView style={styles.submain}>
           <Image style={styles.logo} source={require('../Images/logo.png')} />
+
           <TextInput
             onChangeText={NameChange}
             allowFontScaling={false}
@@ -390,13 +423,86 @@ const OnlineTuition = ({navigation}) => {
               ? country.name
               : ''}
           </Text>
-          <>
-            <TouchableOpacity style={styles.button} onPress={Check}>
-              <Text allowFontScaling={false} style={styles.buttontext}>
-                SAVE
-              </Text>
-            </TouchableOpacity>
-          </>
+          <TouchableOpacity style={styles.Subjectbutton} onPress={openModal}>
+            <Text allowFontScaling={false} style={styles.Subjectbuttontext}>
+              {subject === '' ? 'What do you want to Learn' : subject}
+            </Text>
+          </TouchableOpacity>
+          <View style={styles.pickergroup}>
+            <Picker
+              style={styles.picker}
+              dropdownIconColor={'#2e4c60'}
+              selectedValue={selectedValue}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedValue(itemValue)
+              }>
+              <Picker.Item label="Select Teacher" value="Select Teacher" />
+              {online.map((item, index) => (
+                <Picker.Item key={index} label={item.Name} value={item.Name} />
+              ))}
+              <Picker.Item label="Admin Choice" value="Admin Choice" />
+            </Picker>
+          </View>
+
+          <TouchableOpacity style={styles.button} onPress={Check}>
+            <Text allowFontScaling={false} style={styles.buttontext}>
+              SAVE
+            </Text>
+          </TouchableOpacity>
+          <Modal
+            isVisible={isTeacherModalVisible}
+            animationIn="zoomIn"
+            animationOut="zoomOut"
+            animationInTiming={1000}
+            animationOutTiming={1000}
+            backdropTransitionInTiming={1000}
+            backdropTransitionOutTiming={1000}>
+            <View style={styles.modal}>
+              <ImageBackground
+                resizeMode="cover"
+                style={styles.modalBackground}
+                source={require('../Images/background.jpg')}>
+                <Image
+                  style={styles.modalImage}
+                  source={require('../Images/logo.png')}
+                />
+                <View style={styles.pickergroup}>
+                  <Picker
+                    selectedValue={TeacherselectedValue}
+                    dropdownIconColor={'#2e4c60'}
+                    onValueChange={itemValue => setsubject(itemValue)}
+                    style={styles.picker}>
+                    <Picker.Item
+                      label={
+                        subject === '' ? 'What Do You Want To Teach' : subject
+                      }
+                      value="What Do You Want To Teach"
+                    />
+                    <Picker.Item label="نحو" value="نحو" />
+                    <Picker.Item label="حدیث" value="حدیث" />
+                    <Picker.Item label="صرف" value="صرف" />
+                    <Picker.Item label="اصولِ فقہ" value="اصولِ فقہ" />
+                    <Picker.Item label="فقہ" value="فقہ" />
+                    <Picker.Item label="عقائد" value="عقائد" />
+                    <Picker.Item label="بلاغت" value="بلاغت" />
+                    <Picker.Item label="مناظرہ" value="مناظرہ" />
+                    <Picker.Item label="تفسیر" value="تفسیر" />
+                    <Picker.Item label="وراثت" value="وراثت" />
+                    <Picker.Item label="منطق" value="منطق" />
+                    <Picker.Item label="اصولِ حدیث" value="اصولِ حدیث" />
+                    <Picker.Item label="اصولِ تفسیر" value="اصولِ تفسیر" />
+                  </Picker>
+                </View>
+                <View style={styles.ModalButtonView}>
+                  <TouchableOpacity style={styles.Btn} onPress={CheckPassword}>
+                    <Text allowFontScaling={false} style={styles.BtnText}>
+                      Next
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </ImageBackground>
+            </View>
+          </Modal>
           <View
             style={{
               display: 'flex',
@@ -454,13 +560,11 @@ const OnlineTuition = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  
   logo: {
-    height: responsiveHeight(15),
-    width: responsiveWidth(40),
-    marginTop: responsiveHeight(2),
+    height: responsiveHeight(13),
+    width: responsiveWidth(33),
+    marginTop: responsiveHeight(1),
   },
   phoneinput: {
     justifyContent: 'center',
@@ -492,7 +596,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 12,
+    // marginTop: responsiveHeight(3),
+  },
+  pickergroup: {
+    alignItems: 'center',
+    backgroundColor: '#FBFCF8',
+    // overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: responsiveHeight(6),
+    width: responsiveWidth(80),
+
     marginTop: responsiveHeight(3),
+    borderColor: '#2e4c60',
+    borderWidth: 1.5,
+  },
+  picker: {
+    color: '#2e4c60',
+    // padding:20,
+    height: responsiveHeight(5.5),
+    width: responsiveWidth(84),
+    // paddingHorizontal:20,
+    // fontSize: responsiveFontSize(2),
+    // allowFontScaling: false,
   },
   login: {
     height: responsiveHeight(6),
@@ -544,8 +670,74 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: responsiveFontSize(2.25),
   },
+  Subjectbutton: {
+    // height: responsiveHeight(6),
+    width: responsiveWidth(80),
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    color: '#2e4c60',
+    borderColor: '#2e4c60',
+    borderWidth: 1.5,
+    marginTop: responsiveHeight(3),
+    backgroundColor: '#FBFCF8',
+    fontSize: responsiveFontSize(2),
+  },
+  Subjectbuttontext: {
+    color: '#2e4c60',
+    // fontWeight: '600',
+    // letterSpacing: 0.7,
+    // textAlign: 'center',
+    // textAlignVertical: 'center',
+    // padding:,
+    fontSize: responsiveFontSize(2),
+  },
   highlight: {
     fontWeight: '700',
+  },
+  modalBackground: {
+    width: responsiveWidth(90),
+    height: responsiveHeight(30),
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  modal: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderRadius: 20,
+  },
+
+  modalImage: {
+    height: responsiveHeight(11),
+    width: responsiveWidth(24),
+    marginTop: responsiveHeight(1),
+  },
+  ModalButtonView: {
+    marginTop: responsiveHeight(1),
+
+    width: responsiveWidth(85),
+
+    marginBottom: responsiveHeight(1),
+
+    paddingHorizontal: responsiveWidth(4),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  Btn: {
+    backgroundColor: '#2e4c60',
+    color: 'white',
+    padding: 6,
+    borderRadius: 8,
+    width: responsiveWidth(30),
+  },
+  BtnText: {
+    color: '#fff',
+    fontWeight: '600',
+    letterSpacing: 0.7,
+    textAlign: 'center',
+    fontSize: responsiveFontSize(2.25),
   },
 });
 
