@@ -47,8 +47,6 @@ const Form = ({navigation}) => {
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-      // console.log('Connection type', state.type);
-      // console.log('Is connected?', state.isConnected);
       setIsConnected(state.isConnected);
     });
 
@@ -90,7 +88,7 @@ const Form = ({navigation}) => {
   function EmptyInput() {
     showMessage({
       message: '⚪️ Please Fill All Inputs',
-      // backgroundColor:'#2e4c60',
+          
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -98,13 +96,13 @@ const Form = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
+          
     });
   }
   function Error(app) {
     showMessage({
       message: `Error In Opening ${app}`,
-      // backgroundColor:'#2e4c60',
+          
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -112,13 +110,13 @@ const Form = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
+          
     });
   }
   function Internet() {
     showMessage({
       message: '⚪️ No Internet Connection',
-      // backgroundColor:'#2e4c60',
+          
       type: 'warning',
       color: 'white',
       position: 'bottom',
@@ -126,16 +124,14 @@ const Form = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
+          
     });
   }
 
   const {setShowAlert} = useAppContext();
 
   const GoBackHome = () => {
-    // Set the showAlert function in the context
     setShowAlert(() => {
-      // Show the alert when this function is called
       Alert.alert('⚫ Congrats', 'your Form has been Submitted!');
     });
   };
@@ -143,7 +139,7 @@ const Form = ({navigation}) => {
   function LogIn() {
     showMessage({
       message: '⚪️ You Need to Logged In First',
-      // backgroundColor:'#2e4c60',
+          
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -198,7 +194,7 @@ const Form = ({navigation}) => {
   };
 
   const openTelegram = () => {
-    const username = 'owais_s'; // Replace with the actual Telegram username
+    const username = 'Azharulislamacademy'; // Replace with the actual Telegram username
     const url = `https://t.me/${username}`;
 
     Linking.openURL(url)
@@ -260,12 +256,10 @@ const Form = ({navigation}) => {
       const subject = name;
       const body = `${buttonText} \n ${countryName} \n ${formattedValue}`;
 
-      // Construct the mailto URL
       const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
         subject,
       )}&body=${encodeURIComponent(body)}`;
 
-      // Open the default email app
       Linking.openURL(mailtoUrl).catch(err =>
         console.error('Error opening email app:', err),
       );
@@ -519,7 +513,6 @@ const styles = StyleSheet.create({
     width: responsiveWidth(80),
     paddingHorizontal: 6,
     paddingBottom: 4,
-    // paddingVertical:-10,
     color: '#2e4c60',
     borderColor: '#2e4c60',
     borderWidth: 1.5,
@@ -528,8 +521,6 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2.8),
     textAlignVertical: 'center',
     fontFamily: 'mushaf',
-    // backgroundColor:'red',
-    // textAlignVertical:'center'
   },
   button: {
     backgroundColor: '#2e4c60',

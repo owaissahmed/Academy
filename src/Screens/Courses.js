@@ -14,7 +14,6 @@ import {
   Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import FlashMessage, {showMessage} from 'react-native-flash-message';
 import {
   responsiveScreenFontSize,
   responsiveWidth,
@@ -23,8 +22,6 @@ import {responsiveHeight} from 'react-native-responsive-dimensions';
 import {responsiveFontSize} from 'react-native-responsive-dimensions';
 import firestore from '@react-native-firebase/firestore';
 const devicewidth = Dimensions.get('window').width;
-import {Picker} from '@react-native-picker/picker';
-import NetInfo from '@react-native-community/netinfo';
 const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 import {useRoute} from '@react-navigation/native';
@@ -42,10 +39,10 @@ const Courses = ({navigation}) => {
       if (Link !== '') {
         await Linking.openURL(Link);
       } else {
-        Alert.alert('Error','No Class Available');
+        Alert.alert('Error', 'No Class Available');
       }
     } catch (error) {
-      if (error.message.includes("No Activity found to handle Intent")) {
+      if (error.message.includes('No Activity found to handle Intent')) {
         Alert.alert('Error', 'No app is available to handle the URL.');
       } else {
         console.error('Error opening URL:', error);
@@ -53,7 +50,7 @@ const Courses = ({navigation}) => {
       }
     }
   }
-  
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
@@ -191,32 +188,22 @@ const styles = StyleSheet.create({
     paddingVertical: responsiveHeight(1),
     textAlign: 'center',
     fontFamily: 'good',
-    // lineHeight:25,
     letterSpacing: 2,
   },
 
   CourseName: {
-    // paddingHorizontal: responsiveWidth(4),
     fontSize: responsiveScreenFontSize(3.25),
     color: '#2e4c60',
     backgroundColor: 'white',
-    // paddingVertical: responsiveHeight(1),
     marginTop: responsiveHeight(-1),
     marginBottom: responsiveHeight(1),
     textAlign: 'center',
     fontFamily: 'good',
     borderRadius: 12,
     width: responsiveWidth(90),
-    // letterSpacing: 2,
     fontFamily: 'mushaf',
     alignItems: 'center',
-    // paddingVertical: responsiveHeight(0.5),
-    // paddingTop:responsiveHeight(0.25),
     paddingBottom: responsiveHeight(0.75),
-    // marginHorizontal: responsiveWidth(4),
-
-    // borderTopLeftRadius: 10,
-    // borderTopRightRadius: 10,
   },
   NoData: {
     fontSize: responsiveScreenFontSize(4),
@@ -239,7 +226,6 @@ const styles = StyleSheet.create({
   },
   ModalHeading: {
     fontSize: responsiveScreenFontSize(2),
-    // borderRadius: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
     color: '#fff',
@@ -254,9 +240,7 @@ const styles = StyleSheet.create({
   Phone: {
     fontSize: responsiveScreenFontSize(2.25),
     backgroundColor: '#2e4c60',
-
     color: '#fff',
-    // paddingVertical: responsiveHeight(1),
     textAlign: 'center',
     fontFamily: 'good',
     letterSpacing: 2,

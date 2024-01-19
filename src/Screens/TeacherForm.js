@@ -28,7 +28,6 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import {useRoute} from '@react-navigation/native';
 import {useAppContext} from './AppContext';
 import {launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
@@ -57,8 +56,6 @@ const TeacherForm = ({navigation}) => {
   const [uploadpic, setuploadpic] = useState(false);
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-      // console.log('Connection type', state.type);
-      // console.log('Is connected?', state.isConnected);
       setIsConnected(state.isConnected);
     });
 
@@ -104,9 +101,7 @@ const TeacherForm = ({navigation}) => {
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        // set the selected image
         setSelectedImage(response);
-        // console.log(response);
       }
     });
   };
@@ -129,21 +124,20 @@ const TeacherForm = ({navigation}) => {
   function EmptyInput() {
     showMessage({
       message: '⚪️ Please Fill All Inputs',
-      // backgroundColor:'#2e4c60',
       type: 'danger',
       color: 'white',
+
       position: 'bottom',
       titleStyle: {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
     });
   }
   function selectPic() {
     showMessage({
       message: '⚪️ Please Select The Picture',
-      // backgroundColor:'#2e4c60',
+
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -151,13 +145,12 @@ const TeacherForm = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
     });
   }
   function Internet() {
     showMessage({
       message: '⚪️ No Internet Connection',
-      // backgroundColor:'#2e4c60',
+
       type: 'warning',
       color: 'white',
       position: 'bottom',
@@ -165,14 +158,13 @@ const TeacherForm = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
     });
   }
 
   function LogIn() {
     showMessage({
       message: '⚪️ You Need to Logged In First',
-      // backgroundColor:'#2e4c60',
+
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -186,7 +178,7 @@ const TeacherForm = ({navigation}) => {
   function SelectSubject() {
     showMessage({
       message: '⚪️ Select Subject For Teaching',
-      // backgroundColor:'#2e4c60',
+
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -239,7 +231,7 @@ const TeacherForm = ({navigation}) => {
   };
 
   const openTelegram = () => {
-    const username = 'owais_s'; // Replace with the actual Telegram username
+    const username = 'Azharulislamacademy'; // Replace with the actual Telegram username
     const url = `https://t.me/${username}`;
 
     Linking.openURL(url)
@@ -253,11 +245,8 @@ const TeacherForm = ({navigation}) => {
 
   const {setShowAlert} = useAppContext();
 
-  
   const GoBackHome = () => {
-    // Set the showAlert function in the context
     setShowAlert(() => {
-      // Show the alert when this function is called
       Alert.alert('⚫ Congrats', 'your Form has been Submitted!');
     });
   };
@@ -344,8 +333,6 @@ const TeacherForm = ({navigation}) => {
             }, 1000);
           }, 5000);
         } else {
-          // Handle the case when there is no profile URL
-          // For example, you can display an error message or take other actions
           console.log('Profile URL is empty');
         }
       }
@@ -383,7 +370,6 @@ const TeacherForm = ({navigation}) => {
         delay={1000}
         duration={2000}>
         <ScrollView>
-         
           <View style={styles.submain}>
             <Image style={styles.logo} source={require('../Images/logo.png')} />
 
@@ -676,40 +662,26 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
   },
   pickergroup: {
-    // width: responsiveWidth(100),
-    // paddingLeft:10,
-    // paddingRight:10,
-    // paddingHorizontal:10,
-    // padding:20,
     alignItems: 'center',
     backgroundColor: '#FBFCF8',
-    // overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
     height: responsiveHeight(6),
     width: responsiveWidth(80),
-    // borderRadius: 8,
     marginTop: responsiveHeight(3),
     borderColor: '#2e4c60',
     borderWidth: 1.5,
-    // color:'#2e4c60'
-    // borderLeftWidth: 8,
   },
   picker: {
     color: '#2e4c60',
-    // padding:20,
     height: responsiveHeight(5.5),
     width: responsiveWidth(84),
-    // paddingHorizontal:20,
-    // fontSize: responsiveFontSize(2),
-    // allowFontScaling: false,
   },
   defaultCourse: {
     height: responsiveHeight(6),
     width: responsiveWidth(80),
     paddingHorizontal: 6,
     paddingBottom: 4,
-    // paddingVertical:-10,
     color: '#2e4c60',
     borderColor: '#2e4c60',
     borderWidth: 1.5,
@@ -718,16 +690,12 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2.8),
     textAlignVertical: 'center',
     fontFamily: 'mushaf',
-    // backgroundColor:'red',
-    // textAlignVertical:'center'
   },
   button: {
     backgroundColor: '#2e4c60',
     color: 'white',
     padding: 6,
     marginVertical: responsiveHeight(2),
-    // marginTop: responsiveHeight(2),
-    // marginBottom: responsiveHeight(2),
     borderRadius: 8,
     width: responsiveWidth(38),
   },

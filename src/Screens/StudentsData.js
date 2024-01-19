@@ -13,7 +13,6 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import {responsiveHeight} from 'react-native-responsive-dimensions';
-import {responsiveFontSize} from 'react-native-responsive-dimensions';
 import firestore from '@react-native-firebase/firestore';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
@@ -224,7 +223,6 @@ const styles = StyleSheet.create({
   },
   rectangle: {
     backgroundColor: '#2e4c60',
-    // borderWidth: 1.5,
     height: responsiveHeight(15),
     width: responsiveWidth(95),
     justifyContent: 'space-evenly',

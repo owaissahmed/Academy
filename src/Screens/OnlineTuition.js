@@ -51,8 +51,6 @@ const OnlineTuition = ({navigation}) => {
   const [TeacherselectedValue, setTeacherSelectedValue] = useState('');
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-      // console.log('Connection type', state.type);
-      // console.log('Is connected?', state.isConnected);
       setIsConnected(state.isConnected);
     });
 
@@ -64,16 +62,12 @@ const OnlineTuition = ({navigation}) => {
   const NameChange = newname => {
     setname(newname);
   };
-  // const SubjectChange = newsubject => {
-  //   setsubject(newsubject);
-  // };
   const FatherChange = newfather => {
     setfather(newfather);
   };
   const handleOnCountryChange = country => {
     setCountry(country);
   };
-
 
   const fetchData = async () => {
     try {
@@ -98,10 +92,8 @@ const OnlineTuition = ({navigation}) => {
     setTeacherModalVisible(!isTeacherModalVisible);
   };
 
-  // Use useEffect to trigger data fetching when the subject changes
   useEffect(() => {
     fetchData();
-    // console.log(online, subject);
   }, [subject]);
 
   const openModal = () => {
@@ -129,12 +121,9 @@ const OnlineTuition = ({navigation}) => {
     });
   }
   function EmptyInput() {
-    // const subjects = online.map(obj => obj.Name);
-    // console.log(subjects);
-    // console.log(selectedValue);
     showMessage({
       message: '⚪️ Please Fill All Inputs',
-      // backgroundColor:'#2e4c60',
+
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -142,13 +131,12 @@ const OnlineTuition = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
     });
   }
   function Internet() {
     showMessage({
       message: '⚪️ No Internet Connection',
-      // backgroundColor:'#2e4c60',
+
       type: 'warning',
       color: 'white',
       position: 'bottom',
@@ -156,13 +144,12 @@ const OnlineTuition = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
     });
   }
   function LogIn() {
     showMessage({
       message: '⚪️ You Need to Logged In First',
-      // backgroundColor:'#2e4c60',
+
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -176,7 +163,7 @@ const OnlineTuition = ({navigation}) => {
   function Subject() {
     showMessage({
       message: '⚪️ Please Select The Subject',
-      // backgroundColor:'#2e4c60',
+
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -190,7 +177,7 @@ const OnlineTuition = ({navigation}) => {
   function Teacher() {
     showMessage({
       message: '⚪️ Please Select The Teacher',
-      // backgroundColor:'#2e4c60',
+
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -205,9 +192,7 @@ const OnlineTuition = ({navigation}) => {
   const {setShowAlert} = useAppContext();
 
   const GoBackHome = () => {
-    // Set the showAlert function in the context
     setShowAlert(() => {
-      // Show the alert when this function is called
       Alert.alert('⚫ Congrats', 'your Form has been Submitted!');
     });
   };
@@ -215,7 +200,7 @@ const OnlineTuition = ({navigation}) => {
   function Error(app) {
     showMessage({
       message: `Error In Opening ${app}`,
-      // backgroundColor:'#2e4c60',
+
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -223,7 +208,6 @@ const OnlineTuition = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
     });
   }
 
@@ -268,7 +252,7 @@ const OnlineTuition = ({navigation}) => {
   };
 
   const openTelegram = () => {
-    const username = 'owais_s'; // Replace with the actual Telegram username
+    const username = 'Azharulislamacademy'; // Replace with the actual Telegram username
     const url = `https://t.me/${username}`;
 
     Linking.openURL(url)
@@ -292,7 +276,6 @@ const OnlineTuition = ({navigation}) => {
     }
 
     if (name.trim() === '' || father.trim() === '' || value === '') {
-      // console.log(online);
       EmptyInput();
       return;
     }
@@ -315,8 +298,7 @@ const OnlineTuition = ({navigation}) => {
     setVisible(true);
     show();
 
-    const StudentSubject = subject
-    // SubjectChange()
+    const StudentSubject = subject;
     setTimeout(() => {
       const checkValid = phoneInput.current?.isValidNumber(value);
       setValid(checkValid ? checkValid : false);
@@ -343,12 +325,10 @@ const OnlineTuition = ({navigation}) => {
       const subject = name;
       const body = `Online Tuition \n ${countryName} \n ${formattedValue}`;
 
-      // Construct the mailto URL
       const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
         subject,
       )}&body=${encodeURIComponent(body)}`;
 
-      // Open the default email app
       Linking.openURL(mailtoUrl).catch(err =>
         console.error('Error opening email app:', err),
       );
@@ -371,7 +351,6 @@ const OnlineTuition = ({navigation}) => {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            // marginBottom:responsiveHeight(5),
             backgroundColor: 'rgba(0, 0, 0, 0.100)',
           }}>
           {loading ? (
@@ -634,12 +613,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 12,
-    // marginTop: responsiveHeight(3),
   },
   pickergroup: {
     alignItems: 'center',
     backgroundColor: '#FBFCF8',
-    // overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
     height: responsiveHeight(6),
@@ -651,12 +628,8 @@ const styles = StyleSheet.create({
   },
   picker: {
     color: '#2e4c60',
-    // padding:20,
     height: responsiveHeight(5.5),
     width: responsiveWidth(84),
-    // paddingHorizontal:20,
-    // fontSize: responsiveFontSize(2),
-    // allowFontScaling: false,
   },
   login: {
     height: responsiveHeight(6),
@@ -709,7 +682,6 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2.25),
   },
   Subjectbutton: {
-    // height: responsiveHeight(6),
     width: responsiveWidth(80),
     paddingVertical: 12,
     paddingHorizontal: 8,
@@ -722,11 +694,6 @@ const styles = StyleSheet.create({
   },
   Subjectbuttontext: {
     color: '#2e4c60',
-    // fontWeight: '600',
-    // letterSpacing: 0.7,
-    // textAlign: 'center',
-    // textAlignVertical: 'center',
-    // padding:,
     fontSize: responsiveFontSize(2),
   },
   highlight: {

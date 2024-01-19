@@ -10,8 +10,7 @@ import {
   Button,
   Alert,
   Linking,
-  ActivityIndicator
-  // Modal
+  ActivityIndicator,
 } from 'react-native';
 import {React, useEffect, useState} from 'react';
 import {
@@ -30,7 +29,6 @@ import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 export default function Home({route}) {
   const [isConnected, setIsConnected] = useState(false);
-  // const [user, setuser] = useState([]);
   const [username, setusername] = useState([]);
   const {showAlert} = useAppContext();
   const navigation = useNavigation();
@@ -38,8 +36,8 @@ export default function Home({route}) {
   const [isAdminModalVisible, setAdminModalVisible] = useState(false);
   const [isUserModalVisible, setUserModalVisible] = useState(false);
   const [name, setname] = useState();
-  const [visiblE,setVisiblE] = useState(true);
-  const [loadinG,setloadinG] = useState(true);
+  const [visiblE, setVisiblE] = useState(true);
+  const [loadinG, setloadinG] = useState(true);
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -50,8 +48,6 @@ export default function Home({route}) {
     const subscriber = auth().onAuthStateChanged(user => {
       if (user) {
         const userEmail = user.email;
-        // const uname = userEmail.split(/\d/)[0] || ('@')[0];
-        // const uname = userEmail.split(/\d/)[0] || userEmail.split('@')[0];
         const uname = userEmail.split(/\d|@/)[0];
         setusername(uname);
       } else {
@@ -104,11 +100,7 @@ export default function Home({route}) {
   }
 
   function Login() {
-    // auth().onAuthStateChanged(user => {
-    // if (user && isConnected) {
     navigation.navigate('Auth');
-    // } else Internet();
-    // });
   }
   function Admin() {
     navigation.navigate('Admin');
@@ -151,15 +143,11 @@ export default function Home({route}) {
           await auth().signOut();
           navigation.replace('First');
         }, 1000);
-        //       // navigation.replace('First');
-        //       console.log('banda shaat');
       } catch (error) {
         console.log(error.message);
       }
     }
   };
-
- 
 
   const CheckPassword = () => {
     if (name === '1') {
@@ -216,21 +204,16 @@ export default function Home({route}) {
 
   return (
     <View>
-    <Modal visible={visiblE} animationType="fade" transparent={true}>
-    <View
-      style={{
-        flex: 1,
-        // width:devicewidth,
-        // height:deviceheight,
-        justifyContent: 'center',
-        alignItems: 'center',
-        // backgroundColor: 'rgba(0, 0, 0, 0.100)',
-      }}>
-      {loadinG ? (
-        <ActivityIndicator size="larger" color="#2e4c60" />
-      ) : null}
-    </View>
-  </Modal>
+      <Modal visible={visiblE} animationType="fade" transparent={true}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          {loadinG ? <ActivityIndicator size="larger" color="#2e4c60" /> : null}
+        </View>
+      </Modal>
       <ImageBackground
         resizeMode="cover"
         style={styles.background}
@@ -240,7 +223,6 @@ export default function Home({route}) {
           delay={100}
           animation="fadeInDown"
           style={styles.navbar}>
-          
           <TouchableOpacity onPress={openModalAdmin}>
             <Image
               style={styles.logo}
@@ -287,7 +269,7 @@ export default function Home({route}) {
             </Text>
           </Animatable.View>
         </View>
-        
+
         <Animatable.View
           duration={2000}
           delay={100}
@@ -519,9 +501,7 @@ const styles = StyleSheet.create({
 
   navbar: {
     width: responsiveWidth(100),
-    // marginTop: responsiveHeight(1),
     paddingHorizontal: responsiveWidth(4),
-    // backgroundColor:'red',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -589,9 +569,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'good',
     letterSpacing: 1,
-    // backgroundColor: 'blue',
-    // width: responsiveWidth(68),
-    // marginTop: responsiveHeight(1),
     paddingHorizontal: responsiveWidth(2.25),
   },
   squaretext__: {
@@ -627,7 +604,6 @@ const styles = StyleSheet.create({
   coming: {
     height: responsiveHeight(9),
     width: responsiveWidth(30),
-    // marginTop: responsiveHeight(0.75),
   },
   online: {
     height: responsiveHeight(9),
@@ -686,13 +662,8 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2),
   },
   LogOutText: {
-    // height: responsiveHeight(6),
     width: responsiveWidth(80),
-    // backgroundColor: '#FBFCF8',
-    // padding: 8,
-    // borderColor: '#2e4c60',
     color: '#2e4c60',
-    // borderWidth: 1.5,
     fontFamily: 'good',
     borderRadius: 6,
     letterSpacing: 1,
@@ -719,8 +690,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   LogOutModalButtonView: {
-    // marginTop: responsiveHeight(1),
-
     width: responsiveWidth(85),
 
     marginBottom: responsiveHeight(2),

@@ -4,11 +4,9 @@ import {
   Dimensions,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
   FlatList,
   ImageBackground,
   ScrollView,
-  Alert,
   Modal,
   ActivityIndicator,
 } from 'react-native';
@@ -62,7 +60,7 @@ const UpcomingCourses = ({navigation}) => {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            // marginBottom:responsiveHeight(5),
+
             backgroundColor: 'rgba(0, 0, 0, 0.100)',
           }}>
           {loading ? (
@@ -178,10 +176,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
-  // main: {
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
+
   FlatListVIew: {
     width: responsiveWidth(90),
   },

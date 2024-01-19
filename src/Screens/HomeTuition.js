@@ -27,12 +27,10 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-// import { useAppContext } from './AppContext';
 import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import {useRoute} from '@react-navigation/native';
-
 
 const HomeTuition = ({navigation}) => {
   const [isTeacherModalVisible, setTeacherModalVisible] = useState(false);
@@ -55,8 +53,6 @@ const HomeTuition = ({navigation}) => {
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-      // console.log('Connection type', state.type);
-      // console.log('Is connected?', state.isConnected);
       setIsConnected(state.isConnected);
     });
 
@@ -98,10 +94,8 @@ const HomeTuition = ({navigation}) => {
     setTeacherModalVisible(!isTeacherModalVisible);
   };
 
-  // Use useEffect to trigger data fetching when the subject changes
   useEffect(() => {
     fetchData();
-    // console.log(online, subject);
   }, [subject]);
 
   const openModal = () => {
@@ -131,7 +125,7 @@ const HomeTuition = ({navigation}) => {
   function EmptyInput() {
     showMessage({
       message: '⚪️ Please Fill All Inputs',
-      // backgroundColor:'#2e4c60',
+
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -139,13 +133,12 @@ const HomeTuition = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
     });
   }
   function Internet() {
     showMessage({
       message: '⚪️ No Internet Connection',
-      // backgroundColor:'#2e4c60',
+
       type: 'warning',
       color: 'white',
       position: 'bottom',
@@ -153,14 +146,13 @@ const HomeTuition = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
     });
   }
 
   function Subject() {
     showMessage({
       message: '⚪️ Please Select The Subject',
-      // backgroundColor:'#2e4c60',
+
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -174,7 +166,7 @@ const HomeTuition = ({navigation}) => {
   function Teacher() {
     showMessage({
       message: '⚪️ Please Select The Teacher',
-      // backgroundColor:'#2e4c60',
+
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -189,9 +181,7 @@ const HomeTuition = ({navigation}) => {
   const {setShowAlert} = useAppContext();
 
   const GoBackHome = () => {
-    // Set the showAlert function in the context
     setShowAlert(() => {
-      // Show the alert when this function is called
       Alert.alert('⚫ Congrats', 'your Form has been Submitted!');
     });
   };
@@ -199,7 +189,7 @@ const HomeTuition = ({navigation}) => {
   function LogIn() {
     showMessage({
       message: '⚪️ You Need to Logged In First',
-      // backgroundColor:'#2e4c60',
+
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -214,7 +204,7 @@ const HomeTuition = ({navigation}) => {
   function Error(app) {
     showMessage({
       message: `Error In Opening ${app}`,
-      // backgroundColor:'#2e4c60',
+
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -222,7 +212,6 @@ const HomeTuition = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
     });
   }
 
@@ -254,11 +243,11 @@ const HomeTuition = ({navigation}) => {
 
   const openWhatsApp = () => {
     // Replace with your actual or dummy WhatsApp phone number
-    const phoneNumber = "+923154411997";
+    const phoneNumber = '+923154411997';
     const url = `whatsapp://send?phone=${phoneNumber}`;
-    
+
     Linking.openURL(url)
-      .then((data) => {
+      .then(data => {
         console.log('WhatsApp Opened: ', data);
       })
       .catch(() => {
@@ -267,18 +256,18 @@ const HomeTuition = ({navigation}) => {
   };
 
   const openTelegram = () => {
-    const username = "owais_s"; // Replace with the actual Telegram username
+    const username = 'Azharulislamacademy'; // Replace with the actual Telegram username
     const url = `https://t.me/${username}`;
 
     Linking.openURL(url)
-      .then((data) => {
+      .then(data => {
         console.log('Telegram Opened: ', data);
       })
       .catch(() => {
         Error('Telegram');
       });
   };
-  
+
   const Check = async () => {
     const currentUser = auth().currentUser;
 
@@ -313,7 +302,7 @@ const HomeTuition = ({navigation}) => {
     setLoading(true);
     setVisible(true);
     show();
-    const StudentSubject = subject
+    const StudentSubject = subject;
     setTimeout(() => {
       const checkValid = phoneInput.current?.isValidNumber(value);
       setValid(checkValid ? checkValid : false);
@@ -340,12 +329,10 @@ const HomeTuition = ({navigation}) => {
       const subject = name;
       const body = `Home Tuition \n ${countryName} \n ${formattedValue}`;
 
-      // Construct the mailto URL
       const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
         subject,
       )}&body=${encodeURIComponent(body)}`;
 
-      // Open the default email app
       Linking.openURL(mailtoUrl).catch(err =>
         console.error('Error opening email app:', err),
       );
@@ -368,7 +355,6 @@ const HomeTuition = ({navigation}) => {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            // marginBottom:responsiveHeight(5),
             backgroundColor: 'rgba(0, 0, 0, 0.100)',
           }}>
           {loading ? (
@@ -458,35 +444,35 @@ const HomeTuition = ({navigation}) => {
               : ''}
           </Text>
           <TouchableOpacity style={styles.Subjectbutton} onPress={openModal}>
-          <Text allowFontScaling={false} style={styles.Subjectbuttontext}>
-            {subject === '' ? 'What do you want to Learn' : subject}
-          </Text>
-        </TouchableOpacity>
-        <View style={styles.pickergroup}>
-          <Picker
-            style={styles.picker}
-            dropdownIconColor={'#2e4c60'}
-            selectedValue={selectedValue}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedValue(itemValue)
-            }>
-            <Picker.Item label="Select Teacher" value="Select Teacher" />
-            {online.map((item, index) => (
-              <Picker.Item key={index} label={item.Name} value={item.Name} />
-            ))}
-            {subject != '' ? (
-              <Picker.Item label="Admin Choice" value="Admin Choice" />
-            ) : null}
-          </Picker>
-        </View>
-         
-            <TouchableOpacity style={styles.button} onPress={Check}>
-              <Text allowFontScaling={false} style={styles.buttontext}>
-                SAVE
-              </Text>
-            </TouchableOpacity>
-          
-            <Modal
+            <Text allowFontScaling={false} style={styles.Subjectbuttontext}>
+              {subject === '' ? 'What do you want to Learn' : subject}
+            </Text>
+          </TouchableOpacity>
+          <View style={styles.pickergroup}>
+            <Picker
+              style={styles.picker}
+              dropdownIconColor={'#2e4c60'}
+              selectedValue={selectedValue}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedValue(itemValue)
+              }>
+              <Picker.Item label="Select Teacher" value="Select Teacher" />
+              {online.map((item, index) => (
+                <Picker.Item key={index} label={item.Name} value={item.Name} />
+              ))}
+              {subject != '' ? (
+                <Picker.Item label="Admin Choice" value="Admin Choice" />
+              ) : null}
+            </Picker>
+          </View>
+
+          <TouchableOpacity style={styles.button} onPress={Check}>
+            <Text allowFontScaling={false} style={styles.buttontext}>
+              SAVE
+            </Text>
+          </TouchableOpacity>
+
+          <Modal
             isVisible={isTeacherModalVisible}
             animationIn="zoomIn"
             animationOut="zoomOut"
@@ -651,7 +637,6 @@ const styles = StyleSheet.create({
   pickergroup: {
     alignItems: 'center',
     backgroundColor: '#FBFCF8',
-    // overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'center',
     height: responsiveHeight(6),
@@ -663,12 +648,8 @@ const styles = StyleSheet.create({
   },
   picker: {
     color: '#2e4c60',
-    // padding:20,
     height: responsiveHeight(5.5),
     width: responsiveWidth(84),
-    // paddingHorizontal:20,
-    // fontSize: responsiveFontSize(2),
-    // allowFontScaling: false,
   },
   password: {
     height: responsiveHeight(6),
@@ -713,7 +694,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   Subjectbutton: {
-    // height: responsiveHeight(6),
     width: responsiveWidth(80),
     paddingVertical: 12,
     paddingHorizontal: 8,
@@ -726,11 +706,6 @@ const styles = StyleSheet.create({
   },
   Subjectbuttontext: {
     color: '#2e4c60',
-    // fontWeight: '600',
-    // letterSpacing: 0.7,
-    // textAlign: 'center',
-    // textAlignVertical: 'center',
-    // padding:,
     fontSize: responsiveFontSize(2),
   },
   highlight: {

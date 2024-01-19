@@ -9,14 +9,9 @@ import {
   Dimensions,
   ImageBackground,
   ActivityIndicator,
-  Alert,
   Modal,
   Image,
-  Linking,
 } from 'react-native';
-import PhoneInput from 'react-native-phone-number-input';
-import firestore from '@react-native-firebase/firestore';
-import firebase from '@react-native-firebase/app';
 import NetInfo from '@react-native-community/netinfo';
 import {
   responsiveFontSize,
@@ -40,11 +35,7 @@ const UserSignup = ({navigation}) => {
       setUser(user);
     });
 
-    // Unsubscribe on component unmount
-
     const unsubscribe = NetInfo.addEventListener(state => {
-      // console.log('Connection type', state.type);
-      // console.log('Is connected?', state.isConnected);
       setIsConnected(state.isConnected);
     });
 
@@ -73,7 +64,7 @@ const UserSignup = ({navigation}) => {
   function Empty() {
     showMessage({
       message: '⚪️ Please Fill All Inputs',
-      // backgroundColor:'#2e4c60',
+
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -81,13 +72,12 @@ const UserSignup = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
     });
   }
   function Internet() {
     showMessage({
       message: '⚪️ No Internet Connection',
-      // backgroundColor:'#2e4c60',
+
       type: 'warning',
       color: 'white',
       position: 'bottom',
@@ -95,7 +85,6 @@ const UserSignup = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
     });
   }
 
@@ -113,7 +102,7 @@ const UserSignup = ({navigation}) => {
           setVisible(true);
           showMessage({
             message: '⚪️ Successfully Account Create!',
-            // backgroundColor: '#2e4c60',
+
             color: 'white',
             position: 'bottom',
             type: 'success',
@@ -121,7 +110,6 @@ const UserSignup = ({navigation}) => {
               fontSize: responsiveFontSize(2),
               lineHeight: responsiveHeight(3),
             },
-            // duration: 5000,
           });
           setTimeout(() => {
             setloading(false);
@@ -134,7 +122,7 @@ const UserSignup = ({navigation}) => {
           if (error.code === 'auth/email-already-in-use') {
             showMessage({
               message: '⚪️ That email address is already in use!',
-              // backgroundColor:'#2e4c60',
+
               type: 'warning',
               color: 'white',
               position: 'bottom',
@@ -142,7 +130,6 @@ const UserSignup = ({navigation}) => {
                 fontSize: responsiveFontSize(2.25),
                 lineHeight: responsiveHeight(3),
               },
-              // duration: 5000,
             });
             console.log('That email address is already in use!');
           }
@@ -152,7 +139,7 @@ const UserSignup = ({navigation}) => {
           ) {
             showMessage({
               message: '⚪️ Invalid-Email / Password',
-              // backgroundColor:'#2e4c60',
+
               type: 'warning',
               color: 'white',
               position: 'bottom',
@@ -160,7 +147,6 @@ const UserSignup = ({navigation}) => {
                 fontSize: responsiveFontSize(2.25),
                 lineHeight: responsiveHeight(3),
               },
-              // duration: 5000,
             });
           }
           console.log(error);
@@ -180,11 +166,8 @@ const UserSignup = ({navigation}) => {
         <View
           style={{
             flex: 1,
-            // width:devicewidth,
-            // height:deviceheight,
             justifyContent: 'center',
             alignItems: 'center',
-            // backgroundColor: 'rgba(0, 0, 0, 0.100)',
           }}>
           {loading ? <ActivityIndicator size="larger" color="#2e4c60" /> : null}
         </View>

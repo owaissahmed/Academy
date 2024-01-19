@@ -25,7 +25,6 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-// import { useAppContext } from './AppContext';
 import { useAppContext } from './AppContext';
 import auth from '@react-native-firebase/auth';
 import * as Animatable from 'react-native-animatable';
@@ -47,8 +46,6 @@ const DarseNizamiForm = ({navigation}) => {
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
-    //   console.log('Connection type', state.type);
-    //   console.log('Is connected?', state.isConnected);
       setIsConnected(state.isConnected);
     });
 
@@ -86,7 +83,7 @@ const DarseNizamiForm = ({navigation}) => {
   function EmptyInput() {
     showMessage({
       message: '⚪️ Please Fill All Inputs',
-      // backgroundColor:'#2e4c60',
+          
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -94,13 +91,13 @@ const DarseNizamiForm = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
+          
     });
   }
   function Internet() {
     showMessage({
       message: '⚪️ No Internet Connection',
-      // backgroundColor:'#2e4c60',
+          
       type: 'warning',
       color: 'white',
       position: 'bottom',
@@ -108,14 +105,14 @@ const DarseNizamiForm = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
+          
     });
   }
 
   function LogIn() {
     showMessage({
       message: '⚪️ You Need to Logged In First',
-      // backgroundColor:'#2e4c60',
+          
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -130,9 +127,7 @@ const DarseNizamiForm = ({navigation}) => {
   const { setShowAlert } = useAppContext();
 
   const GoBackHome = () => {
-    // Set the showAlert function in the context
     setShowAlert(() => {
-      // Show the alert when this function is called
       Alert.alert('⚫ Congrats', 'your Form has been Submitted!');
     });
   };
@@ -140,7 +135,7 @@ const DarseNizamiForm = ({navigation}) => {
   function Error(app) {
     showMessage({
       message: `Error In Opening ${app}`,
-      // backgroundColor:'#2e4c60',
+          
       type: 'danger',
       color: 'white',
       position: 'bottom',
@@ -148,7 +143,7 @@ const DarseNizamiForm = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
+          
     });
   }
 
@@ -179,7 +174,6 @@ const DarseNizamiForm = ({navigation}) => {
   };
 
   const openWhatsApp = () => {
-    // Replace with your actual or dummy WhatsApp phone number
     const phoneNumber = "+923154411997";
     const url = `whatsapp://send?phone=${phoneNumber}`;
     
@@ -193,7 +187,7 @@ const DarseNizamiForm = ({navigation}) => {
   };
 
   const openTelegram = () => {
-    const username = "owais_s"; // Replace with the actual Telegram username
+    const username = "Azharulislamacademy"; // Replace with the actual Telegram username
     const url = `https://t.me/${username}`;
 
     Linking.openURL(url)
@@ -255,12 +249,10 @@ const DarseNizamiForm = ({navigation}) => {
       const subject = name;
       const body = `Dars e Nizami \n ${countryName} \n ${formattedValue}`;
 
-      // Construct the mailto URL
       const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
         subject,
       )}&body=${encodeURIComponent(body)}`;
 
-      // Open the default email app
       Linking.openURL(mailtoUrl).catch(err =>
         console.error('Error opening email app:', err),
       );
@@ -283,7 +275,6 @@ const DarseNizamiForm = ({navigation}) => {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            // marginBottom:responsiveHeight(5),
             backgroundColor: 'rgba(0, 0, 0, 0.100)',
           }}>
           {loading ? (

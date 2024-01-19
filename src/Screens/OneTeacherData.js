@@ -1,14 +1,11 @@
 import {
   View,
   Text,
-  Image,
   Dimensions,
   StyleSheet,
   TouchableOpacity,
   ImageBackground,
   FlatList,
-  Alert,
-  ScrollView,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
@@ -17,11 +14,9 @@ import {
 } from 'react-native-responsive-dimensions';
 import {useRoute} from '@react-navigation/native';
 import {responsiveHeight} from 'react-native-responsive-dimensions';
-import {responsiveFontSize} from 'react-native-responsive-dimensions';
 import firestore from '@react-native-firebase/firestore';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import * as Animatable from 'react-native-animatable';
 
 const OneTeacherData = ({navigation}) => {
   const [teacher, setteacher] = useState([]);
@@ -40,7 +35,6 @@ const OneTeacherData = ({navigation}) => {
           });
         });
         setteacher(teacherData);
-        // Alert.alert(TeacherName);
       });
 
     return () => unsubscribe();
@@ -66,9 +60,7 @@ const OneTeacherData = ({navigation}) => {
           </View>
         ) : (
           <View>
-            <Text allowFontScaling={false} style={styles.squaretext}>
-             
-            </Text>
+            <Text allowFontScaling={false} style={styles.squaretext}></Text>
           </View>
         )}
         {teacher.length > 0 ? (
@@ -133,7 +125,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: responsiveHeight(1),
     borderRadius: 12,
-    // marginBottom: responsiveHeight(16),
   },
   squaretext: {
     fontSize: responsiveScreenFontSize(3),
@@ -143,23 +134,17 @@ const styles = StyleSheet.create({
     fontFamily: 'good',
     letterSpacing: 2,
     lineHeight: 30,
-    // marginTop: responsiveHeight(1),
   },
   square: {
     marginTop: responsiveHeight(16),
-    // borderColor: '#2e4c60',
     borderWidth: 1.5,
     height: 'auto',
     width: responsiveWidth(90),
     justifyContent: 'center',
     alignItems: 'center',
-    // alignContent:'flex-start',
-    // alignSelf:
     borderRadius: 12,
     backgroundColor: '#fff',
     paddingVertical: responsiveHeight(1),
-    // marginHorizontal: responsiveWidth(3),
-    // marginBottom: responsiveHeight(1),
   },
   Name: {
     fontSize: responsiveScreenFontSize(2.25),

@@ -11,7 +11,6 @@ import {
   Alert,
   Linking,
 } from 'react-native';
-import Collapsible from 'react-native-collapsible';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -22,7 +21,6 @@ import {useNavigation} from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import FlashMessage, {showMessage} from 'react-native-flash-message';
 
 const Accordion = ({
   id,
@@ -177,34 +175,25 @@ const styles = StyleSheet.create({
   background: {
     width: devicewidth,
     height: deviceheight,
-    // alignItems: 'center',
-    // justifyContent: 'space-evenly',
   },
   HeadingText: {
     fontFamily: 'mushaf',
     color: '#2e4c60',
-    // backgroundColor: 'seagreen',
     fontSize: responsiveFontSize(5),
     textAlign: 'center',
-    // marginVertical:responsiveHeight(),
     marginTop: responsiveHeight(4),
     marginBottom: responsiveHeight(3),
     textTransform: 'uppercase',
     letterSpacing: 2,
   },
   TitleCollapse: {
-    // justifyContent:'center',
     alignItems: 'center',
-    // paddingVertical: responsiveHeight(0.5),
-    // paddingTop:responsiveHeight(0.25),
     paddingBottom: responsiveHeight(0.75),
     marginHorizontal: responsiveWidth(4),
     backgroundColor: '#2e4c60',
     marginVertical: responsiveHeight(2),
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    // marginTop:re
-    // backgroundColor:'red'
   },
   TitleText: {
     color: '#fff',
@@ -232,12 +221,10 @@ const styles = StyleSheet.create({
   DescriptionText: {
     color: '#2e4c60',
     fontSize: responsiveScreenFontSize(2.25),
-    // fontFamily: 'mushaf',
     fontWeight: '600',
     letterSpacing: 0.25,
     marginVertical: responsiveHeight(0.25),
     textAlign:'center',
-    // fontFamily: 'mushaf',
   },
   ButtonView: {
     display: 'flex',

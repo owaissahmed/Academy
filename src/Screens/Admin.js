@@ -1,30 +1,21 @@
 import {
   View,
   Text,
-  Image,
   ImageBackground,
   Dimensions,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
-  Button,
-  Alert,
-  Linking,
 } from 'react-native';
-import {React, useEffect, useState} from 'react';
+import {React} from 'react';
 import {
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
   responsiveScreenFontSize,
 } from 'react-native-responsive-dimensions';
-import Modal from 'react-native-modal';
-import NetInfo from '@react-native-community/netinfo';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
-import {useNavigation} from '@react-navigation/native';
 const Admin = ({navigation}) => {
   function gotoAddCourse() {
     navigation.navigate('AddCourse');
@@ -140,7 +131,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'good',
     letterSpacing: 2,
-    // marginTop: responsiveHeight(1),
   },
   squareView: {
     display: 'flex',
@@ -159,6 +149,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: '#2e4c60',
     marginHorizontal: responsiveWidth(3),
-    // marginBottom: responsiveHeight(1),
   },
 });

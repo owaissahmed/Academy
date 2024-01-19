@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  Image,
   Dimensions,
   StyleSheet,
   TouchableOpacity,
@@ -14,13 +13,12 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import {responsiveHeight} from 'react-native-responsive-dimensions';
-import {responsiveFontSize} from 'react-native-responsive-dimensions';
 import firestore from '@react-native-firebase/firestore';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 
-const TeachersData = ({route,navigation}) => {
+const TeachersData = ({route, navigation}) => {
   const [teacher, setteacher] = useState([]);
 
   useEffect(() => {
@@ -40,9 +38,9 @@ const TeachersData = ({route,navigation}) => {
     return () => unsubscribe();
   }, []);
 
-function GoToOneTeacherData(TeacherName) {
-    navigation.navigate('OneTeacherData',{TeacherName: TeacherName})
-}
+  function GoToOneTeacherData(TeacherName) {
+    navigation.navigate('OneTeacherData', {TeacherName: TeacherName});
+  }
 
   return (
     <View>
@@ -60,7 +58,9 @@ function GoToOneTeacherData(TeacherName) {
               <FlatList
                 data={teacher}
                 renderItem={({item}) => (
-                  <TouchableOpacity style={styles.DataView} onPress={() => GoToOneTeacherData(item.Name)}>
+                  <TouchableOpacity
+                    style={styles.DataView}
+                    onPress={() => GoToOneTeacherData(item.Name)}>
                     <View style={styles.DataView}>
                       <Text allowFontScaling={false} style={styles.Name}>
                         {item.Name}

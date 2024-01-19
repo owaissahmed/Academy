@@ -14,11 +14,9 @@ import {
     responsiveWidth,
   } from 'react-native-responsive-dimensions';
   import {responsiveHeight} from 'react-native-responsive-dimensions';
-  import {responsiveFontSize} from 'react-native-responsive-dimensions';
   import firestore from '@react-native-firebase/firestore';
   const devicewidth = Dimensions.get('window').width;
   const deviceheight = Dimensions.get('window').height;
-  import * as Animatable from 'react-native-animatable';
   
   const DarseNizamiData = ({navigation}) => {
     const [DarseNizami, setDarseNizami] = useState([]);

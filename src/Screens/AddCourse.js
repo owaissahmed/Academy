@@ -14,9 +14,7 @@ import {
   Image,
   // Linking,
 } from 'react-native';
-import PhoneInput from 'react-native-phone-number-input';
 import firestore from '@react-native-firebase/firestore';
-// import firebase from '@react-native-firebase/app';
 import NetInfo from '@react-native-community/netinfo';
 import {Picker} from '@react-native-picker/picker';
 import {
@@ -26,8 +24,6 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-// import {useRoute} from '@react-navigation/native';
-// import {useAppContext} from './AppContext';
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 
@@ -76,7 +72,6 @@ const AddCourse = ({navigation}) => {
   function show() {
     showMessage({
       message: '⚪️ Course Added',
-      // backgroundColor: '#2e4c60',
       type: 'success',
       color: 'white',
       position: 'bottom',
@@ -91,7 +86,6 @@ const AddCourse = ({navigation}) => {
   function Internet() {
     showMessage({
       message: '⚪️ No Internet Connection',
-      // backgroundColor:'#2e4c60',
       type: 'warning',
       color: 'white',
       position: 'bottom',
@@ -99,7 +93,6 @@ const AddCourse = ({navigation}) => {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
-      // duration: 5000,
     });
   }
 
@@ -290,7 +283,6 @@ const styles = StyleSheet.create({
     width: responsiveWidth(80),
     paddingHorizontal: 6,
     paddingBottom: 4,
-    // paddingVertical:-10,
     color: '#2e4c60',
     borderColor: '#2e4c60',
     borderWidth: 1.5,
@@ -299,8 +291,6 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2.8),
     textAlignVertical: 'center',
     fontFamily: 'mushaf',
-    // backgroundColor:'red',
-    // textAlignVertical:'center'
   },
   button: {
     backgroundColor: '#2e4c60',

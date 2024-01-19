@@ -25,66 +25,63 @@ import * as Animatable from 'react-native-animatable';
 import {useNavigation} from '@react-navigation/native';
 
 const About = ({navigation}) => {
+  function Completed() {
+    navigation.navigate('CompletedProject');
+  }
+  function Pending() {
+    navigation.navigate('PendingProjects');
+  }
 
-function Completed() {
-  navigation.navigate('CompletedProject')
-}
-function Pending() {
-  navigation.navigate('PendingProjects')
-}
+  const openInstagram = () => {
+    const username = 'allama_azhar_ali_madani';
+    const url = `https://www.instagram.com/${username}`;
 
-const openInstagram = () => {
-  const username = 'allama_azhar_ali_madani'; // Replace with the actual Instagram username
-  const url = `https://www.instagram.com/${username}`;
+    Linking.openURL(url)
+      .then(data => {
+        console.log('Instagram Opened: ', data);
+      })
+      .catch(() => {
+        console.log('Error opening Instagram');
+      });
+  };
 
-  Linking.openURL(url)
-    .then(data => {
-      console.log('Instagram Opened: ', data);
-    })
-    .catch(() => {
-      console.log('Error opening Instagram');
-    });
-};
+  const openFacebook = () => {
+    const username = 'allamaazharalimadani';
+    const url = `https://www.facebook.com/${username}`;
 
-const openFacebook = () => {
-  const username = 'allamaazharalimadani'; // Replace with the actual Facebook page username
-  const url = `https://www.facebook.com/${username}`;
+    Linking.openURL(url)
+      .then(data => {
+        console.log('Facebook Opened: ', data);
+      })
+      .catch(() => {
+        console.log('Error opening Facebook');
+      });
+  };
 
-  Linking.openURL(url)
-    .then(data => {
-      console.log('Facebook Opened: ', data);
-    })
-    .catch(() => {
-      console.log('Error opening Facebook');
-    });
-};
+  const openWhatsApp = () => {
+    const phoneNumber = '1234567890';
+    const url = `whatsapp://send?phone=${phoneNumber}`;
 
-const openWhatsApp = () => {
-  // Replace with your actual or dummy WhatsApp phone number
-  const phoneNumber = "1234567890";
-  const url = `whatsapp://send?phone=${phoneNumber}`;
-  
-  Linking.openURL(url)
-    .then((data) => {
-      console.log('WhatsApp Opened: ', data);
-    })
-    .catch(() => {
-      console.log('Error opening WhatsApp');
-    });
-};
+    Linking.openURL(url)
+      .then(data => {
+        console.log('WhatsApp Opened: ', data);
+      })
+      .catch(() => {
+        console.log('Error opening WhatsApp');
+      });
+  };
+  const openTelegram = () => {
+    const username = 'Azharulislamacademy';
+    const url = `https://t.me/${username}`;
 
-const openTelegram = () => {
-  const username = "owais_s"; // Replace with the actual Telegram username
-  const url = `https://t.me/${username}`;
-
-  Linking.openURL(url)
-    .then((data) => {
-      console.log('Telegram Opened: ', data);
-    })
-    .catch(() => {
-      console.log('Error opening Telegram');
-    });
-};
+    Linking.openURL(url)
+      .then(data => {
+        console.log('Telegram Opened: ', data);
+      })
+      .catch(() => {
+        console.log('Error opening Telegram');
+      });
+  };
 
   return (
     <View>
@@ -112,16 +109,16 @@ const openTelegram = () => {
           animation="fadeInUp"
           style={styles.squarediv}>
           <TouchableOpacity style={styles.button} onPress={Completed}>
-              <Text allowFontScaling={false} style={styles.buttontext}>
-              پایہ   تکمیل   تک   پہنچنے   والے   منصوبے
-              </Text>
-            </TouchableOpacity>
+            <Text allowFontScaling={false} style={styles.buttontext}>
+              پایہ تکمیل تک پہنچنے والے منصوبے
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={Pending}>
-              <Text allowFontScaling={false} style={styles.buttontext}>
-              مستقبل  قریب  کے  منصوبے
-              </Text>
-            </TouchableOpacity>
-            <View
+            <Text allowFontScaling={false} style={styles.buttontext}>
+              مستقبل قریب کے منصوبے
+            </Text>
+          </TouchableOpacity>
+          <View
             style={{
               display: 'flex',
               flexDirection: 'row',
@@ -208,16 +205,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: responsiveWidth(95),
-    //   marginTop: responsiveHeight(-6),
   },
 
   button: {
     backgroundColor: '#2e4c60',
     color: 'white',
-    // padding: 6,
     marginTop: responsiveHeight(3),
-    // marginBottom: responsiveHeight(2),
-paddingBottom:responsiveHeight(1),
+    paddingBottom: responsiveHeight(1),
     borderRadius: 8,
     width: responsiveWidth(80),
   },
@@ -226,8 +220,6 @@ paddingBottom:responsiveHeight(1),
     color: '#fff',
     fontFamily: 'mushaf',
     fontWeight: '600',
-    // letterSpacing: 0.7,
     textAlign: 'center',
-    // fontSize: responsiveFontSize(2.25),
   },
 });
