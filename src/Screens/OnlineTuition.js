@@ -76,7 +76,7 @@ const OnlineTuition = ({navigation}) => {
 
   const SubjectChange = newSubject => {
     setsubject(newSubject);
-    console.log(newSubject); // Log the new subject, not the state
+    // console.log(newSubject); // Log the new subject, not the state
   };
 
   const fetchData = async () => {
@@ -105,7 +105,7 @@ const OnlineTuition = ({navigation}) => {
   // Use useEffect to trigger data fetching when the subject changes
   useEffect(() => {
     fetchData();
-    console.log(online, subject);
+    // console.log(online, subject);
   }, [subject]);
 
   const openModal = () => {
@@ -135,7 +135,7 @@ const OnlineTuition = ({navigation}) => {
   function EmptyInput() {
     // const subjects = online.map(obj => obj.Name);
     // console.log(subjects);
-
+    // console.log(selectedValue);
     showMessage({
       message: '⚪️ Please Fill All Inputs',
       // backgroundColor:'#2e4c60',
@@ -166,6 +166,34 @@ const OnlineTuition = ({navigation}) => {
   function LogIn() {
     showMessage({
       message: '⚪️ You Need to Logged In First',
+      // backgroundColor:'#2e4c60',
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      duration: 2000,
+    });
+  }
+  function Subject() {
+    showMessage({
+      message: '⚪️ Please Select The Subject',
+      // backgroundColor:'#2e4c60',
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      duration: 2000,
+    });
+  }
+  function Teacher() {
+    showMessage({
+      message: '⚪️ Please Select The Teacher',
       // backgroundColor:'#2e4c60',
       type: 'danger',
       color: 'white',
@@ -272,15 +300,27 @@ const OnlineTuition = ({navigation}) => {
       EmptyInput();
       return;
     }
+    if (subject === '') {
+      Subject();
+      return;
+    }
+
+    if (selectedValue === 'Select Teacher' || selectedValue === '') {
+      Teacher();
+      return;
+    }
 
     if (!isConnected) {
       Internet();
       return;
     }
+
     setLoading(true);
     setVisible(true);
     show();
 
+    const StudentSubject = subject
+    // SubjectChange()
     setTimeout(() => {
       const checkValid = phoneInput.current?.isValidNumber(value);
       setValid(checkValid ? checkValid : false);
@@ -297,9 +337,10 @@ const OnlineTuition = ({navigation}) => {
         Category: 'Tuition',
         Status: '',
         Response: 'Pending',
-        Teacher: '',
+        Teacher: selectedValue,
         Fees: '',
         FeesPaid: '',
+        Subject: StudentSubject,
       });
 
       const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
@@ -338,7 +379,7 @@ const OnlineTuition = ({navigation}) => {
             backgroundColor: 'rgba(0, 0, 0, 0.100)',
           }}>
           {loading ? (
-            <ActivityIndicator size="larger" color="black" />
+            <ActivityIndicator size="larger" color="#2e4c60" />
           ) : (
             <Text allowFontScaling={false} style={{color: '#ffffff'}}>
               Loading...
@@ -440,7 +481,9 @@ const OnlineTuition = ({navigation}) => {
               {online.map((item, index) => (
                 <Picker.Item key={index} label={item.Name} value={item.Name} />
               ))}
-              <Picker.Item label="Admin Choice" value="Admin Choice" />
+              {subject != '' ? (
+                <Picker.Item label="Admin Choice" value="Admin Choice" />
+              ) : null}
             </Picker>
           </View>
 
@@ -474,9 +517,9 @@ const OnlineTuition = ({navigation}) => {
                     style={styles.picker}>
                     <Picker.Item
                       label={
-                        subject === '' ? 'What Do You Want To Teach' : subject
+                        subject === '' ? 'What Do You Want To Learn' : subject
                       }
-                      value="What Do You Want To Teach"
+                      value="What Do You Want To Learn"
                     />
                     <Picker.Item label="نحو" value="نحو" />
                     <Picker.Item label="حدیث" value="حدیث" />
@@ -560,7 +603,6 @@ const OnlineTuition = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  
   logo: {
     height: responsiveHeight(13),
     width: responsiveWidth(33),
