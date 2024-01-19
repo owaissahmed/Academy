@@ -74,10 +74,6 @@ const OnlineTuition = ({navigation}) => {
     setCountry(country);
   };
 
-  const SubjectChange = newSubject => {
-    setsubject(newSubject);
-    // console.log(newSubject); // Log the new subject, not the state
-  };
 
   const fetchData = async () => {
     try {

@@ -10,16 +10,16 @@ import {
   ImageBackground,
   ActivityIndicator,
   Alert,
-  Modal,
   Image,
   Linking,
 } from 'react-native';
+import Modal from 'react-native-modal';
 import PhoneInput from 'react-native-phone-number-input';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
 import NetInfo from '@react-native-community/netinfo';
 import auth from '@react-native-firebase/auth';
-
+import {Picker} from '@react-native-picker/picker';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -35,6 +35,7 @@ import {useRoute} from '@react-navigation/native';
 
 
 const HomeTuition = ({navigation}) => {
+  const [isTeacherModalVisible, setTeacherModalVisible] = useState(false);
   const [name, setname] = useState('');
   const [father, setfather] = useState('');
   const [course, setcourse] = useState('');
@@ -46,6 +47,10 @@ const HomeTuition = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
+  const [online, setonline] = useState([]);
+  const [subject, setsubject] = useState('');
+  const [selectedValue, setSelectedValue] = useState('');
+  const [TeacherselectedValue, setTeacherSelectedValue] = useState('');
   const phoneInput = useRef(null);
 
   useEffect(() => {
@@ -68,6 +73,43 @@ const HomeTuition = ({navigation}) => {
   };
   const handleOnCountryChange = country => {
     setCountry(country);
+  };
+
+  const fetchData = async () => {
+    try {
+      const querySnapshot = await firestore()
+        .collection('teachers')
+        .where('Subject', '==', subject)
+        .get();
+
+      const onlineData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setonline(onlineData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const CheckPassword = () => {
+    fetchData();
+    setTeacherModalVisible(!isTeacherModalVisible);
+  };
+
+  // Use useEffect to trigger data fetching when the subject changes
+  useEffect(() => {
+    fetchData();
+    // console.log(online, subject);
+  }, [subject]);
+
+  const openModal = () => {
+    if (isConnected == false) {
+      Internet();
+    } else {
+      setTeacherModalVisible(true);
+    }
   };
 
   const route = useRoute();
@@ -112,6 +154,35 @@ const HomeTuition = ({navigation}) => {
         lineHeight: responsiveHeight(3),
       },
       // duration: 5000,
+    });
+  }
+
+  function Subject() {
+    showMessage({
+      message: '⚪️ Please Select The Subject',
+      // backgroundColor:'#2e4c60',
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      duration: 2000,
+    });
+  }
+  function Teacher() {
+    showMessage({
+      message: '⚪️ Please Select The Teacher',
+      // backgroundColor:'#2e4c60',
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+      duration: 2000,
     });
   }
 
@@ -224,6 +295,16 @@ const HomeTuition = ({navigation}) => {
       return;
     }
 
+    if (subject === '') {
+      Subject();
+      return;
+    }
+
+    if (selectedValue === 'Select Teacher' || selectedValue === '') {
+      Teacher();
+      return;
+    }
+
     if (!isConnected) {
       Internet();
       return;
@@ -232,7 +313,7 @@ const HomeTuition = ({navigation}) => {
     setLoading(true);
     setVisible(true);
     show();
-
+    const StudentSubject = subject
     setTimeout(() => {
       const checkValid = phoneInput.current?.isValidNumber(value);
       setValid(checkValid ? checkValid : false);
@@ -249,9 +330,10 @@ const HomeTuition = ({navigation}) => {
         Category: 'Tuition',
         Status: '',
         Response: 'Pending',
-        Teacher: '',
+        Teacher: selectedValue,
         Fees: '',
         FeesPaid: '',
+        Subject: StudentSubject,
       });
 
       const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
@@ -290,7 +372,7 @@ const HomeTuition = ({navigation}) => {
             backgroundColor: 'rgba(0, 0, 0, 0.100)',
           }}>
           {loading ? (
-            <ActivityIndicator size="larger" color="black" />
+            <ActivityIndicator size="larger" color="#2e4c60" />
           ) : (
             <Text allowFontScaling={false} style={{color: '#ffffff'}}>
               Loading...
@@ -375,13 +457,89 @@ const HomeTuition = ({navigation}) => {
               ? country.name
               : ''}
           </Text>
-          <View>
+          <TouchableOpacity style={styles.Subjectbutton} onPress={openModal}>
+          <Text allowFontScaling={false} style={styles.Subjectbuttontext}>
+            {subject === '' ? 'What do you want to Learn' : subject}
+          </Text>
+        </TouchableOpacity>
+        <View style={styles.pickergroup}>
+          <Picker
+            style={styles.picker}
+            dropdownIconColor={'#2e4c60'}
+            selectedValue={selectedValue}
+            onValueChange={(itemValue, itemIndex) =>
+              setSelectedValue(itemValue)
+            }>
+            <Picker.Item label="Select Teacher" value="Select Teacher" />
+            {online.map((item, index) => (
+              <Picker.Item key={index} label={item.Name} value={item.Name} />
+            ))}
+            {subject != '' ? (
+              <Picker.Item label="Admin Choice" value="Admin Choice" />
+            ) : null}
+          </Picker>
+        </View>
+         
             <TouchableOpacity style={styles.button} onPress={Check}>
               <Text allowFontScaling={false} style={styles.buttontext}>
                 SAVE
               </Text>
             </TouchableOpacity>
-          </View>
+          
+            <Modal
+            isVisible={isTeacherModalVisible}
+            animationIn="zoomIn"
+            animationOut="zoomOut"
+            animationInTiming={1000}
+            animationOutTiming={1000}
+            backdropTransitionInTiming={1000}
+            backdropTransitionOutTiming={1000}>
+            <View style={styles.modal}>
+              <ImageBackground
+                resizeMode="cover"
+                style={styles.modalBackground}
+                source={require('../Images/background.jpg')}>
+                <Image
+                  style={styles.modalImage}
+                  source={require('../Images/logo.png')}
+                />
+                <View style={styles.pickergroup}>
+                  <Picker
+                    selectedValue={TeacherselectedValue}
+                    dropdownIconColor={'#2e4c60'}
+                    onValueChange={itemValue => setsubject(itemValue)}
+                    style={styles.picker}>
+                    <Picker.Item
+                      label={
+                        subject === '' ? 'What Do You Want To Learn' : subject
+                      }
+                      value="What Do You Want To Learn"
+                    />
+                    <Picker.Item label="نحو" value="نحو" />
+                    <Picker.Item label="حدیث" value="حدیث" />
+                    <Picker.Item label="صرف" value="صرف" />
+                    <Picker.Item label="اصولِ فقہ" value="اصولِ فقہ" />
+                    <Picker.Item label="فقہ" value="فقہ" />
+                    <Picker.Item label="عقائد" value="عقائد" />
+                    <Picker.Item label="بلاغت" value="بلاغت" />
+                    <Picker.Item label="مناظرہ" value="مناظرہ" />
+                    <Picker.Item label="تفسیر" value="تفسیر" />
+                    <Picker.Item label="وراثت" value="وراثت" />
+                    <Picker.Item label="منطق" value="منطق" />
+                    <Picker.Item label="اصولِ حدیث" value="اصولِ حدیث" />
+                    <Picker.Item label="اصولِ تفسیر" value="اصولِ تفسیر" />
+                  </Picker>
+                </View>
+                <View style={styles.ModalButtonView}>
+                  <TouchableOpacity style={styles.Btn} onPress={CheckPassword}>
+                    <Text allowFontScaling={false} style={styles.BtnText}>
+                      Next
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </ImageBackground>
+            </View>
+          </Modal>
           <View
             style={{
               display: 'flex',
@@ -490,6 +648,28 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(2),
     fontSize: responsiveFontSize(2),
   },
+  pickergroup: {
+    alignItems: 'center',
+    backgroundColor: '#FBFCF8',
+    // overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: responsiveHeight(6),
+    width: responsiveWidth(80),
+
+    marginTop: responsiveHeight(3),
+    borderColor: '#2e4c60',
+    borderWidth: 1.5,
+  },
+  picker: {
+    color: '#2e4c60',
+    // padding:20,
+    height: responsiveHeight(5.5),
+    width: responsiveWidth(84),
+    // paddingHorizontal:20,
+    // fontSize: responsiveFontSize(2),
+    // allowFontScaling: false,
+  },
   password: {
     height: responsiveHeight(6),
     width: responsiveWidth(80),
@@ -531,6 +711,75 @@ const styles = StyleSheet.create({
   },
   highlight: {
     fontWeight: '700',
+  },
+  Subjectbutton: {
+    // height: responsiveHeight(6),
+    width: responsiveWidth(80),
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    color: '#2e4c60',
+    borderColor: '#2e4c60',
+    borderWidth: 1.5,
+    marginTop: responsiveHeight(3),
+    backgroundColor: '#FBFCF8',
+    fontSize: responsiveFontSize(2),
+  },
+  Subjectbuttontext: {
+    color: '#2e4c60',
+    // fontWeight: '600',
+    // letterSpacing: 0.7,
+    // textAlign: 'center',
+    // textAlignVertical: 'center',
+    // padding:,
+    fontSize: responsiveFontSize(2),
+  },
+  highlight: {
+    fontWeight: '700',
+  },
+  modalBackground: {
+    width: responsiveWidth(90),
+    height: responsiveHeight(30),
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  modal: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderRadius: 20,
+  },
+
+  modalImage: {
+    height: responsiveHeight(11),
+    width: responsiveWidth(24),
+    marginTop: responsiveHeight(1),
+  },
+  ModalButtonView: {
+    marginTop: responsiveHeight(1),
+
+    width: responsiveWidth(85),
+
+    marginBottom: responsiveHeight(1),
+
+    paddingHorizontal: responsiveWidth(4),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  Btn: {
+    backgroundColor: '#2e4c60',
+    color: 'white',
+    padding: 6,
+    borderRadius: 8,
+    width: responsiveWidth(30),
+  },
+  BtnText: {
+    color: '#fff',
+    fontWeight: '600',
+    letterSpacing: 0.7,
+    textAlign: 'center',
+    fontSize: responsiveFontSize(2.25),
   },
 });
 
