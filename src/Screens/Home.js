@@ -303,7 +303,7 @@ export default function Home({route}) {
                 style={styles.online}
                 source={require('../Images/online.png')}
               />
-              <Text allowFontScaling={false} style={styles.squaretext}>
+              <Text allowFontScaling={false} style={styles.squaretext___}>
                 ONLINE TUTION
               </Text>
             </View>
@@ -314,7 +314,7 @@ export default function Home({route}) {
                 style={styles.home}
                 source={require('../Images/home.png')}
               />
-              <Text allowFontScaling={false} style={styles.squaretext}>
+              <Text allowFontScaling={false} style={styles.squaretext___}>
                 HOME TUTION
               </Text>
             </View>
@@ -348,7 +348,7 @@ export default function Home({route}) {
                 source={require('../Images/teacher.png')}
               />
               <Text allowFontScaling={false} style={styles.squaretext}>
-                FOR TEACHERS
+                BECOME A TEACHER
               </Text>
             </View>
           </TouchableOpacity>
@@ -359,7 +359,7 @@ export default function Home({route}) {
                 source={require('../Images/info.png')}
               />
               <Text allowFontScaling={false} style={styles.squaretext}>
-                ABOUT US
+                ABOUT OUR ACADEMY
               </Text>
             </View>
           </TouchableOpacity>
@@ -557,11 +557,20 @@ const styles = StyleSheet.create({
   },
   squaretext: {
     fontSize: responsiveScreenFontSize(2),
+    marginBottom: responsiveHeight(0.5),
     color: '#2e4c60',
     textAlign: 'center',
     fontFamily: 'good',
     marginTop: responsiveHeight(1),
-    paddingHorizontal: responsiveWidth(0.25),
+    paddingHorizontal: responsiveWidth(0.5),
+  },
+  squaretext___: {
+    fontSize: responsiveScreenFontSize(2),
+    color: '#2e4c60',
+    textAlign: 'center',
+    fontFamily: 'good',
+    marginTop: responsiveHeight(1),
+    paddingHorizontal: responsiveWidth(0.5),
   },
   Welcometext: {
     fontSize: responsiveScreenFontSize(2),
