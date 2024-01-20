@@ -39,7 +39,8 @@ const Auth = ({navigation}) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [USER, setUSER] = useState(null);
   const [name, setname] = useState('');
-
+  const [teacherUser, setteacherUser] = useState('');
+  const [teacherData, setteacherData] = useState('');
   useEffect(() => {
     setTimeout(() => {
       setloadinG(false);
@@ -63,6 +64,26 @@ const Auth = ({navigation}) => {
 
             setuserCourses(userCoursesData);
           });
+      } 
+    })
+
+    const Subscribe = auth().onAuthStateChanged(user => {
+      if (user) {
+        setUSER(user.email);
+        firestore()
+          .collection('teachers')
+          .where('Gmail', '==', user.email)
+          .onSnapshot(querySnapshot => {
+            const userCoursesData = [];
+            querySnapshot.forEach(documentSnapshot => {
+              userCoursesData.push({
+                id: documentSnapshot.id,
+                ...documentSnapshot.data(),
+              });
+            });
+
+            setteacherData(userCoursesData);
+          });
       }
     });
 
@@ -75,7 +96,7 @@ const Auth = ({navigation}) => {
     });
 
     return () => {
-      Subscriber, unsubscribe, subscriber();
+      Subscribe, Subscriber, unsubscribe, subscriber();
     };
   }, []);
 
@@ -254,7 +275,7 @@ const Auth = ({navigation}) => {
                 </TouchableOpacity>
               </View>
             )}
-
+            {teacherData <= 0 ? null : console.log('hello')}
             {userCourses.length > 0 ? (
               <Animatable.View
                 animation={'fadeInUp'}
