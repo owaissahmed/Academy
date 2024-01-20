@@ -313,6 +313,7 @@ const TeacherForm = ({navigation}) => {
               Phone: formattedValue,
               Country: countryName,
               Subject: Subject,
+              Response:'Pending',
               DayTime: firebase.firestore.FieldValue.serverTimestamp(),
             });
 

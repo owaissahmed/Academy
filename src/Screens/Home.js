@@ -32,7 +32,7 @@ export default function Home({route}) {
   const [username, setusername] = useState([]);
   const {showAlert} = useAppContext();
   const navigation = useNavigation();
-  const [isTeacherModalVisible, setTeacherModalVisible] = useState(false);
+  // const [isTeacherModalVisible, setTeacherModalVisible] = useState(false);
   const [isAdminModalVisible, setAdminModalVisible] = useState(false);
   const [isUserModalVisible, setUserModalVisible] = useState(false);
   const [name, setname] = useState();
@@ -60,9 +60,9 @@ export default function Home({route}) {
     };
   }, []);
 
-  const TeacherChange = newname => {
-    setname(newname);
-  };
+  // const TeacherChange = newname => {
+  //   setname(newname);
+  // };
   const AdminChange = newadmin => {
     setname(newadmin);
   };
@@ -149,20 +149,20 @@ export default function Home({route}) {
     }
   };
 
-  const CheckPassword = () => {
-    if (name === '1') {
-      setTeacherModalVisible(!isTeacherModalVisible);
-      setTimeout(() => {
-        navigation.navigate('TeacherForm');
-      }, 1000);
-    } else {
-      Alert.alert('⚫ Warning', 'Wrong Password!');
-    }
-  };
+  // const CheckPassword = () => {
+  //   if (name === '1') {
+  //     setTeacherModalVisible(!isTeacherModalVisible);
+  //     setTimeout(() => {
+  //       navigation.navigate('TeacherForm');
+  //     }, 1000);
+  //   } else {
+  //     Alert.alert('⚫ Warning', 'Wrong Password!');
+  //   }
+  // };
 
-  const closeModal = () => {
-    setTeacherModalVisible(!isTeacherModalVisible);
-  };
+  // const closeModal = () => {
+  //   setTeacherModalVisible(!isTeacherModalVisible);
+  // };
   const closeAdminModal = () => {
     setUserModalVisible(!isUserModalVisible);
   };
@@ -170,7 +170,7 @@ export default function Home({route}) {
     if (isConnected == false) {
       Internet();
     } else {
-      setTeacherModalVisible(true);
+      navigation.navigate('TeacherForm');
     }
   };
   const UseropenModal = () => {
@@ -363,46 +363,7 @@ export default function Home({route}) {
               </Text>
             </View>
           </TouchableOpacity>
-          <Modal
-            isVisible={isTeacherModalVisible}
-            animationIn="zoomIn"
-            animationOut="zoomOut"
-            animationInTiming={1000}
-            animationOutTiming={1000}
-            backdropTransitionInTiming={1000}
-            backdropTransitionOutTiming={1000}>
-            <View style={styles.modal}>
-              <ImageBackground
-                resizeMode="cover"
-                style={styles.modalBackground}
-                source={require('../Images/background.jpg')}>
-                <Image
-                  style={styles.modalImage}
-                  source={require('../Images/logo.png')}
-                />
-                <TextInput
-                  allowFontScaling={false}
-                  autoFocus
-                  style={styles.login}
-                  onChangeText={TeacherChange}
-                  placeholder="Enter Password"
-                  placeholderTextColor={'grey'}
-                />
-                <View style={styles.ModalButtonView}>
-                  <TouchableOpacity style={styles.Btn} onPress={closeModal}>
-                    <Text allowFontScaling={false} style={styles.BtnText}>
-                      Close
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.Btn} onPress={CheckPassword}>
-                    <Text allowFontScaling={false} style={styles.BtnText}>
-                      Next
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </ImageBackground>
-            </View>
-          </Modal>
+         
           <Modal
             isVisible={isUserModalVisible}
             animationIn="zoomIn"

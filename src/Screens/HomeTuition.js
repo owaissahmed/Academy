@@ -76,6 +76,7 @@ const HomeTuition = ({navigation}) => {
       const querySnapshot = await firestore()
         .collection('teachers')
         .where('Subject', '==', subject)
+        .where('Response', '==' ,'')
         .get();
 
       const onlineData = querySnapshot.docs.map(doc => ({
@@ -323,6 +324,7 @@ const HomeTuition = ({navigation}) => {
         Fees: '',
         FeesPaid: '',
         Subject: StudentSubject,
+        Response:'Pending'
       });
 
       const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address

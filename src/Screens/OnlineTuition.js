@@ -74,6 +74,7 @@ const OnlineTuition = ({navigation}) => {
       const querySnapshot = await firestore()
         .collection('teachers')
         .where('Subject', '==', subject)
+        .where('Response', '==' ,'')
         .get();
 
       const onlineData = querySnapshot.docs.map(doc => ({
