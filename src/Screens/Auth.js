@@ -64,8 +64,8 @@ const Auth = ({navigation}) => {
 
             setuserCourses(userCoursesData);
           });
-      } 
-    })
+      }
+    });
 
     const Subscribe = auth().onAuthStateChanged(user => {
       if (user) {
@@ -119,6 +119,18 @@ const Auth = ({navigation}) => {
       position: 'bottom',
       titleStyle: {
         fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+    });
+  }
+  function LogOut() {
+    showMessage({
+      message: '⚪️ Successfully LOGOUT!',
+      color: 'white',
+      position: 'bottom',
+      type: 'success',
+      titleStyle: {
+        fontSize: responsiveFontSize(2),
         lineHeight: responsiveHeight(3),
       },
     });
@@ -216,6 +228,24 @@ const Auth = ({navigation}) => {
     return user !== null;
   };
 
+  const LogingOut = async () => {
+    if (isConnected == false) {
+      Internet();
+    } else {
+      try {
+       
+        LogOut()
+        setTimeout(async () => {
+          await auth().signOut();
+          navigation.replace('First');
+        }, 1000);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+  };
+ 
+
   return (
     <>
       {isUserSignedIn() ? (
@@ -275,7 +305,41 @@ const Auth = ({navigation}) => {
                 </TouchableOpacity>
               </View>
             )}
-            {teacherData <= 0 ? null : console.log('hello')}
+            {teacherData.length > 0 ? (
+              <TouchableOpacity style={styles.DataView}>
+                <View style={styles.DataView}>
+                <Text allowFontScaling={false} style={styles.CourseName}>
+                {teacherData[0].Gmail}
+                </Text>
+                <Text allowFontScaling={false} style={styles.Name}>
+                Name : {teacherData[0].Name}
+                </Text>
+                  <Text allowFontScaling={false} style={styles.Name}>
+                    Father Name : {teacherData[0].Fathername}
+                  </Text>
+                  <Text allowFontScaling={false} style={styles.Name}>
+                    CNIC : {teacherData[0].Cnic}
+                  </Text>
+                  <Text allowFontScaling={false} style={styles.Name}>
+                    Phone No. : {teacherData[0].Phone}
+                  </Text>
+                  <Text allowFontScaling={false} style={styles.Name}>
+                    Subject : {teacherData[0].Subject}
+                  </Text>
+                  <Text allowFontScaling={false} style={styles.Name}>
+                   Education : {teacherData[0].Education}
+                  </Text>
+                  <Text allowFontScaling={false} style={styles.Name}>
+                  Islamic Education : {teacherData[0].IslamicEducation}
+                  </Text>
+                  <Text allowFontScaling={false} style={styles.Name}>
+                  Experience : {teacherData[0].Experience}
+                  </Text>
+                  <TouchableOpacity onPress={LogingOut} style={{width:responsiveWidth(50)}}><Text style={styles.UpdButton}>LogOut</Text></TouchableOpacity>
+                </View>
+              </TouchableOpacity>
+            ) : null}
+
             {userCourses.length > 0 ? (
               <Animatable.View
                 animation={'fadeInUp'}
@@ -338,7 +402,7 @@ const Auth = ({navigation}) => {
               </Animatable.View>
             ) : (
               <>
-                {loadinG === true ? null : (
+                {teacherData.length > 0 ? null : loadinG === true ? null : (
                   <Text allowFontScaling={false} style={styles.NoData}>
                     No Data!!
                   </Text>
