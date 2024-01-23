@@ -114,7 +114,7 @@ const StudentsData = ({navigation}) => {
       });
     const Left = firestore()
       .collection('users')
-      .where('Status', '==', 'Left')
+      .where('Status', '!=', '')
       .onSnapshot(querySnapshot => {
         const Students = [];
         querySnapshot.forEach(documentSnapshot => {

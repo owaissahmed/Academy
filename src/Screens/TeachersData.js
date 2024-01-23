@@ -24,6 +24,7 @@ const TeachersData = ({route, navigation}) => {
   useEffect(() => {
     const unsubscribe = firestore()
       .collection('teachers')
+      .where('Response', '!=', '')
       .onSnapshot(querySnapshot => {
         const teacherData = [];
         querySnapshot.forEach(documentSnapshot => {
