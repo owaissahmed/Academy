@@ -73,6 +73,9 @@ import {
                         Teacher : {item.Teacher}
                       </Text>
                       <Text allowFontScaling={false} style={styles.Name}>
+                      Response : {item.Response}
+                    </Text>
+                      <Text allowFontScaling={false} style={styles.Name}>
                         Fees : {item.Fees}
                       </Text>
                       <Text allowFontScaling={false} style={styles.Name}>

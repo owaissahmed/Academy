@@ -76,7 +76,7 @@ const HomeTuition = ({navigation}) => {
       const querySnapshot = await firestore()
         .collection('teachers')
         .where('Subject', '==', subject)
-        .where('Response', '==' ,'')
+        .where('Response', '!=' ,'')
         .get();
 
       const onlineData = querySnapshot.docs.map(doc => ({
@@ -589,9 +589,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logo: {
-    height: responsiveHeight(15),
-    width: responsiveWidth(40),
-    marginTop: responsiveHeight(2),
+    height: responsiveHeight(13),
+    width: responsiveWidth(33),
+    marginTop: responsiveHeight(1),
   },
   phoneinput: {
     justifyContent: 'center',
@@ -623,18 +623,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 12,
-    marginTop: responsiveHeight(3),
-  },
-  login: {
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
-    backgroundColor: '#FBFCF8',
-    padding: 8,
-    borderColor: '#2e4c60',
-    color: '#2e4c60',
-    borderWidth: 1.5,
-    marginTop: responsiveHeight(2),
-    fontSize: responsiveFontSize(2),
   },
   pickergroup: {
     alignItems: 'center',
@@ -652,6 +640,17 @@ const styles = StyleSheet.create({
     color: '#2e4c60',
     height: responsiveHeight(5.5),
     width: responsiveWidth(84),
+  },
+  login: {
+    height: responsiveHeight(6),
+    width: responsiveWidth(80),
+    backgroundColor: '#FBFCF8',
+    padding: 8,
+    borderColor: '#2e4c60',
+    color: '#2e4c60',
+    borderWidth: 1.5,
+    marginTop: responsiveHeight(2),
+    fontSize: responsiveFontSize(2),
   },
   password: {
     height: responsiveHeight(6),

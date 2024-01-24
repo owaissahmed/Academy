@@ -468,13 +468,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  btnNavbar: {
-    width: responsiveWidth(40),
-    backgroundColor: 'blue',
-  },
+ 
   account: {
     height: responsiveHeight(4.5),
-    width: responsiveWidth(9),
+    width: responsiveWidth(9)
   },
   logo: {
     height: responsiveHeight(4.5),
@@ -489,7 +486,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: responsiveHeight(16),
-    marginTop: responsiveHeight(-2),
+    // backgroundColor: 'blue',
+    marginTop: responsiveHeight(-4),
   },
   squarediv: {
     display: 'flex',
@@ -514,7 +512,7 @@ const styles = StyleSheet.create({
     color: '#2e4c60',
     fontSize: responsiveFontSize(4.5),
     textAlign: 'center',
-    marginBottom: responsiveHeight(2),
+    marginBottom: responsiveHeight(1),
   },
   squaretext: {
     fontSize: responsiveScreenFontSize(2),
@@ -550,7 +548,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   square: {
-    marginTop: responsiveHeight(1.5),
+    marginTop: responsiveHeight(1),
     borderColor: '#2e4c60',
     borderWidth: 1.5,
     height: responsiveHeight(16),

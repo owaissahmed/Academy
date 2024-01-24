@@ -70,6 +70,12 @@ const OnlineData = ({navigation}) => {
                         Teacher : {item.Teacher}
                       </Text>
                       <Text allowFontScaling={false} style={styles.Name}>
+                        Subject : {item.Subject}
+                      </Text>
+                      <Text allowFontScaling={false} style={styles.Name}>
+                        Response : {item.Response}
+                      </Text>
+                      <Text allowFontScaling={false} style={styles.Name}>
                         Fees : {item.Fees}
                       </Text>
                       <Text allowFontScaling={false} style={styles.Name}>
@@ -109,14 +115,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#2e4c60',
     height: 'auto',
     width: responsiveWidth(90),
-    marginVertical:responsiveHeight(1),
+    marginVertical: responsiveHeight(1),
     alignItems: 'center',
-    paddingVertical: responsiveHeight(1),
+    paddingVertical: responsiveHeight(0.5),
     borderRadius: 12,
   },
 
   Name: {
-    fontSize: responsiveScreenFontSize(2),
+    fontSize: responsiveScreenFontSize(1.75),
     color: '#fff',
     paddingVertical: responsiveHeight(1),
     textAlign: 'center',

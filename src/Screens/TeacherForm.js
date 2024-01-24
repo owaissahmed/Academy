@@ -319,7 +319,7 @@ const TeacherForm = ({navigation}) => {
 
             const recipient = 'izhar2526@gmail.com';
             const subject = name;
-            const body = `Teacher \n ${Experience} \n ${countryName} \n ${formattedValue}`;
+            const body = `Teacher \n ${Subject} \n ${countryName} \n ${formattedValue}`;
 
             const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
               subject,
@@ -526,7 +526,7 @@ const TeacherForm = ({navigation}) => {
             <View>
               <TouchableOpacity onPress={Check} style={styles.button}>
                 <Text allowFontScaling={false} style={styles.buttontext}>
-                  NEXT
+                  SAVE
                 </Text>
               </TouchableOpacity>
             </View>

@@ -80,6 +80,11 @@ const OneTeacherData = ({navigation}) => {
                       <Text allowFontScaling={false} style={styles.Name}>
                         Phone : {item.Phone}
                       </Text>
+                      {item.Subject ? (
+                        <Text allowFontScaling={false} style={styles.Name}>
+                          Subject : {item.Subject}
+                        </Text>
+                      ) : null}
                       <Text allowFontScaling={false} style={styles.Name}>
                         Fees : {item.Fees}
                       </Text>

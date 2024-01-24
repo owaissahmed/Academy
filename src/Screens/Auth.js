@@ -308,7 +308,7 @@ const Auth = ({navigation}) => {
             {teacherData.length > 0 ? (
               <TouchableOpacity style={styles.DataView}>
                 <View style={styles.DataView}>
-                <Text allowFontScaling={false} style={styles.CourseName}>
+                <Text allowFontScaling={false} style={styles.Gmail}>
                 {teacherData[0].Gmail}
                 </Text>
                 <Text allowFontScaling={false} style={styles.Name}>
@@ -623,6 +623,19 @@ const styles = StyleSheet.create({
     fontFamily: 'good',
     borderRadius: 12,
     letterSpacing: 2,
+  },
+  Gmail: {
+    paddingHorizontal: responsiveWidth(8),
+    fontSize: responsiveScreenFontSize(2.25),
+    color: '#2e4c60',
+    backgroundColor: 'white',
+    paddingVertical: responsiveHeight(1),
+    marginBottom: responsiveHeight(1),
+    textAlign: 'center',
+    fontFamily: 'good',
+    borderRadius: 12,
+    letterSpacing: 2,
+    width:responsiveWidth(90)
   },
   UpdButton: {
     paddingHorizontal: responsiveWidth(8),

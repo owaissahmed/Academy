@@ -24,7 +24,7 @@ import {
     useEffect(() => {
       const unsubscribe = firestore()
         .collection('users')
-        .where('Status', '==', 'Left')
+        .where('Status', '!=', '')
         .onSnapshot(querySnapshot => {
           const onlineData = [];
           querySnapshot.forEach(documentSnapshot => {
@@ -68,6 +68,11 @@ import {
                         <Text allowFontScaling={false} style={styles.Name}>
                           Course : {item.CourseName}
                         </Text>
+                        {item.Subject ? (
+                          <Text allowFontScaling={false} style={styles.Name}>
+                            Subject : {item.Subject}
+                          </Text>
+                        ) : null}
                         <Text allowFontScaling={false} style={styles.Name}>
                         Teacher : {item.Teacher}
                       </Text>
@@ -111,14 +116,14 @@ import {
       backgroundColor: '#2e4c60',
       height: 'auto',
       width: responsiveWidth(90),
-  marginVertical:responsiveHeight(1),
+      marginVertical: responsiveHeight(1),
       alignItems: 'center',
-      paddingVertical: responsiveHeight(1),
+      paddingVertical: responsiveHeight(0.5),
       borderRadius: 12,
     },
   
     Name: {
-      fontSize: responsiveScreenFontSize(2),
+      fontSize: responsiveScreenFontSize(1.75),
       color: '#fff',
       paddingVertical: responsiveHeight(1),
       textAlign: 'center',

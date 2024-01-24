@@ -67,6 +67,9 @@ import {
                           Phone : {item.Phone}
                         </Text>
                         <Text allowFontScaling={false} style={styles.Name}>
+                        Response : {item.Response}
+                      </Text>
+                        <Text allowFontScaling={false} style={styles.Name}>
                         Teacher : {item.Teacher}
                       </Text>
                       <Text allowFontScaling={false} style={styles.Name}>
