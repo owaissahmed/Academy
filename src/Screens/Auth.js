@@ -370,6 +370,11 @@ const Auth = ({navigation}) => {
                                 style={styles.Name}>
                                 Teacher: {item.Teacher}
                               </Text>
+                              {item.Subject ? (
+                                <Text allowFontScaling={false} style={styles.Name}>
+                                  Subject : {item.Subject}
+                                </Text>
+                              ) : null}
                               <Text
                                 allowFontScaling={false}
                                 style={styles.Name}>
