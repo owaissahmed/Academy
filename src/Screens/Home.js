@@ -128,7 +128,7 @@ export default function Home({route}) {
       });
   };
   const About = () => {
-    navigation.navigate('About');
+    navigation.navigate('CompletedProject');
   };
 
   const LogingOut = async () => {

@@ -21,15 +21,8 @@ import {useNavigation} from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-
-const Accordion = ({
-  id,
-  title,
-  Detail,
-  openAccordion,
-  onToggle,
-  Link,
-}) => {
+import * as Animatable from 'react-native-animatable';
+const Accordion = ({id, title, Detail, openAccordion, onToggle, Link}) => {
   const [isConnected, setIsConnected] = useState(false);
   const navigation = useNavigation();
   const isOpen = openAccordion === id;
@@ -56,12 +49,6 @@ const Accordion = ({
 
   function Internet() {
     Alert.alert('⚫ Warning', 'No Internet Connection!');
-  }
-
-  function Demo() {
-    if (isConnected == true) {
-      Linking.openURL(Link);
-    } else Internet();
   }
 
   return (
@@ -93,17 +80,78 @@ const CompletedProject = ({navigation}) => {
     setOpenAccordion(openAccordion === accordionId ? null : accordionId);
   };
 
+  const openInstagram = () => {
+    const username = 'allama_azhar_ali_madani';
+    const url = `https://www.instagram.com/${username}`;
+
+    Linking.openURL(url)
+      .then(data => {
+        console.log('Instagram Opened: ', data);
+      })
+      .catch(() => {
+        console.log('Error opening Instagram');
+      });
+  };
+
+  const openFacebook = () => {
+    const username = 'allamaazharalimadani';
+    const url = `https://www.facebook.com/${username}`;
+
+    Linking.openURL(url)
+      .then(data => {
+        console.log('Facebook Opened: ', data);
+      })
+      .catch(() => {
+        console.log('Error opening Facebook');
+      });
+  };
+
+  const openWhatsApp = () => {
+    const phoneNumber = '1234567890';
+    const url = `whatsapp://send?phone=${phoneNumber}`;
+
+    Linking.openURL(url)
+      .then(data => {
+        console.log('WhatsApp Opened: ', data);
+      })
+      .catch(() => {
+        console.log('Error opening WhatsApp');
+      });
+  };
+  const openTelegram = () => {
+    const username = 'Azharulislamacademy';
+    const url = `https://t.me/${username}`;
+
+    Linking.openURL(url)
+      .then(data => {
+        console.log('Telegram Opened: ', data);
+      })
+      .catch(() => {
+        console.log('Error opening Telegram');
+      });
+  };
+
   return (
     <ImageBackground
       resizeMode="cover"
       style={styles.background}
       source={require('../Images/background.jpg')}>
-      <View>
-        <Text allowFontScaling={false} style={styles.HeadingText}>
-          پایہ تکمیل تک پہنچنے والے منصوبے
-        </Text>
+      <View style={styles.submain}>
+        <Animatable.View
+          duration={2000}
+          delay={100}
+          animation="fadeInUp"
+          style={styles.rectangle}>
+          <Text allowFontScaling={false} style={styles.rectangletext}>
+            ازھارالاسلام اکیڈمی
+          </Text>
+          <Text allowFontScaling={false} style={styles.rectangletext_}>
+            آن لائن دینی تعلیم کا مستند ادارہ
+          </Text>
+        </Animatable.View>
       </View>
       <ScrollView>
+      <Animatable.View animation={'fadeInUp'} delay={100} duration={2000}>
         <Accordion
           id={1}
           title="درسِ  نظامی  ہیلپ  ڈیسک"
@@ -124,7 +172,7 @@ const CompletedProject = ({navigation}) => {
           id={3}
           title="آن  لائن  درسِ  نظامی"
           Detail="ملک و بیرون ملک کے شائقین علم طلبہ کے لیے باقاعدہ درس نظامی کا اغاز ہوچکا ہے  جس میں کنز المدارس بورڈ (دعوت اسلامی) کے نصاب کے مطابق 8 سالہ عالم کورس کروایا جائے
-           گا، ممکنہ حد تک کنزالمدارس سے پیپر بھی دلوائے جائیں گے اور اکیڈمی اپنی سند کااجراء بھی کرے گی ان شاء الله الکریم" 
+           گا، ممکنہ حد تک کنزالمدارس سے پیپر بھی دلوائے جائیں گے اور اکیڈمی اپنی سند کااجراء بھی کرے گی ان شاء الله الکریم"
           openAccordion={openAccordion}
           onToggle={handleToggle}
         />
@@ -166,7 +214,100 @@ const CompletedProject = ({navigation}) => {
           openAccordion={openAccordion}
           onToggle={handleToggle}
         />
+        <Accordion
+          id={9}
+          title="ازھار الاسلام اکیڈمی  ویب  سائٹ"
+          Detail="میڈیا کے اس تیز ترین دور میں پیغام رسائی کا ایک اہم ذریعہ ویب سائٹ بھی ہوتا ہے جہاں کثیر الجہات پلیٹ فارمز ایک پیج پر ڈسپلے ہوجاتے ہیں اور طالب اپنی خواہش و مرضی
+        کے مطابق انتخاب کر سکتا ہے لہذا اسی تناظر میں اکیڈمی نے ویب سائٹ پر کام شروع کر دیا ہے جس میں اکیڈمی میں ہونے والے تمام امور (درس نظامی بیلپ ڈیسک ، آن  لائن شارٹ کورسز ، آن لائن درس نظامی، آن لائی ٹیوشن سینٹر ، ریکارڈڈ ویڈیو کورسز ، آن لائن تربیتی ورکشاپس، تحریری نوٹس، کتب) احسن انداز میں مرتب ہوں گے اور طالبین کے سہولت اور آسانی کا ذریعہ بنیں گے"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={10}
+          title=" ازہار الاسلام اکیڈمی للبنات (آف لائن  )"
+          Detail="خواتین اور بچیوں کو عموما ہمارے معاشرے میں میڈیا و سوشل میڈیا کی بے حیائیوں سے پریشان والدین موبائل اور انٹر نیٹ کے استعمال کو ممنوع قرار دے دیتے ہیں جس
+        کے نتیجے میں وہ تعلیم سے محروم رہ جاتی ہے حالانکہ نسل نو کی تعمیر کی پہلی ذمہ داری انہی خواتین پر ہوتی ہے اسی لیے اکیڈمی نے ازہار الاسلام اکیڈمی للبنات (آف لائن) کا ارادہ
+        کیا ہے اللہ نے چاہا تو عنقریب پہلی برانچ کا افتتاح کر دیا جائے گا، جہاں ناظرہ ، حفظ ، درس نظامی کے ساتھ ساتھ اکیڈمی میں چلنے والے والے آن لائن شارٹ
+        کورسز آف لائن کروائے جائیں گے ، تربیتی ورک شاپس کا انعقاد ہو گا جس سے معاشرے میں خواتین کو وسیع النظری ، اخلاقیات اور عائلی ذمہ داریوں کی تربیت کی جائے گی"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={11}
+          title="ازہار  الاسلام  ٹیوشن  نیٹورک  ( آف لائن  )"
+          Detail="معاشرے میں دن بدن بڑھتے ہوئے کرائم والدین کو اپنے بچوں کے تحفظ کے بارے میں بہت پریشان کرتے ہیں بہت بڑا طبقہ اپنے بچوں کو اپنے گھر میں ہی دینی تعلیم سے آراستہ کرنا چاہتا ہے، لیکن غیر معیاری تعلیم اور غیر ذمہ دار افراد بچوں کو تعلیم کی بجائے ضیائع وقت کا سبب بنتے ہیں اکیڈمی نے ملک بھر سے اساتذہ کا ڈیٹا کلیکٹ کرنا شروع کر دیا ہے عنقریب سینئر ، ماہر با اعتماد نیچر آپ کے بچوں کو ڈور اسٹیپ پر تعلیم دیں گے جس سے تعلیمی معیار اور ذمہ استاد والدین اور بچوں کے لیے حصول دین کا ذریعہ بنیں گے"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        <Accordion
+          id={12}
+          title="ٹیچر   ٹریننگ   پروگرام"
+          Detail="اساتذہ معمار قوم ہوتے ہیں قوم کا مستقبل ان کے رحم و کرم پر ہوتا ہے اگر غیر تربیت یافتہ مدرس مسند تدریس پر آجائے تو وہ نفع کی بجائے نقصان زیادہ کر نا شروع کر دیتا ہے خصوصا جب دینی تعلیم بالخصوص درس نظامی کا معلم ہو ، نئے معلمین کے تربیت کے لیے اکیڈمی ٹیچر ٹریننگ پروگرام کا آغاز کر رہی ہے جس میں ان شاء اللہ اساتذہ کو تربیت کرنے کے طریقے، طلبہ کی تعلیم میں بہتری اور خصوصا اسباق کا منبج اور پڑھانے کے دلچسپ طریقے سکھائے جائیں گے یہ پروگرام آن لائن بھی منعقد ہوگا ، از ہار الاسلام اکیڈمی میں آف لائن بھی ہوگا اور جو مدارس و جامعات اپنے اداروں میں اس کا انعقاد کریں گے وہاں جا کر بھی پروگرام منعقد کر دیا جائے گا"
+          openAccordion={openAccordion}
+          onToggle={handleToggle}
+        />
+        </Animatable.View>
       </ScrollView>
+      <Animatable.View
+        duration={2000}
+        delay={100}
+        animation="fadeInUp"
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          width: responsiveWidth(55),
+          justifyContent: 'space-evenly',
+          alignSelf: 'center',
+          marginTop: responsiveHeight(2),
+        }}>
+        <TouchableOpacity onPress={openFacebook}>
+          <Image
+            style={{
+              width: responsiveWidth(7.25),
+              height: responsiveHeight(3.5),
+            }}
+            source={require('../Images/fb.png')}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={openInstagram}>
+          <Image
+            style={{
+              width: responsiveWidth(7.25),
+              height: responsiveHeight(3.5),
+            }}
+            source={require('../Images/instagram.png')}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={openWhatsApp}>
+          <Image
+            style={{
+              width: responsiveWidth(7.25),
+              height: responsiveHeight(3.5),
+            }}
+            source={require('../Images/whatsapp.png')}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={openTelegram}>
+          <Image
+            style={{
+              width: responsiveWidth(7.25),
+              height: responsiveHeight(3.5),
+            }}
+            source={require('../Images/telegram.png')}
+          />
+        </TouchableOpacity>
+      </Animatable.View>
+      <Animatable.View
+        duration={2000}
+        delay={100}
+        animation="fadeInUp"
+        style={{
+          marginTop: responsiveHeight(1),
+          marginBottom: responsiveHeight(1),
+          alignSelf: 'center',
+        }}>
+        <Text style={{color: '#2e4c60', fontWeight: 'bold'}}>CONTACT US</Text>
+      </Animatable.View>
     </ImageBackground>
   );
 };
@@ -175,6 +316,25 @@ const styles = StyleSheet.create({
   background: {
     width: devicewidth,
     height: deviceheight,
+  },
+  rectangletext: {
+    fontFamily: 'mushaf',
+    textTransform: 'uppercase',
+    color: '#2e4c60',
+    fontSize: responsiveFontSize(8.5),
+    textAlign: 'center',
+    // backgroundColor: 'lightblue',
+    marginTop: responsiveHeight(-1.5),
+  },
+  rectangletext_: {
+    fontFamily: 'mushaf',
+    textTransform: 'uppercase',
+    color: '#2e4c60',
+    fontSize: responsiveFontSize(4.5),
+    textAlign: 'center',
+    marginTop: responsiveHeight(-3),
+    marginBottom: responsiveHeight(1),
+    // backgroundColor: 'lightgreen',
   },
   HeadingText: {
     fontFamily: 'mushaf',
@@ -224,7 +384,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 0.25,
     marginVertical: responsiveHeight(0.25),
-    textAlign:'center',
+    textAlign: 'center',
   },
   ButtonView: {
     display: 'flex',
