@@ -20,6 +20,7 @@ import LeftStudents from './Screens/LeftStudents';
 import OnlineData from './Screens/OnlineData';
 import HomeData from './Screens/HomeData';
 import CoursesData from './Screens/CoursesData';
+import HelpDesk from './Screens/HelpDesk';
 import TeachersData from './Screens/TeachersData';
 import DarseNizamiData from './Screens/DarseNizamiData';
 import OneTeacherData from './Screens/OneTeacherData';
@@ -172,6 +173,11 @@ export default function AppNavigator() {
           <Stack.Screen
             name="UserSignup"
             component={UserSignup}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="HelpDesk"
+            component={HelpDesk}
             options={{headerShown: false}}
           />
           

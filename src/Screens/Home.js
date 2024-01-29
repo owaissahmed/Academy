@@ -77,11 +77,7 @@ export default function Home({route}) {
     Alert.alert('⚫ Warning', 'No Internet Connection!');
   }
 
-  function Youtube() {
-    if (isConnected == true) {
-      Linking.openURL('https://www.youtube.com/@azhar-ul-islam');
-    } else Internet();
-  }
+ 
 
   function Courses() {
     if (isConnected == true) {
@@ -118,6 +114,12 @@ export default function Home({route}) {
     } else
       navigation.navigate('HomeTuition', {TextHomeTuition: 'Home Tuition'});
   };
+  const HelpDesk = () => {
+    if (isConnected == false) {
+      Internet();
+    } else
+      navigation.navigate('HelpDesk');
+  };
 
   const DarseNizamiForm = () => {
     if (isConnected == false) {
@@ -149,20 +151,6 @@ export default function Home({route}) {
     }
   };
 
-  // const CheckPassword = () => {
-  //   if (name === '1') {
-  //     setTeacherModalVisible(!isTeacherModalVisible);
-  //     setTimeout(() => {
-  //       navigation.navigate('TeacherForm');
-  //     }, 1000);
-  //   } else {
-  //     Alert.alert('⚫ Warning', 'Wrong Password!');
-  //   }
-  // };
-
-  // const closeModal = () => {
-  //   setTeacherModalVisible(!isTeacherModalVisible);
-  // };
   const closeAdminModal = () => {
     setUserModalVisible(!isUserModalVisible);
   };
@@ -275,7 +263,7 @@ export default function Home({route}) {
           delay={100}
           animation="fadeInUp"
           style={styles.squarediv}>
-          <TouchableOpacity onPress={Youtube}>
+          <TouchableOpacity onPress={HelpDesk}>
             <View style={styles.square}>
               <Image
                 style={styles.youtube}
@@ -304,7 +292,7 @@ export default function Home({route}) {
                 source={require('../Images/online.png')}
               />
               <Text allowFontScaling={false} style={styles.squaretext___}>
-                ONLINE TUTION
+                ONLINE TUITION
               </Text>
             </View>
           </TouchableOpacity>
@@ -315,7 +303,7 @@ export default function Home({route}) {
                 source={require('../Images/home.png')}
               />
               <Text allowFontScaling={false} style={styles.squaretext___}>
-                HOME TUTION
+                HOME TUITION
               </Text>
             </View>
           </TouchableOpacity>
