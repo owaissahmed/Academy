@@ -47,6 +47,11 @@ const HelpDesk = ({navigation}) => {
       Linking.openURL('https://www.youtube.com/@azhar-ul-islam');
     } else Internet();
   }
+  function Questions() {
+    if (isConnected == true) {
+     navigation.navigate('Questions')
+    } else Internet();
+  }
 
   return (
     <View>
@@ -105,7 +110,7 @@ const HelpDesk = ({navigation}) => {
           </TouchableOpacity>
         </Animatable.View>
         <Animatable.View animation={'fadeInUp'} delay={1000} duration={2000}>
-          <TouchableOpacity style={styles.rectangle}>
+          <TouchableOpacity onPress={Questions} style={styles.rectangle}>
             <View
               style={{
                 width: responsiveWidth(25),

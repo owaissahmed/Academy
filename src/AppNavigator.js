@@ -25,6 +25,8 @@ import TeachersData from './Screens/TeachersData';
 import DarseNizamiData from './Screens/DarseNizamiData';
 import OneTeacherData from './Screens/OneTeacherData';
 import AddOldCourse from './Screens/AddOldCourse';
+import Questions from './Screens/Questions';
+
 import Auth from './Screens/Auth';
 
 import UserSignup from './Screens/UserSignup';
@@ -178,6 +180,11 @@ export default function AppNavigator() {
           <Stack.Screen
             name="HelpDesk"
             component={HelpDesk}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Questions"
+            component={Questions}
             options={{headerShown: false}}
           />
           
