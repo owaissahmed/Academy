@@ -44,7 +44,7 @@ const HelpDesk = ({navigation}) => {
 
   function Youtube() {
     if (isConnected == true) {
-      Linking.openURL('https://www.youtube.com/@azhar-ul-islam');
+      Linking.openURL('https://youtube.com/playlist?list=PLN0T4WcAQQmXUrslrRFHmCxlBI6JMLVmH&si=d0CWtoB7ZUma_2hS');
     } else Internet();
   }
   function Questions() {
