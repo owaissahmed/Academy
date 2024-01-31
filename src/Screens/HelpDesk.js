@@ -87,12 +87,11 @@ const HelpDesk = ({navigation}) => {
   function Error(app) {
     showMessage({
       message: `Error In Opening ${app}`,
-
       type: 'danger',
       color: 'white',
       position: 'bottom',
       titleStyle: {
-        fontSize: responsiveFontSize(2.25),
+        fontSize: responsiveScreenFontSize(2.25),
         lineHeight: responsiveHeight(3),
       },
     });
@@ -138,7 +137,6 @@ const HelpDesk = ({navigation}) => {
           style={{
             width: responsiveWidth(40),
             height: responsiveHeight(15),
-            // backgroundColor: 'red',
           }}
           source={require('../Images/logo.png')}
         />

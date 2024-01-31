@@ -33,8 +33,15 @@ const Questions = ({navigation}) => {
   const [isTeacherModalVisible, setTeacherModalVisible] = useState(false);
   const [courses, setcourses] = useState([]);
   const [question, setquestion] = useState('');
+  const [visible, setVisible] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+      setVisible(false);
+    }, 1000);
+
     const subscribe = NetInfo.addEventListener(state => {
       setIsConnected(state.isConnected);
     });
@@ -69,7 +76,7 @@ const Questions = ({navigation}) => {
       message: '⚪️ Please Fill All Inputs',
       type: 'danger',
       color: 'white',
-      position: 'bottom',
+      position: 'top',
       titleStyle: {
         fontSize: responsiveFontSize(2.25),
         lineHeight: responsiveHeight(3),
@@ -152,6 +159,22 @@ const Questions = ({navigation}) => {
         resizeMode="cover"
         style={styles.background}
         source={require('../Images/background.jpg')}>
+        <Modal visible={visible} animationType="fade" transparent={true}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            {loading ? (
+              <ActivityIndicator size="larger" color="#2e4c60" />
+            ) : (
+              <Text allowFontScaling={false} style={{color: '#ffffff'}}>
+                Loading...
+              </Text>
+            )}
+          </View>
+        </Modal>
         <>
           <FlashMessage position={'center'} />
         </>
@@ -195,7 +218,6 @@ const Questions = ({navigation}) => {
             </ImageBackground>
           </View>
         </Modal>
-
         {courses.length > 0 ? (
           <Animatable.View animation={'fadeInUp'} delay={1000} duration={2000}>
             <View style={styles.FlatListVIew}>
@@ -221,9 +243,13 @@ const Questions = ({navigation}) => {
           </Animatable.View>
         ) : (
           <>
-            <Text allowFontScaling={false} style={styles.NoData}>
-              No Data!!
-            </Text>
+            {loading == true ? (
+              <Text allowFontScaling={false} style={styles.NoData}></Text>
+            ) : (
+              <Text allowFontScaling={false} style={styles.NoData}>
+                No Data!!
+              </Text>
+            )}
           </>
         )}
         <Animatable.View
