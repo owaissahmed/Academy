@@ -110,16 +110,14 @@ const HelpDesk = ({navigation}) => {
     });
   }
 
-  function Youtube() {
-    if (isConnected == true) {
-      Linking.openURL(
-        'https://youtube.com/playlist?list=PLN0T4WcAQQmXUrslrRFHmCxlBI6JMLVmH&si=d0CWtoB7ZUma_2hS',
-      );
-    } else Internet();
-  }
   function Questions() {
     if (isConnected == true) {
       navigation.navigate('Questions');
+    } else Internet();
+  }
+  function Playlist() {
+    if (isConnected == true) {
+      navigation.navigate('Playlist');
     } else Internet();
   }
 
@@ -142,7 +140,7 @@ const HelpDesk = ({navigation}) => {
         />
       </Animatable.View>
       <Animatable.View animation={'fadeInUp'} delay={1000} duration={2000}>
-        <TouchableOpacity onPress={Youtube} style={styles.rectangle}>
+        <TouchableOpacity onPress={Playlist} style={styles.rectangle}>
           <View
             style={{
               width: responsiveWidth(25),

@@ -26,6 +26,7 @@ import DarseNizamiData from './Screens/DarseNizamiData';
 import OneTeacherData from './Screens/OneTeacherData';
 import AddOldCourse from './Screens/AddOldCourse';
 import Questions from './Screens/Questions';
+import Playlist from './Screens/Playlist';
 
 import Auth from './Screens/Auth';
 
@@ -185,6 +186,11 @@ export default function AppNavigator() {
           <Stack.Screen
             name="Questions"
             component={Questions}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Playlist"
+            component={Playlist}
             options={{headerShown: false}}
           />
           

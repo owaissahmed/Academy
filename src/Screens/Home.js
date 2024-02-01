@@ -77,8 +77,6 @@ export default function Home({route}) {
     Alert.alert('⚫ Warning', 'No Internet Connection!');
   }
 
- 
-
   function Courses() {
     if (isConnected == true) {
       navigation.navigate('Courses');
@@ -117,8 +115,7 @@ export default function Home({route}) {
   const HelpDesk = () => {
     if (isConnected == false) {
       Internet();
-    } else
-      navigation.navigate('HelpDesk');
+    } else navigation.navigate('HelpDesk');
   };
 
   const DarseNizamiForm = () => {
@@ -206,235 +203,246 @@ export default function Home({route}) {
         resizeMode="cover"
         style={styles.background}
         source={require('../Images/background.jpg')}>
-        <Animatable.View
-          duration={2000}
-          delay={100}
-          animation="fadeInDown"
-          style={styles.navbar}>
-          <TouchableOpacity onPress={openModalAdmin}>
-            <Image
-              style={styles.logo}
-              source={require('../Images/round.png')}
-            />
-          </TouchableOpacity>
-          {username != '' ? (
-            <TouchableOpacity onPress={UseropenModal}>
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  width: responsiveWidth(70),
-                }}>
-                <Text style={styles.Welcometext}>
-                  {username != '' ? `Hi, ${username}` : null}
-                </Text>
-                <Image
-                  style={styles.down}
-                  source={require('../Images/down.png')}
-                />
-              </View>
+        <View
+          style={{
+            // backgroundColor: 'red',
+            alignItems: 'center',
+            // alignSelf:'center',
+            // alignContent:'space-evenly',
+            width: devicewidth,
+            height: deviceheight,
+            justifyContent: 'space-evenly',
+          }}>
+          <Animatable.View
+            duration={2000}
+            delay={100}
+            animation="fadeInDown"
+            style={styles.navbar}>
+            <TouchableOpacity onPress={openModalAdmin}>
+              <Image
+                style={styles.logo}
+                source={require('../Images/round.png')}
+              />
             </TouchableOpacity>
-          ) : null}
-          <TouchableOpacity onPress={Login}>
-            <Image
-              style={styles.account}
-              source={require('../Images/account.png')}
-            />
-          </TouchableOpacity>
-        </Animatable.View>
-        <View style={styles.submain}>
+            {username != '' ? (
+              <TouchableOpacity onPress={UseropenModal}>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    width: responsiveWidth(70),
+                  }}>
+                  <Text style={styles.Welcometext}>
+                    {username != '' ? `Hi, ${username}` : null}
+                  </Text>
+                  <Image
+                    style={styles.down}
+                    source={require('../Images/down.png')}
+                  />
+                </View>
+              </TouchableOpacity>
+            ) : null}
+            <TouchableOpacity onPress={Login}>
+              <Image
+                style={styles.account}
+                source={require('../Images/account.png')}
+              />
+            </TouchableOpacity>
+          </Animatable.View>
+          <View style={styles.submain}>
+            <Animatable.View
+              duration={2000}
+              delay={100}
+              animation="fadeInUp"
+              style={styles.rectangle}>
+              <Text allowFontScaling={false} style={styles.rectangletext}>
+                ازھارالاسلام اکیڈمی
+              </Text>
+              <Text allowFontScaling={false} style={styles.rectangletext_}>
+                آن لائن دینی تعلیم کا مستند ادارہ
+              </Text>
+            </Animatable.View>
+          </View>
+
           <Animatable.View
             duration={2000}
             delay={100}
             animation="fadeInUp"
-            style={styles.rectangle}>
-            <Text allowFontScaling={false} style={styles.rectangletext}>
-              ازھارالاسلام اکیڈمی
-            </Text>
-            <Text allowFontScaling={false} style={styles.rectangletext_}>
-              آن لائن دینی تعلیم کا مستند ادارہ
-            </Text>
+            style={styles.squarediv}>
+            <TouchableOpacity onPress={HelpDesk}>
+              <View style={styles.square}>
+                <Image
+                  style={styles.youtube}
+                  source={require('../Images/youtube.png')}
+                />
+                <Text allowFontScaling={false} style={styles.squaretext__}>
+                  DARS-e-NIZAMI HELP DESK
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={Courses}>
+              <View style={styles.square}>
+                <Image
+                  style={styles.books}
+                  source={require('../Images/books.png')}
+                />
+                <Text allowFontScaling={false} style={styles.squaretext}>
+                  SHORT COURSES
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={OnlineTuition}>
+              <View style={styles.square}>
+                <Image
+                  style={styles.online}
+                  source={require('../Images/online.png')}
+                />
+                <Text allowFontScaling={false} style={styles.squaretext___}>
+                  ONLINE TUITION
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={HomeTuition}>
+              <View style={styles.square}>
+                <Image
+                  style={styles.home}
+                  source={require('../Images/home.png')}
+                />
+                <Text allowFontScaling={false} style={styles.squaretext___}>
+                  HOME TUITION
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={DarseNizamiForm}>
+              <View style={styles.square}>
+                <Image
+                  style={styles.quran}
+                  source={require('../Images/quran.png')}
+                />
+                <Text allowFontScaling={false} style={styles.squaretext__}>
+                  DARS-e-NIZAMI COURSE
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={UpcomingCourses}>
+              <View style={styles.square}>
+                <Image
+                  style={styles.coming}
+                  source={require('../Images/coming.png')}
+                />
+                <Text allowFontScaling={false} style={styles.squaretext__}>
+                  UPCOMING COURSES
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openModal}>
+              <View style={styles.square}>
+                <Image
+                  style={styles.teacher}
+                  source={require('../Images/teacher.png')}
+                />
+                <Text allowFontScaling={false} style={styles.squaretext}>
+                  BECOME A TEACHER
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={About}>
+              <View style={styles.square}>
+                <Image
+                  style={styles.info}
+                  source={require('../Images/info.png')}
+                />
+                <Text allowFontScaling={false} style={styles.squaretext}>
+                  ABOUT OUR ACADEMY
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <Modal
+              isVisible={isUserModalVisible}
+              animationIn="zoomIn"
+              animationOut="zoomOut"
+              animationInTiming={1000}
+              animationOutTiming={1000}
+              backdropTransitionInTiming={1000}
+              backdropTransitionOutTiming={1000}>
+              <View style={styles.modal}>
+                <ImageBackground
+                  resizeMode="cover"
+                  style={styles.logoutmodalBackground}
+                  source={require('../Images/background.jpg')}>
+                  <Image
+                    style={styles.modalImage}
+                    source={require('../Images/logo.png')}
+                  />
+                  <Text allowFontScaling={false} style={styles.LogOutText}>
+                    Are You Sure To LogOut ?
+                  </Text>
+                  <TextInput />
+                  <View style={styles.LogOutModalButtonView}>
+                    <TouchableOpacity
+                      style={styles.Btn}
+                      onPress={closeAdminModal}>
+                      <Text allowFontScaling={false} style={styles.BtnText}>
+                        Close
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.Btn} onPress={LogingOut}>
+                      <Text allowFontScaling={false} style={styles.BtnText}>
+                        LOGOUT
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </ImageBackground>
+              </View>
+            </Modal>
+            <Modal
+              isVisible={isAdminModalVisible}
+              animationIn="zoomIn"
+              animationOut="zoomOut"
+              animationInTiming={1000}
+              animationOutTiming={1000}
+              backdropTransitionInTiming={1000}
+              backdropTransitionOutTiming={1000}>
+              <View style={styles.modal}>
+                <ImageBackground
+                  resizeMode="cover"
+                  style={styles.modalBackground}
+                  source={require('../Images/background.jpg')}>
+                  <Image
+                    style={styles.modalImage}
+                    source={require('../Images/logo.png')}
+                  />
+                  <TextInput
+                    allowFontScaling={false}
+                    autoFocus
+                    style={styles.login}
+                    onChangeText={AdminChange}
+                    placeholder="Enter Password"
+                    placeholderTextColor={'grey'}
+                  />
+                  <View style={styles.ModalButtonView}>
+                    <TouchableOpacity
+                      style={styles.Btn}
+                      onPress={closeModalAdmin}>
+                      <Text allowFontScaling={false} style={styles.BtnText}>
+                        Close
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.Btn}
+                      onPress={CheckPasswordAdmin}>
+                      <Text allowFontScaling={false} style={styles.BtnText}>
+                        Next
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </ImageBackground>
+              </View>
+            </Modal>
           </Animatable.View>
         </View>
-
-        <Animatable.View
-          duration={2000}
-          delay={100}
-          animation="fadeInUp"
-          style={styles.squarediv}>
-          <TouchableOpacity onPress={HelpDesk}>
-            <View style={styles.square}>
-              <Image
-                style={styles.youtube}
-                source={require('../Images/youtube.png')}
-              />
-              <Text allowFontScaling={false} style={styles.squaretext__}>
-                DARS-e-NIZAMI HELP DESK
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={Courses}>
-            <View style={styles.square}>
-              <Image
-                style={styles.books}
-                source={require('../Images/books.png')}
-              />
-              <Text allowFontScaling={false} style={styles.squaretext}>
-                SHORT COURSES
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={OnlineTuition}>
-            <View style={styles.square}>
-              <Image
-                style={styles.online}
-                source={require('../Images/online.png')}
-              />
-              <Text allowFontScaling={false} style={styles.squaretext___}>
-                ONLINE TUITION
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={HomeTuition}>
-            <View style={styles.square}>
-              <Image
-                style={styles.home}
-                source={require('../Images/home.png')}
-              />
-              <Text allowFontScaling={false} style={styles.squaretext___}>
-                HOME TUITION
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={DarseNizamiForm}>
-            <View style={styles.square}>
-              <Image
-                style={styles.quran}
-                source={require('../Images/quran.png')}
-              />
-              <Text allowFontScaling={false} style={styles.squaretext__}>
-                DARS-e-NIZAMI COURSE
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={UpcomingCourses}>
-            <View style={styles.square}>
-              <Image
-                style={styles.coming}
-                source={require('../Images/coming.png')}
-              />
-              <Text allowFontScaling={false} style={styles.squaretext__}>
-                UPCOMING COURSES
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={openModal}>
-            <View style={styles.square}>
-              <Image
-                style={styles.teacher}
-                source={require('../Images/teacher.png')}
-              />
-              <Text allowFontScaling={false} style={styles.squaretext}>
-                BECOME A TEACHER
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={About}>
-            <View style={styles.square}>
-              <Image
-                style={styles.info}
-                source={require('../Images/info.png')}
-              />
-              <Text allowFontScaling={false} style={styles.squaretext}>
-                ABOUT OUR ACADEMY
-              </Text>
-            </View>
-          </TouchableOpacity>
-         
-          <Modal
-            isVisible={isUserModalVisible}
-            animationIn="zoomIn"
-            animationOut="zoomOut"
-            animationInTiming={1000}
-            animationOutTiming={1000}
-            backdropTransitionInTiming={1000}
-            backdropTransitionOutTiming={1000}>
-            <View style={styles.modal}>
-              <ImageBackground
-                resizeMode="cover"
-                style={styles.logoutmodalBackground}
-                source={require('../Images/background.jpg')}>
-                <Image
-                  style={styles.modalImage}
-                  source={require('../Images/logo.png')}
-                />
-                <Text allowFontScaling={false} style={styles.LogOutText}>
-                  Are You Sure To LogOut ?
-                </Text>
-                <TextInput />
-                <View style={styles.LogOutModalButtonView}>
-                  <TouchableOpacity
-                    style={styles.Btn}
-                    onPress={closeAdminModal}>
-                    <Text allowFontScaling={false} style={styles.BtnText}>
-                      Close
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.Btn} onPress={LogingOut}>
-                    <Text allowFontScaling={false} style={styles.BtnText}>
-                      LOGOUT
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </ImageBackground>
-            </View>
-          </Modal>
-          <Modal
-            isVisible={isAdminModalVisible}
-            animationIn="zoomIn"
-            animationOut="zoomOut"
-            animationInTiming={1000}
-            animationOutTiming={1000}
-            backdropTransitionInTiming={1000}
-            backdropTransitionOutTiming={1000}>
-            <View style={styles.modal}>
-              <ImageBackground
-                resizeMode="cover"
-                style={styles.modalBackground}
-                source={require('../Images/background.jpg')}>
-                <Image
-                  style={styles.modalImage}
-                  source={require('../Images/logo.png')}
-                />
-                <TextInput
-                  allowFontScaling={false}
-                  autoFocus
-                  style={styles.login}
-                  onChangeText={AdminChange}
-                  placeholder="Enter Password"
-                  placeholderTextColor={'grey'}
-                />
-                <View style={styles.ModalButtonView}>
-                  <TouchableOpacity
-                    style={styles.Btn}
-                    onPress={closeModalAdmin}>
-                    <Text allowFontScaling={false} style={styles.BtnText}>
-                      Close
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.Btn}
-                    onPress={CheckPasswordAdmin}>
-                    <Text allowFontScaling={false} style={styles.BtnText}>
-                      Next
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </ImageBackground>
-            </View>
-          </Modal>
-        </Animatable.View>
       </ImageBackground>
     </View>
   );
@@ -446,6 +454,7 @@ const styles = StyleSheet.create({
     height: deviceheight,
     alignItems: 'center',
     justifyContent: 'space-evenly',
+    // backgroundColor:'red'
   },
 
   navbar: {
@@ -457,7 +466,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: responsiveHeight(-1),
   },
-  
+
   account: {
     height: responsiveHeight(4.5),
     width: responsiveWidth(9),

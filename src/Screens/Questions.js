@@ -72,54 +72,16 @@ const Questions = ({navigation}) => {
   };
 
   function EmptyInput() {
-    showMessage({
-      message: '⚪️ Please Fill All Inputs',
-      type: 'danger',
-      color: 'white',
-      position: 'top',
-      titleStyle: {
-        fontSize: responsiveFontSize(2.25),
-        lineHeight: responsiveHeight(3),
-      },
-    });
+    Alert.alert('⚫ Warning', 'Please Fill All Inputs!');
   }
   function Internet() {
-    showMessage({
-      message: '⚪️ No Internet Connection',
-      type: 'warning',
-      color: 'white',
-      position: 'bottom',
-      titleStyle: {
-        fontSize: responsiveFontSize(2.25),
-        lineHeight: responsiveHeight(3),
-      },
-    });
+    Alert.alert('⚫ Warning', 'No Internet Connection!');
   }
   function Submit() {
-    showMessage({
-      message: '⚪️ Your Question Has Been Submit',
-      type: 'success',
-      color: 'white',
-      position: 'bottom',
-      titleStyle: {
-        fontSize: responsiveFontSize(2.25),
-        lineHeight: responsiveHeight(3),
-      },
-    });
+    Alert.alert('⚫ Congrats', 'Your Question Has Been Submit');
   }
-
   function LogIn() {
-    showMessage({
-      message: '⚪️ You Need to Logged In First',
-      type: 'danger',
-      color: 'white',
-      position: 'bottom',
-      titleStyle: {
-        fontSize: responsiveFontSize(2.25),
-        lineHeight: responsiveHeight(3),
-      },
-      duration: 2000,
-    });
+    Alert.alert('⚫ Warning', 'You Need To Login First!');
   }
   const questionChange = newquestion => {
     setquestion(newquestion);
@@ -137,6 +99,11 @@ const Questions = ({navigation}) => {
 
     if (question.trim() === '') {
       EmptyInput();
+      return;
+    }
+
+    if (!isConnected) {
+      Internet();
       return;
     }
 
