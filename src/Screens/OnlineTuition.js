@@ -50,8 +50,7 @@ const OnlineTuition = ({navigation}) => {
   const [subject, setsubject] = useState('');
   const [selectedValue, setSelectedValue] = useState('');
   const [TeacherselectedValue, setTeacherSelectedValue] = useState('');
-  const [GenderselectedValue, setGenderSelectedValue] =
-    useState('Select Gender');
+  const [GenderselectedValue, setGenderSelectedValue] = useState('Select Gender');
   const [islamiceducation, setislamiceducation] = useState('');
   const [education, setEducation] = useState('');
   const [age, setage] = useState('');
@@ -86,6 +85,7 @@ const OnlineTuition = ({navigation}) => {
   const AgeChange = newage => {
     setage(newage);
   };
+  
   const fetchData = async () => {
     try {
       const querySnapshot = await firestore()
@@ -309,8 +309,8 @@ const OnlineTuition = ({navigation}) => {
     if (
       name.trim() === '' ||
       father.trim() === '' ||
-      age === '' ||
       value === '' ||
+      age === '' ||
       islamiceducation.trim() === '' ||
       education.trim() === ''
     ) {
@@ -350,9 +350,9 @@ const OnlineTuition = ({navigation}) => {
         Gmail: currentUser.email,
         Name: name,
         Fathername: father,
-        Age: age,
-        Gender: GenderselectedValue,
         CourseName: buttonText,
+        Gender: GenderselectedValue,
+        Age: age,
         Education: education,
         IslamicEducation: islamiceducation,
         Phone: formattedValue,
@@ -444,30 +444,29 @@ const OnlineTuition = ({navigation}) => {
                 dropdownIconColor={'#2e4c60'}
                 onValueChange={handleValueChange}>
                 <Picker.Item label="Select Gender" value="Select Gender" />
-                <Picker.Item label="For Male" value="For Male" />
-                <Picker.Item label="For Female" value="For Female" />
-                <Picker.Item label="For Both" value="For Both" />
+                <Picker.Item label="Male" value="Male" />
+                <Picker.Item label="Female" value="Female" />
               </Picker>
             </View>
             <Text allowFontScaling={false} style={styles.default}>
               {buttonText}
             </Text>
+            <TextInput
+            onChangeText={EducationChange}
+            allowFontScaling={false}
+            style={styles.password}
+            placeholder="Enter Your Education"
+            placeholderTextColor={'grey'}
+            />
+            <TextInput
+            onChangeText={IslamicChange}
+            allowFontScaling={false}
+            style={styles.password}
+            placeholder="Enter Your Islamic Education"
+            placeholderTextColor={'grey'}
+            />
             <View>
-              <TextInput
-                onChangeText={EducationChange}
-                allowFontScaling={false}
-                style={styles.password}
-                placeholder="Enter Your Education"
-                placeholderTextColor={'grey'}
-              />
-              <TextInput
-                onChangeText={IslamicChange}
-                allowFontScaling={false}
-                style={styles.password}
-                placeholder="Enter Your Islamic Education"
-                placeholderTextColor={'grey'}
-              />
-              <PhoneInput
+            <PhoneInput
                 textInputProps={{
                   placeholderTextColor: 'grey',
                 }}

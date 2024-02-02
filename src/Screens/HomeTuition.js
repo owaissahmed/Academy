@@ -12,6 +12,7 @@ import {
   Alert,
   Image,
   Linking,
+  ScrollView,
 } from 'react-native';
 import Modal from 'react-native-modal';
 import PhoneInput from 'react-native-phone-number-input';
@@ -49,6 +50,12 @@ const HomeTuition = ({navigation}) => {
   const [subject, setsubject] = useState('');
   const [selectedValue, setSelectedValue] = useState('');
   const [TeacherselectedValue, setTeacherSelectedValue] = useState('');
+  const [GenderselectedValue, setGenderSelectedValue] =
+    useState('Select Gender');
+  const [islamiceducation, setislamiceducation] = useState('');
+  const [education, setEducation] = useState('');
+  const [age, setage] = useState('');
+  const [address, setaddress] = useState('');
   const phoneInput = useRef(null);
 
   useEffect(() => {
@@ -70,13 +77,27 @@ const HomeTuition = ({navigation}) => {
   const handleOnCountryChange = country => {
     setCountry(country);
   };
-
+  const handleValueChange = value => {
+    setGenderSelectedValue(value);
+  };
+  const EducationChange = newEducation => {
+    setEducation(newEducation);
+  };
+  const IslamicChange = newIslamic => {
+    setislamiceducation(newIslamic);
+  };
+  const AgeChange = newage => {
+    setage(newage);
+  };
+  const AddressChange = newaddress => {
+    setaddress(newaddress);
+  };
   const fetchData = async () => {
     try {
       const querySnapshot = await firestore()
         .collection('teachers')
         .where('Subject', '==', subject)
-        .where('Response', '!=' ,'')
+        .where('Response', '!=', '')
         .get();
 
       const onlineData = querySnapshot.docs.map(doc => ({
@@ -126,6 +147,19 @@ const HomeTuition = ({navigation}) => {
   function EmptyInput() {
     showMessage({
       message: '⚪️ Please Fill All Inputs',
+
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
+    });
+  }
+  function Gender() {
+    showMessage({
+      message: '⚪️ Please Select Gender',
 
       type: 'danger',
       color: 'white',
@@ -280,8 +314,20 @@ const HomeTuition = ({navigation}) => {
       return;
     }
 
-    if (name.trim() === '' || father.trim() === '' || value === '') {
+    if (
+      name.trim() === '' ||
+      father.trim() === '' ||
+      value === '' ||
+      age === '' ||
+      address === '' ||
+      islamiceducation.trim() === '' ||
+      education.trim() === ''
+    ) {
       EmptyInput();
+      return;
+    }
+    if (GenderselectedValue === 'Select Gender') {
+      Gender();
       return;
     }
 
@@ -324,7 +370,12 @@ const HomeTuition = ({navigation}) => {
         Fees: '',
         FeesPaid: '',
         Subject: StudentSubject,
-        Response:'Pending'
+        Response: 'Pending',
+        Gender: GenderselectedValue,
+        Address: address,
+        Age: age,
+        Education: education,
+        IslamicEducation: islamiceducation,
       });
 
       const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
@@ -374,160 +425,206 @@ const HomeTuition = ({navigation}) => {
       <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
         <SafeAreaView style={styles.submain}>
           <Image style={styles.logo} source={require('../Images/logo.png')} />
-
-          <TextInput
-            onChangeText={NameChange}
-            allowFontScaling={false}
-            style={styles.login}
-            placeholder="Enter Your Name"
-            placeholderTextColor={'grey'}
-          />
-          <TextInput
-            onChangeText={FatherChange}
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Your Father Name"
-            placeholderTextColor={'grey'}
-          />
-          <Text allowFontScaling={false} style={styles.default}>
-            {buttonText}
-          </Text>
-          <View>
-            <PhoneInput
-              textInputProps={{
-                placeholderTextColor: 'grey',
-              }}
-              containerStyle={{
-                width: responsiveWidth(80),
-                height: responsiveHeight(6),
-                marginTop: responsiveHeight(3),
-                borderColor: '#2e4c60',
-                borderWidth: 1.5,
-                backgroundColor: '#FBFCF8',
-              }}
-              flagButtonStyle={{
-                backgroundColor: '#FBFCF8',
-              }}
-              textInputStyle={{
-                height: responsiveHeight(6),
-                width: responsiveWidth(70),
-                color: '#2e4c60',
-                marginTop: responsiveHeight(0.2),
-                fontSize: responsiveFontSize(2),
-                textAlignVertical: 'center',
-              }}
-              codeTextStyle={{
-                color: '#2e4c60',
-                fontSize: responsiveFontSize(2),
-                height: responsiveHeight(7),
-                fontWeight: 'normal',
-                textAlignVertical: 'center',
-              }}
-              ref={phoneInput}
-              onChangeCountry={handleOnCountryChange}
-              defaultValue={value}
-              defaultCode="PK"
-              layout="first"
-              onChangeText={text => {
-                setValue(text);
-              }}
-              onChangeFormattedText={text => {
-                setFormattedValue(text);
-                setCountryCode(phoneInput.current?.getCountryCode() || '');
-              }}
-              countryPickerProps={{withAlphaFilter: true}}
+          <ScrollView style={{height: responsiveHeight(75)}}>
+            <TextInput
+              onChangeText={NameChange}
+              allowFontScaling={false}
+              style={styles.login}
+              placeholder="Enter Your Name"
+              placeholderTextColor={'grey'}
             />
-          </View>
-          <Text allowFontScaling={false} style={styles.default}>
-            {country && country === 'Pakistan'
-              ? 'Pakistan'
-              : country
-              ? country.name
-              : ''}
-          </Text>
-          <TouchableOpacity style={styles.Subjectbutton} onPress={openModal}>
-            <Text allowFontScaling={false} style={styles.Subjectbuttontext}>
-              {subject === '' ? 'What do you want to Learn' : subject}
+            <TextInput
+              onChangeText={FatherChange}
+              allowFontScaling={false}
+              style={styles.password}
+              placeholder="Enter Your Father Name"
+              placeholderTextColor={'grey'}
+            />
+            <TextInput
+              allowFontScaling={false}
+              style={styles.password}
+              placeholder="Enter Your Age"
+              inputMode={'tel'}
+              placeholderTextColor={'grey'}
+              onChangeText={AgeChange}
+            />
+            <View style={styles.pickergroup}>
+              <Picker
+                style={styles.picker}
+                selectedValue={GenderselectedValue}
+                dropdownIconColor={'#2e4c60'}
+                onValueChange={handleValueChange}>
+                <Picker.Item label="Select Gender" value="Select Gender" />
+                <Picker.Item label="Male" value="Male" />
+                <Picker.Item label="Female" value="Female" />
+              </Picker>
+            </View>
+            <TextInput
+              allowFontScaling={false}
+              style={styles.password}
+              placeholder="Enter Your Complete Address"
+              placeholderTextColor={'grey'}
+              onChangeText={AddressChange}
+            />
+            <Text allowFontScaling={false} style={styles.default}>
+              {buttonText}
             </Text>
-          </TouchableOpacity>
-          <View style={styles.pickergroup}>
-            <Picker
-              style={styles.picker}
-              dropdownIconColor={'#2e4c60'}
-              selectedValue={selectedValue}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedValue(itemValue)
-              }>
-              <Picker.Item label="Select Teacher" value="Select Teacher" />
-              {online.map((item, index) => (
-                <Picker.Item key={index} label={item.Name} value={item.Name} />
-              ))}
-              {subject != '' ? (
-                <Picker.Item label="Admin Choice" value="Admin Choice" />
-              ) : null}
-            </Picker>
-          </View>
+            <TextInput
+              onChangeText={EducationChange}
+              allowFontScaling={false}
+              style={styles.password}
+              placeholder="Enter Your Education"
+              placeholderTextColor={'grey'}
+            />
+            <TextInput
+              onChangeText={IslamicChange}
+              allowFontScaling={false}
+              style={styles.password}
+              placeholder="Enter Your Islamic Education"
+              placeholderTextColor={'grey'}
+            />
+            <View>
+              <PhoneInput
+                textInputProps={{
+                  placeholderTextColor: 'grey',
+                }}
+                containerStyle={{
+                  width: responsiveWidth(80),
+                  height: responsiveHeight(6),
+                  marginTop: responsiveHeight(3),
+                  borderColor: '#2e4c60',
+                  borderWidth: 1.5,
+                  backgroundColor: '#FBFCF8',
+                }}
+                flagButtonStyle={{
+                  backgroundColor: '#FBFCF8',
+                }}
+                textInputStyle={{
+                  height: responsiveHeight(6),
+                  width: responsiveWidth(70),
+                  color: '#2e4c60',
+                  marginTop: responsiveHeight(0.2),
+                  fontSize: responsiveFontSize(2),
+                  textAlignVertical: 'center',
+                }}
+                codeTextStyle={{
+                  color: '#2e4c60',
+                  fontSize: responsiveFontSize(2),
+                  height: responsiveHeight(7),
+                  fontWeight: 'normal',
+                  textAlignVertical: 'center',
+                }}
+                ref={phoneInput}
+                onChangeCountry={handleOnCountryChange}
+                defaultValue={value}
+                defaultCode="PK"
+                layout="first"
+                onChangeText={text => {
+                  setValue(text);
+                }}
+                onChangeFormattedText={text => {
+                  setFormattedValue(text);
+                  setCountryCode(phoneInput.current?.getCountryCode() || '');
+                }}
+                countryPickerProps={{withAlphaFilter: true}}
+              />
+            </View>
+            <Text allowFontScaling={false} style={styles.default}>
+              {country && country === 'Pakistan'
+                ? 'Pakistan'
+                : country
+                ? country.name
+                : ''}
+            </Text>
+            <TouchableOpacity style={styles.Subjectbutton} onPress={openModal}>
+              <Text allowFontScaling={false} style={styles.Subjectbuttontext}>
+                {subject === '' ? 'What do you want to Learn' : subject}
+              </Text>
+            </TouchableOpacity>
+            <View style={styles.pickergroup}>
+              <Picker
+                style={styles.picker}
+                dropdownIconColor={'#2e4c60'}
+                selectedValue={selectedValue}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSelectedValue(itemValue)
+                }>
+                <Picker.Item label="Select Teacher" value="Select Teacher" />
+                {online.map((item, index) => (
+                  <Picker.Item
+                    key={index}
+                    label={item.Name}
+                    value={item.Name}
+                  />
+                ))}
+                {subject != '' ? (
+                  <Picker.Item label="Admin Choice" value="Admin Choice" />
+                ) : null}
+              </Picker>
+            </View>
 
+            <Modal
+              isVisible={isTeacherModalVisible}
+              animationIn="zoomIn"
+              animationOut="zoomOut"
+              animationInTiming={1000}
+              animationOutTiming={1000}
+              backdropTransitionInTiming={1000}
+              backdropTransitionOutTiming={1000}>
+              <View style={styles.modal}>
+                <ImageBackground
+                  resizeMode="cover"
+                  style={styles.modalBackground}
+                  source={require('../Images/background.jpg')}>
+                  <Image
+                    style={styles.modalImage}
+                    source={require('../Images/logo.png')}
+                  />
+                  <View style={styles.pickergroup}>
+                    <Picker
+                      selectedValue={TeacherselectedValue}
+                      dropdownIconColor={'#2e4c60'}
+                      onValueChange={itemValue => setsubject(itemValue)}
+                      style={styles.picker}>
+                      <Picker.Item
+                        label={
+                          subject === '' ? 'What Do You Want To Learn' : subject
+                        }
+                        value="What Do You Want To Learn"
+                      />
+                      <Picker.Item label="نحو" value="نحو" />
+                      <Picker.Item label="حدیث" value="حدیث" />
+                      <Picker.Item label="صرف" value="صرف" />
+                      <Picker.Item label="اصولِ فقہ" value="اصولِ فقہ" />
+                      <Picker.Item label="فقہ" value="فقہ" />
+                      <Picker.Item label="عقائد" value="عقائد" />
+                      <Picker.Item label="بلاغت" value="بلاغت" />
+                      <Picker.Item label="مناظرہ" value="مناظرہ" />
+                      <Picker.Item label="تفسیر" value="تفسیر" />
+                      <Picker.Item label="وراثت" value="وراثت" />
+                      <Picker.Item label="منطق" value="منطق" />
+                      <Picker.Item label="اصولِ حدیث" value="اصولِ حدیث" />
+                      <Picker.Item label="اصولِ تفسیر" value="اصولِ تفسیر" />
+                    </Picker>
+                  </View>
+                  <View style={styles.ModalButtonView}>
+                    <TouchableOpacity
+                      style={styles.Btn}
+                      onPress={CheckPassword}>
+                      <Text allowFontScaling={false} style={styles.BtnText}>
+                        Next
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </ImageBackground>
+              </View>
+            </Modal>
+          </ScrollView>
           <TouchableOpacity style={styles.button} onPress={Check}>
             <Text allowFontScaling={false} style={styles.buttontext}>
               SAVE
             </Text>
           </TouchableOpacity>
-
-          <Modal
-            isVisible={isTeacherModalVisible}
-            animationIn="zoomIn"
-            animationOut="zoomOut"
-            animationInTiming={1000}
-            animationOutTiming={1000}
-            backdropTransitionInTiming={1000}
-            backdropTransitionOutTiming={1000}>
-            <View style={styles.modal}>
-              <ImageBackground
-                resizeMode="cover"
-                style={styles.modalBackground}
-                source={require('../Images/background.jpg')}>
-                <Image
-                  style={styles.modalImage}
-                  source={require('../Images/logo.png')}
-                />
-                <View style={styles.pickergroup}>
-                  <Picker
-                    selectedValue={TeacherselectedValue}
-                    dropdownIconColor={'#2e4c60'}
-                    onValueChange={itemValue => setsubject(itemValue)}
-                    style={styles.picker}>
-                    <Picker.Item
-                      label={
-                        subject === '' ? 'What Do You Want To Learn' : subject
-                      }
-                      value="What Do You Want To Learn"
-                    />
-                    <Picker.Item label="نحو" value="نحو" />
-                    <Picker.Item label="حدیث" value="حدیث" />
-                    <Picker.Item label="صرف" value="صرف" />
-                    <Picker.Item label="اصولِ فقہ" value="اصولِ فقہ" />
-                    <Picker.Item label="فقہ" value="فقہ" />
-                    <Picker.Item label="عقائد" value="عقائد" />
-                    <Picker.Item label="بلاغت" value="بلاغت" />
-                    <Picker.Item label="مناظرہ" value="مناظرہ" />
-                    <Picker.Item label="تفسیر" value="تفسیر" />
-                    <Picker.Item label="وراثت" value="وراثت" />
-                    <Picker.Item label="منطق" value="منطق" />
-                    <Picker.Item label="اصولِ حدیث" value="اصولِ حدیث" />
-                    <Picker.Item label="اصولِ تفسیر" value="اصولِ تفسیر" />
-                  </Picker>
-                </View>
-                <View style={styles.ModalButtonView}>
-                  <TouchableOpacity style={styles.Btn} onPress={CheckPassword}>
-                    <Text allowFontScaling={false} style={styles.BtnText}>
-                      Next
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </ImageBackground>
-            </View>
-          </Modal>
           <View
             style={{
               display: 'flex',
@@ -585,13 +682,11 @@ const HomeTuition = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   logo: {
     height: responsiveHeight(13),
     width: responsiveWidth(33),
-    marginTop: responsiveHeight(1),
+    marginTop: responsiveHeight(2),
+    // backgroundColor: '#F57777',
   },
   phoneinput: {
     justifyContent: 'center',
@@ -618,11 +713,14 @@ const styles = StyleSheet.create({
   },
   submain: {
     borderColor: '#2e4c60',
+    height: responsiveHeight(90),
     borderWidth: 1.5,
     width: responsiveWidth(90),
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 12,
+
+    // marginVertical: responsiveHeight(3),
   },
   pickergroup: {
     alignItems: 'center',
@@ -631,7 +729,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: responsiveHeight(6),
     width: responsiveWidth(80),
-
     marginTop: responsiveHeight(3),
     borderColor: '#2e4c60',
     borderWidth: 1.5,
@@ -640,6 +737,18 @@ const styles = StyleSheet.create({
     color: '#2e4c60',
     height: responsiveHeight(5.5),
     width: responsiveWidth(84),
+  },
+  Genderpicker: {
+    backgroundColor: 'white',
+    color: '#2e4c60',
+    width: responsiveWidth(80),
+    borderColor: '#2e4c60',
+    backgroundColor: '#FBFCF8',
+    fontSize: responsiveFontSize(2),
+    borderWidth: 1.5,
+    borderRadius: 10,
+    marginBottom: responsiveHeight(1),
+    marginTop: responsiveHeight(3),
   },
   login: {
     height: responsiveHeight(6),
@@ -650,6 +759,7 @@ const styles = StyleSheet.create({
     color: '#2e4c60',
     borderWidth: 1.5,
     marginTop: responsiveHeight(2),
+    // marginBottom: responsiveHeight(2),
     fontSize: responsiveFontSize(2),
   },
   password: {
@@ -675,10 +785,19 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2),
     textAlignVertical: 'center',
   },
+  buttonNext: {
+    // borderColor: '#2e4c60',
+    // borderWidth: 1.5,
+    // width: responsiveWidth(90),
+    alignItems: 'center',
+    justifyContent: 'center',
+    // borderRadius: 12,
+  },
   button: {
     backgroundColor: '#2e4c60',
     color: 'white',
     padding: 6,
+    justifyContent: 'center',
     marginTop: responsiveHeight(3),
     marginBottom: responsiveHeight(2),
     borderRadius: 8,
@@ -690,9 +809,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.7,
     textAlign: 'center',
     fontSize: responsiveFontSize(2.25),
-  },
-  highlight: {
-    fontWeight: '700',
   },
   Subjectbutton: {
     width: responsiveWidth(80),
