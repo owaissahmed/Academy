@@ -29,6 +29,9 @@ const Admin = ({navigation}) => {
   function gotoAddOldCourse() {
     navigation.navigate('AddOldCourse');
   }
+  function gotoAdminQues() {
+    navigation.navigate('AdminQues');
+  }
 
   return (
     <View>
@@ -83,6 +86,13 @@ const Admin = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
+          <TouchableOpacity onPress={gotoAdminQues}>
+            <View style={styles.square}>
+              <Text allowFontScaling={false} style={styles.squaretext}>
+                QUESTIONS
+              </Text>
+            </View>
+          </TouchableOpacity>
         </Animatable.View>
       </ImageBackground>
     </View>
@@ -96,14 +106,15 @@ const styles = StyleSheet.create({
     width: devicewidth,
     height: deviceheight,
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
   },
 
   rectangle: {
     display: 'flex',
     justifyContent: 'center',
+    // backgroundColor: 'green',
     alignItems: 'center',
-    height: responsiveHeight(16),
+    // height: responsiveHeight(16),
     marginTop: responsiveHeight(-2),
   },
 
@@ -134,20 +145,24 @@ const styles = StyleSheet.create({
   },
   squareView: {
     display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    height: responsiveHeight(65),
+    flexDirection:'row',
+    flexWrap:'wrap',
+    // backgroundColor: 'green',
+    justifyContent: 'center',
+    // alignItems: 'center',
+    height:'auto',
+    width: responsiveWidth(100),
   },
   square: {
-    marginTop: responsiveHeight(-4),
+    marginTop: responsiveHeight(2),
     borderColor: '#2e4c60',
     borderWidth: 1.5,
-    height: responsiveHeight(16),
-    width: responsiveWidth(90),
+    height: responsiveHeight(15),
+    width: responsiveWidth(45),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
     backgroundColor: '#2e4c60',
-    marginHorizontal: responsiveWidth(3),
+    marginHorizontal: responsiveWidth(2),
   },
 });
