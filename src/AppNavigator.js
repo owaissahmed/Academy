@@ -28,7 +28,7 @@ import AddOldCourse from './Screens/AddOldCourse';
 import Questions from './Screens/Questions';
 import Playlist from './Screens/Playlist';
 import AdminQues from './Screens/AdminQues';
-
+import AddPlaylist from './Screens/AddPlaylist';
 import Auth from './Screens/Auth';
 
 import UserSignup from './Screens/UserSignup';
@@ -197,6 +197,11 @@ export default function AppNavigator() {
           <Stack.Screen
             name="AdminQues"
             component={AdminQues}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="AddPlaylist"
+            component={AddPlaylist}
             options={{headerShown: false}}
           />
           

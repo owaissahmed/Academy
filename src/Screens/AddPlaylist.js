@@ -9,14 +9,10 @@ import {
   Dimensions,
   ImageBackground,
   ActivityIndicator,
-  // Alert,
-  Modal,
-  Image,
-  // Linking,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import firebase from '@react-native-firebase/app';
 import NetInfo from '@react-native-community/netinfo';
-import {Picker} from '@react-native-picker/picker';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -27,15 +23,11 @@ const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 
-const AddCourse = ({navigation}) => {
-  const [course, setcourse] = useState('');
-  const [duration, setduration] = useState('');
-  const [fee, setFee] = useState('');
-  const [startDate, setstartDate] = useState('');
-  const [days, setdays] = useState('');
-  const [time, settime] = useState('');
+const AddPlaylist = ({navigation}) => {
+  const [Playlist, setPlaylist] = useState('');
+  const [videos, setvideos] = useState('');
+  const [Link, setLink] = useState('');
   const [isConnected, setIsConnected] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('For Male');
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -47,31 +39,16 @@ const AddCourse = ({navigation}) => {
     };
   }, []);
 
-  const CourseName = coursename => {
-    setcourse(coursename);
+  const PlaylistChange = Playlist => {
+    setPlaylist(Playlist);
   };
-  const Duration = duration => {
-    setduration(duration);
-  };
-  const FeeChange = fee => {
-    setFee(fee);
-  };
-  const DayChange = day => {
-    setdays(day);
-  };
-  const TimeChange = time => {
-    settime(time);
-  };
-  const startDateChange = startDate => {
-    setstartDate(startDate);
-  };
-  const handleValueChange = value => {
-    setSelectedValue(value);
+  const LinkChange = link => {
+    setLink(link);
   };
 
   function show() {
     showMessage({
-      message: '⚪️ Course Added',
+      message: '⚪️ Playlist Added',
       type: 'success',
       color: 'white',
       position: 'bottom',
@@ -86,6 +63,7 @@ const AddCourse = ({navigation}) => {
   function Internet() {
     showMessage({
       message: '⚪️ No Internet Connection',
+
       type: 'warning',
       color: 'white',
       position: 'bottom',
@@ -100,21 +78,16 @@ const AddCourse = ({navigation}) => {
     if (isConnected == false) {
       Internet();
     } else {
-      const collectionRef = firestore().collection('New Course').add({
-        CourseName: course,
-        Duration: duration,
-        Fees: fee,
-        Days: days,
-        Time: time,
-        StartDate: startDate,
-        Gender: selectedValue,
+      const collectionRef = firestore().collection('Playlists').add({
+        Name: Playlist,
+        Link: Link,
+        CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
       });
 
       show();
       setTimeout(() => {
-        navigation.replace('Admin');
+        navigation.replace('Home');
       }, 2000);
-      // }, 5000);
     }
   };
 
@@ -129,63 +102,24 @@ const AddCourse = ({navigation}) => {
       <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
         <SafeAreaView style={styles.submain}>
           <TextInput
-            onChangeText={CourseName}
+            onChangeText={PlaylistChange}
             allowFontScaling={false}
-            style={styles.login}
-            placeholder="Enter Course Name"
+            style={styles.password}
+            placeholder="Enter Playlist Name In Urdu"
             placeholderTextColor={'grey'}
           />
           <TextInput
-            onChangeText={Duration}
+            onChangeText={LinkChange}
             allowFontScaling={false}
             style={styles.password}
-            placeholder="Enter Duration"
+            placeholder="Enter Youtube Playlist Link"
             placeholderTextColor={'grey'}
           />
-          <TextInput
-            onChangeText={FeeChange}
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Fees"
-            placeholderTextColor={'grey'}
-          />
-          <TextInput
-            onChangeText={DayChange}
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Class Days"
-            placeholderTextColor={'grey'}
-          />
-          <TextInput
-            onChangeText={TimeChange}
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Timings"
-            placeholderTextColor={'grey'}
-          />
-          <TextInput
-            onChangeText={startDateChange}
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Course Starting Date"
-            placeholderTextColor={'grey'}
-          />
-          <View style={styles.picker}>
-            <Picker
-              selectedValue={selectedValue}
-              onValueChange={handleValueChange}>
-              <Picker.Item label="For Male" value="For Male" />
-              <Picker.Item label="For Female" value="For Female" />
-              <Picker.Item label="For Both" value="For Both" />
-            </Picker>
-          </View>
-          <>
-            <TouchableOpacity style={styles.button} onPress={Check}>
-              <Text allowFontScaling={false} style={styles.buttontext}>
-                SAVE
-              </Text>
-            </TouchableOpacity>
-          </>
+          <TouchableOpacity style={styles.button} onPress={Check}>
+            <Text allowFontScaling={false} style={styles.buttontext}>
+              SAVE
+            </Text>
+          </TouchableOpacity>
         </SafeAreaView>
       </Animatable.View>
     </ImageBackground>
@@ -310,4 +244,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddCourse;
+export default AddPlaylist;

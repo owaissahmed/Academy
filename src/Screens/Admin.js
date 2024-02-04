@@ -32,6 +32,9 @@ const Admin = ({navigation}) => {
   function gotoAdminQues() {
     navigation.navigate('AdminQues');
   }
+  function gotoAddPlaylist() {
+    navigation.navigate('AddPlaylist');
+  }
 
   return (
     <View>
@@ -90,6 +93,13 @@ const Admin = ({navigation}) => {
             <View style={styles.square}>
               <Text allowFontScaling={false} style={styles.squaretext}>
                 QUESTIONS
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={gotoAddPlaylist}>
+            <View style={styles.square}>
+              <Text allowFontScaling={false} style={styles.squaretext}>
+              ADD PLAYLIST
               </Text>
             </View>
           </TouchableOpacity>

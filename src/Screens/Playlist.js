@@ -73,7 +73,7 @@ const Playlist = ({navigation}) => {
       }
     } catch (error) {
       if (error.message.includes('No Activity found to handle Intent')) {
-        Alert.alert('Error', 'No app is available to handle the URL.');
+        Alert.alert('Error', 'Invalid Link OR\nNo app is available to handle the URL.');
       } else {
         console.error('Error opening URL:', error);
         Alert.alert('Error', 'Could not open the URL. Please try again later.');

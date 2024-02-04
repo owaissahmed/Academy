@@ -96,7 +96,7 @@ const AddOldCourse = ({navigation}) => {
 
       show();
       setTimeout(() => {
-        navigation.replace('Home');
+        navigation.replace('Admin');
       }, 2000);
       
     }
