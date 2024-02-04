@@ -16,6 +16,8 @@ import {
   ScrollView,
 } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
+import storage from '@react-native-firebase/storage';
+import {launchImageLibrary} from 'react-native-image-picker';
 import PhoneInput from 'react-native-phone-number-input';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
@@ -45,6 +47,9 @@ const DarseNizamiForm = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const phoneInput = useRef(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [profile, setprofile] = useState('');
+  const [uploadpic, setuploadpic] = useState(false);
   const [GenderselectedValue, setGenderSelectedValue] =
     useState('Select Gender');
   const [ClassselectedValue, setClassSelectedValue] = useState(
@@ -80,6 +85,24 @@ const DarseNizamiForm = ({navigation}) => {
   const AgeChange = newage => {
     setage(newage);
   };
+  const selectImage = () => {
+    const options = {
+      title: 'Select an image',
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    launchImageLibrary(options, response => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        setSelectedImage(response);
+      }
+    });
+  };
 
   const route = useRoute();
   const buttonText = route.params?.TextDarseNizami || 'Dars-e-Nizami';
@@ -95,6 +118,19 @@ const DarseNizamiForm = ({navigation}) => {
         lineHeight: responsiveHeight(3),
       },
       duration: 50000,
+    });
+  }
+  function selectPic() {
+    showMessage({
+      message: '⚪️ Please Select The Picture',
+
+      type: 'danger',
+      color: 'white',
+      position: 'bottom',
+      titleStyle: {
+        fontSize: responsiveFontSize(2.25),
+        lineHeight: responsiveHeight(3),
+      },
     });
   }
   function EmptyInput() {
@@ -267,6 +303,10 @@ const DarseNizamiForm = ({navigation}) => {
       Gender();
       return;
     }
+    if (!selectedImage && ClassselectedValue != 'عامہ سالِ اول') {
+      selectPic();
+      return;
+    }
 
     if (!isConnected) {
       Internet();
@@ -275,51 +315,116 @@ const DarseNizamiForm = ({navigation}) => {
 
     setLoading(true);
     setVisible(true);
-    show();
 
-    setTimeout(() => {
-      const checkValid = phoneInput.current?.isValidNumber(value);
-      setValid(checkValid ? checkValid : false);
-      setCountryCode(phoneInput.current?.getCountryCode() || '');
-
-      const collectionRef = firestore().collection('users').add({
-        Gmail: currentUser.email,
-        Name: name,
-        Fathername: father,
-        CourseName: buttonText,
-        Phone: formattedValue,
-        Country: countryName,
-        CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-        Category:'Aalim Course',
-        Status: '',
-        Response: 'Pending',
-        Teacher: '',
-        Fees: '',
-        FeesPaid: '',
-        Gender: GenderselectedValue,
-        Age: age,
-        Class:ClassselectedValue
-      });
-
-      const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
-      const subject = name;
-      const body = `Dars e Nizami \n ${countryName} \n ${formattedValue}`;
-
-      const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
-        subject,
-      )}&body=${encodeURIComponent(body)}`;
-
-      Linking.openURL(mailtoUrl).catch(err =>
-        console.error('Error opening email app:', err),
-      );
-
-      navigation.replace('Home');
-
+    if (ClassselectedValue === 'عامہ سالِ اول') {
+      show();
       setTimeout(() => {
-        GoBackHome();
-      }, 1000);
-    }, 5000);
+        const checkValid = phoneInput.current?.isValidNumber(value);
+        setValid(checkValid ? checkValid : false);
+        setCountryCode(phoneInput.current?.getCountryCode() || '');
+
+        const collectionRef = firestore().collection('users').add({
+          Gmail: currentUser.email,
+          Name: name,
+          Fathername: father,
+          CourseName: buttonText,
+          Phone: formattedValue,
+          Country: countryName,
+          CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          Category: 'Aalim Course',
+          Status: '',
+          Response: 'Pending',
+          Teacher: '',
+          Fees: '',
+          FeesPaid: '',
+          Gender: GenderselectedValue,
+          Age: age,
+          Class: ClassselectedValue,
+        });
+
+        const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
+        const subject = name;
+        const body = `Dars e Nizami \n ${countryName} \n ${formattedValue}`;
+
+        const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
+          subject,
+        )}&body=${encodeURIComponent(body)}`;
+
+        Linking.openURL(mailtoUrl).catch(err =>
+          console.error('Error opening email app:', err),
+        );
+
+        navigation.replace('Home');
+
+        setTimeout(() => {
+          GoBackHome();
+        }, 1000);
+      }, 5000);
+    }
+
+    if (selectedImage) {
+      setuploadpic(true);
+      const reference = storage().ref(selectedImage.assets[0].fileName);
+      const pathToFile = selectedImage.assets[0].uri;
+      await reference.putFile(pathToFile);
+    }
+
+    if (selectedImage) {
+      const profilepic = await storage()
+        .ref(selectedImage.assets[0].fileName)
+        .getDownloadURL();
+      setprofile(profilepic);
+      console.log(profile);
+
+      if (profilepic) {
+        show();
+        setTimeout(() => {
+          const checkValid = phoneInput.current?.isValidNumber(value);
+          setValid(checkValid ? checkValid : false);
+          setCountryCode(phoneInput.current?.getCountryCode() || '');
+
+          const collectionRef = firestore().collection('users').add({
+            Gmail: currentUser.email,
+            Name: name,
+            Fathername: father,
+            CourseName: buttonText,
+            Phone: formattedValue,
+            Country: countryName,
+            CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            Category: 'Aalim Course',
+            Status: '',
+            Response: 'Pending',
+            picture: profilepic,
+            Teacher: '',
+            Fees: '',
+            FeesPaid: '',
+            Gender: GenderselectedValue,
+            Age: age,
+            Class: ClassselectedValue,
+          });
+
+          const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
+          const subject = name;
+          const body = `Dars e Nizami \n ${countryName} \n ${formattedValue}`;
+
+          const mailtoUrl = `mailto:${recipient}?subject=${encodeURIComponent(
+            subject,
+          )}&body=${encodeURIComponent(body)}`;
+
+          Linking.openURL(mailtoUrl).catch(err =>
+            console.error('Error opening email app:', err),
+          );
+
+          navigation.replace('Home');
+
+          setTimeout(() => {
+            GoBackHome();
+          }, 1000);
+        }, 5000);
+      } 
+    }
   };
+
   return (
     <ImageBackground
       resizeMode="cover"
@@ -334,7 +439,7 @@ const DarseNizamiForm = ({navigation}) => {
             backgroundColor: 'rgba(0, 0, 0, 0.100)',
           }}>
           {loading ? (
-            <ActivityIndicator size="larger" color="black" />
+            <ActivityIndicator size="larger" color="#2e4c60" />
           ) : (
             <Text allowFontScaling={false} style={{color: '#ffffff'}}>
               Loading...
@@ -405,6 +510,40 @@ const DarseNizamiForm = ({navigation}) => {
                 <Picker.Item label="عالمیہ سالِ دوم" value="عالمیہ سالِ دوم" />
               </Picker>
             </View>
+            {ClassselectedValue ===
+            'Select Class To Get Addmission' ? null : ClassselectedValue ===
+              'عامہ سالِ اول' ? null : (
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  width: responsiveWidth(80),
+                  justifyContent: selectedImage ? 'space-between' : 'center',
+                  marginTop: responsiveHeight(2),
+                }}>
+                <TouchableOpacity
+                  onPress={selectImage}
+                  style={styles.buttonPic}>
+                  <Text allowFontScaling={false} style={styles.buttonPictext}>
+                    Select Last Class MarkSheet
+                  </Text>
+                </TouchableOpacity>
+                <View>
+                  {selectedImage ? (
+                    <Image
+                      source={{uri: selectedImage.assets[0].uri}}
+                      style={{
+                        width: responsiveWidth(30),
+                        marginVertical: responsiveHeight(1),
+                        // height: 100,
+                        height: responsiveHeight(15),
+                      }}
+                    />
+                  ) : null}
+                </View>
+              </View>
+            )}
             <View>
               <PhoneInput
                 textInputProps={{
@@ -641,6 +780,23 @@ const styles = StyleSheet.create({
     marginBottom: responsiveHeight(2),
     borderRadius: 8,
     width: responsiveWidth(30),
+  },
+  buttonPic: {
+    backgroundColor: '#2e4c60',
+    color: 'white',
+    padding: 4,
+    justifyContent: 'center',
+    marginTop: responsiveHeight(3),
+    marginBottom: responsiveHeight(2),
+    borderRadius: 8,
+    width: responsiveWidth(40),
+  },
+  buttonPictext: {
+    color: '#fff',
+    fontWeight: '600',
+    letterSpacing: 0.7,
+    textAlign: 'center',
+    fontSize: responsiveFontSize(2),
   },
   buttontext: {
     color: '#fff',
