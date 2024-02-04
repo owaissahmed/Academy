@@ -50,9 +50,9 @@ const OnlineTuition = ({navigation}) => {
   const [subject, setsubject] = useState('');
   const [selectedValue, setSelectedValue] = useState('');
   const [TeacherselectedValue, setTeacherSelectedValue] = useState('');
-  const [GenderselectedValue, setGenderSelectedValue] = useState('Select Gender');
   const [islamiceducation, setislamiceducation] = useState('');
   const [education, setEducation] = useState('');
+  const [GenderselectedValue, setGenderSelectedValue] = useState('Select Gender');
   const [age, setage] = useState('');
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -76,14 +76,14 @@ const OnlineTuition = ({navigation}) => {
   const handleValueChange = value => {
     setGenderSelectedValue(value);
   };
+  const AgeChange = newage => {
+    setage(newage);
+  };
   const EducationChange = newEducation => {
     setEducation(newEducation);
   };
   const IslamicChange = newIslamic => {
     setislamiceducation(newIslamic);
-  };
-  const AgeChange = newage => {
-    setage(newage);
   };
   
   const fetchData = async () => {
@@ -504,7 +504,7 @@ const OnlineTuition = ({navigation}) => {
                 onChangeText={text => {
                   setValue(text);
                 }}
-                onChangeFormattedText={text => {
+                onChangeFormattedText={text => {  
                   setFormattedValue(text);
                   setCountryCode(phoneInput.current?.getCountryCode() || '');
                 }}
