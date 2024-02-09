@@ -14,7 +14,6 @@ import {
   Image,
   Linking,
 } from 'react-native';
-
 import PhoneInput from 'react-native-phone-number-input';
 import {Picker} from '@react-native-picker/picker';
 import firestore from '@react-native-firebase/firestore';

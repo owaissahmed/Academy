@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Modal from 'react-native-modal';
+import {Picker} from '@react-native-picker/picker';
 import {
   responsiveScreenFontSize,
   responsiveWidth,
@@ -35,6 +36,8 @@ const Questions = ({navigation}) => {
   const [question, setquestion] = useState('');
   const [visible, setVisible] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [Subject, setSubject] = useState('Select Subject');
+  const [Category, setCategory] = useState('عقائد');
 
   useEffect(() => {
     setTimeout(() => {
@@ -49,19 +52,29 @@ const Questions = ({navigation}) => {
     const unsubscribe = firestore()
       .collection('Questions')
       .where('Answer', '!=', '')
-      .onSnapshot(querySnapshot => {
-        const coursesData = [];
-        querySnapshot.forEach(documentSnapshot => {
-          coursesData.push({
-            id: documentSnapshot.id,
-            ...documentSnapshot.data(),
-          });
-        });
+      .where('Subject', '==', Category)
+      .onSnapshot(
+        querySnapshot => {
+          if (querySnapshot) {
+            const coursesData = [];
+            querySnapshot.forEach(documentSnapshot => {
+              coursesData.push({
+                id: documentSnapshot.id,
+                ...documentSnapshot.data(),
+              });
+            });
 
-        setcourses(coursesData);
-      });
+            setcourses(coursesData);
+          } else {
+            console.log('No documents found matching the query.');
+          }
+        },
+        error => {
+          console.error('Error fetching documents: ', error);
+        },
+      );
     return () => unsubscribe, subscribe();
-  }, []);
+  }, [Category]);
 
   const openModal = () => {
     if (isConnected == false) {
@@ -70,7 +83,9 @@ const Questions = ({navigation}) => {
       setTeacherModalVisible(true);
     }
   };
-
+  function SelectSubject() {
+    Alert.alert('⚫ Warning', 'Please Select Subject!');
+  }
   function EmptyInput() {
     Alert.alert('⚫ Warning', 'Please Fill All Inputs!');
   }
@@ -102,6 +117,10 @@ const Questions = ({navigation}) => {
       return;
     }
 
+    if (Subject === 'Select Subject') {
+      SelectSubject();
+      return;
+    }
     if (!isConnected) {
       Internet();
       return;
@@ -110,6 +129,7 @@ const Questions = ({navigation}) => {
     const collectionRef = firestore().collection('Questions').add({
       Question: question,
       Answer: '',
+      Subject: Subject,
       CreatedAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
     setTeacherModalVisible(!isTeacherModalVisible);
@@ -170,6 +190,29 @@ const Questions = ({navigation}) => {
                 placeholder="Write Your Question"
                 placeholderTextColor={'grey'}
               />
+              <View style={styles.pickergroup}>
+                <Picker
+                  selectedValue={Subject}
+                  dropdownIconColor={'#2e4c60'}
+                  onValueChange={itemValue => setSubject(itemValue)}
+                  style={styles.picker}>
+                  <Picker.Item label="Select Subject" value="Select Subject" />
+                  <Picker.Item label="نحو" value="نحو" />
+                  <Picker.Item label="حدیث" value="حدیث" />
+                  <Picker.Item label="صرف" value="صرف" />
+                  <Picker.Item label="اصولِ فقہ" value="اصولِ فقہ" />
+                  <Picker.Item label="فقہ" value="فقہ" />
+                  <Picker.Item label="عقائد" value="عقائد" />
+                  <Picker.Item label="بلاغت" value="بلاغت" />
+                  <Picker.Item label="مناظرہ" value="مناظرہ" />
+                  <Picker.Item label="تفسیر" value="تفسیر" />
+                  <Picker.Item label="وراثت" value="وراثت" />
+                  <Picker.Item label="منطق" value="منطق" />
+                  <Picker.Item label="اصولِ حدیث" value="اصولِ حدیث" />
+                  <Picker.Item label="اصولِ تفسیر" value="اصولِ تفسیر" />
+                  <Picker.Item label="Other" value="Other" />
+                </Picker>
+              </View>
               <View style={styles.ModalButtonView}>
                 <TouchableOpacity style={styles.Btn} onPress={Close}>
                   <Text allowFontScaling={false} style={styles.BtnText}>
@@ -185,6 +228,44 @@ const Questions = ({navigation}) => {
             </ImageBackground>
           </View>
         </Modal>
+        <Animatable.View
+          style={{
+            width: responsiveWidth(100),
+            justifyContent: 'center',
+            alignItems: 'center',
+            display: 'flex',
+            top: 0,
+            position: 'absolute',
+          }}
+          animation={'fadeInDown'}
+          delay={1000}
+          duration={2000}>
+          <View style={styles.category}>
+            <View style={styles.categorypickergroup}>
+              <Picker
+                selectedValue={Category}
+                dropdownIconColor={'#2e4c60'}
+                onValueChange={itemValue => setCategory(itemValue)}
+                style={styles.categorypicker}>
+                <Picker.Item label="Select Category" value="Select Category" />
+                <Picker.Item label="نحو" value="نحو" />
+                <Picker.Item label="حدیث" value="حدیث" />
+                <Picker.Item label="صرف" value="صرف" />
+                <Picker.Item label="اصولِ فقہ" value="اصولِ فقہ" />
+                <Picker.Item label="فقہ" value="فقہ" />
+                <Picker.Item label="عقائد" value="عقائد" />
+                <Picker.Item label="بلاغت" value="بلاغت" />
+                <Picker.Item label="مناظرہ" value="مناظرہ" />
+                <Picker.Item label="تفسیر" value="تفسیر" />
+                <Picker.Item label="وراثت" value="وراثت" />
+                <Picker.Item label="منطق" value="منطق" />
+                <Picker.Item label="اصولِ حدیث" value="اصولِ حدیث" />
+                <Picker.Item label="اصولِ تفسیر" value="اصولِ تفسیر" />
+                <Picker.Item label="Other" value="Other" />
+              </Picker>
+            </View>
+          </View>
+        </Animatable.View>
         {courses.length > 0 ? (
           <Animatable.View animation={'fadeInUp'} delay={1000} duration={2000}>
             <View style={styles.FlatListVIew}>
@@ -209,15 +290,15 @@ const Questions = ({navigation}) => {
             </View>
           </Animatable.View>
         ) : (
-          <>
+          <View>
             {loading == true ? (
               <Text allowFontScaling={false} style={styles.NoData}></Text>
             ) : (
               <Text allowFontScaling={false} style={styles.NoData}>
-                No Data!!
+                No Questions!!
               </Text>
             )}
-          </>
+          </View>
         )}
         <Animatable.View
           style={{
@@ -235,18 +316,7 @@ const Questions = ({navigation}) => {
           delay={1000}
           duration={2000}>
           <TouchableOpacity onPress={openModal} style={styles.rectangle}>
-            <View
-              style={
-                {
-                  // width: responsiveWidth(25),
-                  // height: responsiveHeight(15),
-                  // backgroundColor: 'red',
-                  // justifyContent: 'center',
-                  // alignItems: 'center',
-                  // display: 'flex',
-                  // marginHorizontal: responsiveWidth(6),
-                }
-              }>
+            <View>
               <Image
                 style={{
                   width: responsiveWidth(8),
@@ -256,18 +326,7 @@ const Questions = ({navigation}) => {
                 source={require('../Images/q.png')}
               />
             </View>
-            <View
-              style={
-                {
-                  // width: responsiveWidth(55),
-                  // height: responsiveHeight(10),
-                  // backgroundColor: 'green',
-                  // justifyContent: 'center',
-                  // alignItems: 'center',
-                  // display: 'flex',
-                  // marginHorizontal: responsiveWidth(2),
-                }
-              }>
+            <View>
               <Text allowFontScaling={false} style={styles.rectangletext}>
                 Ask Question Now
               </Text>
@@ -291,6 +350,7 @@ const styles = StyleSheet.create({
   FlatListVIew: {
     width: responsiveWidth(98),
     marginBottom: responsiveHeight(8),
+    marginTop: responsiveHeight(8),
   },
   Data: {
     backgroundColor: '#fff',
@@ -396,9 +456,63 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
     textTransform: 'uppercase',
   },
+  category: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    backgroundColor: '#2e4c60',
+    height: responsiveHeight(7),
+    width: responsiveWidth(100),
+  },
+  categorytext: {
+    width: responsiveWidth(70),
+    fontSize: responsiveScreenFontSize(2.5),
+    color: '#fff',
+    lineHeight: 25,
+    textAlign: 'center',
+    fontFamily: 'good',
+    letterSpacing: 2,
+    textTransform: 'uppercase',
+  },
+  pickergroup: {
+    alignItems: 'center',
+    backgroundColor: '#FBFCF8',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: responsiveHeight(6),
+    width: responsiveWidth(80),
+    borderColor: '#2e4c60',
+    padding: 8,
+    borderWidth: 1.5,
+    borderRadius: 6,
+  },
+  picker: {
+    color: '#2e4c60',
+    height: responsiveHeight(5.5),
+    width: responsiveWidth(84),
+  },
+  categorypickergroup: {
+    alignItems: 'center',
+    backgroundColor: '#FBFCF8',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: responsiveHeight(6),
+    width: responsiveWidth(95),
+    // marginTop: responsiveHeight(3),
+    borderColor: '#2e4c60',
+    padding: 8,
+    borderWidth: 1.5,
+    borderRadius: 6,
+  },
+  categorypicker: {
+    color: '#2e4c60',
+    height: responsiveHeight(5.5),
+    width: responsiveWidth(84),
+  },
   modalBackground: {
     width: responsiveWidth(90),
-    height: responsiveHeight(30),
+    height: responsiveHeight(35),
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
