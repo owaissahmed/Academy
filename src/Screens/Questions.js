@@ -165,6 +165,7 @@ const Questions = ({navigation}) => {
         <>
           <FlashMessage position={'center'} />
         </>
+
         <Modal
           isVisible={isTeacherModalVisible}
           animationIn="zoomIn"
@@ -228,44 +229,6 @@ const Questions = ({navigation}) => {
             </ImageBackground>
           </View>
         </Modal>
-        <Animatable.View
-          style={{
-            width: responsiveWidth(100),
-            justifyContent: 'center',
-            alignItems: 'center',
-            display: 'flex',
-            top: 0,
-            position: 'absolute',
-          }}
-          animation={'fadeInDown'}
-          delay={1000}
-          duration={2000}>
-          <View style={styles.category}>
-            <View style={styles.categorypickergroup}>
-              <Picker
-                selectedValue={Category}
-                dropdownIconColor={'#2e4c60'}
-                onValueChange={itemValue => setCategory(itemValue)}
-                style={styles.categorypicker}>
-                <Picker.Item label="Select Category" value="Select Category" />
-                <Picker.Item label="نحو" value="نحو" />
-                <Picker.Item label="حدیث" value="حدیث" />
-                <Picker.Item label="صرف" value="صرف" />
-                <Picker.Item label="اصولِ فقہ" value="اصولِ فقہ" />
-                <Picker.Item label="فقہ" value="فقہ" />
-                <Picker.Item label="عقائد" value="عقائد" />
-                <Picker.Item label="بلاغت" value="بلاغت" />
-                <Picker.Item label="مناظرہ" value="مناظرہ" />
-                <Picker.Item label="تفسیر" value="تفسیر" />
-                <Picker.Item label="وراثت" value="وراثت" />
-                <Picker.Item label="منطق" value="منطق" />
-                <Picker.Item label="اصولِ حدیث" value="اصولِ حدیث" />
-                <Picker.Item label="اصولِ تفسیر" value="اصولِ تفسیر" />
-                <Picker.Item label="Other" value="Other" />
-              </Picker>
-            </View>
-          </View>
-        </Animatable.View>
         {courses.length > 0 ? (
           <Animatable.View animation={'fadeInUp'} delay={1000} duration={2000}>
             <View style={styles.FlatListVIew}>
@@ -300,6 +263,100 @@ const Questions = ({navigation}) => {
             )}
           </View>
         )}
+        <Animatable.View
+          style={{
+            width: responsiveWidth(100),
+            // justifyContent: 'center',
+            // alignItems: 'center',
+            // display: 'flex',
+            bottom: 60,
+            position: 'absolute',
+            // marginBottom:responsiveHeight(),
+          }}
+          animation={'fadeInDown'}
+          delay={1000}
+          duration={2000}>
+          <View style={styles.category}>
+            <View style={styles.categorypickergroup}>
+              <Picker
+                selectedValue={Category}
+                dropdownIconColor={'#2e4c60'}
+                onValueChange={itemValue => setCategory(itemValue)}
+                style={styles.categorypicker}>
+                <Picker.Item
+                  label="نحو"
+                  value="نحو"
+                  style={styles.pickerItem}
+                />
+                <Picker.Item
+                  label="حدیث"
+                  value="حدیث"
+                  style={styles.pickerItem}
+                />
+                <Picker.Item
+                  label="صرف"
+                  value="صرف"
+                  style={styles.pickerItem}
+                />
+                <Picker.Item
+                  label="اصولِ فقہ"
+                  value="اصولِ فقہ"
+                  style={styles.pickerItem}
+                />
+                <Picker.Item
+                  label="فقہ"
+                  value="فقہ"
+                  style={styles.pickerItem}
+                />
+                <Picker.Item
+                  label="عقائد"
+                  value="عقائد"
+                  style={styles.pickerItem}
+                />
+                <Picker.Item
+                  label="بلاغت"
+                  value="بلاغت"
+                  style={styles.pickerItem}
+                />
+                <Picker.Item
+                  label="مناظرہ"
+                  value="مناظرہ"
+                  style={styles.pickerItem}
+                />
+                <Picker.Item
+                  label="تفسیر"
+                  value="تفسیر"
+                  style={styles.pickerItem}
+                />
+                <Picker.Item
+                  label="وراثت"
+                  value="وراثت"
+                  style={styles.pickerItem}
+                />
+                <Picker.Item
+                  label="منطق"
+                  value="منطق"
+                  style={styles.pickerItem}
+                />
+                <Picker.Item
+                  label="اصولِ حدیث"
+                  value="اصولِ حدیث"
+                  style={styles.pickerItem}
+                />
+                <Picker.Item
+                  label="اصولِ تفسیر"
+                  value="اصولِ تفسیر"
+                  style={styles.pickerItem}
+                />
+                <Picker.Item
+                  label="Other"
+                  value="Other"
+                  style={styles.pickerItem}
+                />
+              </Picker>
+            </View>
+          </View>
+        </Animatable.View>
         <Animatable.View
           style={{
             width: responsiveWidth(100),
@@ -349,8 +406,8 @@ const styles = StyleSheet.create({
   },
   FlatListVIew: {
     width: responsiveWidth(98),
-    marginBottom: responsiveHeight(8),
-    marginTop: responsiveHeight(8),
+    marginBottom: responsiveHeight(12),
+    marginTop: responsiveHeight(1),
   },
   Data: {
     backgroundColor: '#fff',
@@ -404,8 +461,8 @@ const styles = StyleSheet.create({
     width: responsiveWidth(80),
     backgroundColor: '#FBFCF8',
     padding: 8,
-    borderColor: '#2e4c60',
     color: '#2e4c60',
+    borderColor: '#2e4c60',
     borderWidth: 1.5,
     fontFamily: 'good',
     borderRadius: 6,
@@ -462,6 +519,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-evenly',
     backgroundColor: '#2e4c60',
+    borderColor: '#fff',
+    borderWidth: 1.5,
     height: responsiveHeight(7),
     width: responsiveWidth(100),
   },
@@ -493,7 +552,6 @@ const styles = StyleSheet.create({
     width: responsiveWidth(84),
   },
   categorypickergroup: {
-    alignItems: 'center',
     backgroundColor: '#FBFCF8',
     alignItems: 'center',
     justifyContent: 'center',
@@ -504,6 +562,9 @@ const styles = StyleSheet.create({
     padding: 8,
     borderWidth: 1.5,
     borderRadius: 6,
+  },
+  pickerItem: {
+    fontSize: responsiveScreenFontSize(2),
   },
   categorypicker: {
     color: '#2e4c60',
