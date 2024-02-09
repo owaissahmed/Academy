@@ -166,7 +166,7 @@ export default function Home({route}) {
     }
   };
   const CheckPasswordAdmin = () => {
-    if (name === '2') {
+    if (name === 'Azhar8304') {
       setAdminModalVisible(!isAdminModalVisible);
       setTimeout(() => {
         navigation.navigate('Admin');
