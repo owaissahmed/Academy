@@ -30,7 +30,8 @@ import Playlist from './Screens/Playlist';
 import AdminQues from './Screens/AdminQues';
 import AddPlaylist from './Screens/AddPlaylist';
 import Auth from './Screens/Auth';
-
+import TeacherTypes from './Screens/TeacherTypes';
+import PendingTeachers from './Screens/PendingTeachers';
 import UserSignup from './Screens/UserSignup';
 import {AppProvider} from './Screens/AppContext';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -202,6 +203,16 @@ export default function AppNavigator() {
           <Stack.Screen
             name="AddPlaylist"
             component={AddPlaylist}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="TeacherTypes"
+            component={TeacherTypes}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="PendingTeachers"
+            component={PendingTeachers}
             options={{headerShown: false}}
           />
           

@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   FlatList,
+  Image,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {
@@ -94,25 +95,25 @@ const styles = StyleSheet.create({
   },
 
   FlatListVIew: {
-    width: responsiveWidth(90),
+    width: responsiveWidth(95),
   },
   DataView: {
     backgroundColor: '#2e4c60',
     height: 'auto',
-    width: responsiveWidth(90),
+    width: responsiveWidth(95),
     marginVertical: responsiveHeight(1),
     alignItems: 'center',
-    paddingVertical: responsiveHeight(1),
+    paddingVertical: responsiveHeight(0.5),
     borderRadius: 12,
   },
 
   Name: {
-    fontSize: responsiveScreenFontSize(2.5),
+    fontSize: responsiveScreenFontSize(2),
     color: '#fff',
     paddingVertical: responsiveHeight(1),
     textAlign: 'center',
     fontFamily: 'good',
-    letterSpacing: 2,
+    letterSpacing: 1,
   },
   NoData: {
     fontSize: responsiveScreenFontSize(4),

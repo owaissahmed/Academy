@@ -24,7 +24,7 @@ const Admin = ({navigation}) => {
     navigation.navigate('StudentsData');
   }
   function gotoTeachersData() {
-    navigation.navigate('TeachersData');
+    navigation.navigate('TeacherTypes');
   }
   function gotoAddOldCourse() {
     navigation.navigate('AddOldCourse');
