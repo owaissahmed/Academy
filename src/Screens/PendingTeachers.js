@@ -44,24 +44,12 @@ const PendingTeachers = ({route, navigation}) => {
     return () => unsubscribe();
   }, []);
 
-  const CheckPasswordAdmin = () => {
-    if (name === 'Azhar8304') {
-      setAdminModalVisible(!isAdminModalVisible);
-      setTimeout(() => {
-        navigation.navigate('Admin');
-      }, 1000);
-    } else {
-      Alert.alert('⚫ Warning', 'Wrong Password!');
-    }
-  };
+ 
 
   const closeModalAdmin = () => {
     setAdminModalVisible(!isAdminModalVisible);
   };
-  const openModalAdmin = () => {
-    setAdminModalVisible(true);
-  };
-
+  
   const AdminChange = newadmin => {
     setname(newadmin);
   };
