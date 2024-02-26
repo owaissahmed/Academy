@@ -25,24 +25,12 @@ const OnlineData = ({navigation}) => {
   const [teachers, setteachers] = useState([]);
   const [isAdminModalVisible, setAdminModalVisible] = useState(false);
   const [name, setname] = useState();
+  const [fees, setfees] = useState();
+  const [feespaid, setfeespaid] = useState();
   const [selectedUser, setSelectedUser] = useState(null);
   const [selectedValue, setSelectedValue] = useState('');
 
   useEffect(() => {
-    // const querySnapshot =  firestore()
-    //   .collection('teachers')
-    //   .where('Response', '!=', '')
-    //   .get();
-
-    // const teachersData = querySnapshot.docs.map(doc => ({
-    //   id: doc.id,
-    //   ...doc.data(),
-    // }));
-
-    // setteachers(teachersData);
-    // console.log('Error fetching data:', teachersData);
-    // setteachers(teacherData);
-
     const subscribe = firestore()
       .collection('teachers')
       .where('Response', '!=', '')
@@ -85,6 +73,12 @@ const OnlineData = ({navigation}) => {
   const AdminChange = newadmin => {
     setname(newadmin);
   };
+  const FeesChange = newFees => {
+    setfees(newFees);
+  };
+  const FeesPaidChange = newFeesPaid => {
+    setfeespaid(newFeesPaid);
+  };
 
   const handleSelectUser = user => {
     setAdminModalVisible(true);
@@ -93,18 +87,21 @@ const OnlineData = ({navigation}) => {
 
   const handleUpdateName = async () => {
     const {id} = selectedUser;
+    setAdminModalVisible(!isAdminModalVisible);
     try {
-      await firestore()
-        .collection('users')
-        .doc(id)
-        .update({Response: name, Teacher: selectedValue});
+      await firestore().collection('users').doc(id).update({
+        Response: name,
+        Teacher: selectedValue,
+        Fees: fees,
+        FeesPaid: feespaid,
+      });
       setSelectedUser(null);
-      setAdminModalVisible(!isAdminModalVisible);
       console.log(selectedValue);
     } catch (error) {
       console.log('Error updating name:', error);
     }
-    setAdminModalVisible(!isAdminModalVisible);
+    // setAdminModalVisible(!isAdminModalVisible);
+    console.log(name, selectedValue);
   };
 
   return (
@@ -181,6 +178,22 @@ const OnlineData = ({navigation}) => {
                     placeholder="Enter Response"
                     placeholderTextColor={'grey'}
                   />
+                  <TextInput
+                    allowFontScaling={false}
+                    autoFocus
+                    style={styles.login}
+                    onChangeText={FeesChange}
+                    placeholder="Enter Fees"
+                    placeholderTextColor={'grey'}
+                  />
+                  <TextInput
+                    allowFontScaling={false}
+                    autoFocus
+                    style={styles.login}
+                    onChangeText={FeesPaidChange}
+                    placeholder="Enter Fees Paid"
+                    placeholderTextColor={'grey'}
+                  />
                   <View style={styles.pickergroup}>
                     <Picker
                       style={styles.picker}
@@ -189,6 +202,10 @@ const OnlineData = ({navigation}) => {
                       onValueChange={(itemValue, itemIndex) =>
                         setSelectedValue(itemValue)
                       }>
+                      <Picker.Item
+                        label={'Select Teacher'}
+                        value={'Select Teacher'}
+                      />
                       {teachers.map((item, index) => (
                         <Picker.Item
                           key={index}
@@ -269,7 +286,7 @@ const styles = StyleSheet.create({
   },
   modalBackground: {
     width: responsiveWidth(90),
-    height: responsiveHeight(30),
+    height: 'auto',
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
@@ -287,9 +304,9 @@ const styles = StyleSheet.create({
     color: '#2e4c60',
     borderWidth: 1.5,
     fontFamily: 'good',
-    borderRadius: 6,
+    // borderRadius: 6,
     letterSpacing: 1,
-    marginTop: responsiveHeight(0.5),
+    marginTop: responsiveHeight(1),
     fontSize: responsiveScreenFontSize(2),
   },
   LogOutText: {
@@ -342,7 +359,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: responsiveHeight(6),
     width: responsiveWidth(80),
-    marginTop: responsiveHeight(3),
+    marginTop: responsiveHeight(1),
     borderColor: '#2e4c60',
     borderWidth: 1.5,
   },
