@@ -465,15 +465,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: responsiveHeight(-1),
+    // backgroundColor:'red',
+   paddingVertical:responsiveHeight(1)
   },
 
   account: {
     height: responsiveHeight(4.5),
-    width: responsiveWidth(9),
+    width: responsiveWidth(9.25),
   },
   logo: {
     height: responsiveHeight(4.5),
-    width: responsiveWidth(9),
+    width: responsiveWidth(9.25),
   },
   down: {
     height: responsiveHeight(3),
@@ -579,7 +581,7 @@ const styles = StyleSheet.create({
   home: {
     height: responsiveHeight(9),
     width: responsiveWidth(35),
-    marginTop: responsiveHeight(1),
+    marginTop: responsiveHeight(0.5),
   },
   books: {
     height: responsiveHeight(8),
