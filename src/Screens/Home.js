@@ -233,7 +233,7 @@ export default function Home({route}) {
                     justifyContent: 'center',
                     width: responsiveWidth(70),
                   }}>
-                  <Text style={styles.Welcometext}>
+                  <Text allowFontScaling={false} style={styles.Welcometext}>
                     {username != '' ? `Hi, ${username}` : null}
                   </Text>
                   <Image
