@@ -156,13 +156,11 @@ const UpcomingCourses = ({navigation}) => {
         </Animatable.View>
       ) : (
         <>
-          {loading == true ? (
-            <Text allowFontScaling={false} style={styles.NoData}></Text>
-          ) : (
+          {loading != true ? (
             <Text allowFontScaling={false} style={styles.NoData}>
               No Courses!!
             </Text>
-          )}
+          ) : null}
         </>
       )}
     </ImageBackground>

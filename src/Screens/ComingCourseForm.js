@@ -387,7 +387,7 @@ const ComingCourseForm = ({navigation}) => {
           </TouchableOpacity>
         </View>
         <View style={{marginBottom: responsiveHeight(1)}}>
-          <Text style={{color: '#2e4c60', fontWeight: 'bold'}}>
+          <Text allowFontScaling={false} style={{color: '#2e4c60', fontWeight: 'bold'}}>
             CONTACT US
           </Text>
         </View>

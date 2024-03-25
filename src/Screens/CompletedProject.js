@@ -305,7 +305,7 @@ const CompletedProject = ({navigation}) => {
           marginBottom: responsiveHeight(1),
           alignSelf: 'center',
         }}>
-        <Text style={{color: '#2e4c60', fontWeight: 'bold'}}>CONTACT US</Text>
+        <Text allowFontScaling={false} style={{color: '#2e4c60', fontWeight: 'bold'}}>CONTACT US</Text>
       </Animatable.View>
     </ImageBackground>
   );

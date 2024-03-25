@@ -131,7 +131,7 @@ const Courses = ({navigation}) => {
                           <Text
                             allowFontScaling={false}
                             style={styles.ButtonText}>
-                            Addmission
+                            Admission
                           </Text>
                         </TouchableOpacity>
                       </View>
@@ -143,14 +143,21 @@ const Courses = ({navigation}) => {
             </View>
           </Animatable.View>
         ) : (
+          // <>
+          //   {loading == true ? (
+          //     <Text allowFontScaling={false} style={styles.NoData}></Text>
+          //   ) : (
+          //     <Text allowFontScaling={false} style={styles.NoData}>
+          //       No Data!!
+          //     </Text>
+          //   )}
+          // </>
           <>
-            {loading == true ? (
-              <Text allowFontScaling={false} style={styles.NoData}></Text>
-            ) : (
+            {loading != true ? (
               <Text allowFontScaling={false} style={styles.NoData}>
                 No Data!!
               </Text>
-            )}
+            ) : null}
           </>
         )}
       </ImageBackground>
