@@ -71,6 +71,7 @@ const Form = ({navigation}) => {
   const route = useRoute();
 
   const buttonText = route.params?.TextHomeTuition || 'course';
+  const Playlist = route.params?.Playlist;
 
   function show() {
     showMessage({
@@ -247,9 +248,9 @@ const Form = ({navigation}) => {
         Category: 'Courses',
         Status: '',
         Response: 'Pending',
-        Teacher: '',
         Fees: '',
         FeesPaid: '',
+        Playlist:Playlist
       });
 
       const recipient = 'izhar2526@gmail.com'; // Replace with the recipient's email address
@@ -286,7 +287,7 @@ const Form = ({navigation}) => {
             backgroundColor: 'rgba(0, 0, 0, 0.100)',
           }}>
           {loading ? (
-            <ActivityIndicator size="larger" color="black" />
+            <ActivityIndicator size="larger" color="#2e4c60" />
           ) : (
             <Text allowFontScaling={false} style={{color: '#ffffff'}}>
               Loading...

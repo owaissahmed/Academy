@@ -30,8 +30,8 @@ const Courses = ({navigation}) => {
   const [visible, setVisible] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  const CoursesForm = title => {
-    navigation.navigate('Form', {TextHomeTuition: title});
+  const CoursesForm = (title,playlist)=> {
+    navigation.navigate('Form', {TextHomeTuition: title,Playlist: playlist});
   };
 
   async function Demo(Link) {
@@ -127,7 +127,7 @@ const Courses = ({navigation}) => {
                         </TouchableOpacity>
                         <TouchableOpacity
                           style={styles.Button}
-                          onPress={() => CoursesForm(item.CourseName)}>
+                          onPress={() => CoursesForm(item.CourseName,item.Playlist)}>
                           <Text
                             allowFontScaling={false}
                             style={styles.ButtonText}>
@@ -265,7 +265,7 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2.25),
     borderWidth: 1.5,
     borderColor: '#2e4c60',
-    color: 'black',
+    color: '#2e4c60',
     height: responsiveHeight(5),
   },
   ButtonView: {

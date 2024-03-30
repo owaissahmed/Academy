@@ -100,6 +100,23 @@ const Auth = ({navigation}) => {
     };
   }, []);
 
+  async function Demo(Link) {
+    try {
+      if (Link !== '') {
+        await Linking.openURL(Link);
+      } else {
+        Alert.alert('Error', 'No Class Available');
+      }
+    } catch (error) {
+      if (error.message.includes('No Activity found to handle Intent')) {
+        Alert.alert('Error', 'No app is available to handle the URL.');
+      } else {
+        console.error('Error opening URL:', error);
+        Alert.alert('Error', 'Could not open the URL. Please try again later.');
+      }
+    }
+  }
+
   const gmailChange = newgmail => {
     setgmail(newgmail);
   };
@@ -233,8 +250,7 @@ const Auth = ({navigation}) => {
       Internet();
     } else {
       try {
-       
-        LogOut()
+        LogOut();
         setTimeout(async () => {
           await auth().signOut();
           navigation.replace('First');
@@ -244,7 +260,6 @@ const Auth = ({navigation}) => {
       }
     }
   };
- 
 
   return (
     <>
@@ -308,12 +323,12 @@ const Auth = ({navigation}) => {
             {teacherData.length > 0 ? (
               <TouchableOpacity style={styles.DataView}>
                 <View style={styles.DataView}>
-                <Text allowFontScaling={false} style={styles.Gmail}>
-                {teacherData[0].Gmail}
-                </Text>
-                <Text allowFontScaling={false} style={styles.Name}>
-                Name : {teacherData[0].Name}
-                </Text>
+                  <Text allowFontScaling={false} style={styles.Gmail}>
+                    {teacherData[0].Gmail}
+                  </Text>
+                  <Text allowFontScaling={false} style={styles.Name}>
+                    Name : {teacherData[0].Name}
+                  </Text>
                   <Text allowFontScaling={false} style={styles.Name}>
                     Father Name : {teacherData[0].Fathername}
                   </Text>
@@ -327,15 +342,19 @@ const Auth = ({navigation}) => {
                     Subject : {teacherData[0].Subject}
                   </Text>
                   <Text allowFontScaling={false} style={styles.Name}>
-                   Education : {teacherData[0].Education}
+                    Education : {teacherData[0].Education}
                   </Text>
                   <Text allowFontScaling={false} style={styles.Name}>
-                  Islamic Education : {teacherData[0].IslamicEducation}
+                    Islamic Education : {teacherData[0].IslamicEducation}
                   </Text>
                   <Text allowFontScaling={false} style={styles.Name}>
-                  Experience : {teacherData[0].Experience}
+                    Experience : {teacherData[0].Experience}
                   </Text>
-                  <TouchableOpacity onPress={LogingOut} style={{width:responsiveWidth(50)}}><Text style={styles.UpdButton}>LogOut</Text></TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={LogingOut}
+                    style={{width: responsiveWidth(50)}}>
+                    <Text style={styles.UpdButton}>LogOut</Text>
+                  </TouchableOpacity>
                 </View>
               </TouchableOpacity>
             ) : null}
@@ -365,13 +384,17 @@ const Auth = ({navigation}) => {
 
                           {item.Response !== 'Pending' ? (
                             <>
+                            {item.Teacher ? (
                               <Text
                                 allowFontScaling={false}
                                 style={styles.Name}>
-                                Teacher: {item.Teacher}
+                                Teacher : {item.Teacher}
                               </Text>
+                            ) : null}
                               {item.Subject ? (
-                                <Text allowFontScaling={false} style={styles.Name}>
+                                <Text
+                                  allowFontScaling={false}
+                                  style={styles.Name}>
                                   Subject : {item.Subject}
                                 </Text>
                               ) : null}
@@ -385,6 +408,15 @@ const Auth = ({navigation}) => {
                                 style={styles.Name}>
                                 Fees Paid: {item.FeesPaid}
                               </Text>
+                              {item.Playlist ? (
+                                <TouchableOpacity
+                                  style={{width: responsiveWidth(100)}}
+                                  onPress={() => Demo(item.Playlist)}>
+                                  <Text style={styles.UpdButton}>
+                                    Go To Course
+                                  </Text>
+                                </TouchableOpacity>
+                              ) : null}
                               <TouchableOpacity
                                 style={{width: responsiveWidth(100)}}
                                 onPress={() => handleSelectUser(item)}>
@@ -640,7 +672,7 @@ const styles = StyleSheet.create({
     fontFamily: 'good',
     borderRadius: 12,
     letterSpacing: 2,
-    width:responsiveWidth(90)
+    width: responsiveWidth(90),
   },
   UpdButton: {
     paddingHorizontal: responsiveWidth(8),
@@ -734,7 +766,7 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2.25),
     borderWidth: 1.5,
     borderColor: '#2e4c60',
-    color: 'black',
+    color: '#2e4c60',
     height: responsiveHeight(5),
   },
 });

@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
     fontSize: responsiveScreenFontSize(2.25),
     borderWidth: 1.5,
     borderColor: '#2e4c60',
-    color: 'black',
+    color: '#2e4c60',
     height: responsiveHeight(5),
   },
 });

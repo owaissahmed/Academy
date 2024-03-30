@@ -27,6 +27,7 @@ const AddOldCourse = ({navigation}) => {
   const [price, setprice] = useState('');
   const [videos, setvideos] = useState('');
   const [youtubeDemo, setyoutubeDemo] = useState('');
+  const [youtubePlaylist, setyoutubePlaylist] = useState('');
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
@@ -48,6 +49,9 @@ const AddOldCourse = ({navigation}) => {
   };
   const LinkChange = day => {
     setyoutubeDemo(day);
+  };
+  const PlaylistChange = day => {
+    setyoutubePlaylist(day);
   };
   const videosChange = videos => {
     setvideos(videos);
@@ -92,6 +96,7 @@ const AddOldCourse = ({navigation}) => {
         Price: price,
         Link: youtubeDemo,
         Videos: videos,
+        Platylist:youtubePlaylist
       });
 
       show();
@@ -138,6 +143,13 @@ const AddOldCourse = ({navigation}) => {
             allowFontScaling={false}
             style={styles.password}
             placeholder="Total Videos"
+            placeholderTextColor={'grey'}
+          />
+          <TextInput
+            onChangeText={PlaylistChange}
+            allowFontScaling={false}
+            style={styles.password}
+            placeholder="Playlist Link"
             placeholderTextColor={'grey'}
           />
           <TouchableOpacity style={styles.button} onPress={Check}>
