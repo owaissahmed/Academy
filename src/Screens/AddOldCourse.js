@@ -96,7 +96,7 @@ const AddOldCourse = ({navigation}) => {
         Price: price,
         Link: youtubeDemo,
         Videos: videos,
-        Platylist:youtubePlaylist
+        Playlist:youtubePlaylist
       });
 
       show();
