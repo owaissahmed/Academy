@@ -390,7 +390,7 @@ export default function Home({route}) {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.Btn} onPress={LogingOut}>
                       <Text allowFontScaling={false} style={styles.BtnText}>
-                        LOGOUT
+                        LogOut
                       </Text>
                     </TouchableOpacity>
                   </View>
