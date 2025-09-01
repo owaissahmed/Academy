@@ -400,7 +400,7 @@ const OnlineTuition = ({navigation}) => {
             backgroundColor: 'rgba(0, 0, 0, 0.100)',
           }}>
           {loading ? (
-            <ActivityIndicator size="larger" color="#2e4c60" />
+            <ActivityIndicator size="large" color="#2e4c60" />
           ) : (
             <Text allowFontScaling={false} style={{color: '#ffffff'}}>
               Loading...

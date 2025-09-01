@@ -196,7 +196,7 @@ export default function Home({route}) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          {loadinG ? <ActivityIndicator size="larger" color="#2e4c60" /> : null}
+          {loadinG ? <ActivityIndicator size="large" color="#2e4c60" /> : null}
         </View>
       </Modal>
       <ImageBackground

@@ -154,7 +154,7 @@ const Questions = ({navigation}) => {
               alignItems: 'center',
             }}>
             {loading ? (
-              <ActivityIndicator size="larger" color="#2e4c60" />
+              <ActivityIndicator size="large" color="#2e4c60" />
             ) : (
               <Text allowFontScaling={false} style={{color: '#ffffff'}}>
                 Loading...

@@ -169,7 +169,7 @@ const UserSignup = ({navigation}) => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          {loading ? <ActivityIndicator size="larger" color="#2e4c60" /> : null}
+          {loading ? <ActivityIndicator size="large" color="#2e4c60" /> : null}
         </View>
       </Modal>
 
