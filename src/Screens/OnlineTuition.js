@@ -719,8 +719,8 @@ const styles = StyleSheet.create({
   },
   picker: {
     color: '#2e4c60',
-    height: responsiveHeight(5.5),
-    width: responsiveWidth(84),
+    height: responsiveHeight(6.5),
+    width: responsiveWidth(75),
   },
   Genderpicker: {
     backgroundColor: 'white',
