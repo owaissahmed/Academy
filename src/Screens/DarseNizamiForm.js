@@ -439,7 +439,7 @@ const DarseNizamiForm = ({navigation}) => {
             backgroundColor: 'rgba(0, 0, 0, 0.100)',
           }}>
           {loading ? (
-            <ActivityIndicator size="larger" color="#2e4c60" />
+            <ActivityIndicator size="large" color="#2e4c60" />
           ) : (
             <Text allowFontScaling={false} style={{color: '#ffffff'}}>
               Loading...
@@ -711,10 +711,10 @@ const styles = StyleSheet.create({
     borderColor: '#2e4c60',
     borderWidth: 1.5,
   },
-  picker: {
+ picker: {
     color: '#2e4c60',
-    height: responsiveHeight(5.5),
-    width: responsiveWidth(84),
+    height: responsiveHeight(6.5),
+    width: responsiveWidth(75),
   },
   Genderpicker: {
     backgroundColor: 'white',
