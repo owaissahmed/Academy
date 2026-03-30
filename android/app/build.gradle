@@ -2,6 +2,10 @@ apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 apply plugin: 'com.google.gms.google-services'
 apply plugin: "org.jetbrains.kotlin.android"
+<<<<<<< HEAD
+
+=======
+>>>>>>> 05cd489379b24f4198231fbbe227c283d36edb3c
 
 /**
  * This is the configuration block to customize your React Native Android app.
