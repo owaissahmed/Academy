@@ -40,12 +40,9 @@ export default function Home({route}) {
   const [loadinG, setloadinG] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(state => {
-      setIsConnected(state.isConnected);
-    });
-    setloadinG(false);
-    setVisiblE(false);
-    const subscriber = auth().onAuthStateChanged(user => {
+  let subscriber;
+  try {
+    subscriber = auth().onAuthStateChanged(user => {
       if (user) {
         const userEmail = user.email;
         const uname = userEmail.split(/\d|@/)[0];
@@ -54,11 +51,21 @@ export default function Home({route}) {
         setusername('');
       }
     });
+  } catch (error) {
+    console.log('Firebase not ready:', error);
+  }
 
-    return () => {
-      subscriber, unsubscribe();
-    };
-  }, []);
+  const unsubscribe = NetInfo.addEventListener(state => {
+    setIsConnected(state.isConnected);
+  });
+  setloadinG(false);
+  setVisiblE(false);
+
+  return () => {
+    if (subscriber) subscriber();
+    unsubscribe();
+  };
+}, []);
 
   // const TeacherChange = newname => {
   //   setname(newname);

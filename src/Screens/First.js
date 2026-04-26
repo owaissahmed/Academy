@@ -14,7 +14,7 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-
+import auth from '@react-native-firebase/auth';
 import * as Animatable from 'react-native-animatable';
 
 export default function First({navigation}) {
@@ -22,6 +22,14 @@ export default function First({navigation}) {
     gotoHome();
   }, []);
   function gotoHome() {
+    // Firebase check karo
+    try {
+      const app = auth().app;
+      console.log('✅ Firebase ready:', app.name);
+    } catch (e) {
+      console.log('❌ Firebase NOT ready:', e.message);
+    }
+
     setTimeout(() => {
       navigation.replace('Home');
     }, 4000);
