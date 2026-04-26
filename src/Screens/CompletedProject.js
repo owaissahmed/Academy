@@ -137,10 +137,7 @@ const CompletedProject = ({navigation}) => {
       style={styles.background}
       source={require('../Images/background.jpg')}>
       <View style={styles.submain}>
-        <Animatable.View
-          duration={2000}
-          delay={100}
-          animation="fadeInUp"
+        <View
           style={styles.rectangle}>
           <Text allowFontScaling={false} style={styles.rectangletext}>
             ازھارالاسلام اکیڈمی
@@ -148,10 +145,10 @@ const CompletedProject = ({navigation}) => {
           <Text allowFontScaling={false} style={styles.rectangletext_}>
             آن لائن دینی تعلیم کا مستند ادارہ
           </Text>
-        </Animatable.View>
+        </View>
       </View>
       <ScrollView>
-      <Animatable.View animation={'fadeInUp'} delay={100} duration={2000}>
+      <View>
         <Accordion
           id={1}
           title="درسِ  نظامی  ہیلپ  ڈیسک"
@@ -245,12 +242,9 @@ const CompletedProject = ({navigation}) => {
           openAccordion={openAccordion}
           onToggle={handleToggle}
         />
-        </Animatable.View>
+        </View>
       </ScrollView>
-      <Animatable.View
-        duration={2000}
-        delay={100}
-        animation="fadeInUp"
+      <View
         style={{
           display: 'flex',
           flexDirection: 'row',
@@ -295,18 +289,15 @@ const CompletedProject = ({navigation}) => {
             source={require('../Images/telegram.png')}
           />
         </TouchableOpacity>
-      </Animatable.View>
-      <Animatable.View
-        duration={2000}
-        delay={100}
-        animation="fadeInUp"
+      </View>
+      <View
         style={{
           marginTop: responsiveHeight(1),
           marginBottom: responsiveHeight(1),
           alignSelf: 'center',
         }}>
         <Text allowFontScaling={false} style={{color: '#2e4c60', fontWeight: 'bold'}}>CONTACT US</Text>
-      </Animatable.View>
+      </View>
     </ImageBackground>
   );
 };

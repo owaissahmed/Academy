@@ -1,18 +1,5 @@
-import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  Dimensions,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  Button,
-  Alert,
-  Linking,
-  ActivityIndicator,
-} from 'react-native';
-import {React, useEffect, useState} from 'react';
+import { View, Text, Image, ImageBackground, Dimensions, StyleSheet, TouchableOpacity, TextInput, Button, Alert, Linking, ActivityIndicator, } from 'react-native';
+import { React, useEffect, useState } from 'react';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -23,14 +10,13 @@ import Modal from 'react-native-modal';
 import NetInfo from '@react-native-community/netinfo';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import {useAppContext} from './AppContext';
-import * as Animatable from 'react-native-animatable';
-import {useNavigation} from '@react-navigation/native';
+import { useAppContext } from './AppContext';
+import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
-export default function Home({route}) {
+export default function Home({ route }) {
   const [isConnected, setIsConnected] = useState(false);
   const [username, setusername] = useState([]);
-  const {showAlert} = useAppContext();
+  const { showAlert } = useAppContext();
   const navigation = useNavigation();
   // const [isTeacherModalVisible, setTeacherModalVisible] = useState(false);
   const [isAdminModalVisible, setAdminModalVisible] = useState(false);
@@ -40,32 +26,32 @@ export default function Home({route}) {
   const [loadinG, setloadinG] = useState(true);
 
   useEffect(() => {
-  let subscriber;
-  try {
-    subscriber = auth().onAuthStateChanged(user => {
-      if (user) {
-        const userEmail = user.email;
-        const uname = userEmail.split(/\d|@/)[0];
-        setusername(uname);
-      } else {
-        setusername('');
-      }
+    let subscriber;
+    try {
+      subscriber = auth().onAuthStateChanged(user => {
+        if (user) {
+          const userEmail = user.email;
+          const uname = userEmail.split(/\d|@/)[0];
+          setusername(uname);
+        } else {
+          setusername('');
+        }
+      });
+    } catch (error) {
+      console.log('Firebase not ready:', error);
+    }
+
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsConnected(state.isConnected);
     });
-  } catch (error) {
-    console.log('Firebase not ready:', error);
-  }
+    setloadinG(false);
+    setVisiblE(false);
 
-  const unsubscribe = NetInfo.addEventListener(state => {
-    setIsConnected(state.isConnected);
-  });
-  setloadinG(false);
-  setVisiblE(false);
-
-  return () => {
-    if (subscriber) subscriber();
-    unsubscribe();
-  };
-}, []);
+    return () => {
+      if (subscriber) subscriber();
+      unsubscribe();
+    };
+  }, []);
 
   // const TeacherChange = newname => {
   //   setname(newname);
@@ -110,14 +96,14 @@ export default function Home({route}) {
   const OnlineTuition = () => {
     if (isConnected == false) {
       Internet();
-    } else navigation.navigate('OnlineTuition', {buttonText: 'Online Tuition'});
+    } else navigation.navigate('OnlineTuition', { buttonText: 'Online Tuition' });
   };
 
   const HomeTuition = () => {
     if (isConnected == false) {
       Internet();
     } else
-      navigation.navigate('HomeTuition', {TextHomeTuition: 'Home Tuition'});
+      navigation.navigate('HomeTuition', { TextHomeTuition: 'Home Tuition' });
   };
   const HelpDesk = () => {
     if (isConnected == false) {
@@ -220,10 +206,7 @@ export default function Home({route}) {
             height: deviceheight,
             justifyContent: 'space-evenly',
           }}>
-          <Animatable.View
-            duration={2000}
-            delay={100}
-            animation="fadeInDown"
+          <View
             style={styles.navbar}>
             <TouchableOpacity onPress={openModalAdmin}>
               <Image
@@ -256,12 +239,9 @@ export default function Home({route}) {
                 source={require('../Images/account.png')}
               />
             </TouchableOpacity>
-          </Animatable.View>
+          </View>
           <View style={styles.submain}>
-            <Animatable.View
-              duration={2000}
-              delay={100}
-              animation="fadeInUp"
+            <View
               style={styles.rectangle}>
               <Text allowFontScaling={false} style={styles.rectangletext}>
                 ازھارالاسلام اکیڈمی
@@ -269,13 +249,10 @@ export default function Home({route}) {
               <Text allowFontScaling={false} style={styles.rectangletext_}>
                 آن لائن دینی تعلیم کا مستند ادارہ
               </Text>
-            </Animatable.View>
+            </View>
           </View>
 
-          <Animatable.View
-            duration={2000}
-            delay={100}
-            animation="fadeInUp"
+          <View
             style={styles.squarediv}>
             <TouchableOpacity onPress={HelpDesk}>
               <View style={styles.square}>
@@ -448,7 +425,7 @@ export default function Home({route}) {
                 </ImageBackground>
               </View>
             </Modal>
-          </Animatable.View>
+          </View>
         </View>
       </ImageBackground>
     </View>
@@ -473,7 +450,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: responsiveHeight(-1),
     // backgroundColor:'red',
-   paddingVertical:responsiveHeight(1)
+    paddingVertical: responsiveHeight(1)
   },
 
   account: {

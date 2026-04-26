@@ -23,7 +23,6 @@ import {responsiveFontSize} from 'react-native-responsive-dimensions';
 import firestore from '@react-native-firebase/firestore';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import * as Animatable from 'react-native-animatable';
 import {useRoute} from '@react-navigation/native';
 const Courses = ({navigation}) => {
   const [courses, setcourses] = useState([]);
@@ -99,7 +98,7 @@ const Courses = ({navigation}) => {
           </View>
         </Modal>
         {courses.length > 0 ? (
-          <Animatable.View animation={'fadeInUp'} delay={1000} duration={2000}>
+          <View>
             <View style={styles.FlatListVIew}>
               <FlatList
                 data={courses}
@@ -141,7 +140,7 @@ const Courses = ({navigation}) => {
                 keyExtractor={item => item.id}
               />
             </View>
-          </Animatable.View>
+          </View>
         ) : (
           // <>
           //   {loading == true ? (

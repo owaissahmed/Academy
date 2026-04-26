@@ -30,7 +30,6 @@ const deviceheight = Dimensions.get('window').height;
 import {useAppContext} from './AppContext';
 import {launchImageLibrary} from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 
 const TeacherForm = ({navigation}) => {
@@ -364,11 +363,8 @@ const TeacherForm = ({navigation}) => {
       <>
         <FlashMessage position={'center'} />
       </>
-      <Animatable.View
-        style={{height: responsiveHeight(75)}}
-        animation={'zoomIn'}
-        delay={1000}
-        duration={2000}>
+      <View
+        style={{height: responsiveHeight(75)}}>
         <ScrollView>
           <View style={styles.submain}>
             <Image style={styles.logo} source={require('../Images/logo.png')} />
@@ -581,7 +577,7 @@ const TeacherForm = ({navigation}) => {
             </View>
           </View>
         </ScrollView>
-      </Animatable.View>
+      </View>
     </ImageBackground>
   );
 };

@@ -16,7 +16,6 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import {responsiveHeight} from 'react-native-responsive-dimensions';
-import * as Animatable from 'react-native-animatable';
 import {responsiveFontSize} from 'react-native-responsive-dimensions';
 import firestore from '@react-native-firebase/firestore';
 const devicewidth = Dimensions.get('window').width;
@@ -74,7 +73,7 @@ const UpcomingCourses = ({navigation}) => {
       </Modal>
 
       {courses.length > 0 ? (
-        <Animatable.View animation={'fadeInUp'} delay={1000} duration={2000}>
+        <View>
           <View style={styles.Description_View}>
             <FlatList
               data={courses}
@@ -153,7 +152,7 @@ const UpcomingCourses = ({navigation}) => {
               keyExtractor={item => item.id}
             />
           </View>
-        </Animatable.View>
+        </View>
       ) : (
         <>
           {loading != true ? (

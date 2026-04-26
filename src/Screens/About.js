@@ -11,7 +11,7 @@ import {
   Alert,
   Linking,
 } from 'react-native';
-import {React, useEffect, useState} from 'react';
+import { React, useEffect, useState } from 'react';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -21,10 +21,9 @@ import {
 import NetInfo from '@react-native-community/netinfo';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import * as Animatable from 'react-native-animatable';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-const About = ({navigation}) => {
+const About = ({ navigation }) => {
   function Completed() {
     navigation.navigate('CompletedProject');
   }
@@ -90,10 +89,7 @@ const About = ({navigation}) => {
         style={styles.background}
         source={require('../Images/background.jpg')}>
         <View style={styles.submain}>
-          <Animatable.View
-            duration={2000}
-            delay={100}
-            animation="fadeInUp"
+          <View
             style={styles.rectangle}>
             <Text allowFontScaling={false} style={styles.rectangletext}>
               ازھارالاسلام اکیڈمی
@@ -101,12 +97,9 @@ const About = ({navigation}) => {
             <Text allowFontScaling={false} style={styles.rectangletext_}>
               آن لائن دینی تعلیم کا مستند ادارہ
             </Text>
-          </Animatable.View>
+          </View>
         </View>
-        <Animatable.View
-          duration={2000}
-          delay={100}
-          animation="fadeInUp"
+        <View
           style={styles.squarediv}>
           <TouchableOpacity style={styles.button} onPress={Completed}>
             <Text allowFontScaling={false} style={styles.buttontext}>
@@ -163,12 +156,12 @@ const About = ({navigation}) => {
               />
             </TouchableOpacity>
           </View>
-          <View style={{marginTop: responsiveHeight(1)}}>
-            <Text allowFontScaling={false} style={{color: '#2e4c60', fontWeight: 'bold'}}>
+          <View style={{ marginTop: responsiveHeight(1) }}>
+            <Text allowFontScaling={false} style={{ color: '#2e4c60', fontWeight: 'bold' }}>
               CONTACT US
             </Text>
           </View>
-        </Animatable.View>
+        </View>
       </ImageBackground>
     </View>
   );

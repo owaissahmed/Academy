@@ -29,7 +29,6 @@ import {
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 import {useAppContext} from './AppContext';
-import * as Animatable from 'react-native-animatable';
 import FlashMessage, {showMessage} from 'react-native-flash-message';
 import {useRoute} from '@react-navigation/native';
 
@@ -422,7 +421,7 @@ const HomeTuition = ({navigation}) => {
       <>
         <FlashMessage position={'center'} />
       </>
-      <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
+      <View>
         <SafeAreaView style={styles.submain}>
           <Image style={styles.logo} source={require('../Images/logo.png')} />
           <ScrollView style={{height: responsiveHeight(75)}}>
@@ -676,7 +675,7 @@ const HomeTuition = ({navigation}) => {
             </Text>
           </View>
         </SafeAreaView>
-      </Animatable.View>
+      </View>
     </ImageBackground>
   );
 };

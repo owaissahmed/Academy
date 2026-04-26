@@ -18,7 +18,6 @@ import {responsiveHeight} from 'react-native-responsive-dimensions';
 import firestore from '@react-native-firebase/firestore';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import * as Animatable from 'react-native-animatable';
 import NetInfo from '@react-native-community/netinfo';
 const HelpDesk = ({navigation}) => {
   const [isConnected, setIsConnected] = useState(false);
@@ -130,7 +129,7 @@ const HelpDesk = ({navigation}) => {
         <FlashMessage position={'center'} />
       </>
 
-      <Animatable.View animation={'fadeInDown'} delay={1000} duration={2000}>
+      <View >
         <Image
           style={{
             width: responsiveWidth(40),
@@ -138,8 +137,8 @@ const HelpDesk = ({navigation}) => {
           }}
           source={require('../Images/logo.png')}
         />
-      </Animatable.View>
-      <Animatable.View animation={'fadeInUp'} delay={1000} duration={2000}>
+      </View>
+      <View>
         <TouchableOpacity onPress={Playlist} style={styles.rectangle}>
           <View
             style={{
@@ -175,8 +174,8 @@ const HelpDesk = ({navigation}) => {
             </Text>
           </View>
         </TouchableOpacity>
-      </Animatable.View>
-      <Animatable.View animation={'fadeInUp'} delay={1000} duration={2000}>
+      </View>
+      <View>
         <TouchableOpacity onPress={Questions} style={styles.rectangle}>
           <View
             style={{
@@ -272,7 +271,7 @@ const HelpDesk = ({navigation}) => {
             </Text>
           </View>
         </View>
-      </Animatable.View>
+      </View>
     </ImageBackground>
   );
 };
