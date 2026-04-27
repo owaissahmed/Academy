@@ -360,10 +360,7 @@ const Auth = ({navigation}) => {
             ) : null}
 
             {userCourses.length > 0 ? (
-              <Animatable.View
-                animation={'fadeInUp'}
-                delay={1000}
-                duration={2000}>
+              <View>
                 <View style={styles.FlatListVIew}>
                   <FlatList
                     data={userCourses}
@@ -436,7 +433,7 @@ const Auth = ({navigation}) => {
                     keyExtractor={item => item.id}
                   />
                 </View>
-              </Animatable.View>
+              </View>
             ) : (
               <>
                 {teacherData.length > 0 ? null : loadinG === true ? null : (
@@ -456,11 +453,11 @@ const Auth = ({navigation}) => {
           <>
             <FlashMessage position={'center'} />
           </>
-          <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
+          <View>
             <SafeAreaView style={styles.submain}>
               <Image
                 style={styles.logo}
-                source={require('../Images/logo.png')}
+                source={require('../Images/landscape-logo.png')}
               />
               <View style={{alignItems: 'center'}}>
                 <TextInput
@@ -495,7 +492,7 @@ const Auth = ({navigation}) => {
                 </View>
               </View>
             </SafeAreaView>
-          </Animatable.View>
+          </View>
         </ImageBackground>
       )}
     </>
@@ -506,10 +503,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  logo: {
-    height: responsiveHeight(15),
-    width: responsiveWidth(40),
-    marginTop: responsiveHeight(2),
+ logo: {
+    height: responsiveHeight(8),
+    width: responsiveWidth(80),
+    marginTop: responsiveHeight(1),
   },
   phoneinput: {
     justifyContent: 'center',

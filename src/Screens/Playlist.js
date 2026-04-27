@@ -12,23 +12,23 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-native-modal';
 import {
   responsiveScreenFontSize,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import auth from '@react-native-firebase/auth';
-import FlashMessage, {showMessage} from 'react-native-flash-message';
-import {responsiveHeight} from 'react-native-responsive-dimensions';
-import {responsiveFontSize} from 'react-native-responsive-dimensions';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
+import { responsiveHeight } from 'react-native-responsive-dimensions';
+import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
 import NetInfo from '@react-native-community/netinfo';
-const Playlist = ({navigation}) => {
+const Playlist = ({ navigation }) => {
   const [isConnected, setIsConnected] = useState(false);
   const [isTeacherModalVisible, setTeacherModalVisible] = useState(false);
   const [courses, setcourses] = useState([]);
@@ -175,33 +175,30 @@ const Playlist = ({navigation}) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            {loading ? (
+            {loading && (
               <ActivityIndicator size="large" color="#2e4c60" />
-            ) : (
-              <Text allowFontScaling={false} style={{color: '#ffffff'}}>
-                Loading...
-              </Text>
             )}
           </View>
         </Modal>
         <>
           <FlashMessage position={'center'} />
         </>
-        <Animatable.View animation={'fadeInDown'} delay={1000} duration={2000}>
+        <View >
           <Image
             style={{
-              width: responsiveWidth(40),
-              height: responsiveHeight(15),
+              height: responsiveHeight(8),
+              width: responsiveWidth(80),
+              marginTop: responsiveHeight(1),
             }}
-            source={require('../Images/logo.png')}
+            source={require('../Images/landscape-logo.png')}
           />
-        </Animatable.View>
-        {courses.length > 0 ? (
-          <Animatable.View animation={'fadeInUp'} delay={1000} duration={2000}>
+        </View>
+        {!loading && courses.length > 0 ? (
+          <View >
             <View style={styles.FlatListVIew}>
               <FlatList
                 data={courses}
-                renderItem={({item}) => (
+                renderItem={({ item }) => (
                   <TouchableOpacity
                     onPress={() => youtube(item.Link)}
                     style={styles.Data}>
@@ -215,22 +212,17 @@ const Playlist = ({navigation}) => {
                 keyExtractor={item => item.id}
               />
             </View>
-          </Animatable.View>
+          </View>
         ) : (
           <View>
-            {loading == true ? (
-              <Text allowFontScaling={false} style={styles.NoData}></Text>
-            ) : (
+            {!loading && (
               <Text allowFontScaling={false} style={styles.NoData}>
                 No Data!!
               </Text>
             )}
           </View>
         )}
-        <Animatable.View
-          animation={'fadeInUp'}
-          delay={1000}
-          duration={2000}
+        <View
           style={{
             width: 'auto',
             alignItems: 'center',
@@ -282,12 +274,12 @@ const Playlist = ({navigation}) => {
               />
             </TouchableOpacity>
           </View>
-          <View style={{marginBottom: responsiveHeight(1)}}>
-            <Text allowFontScaling={false} style={{color: '#2e4c60', fontWeight: 'bold'}}>
+          <View style={{ marginBottom: responsiveHeight(1) }}>
+            <Text allowFontScaling={false} style={{ color: '#2e4c60', fontWeight: 'bold' }}>
               CONTACT US
             </Text>
           </View>
-        </Animatable.View>
+        </View>
       </ImageBackground>
     </View>
   );
@@ -303,7 +295,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   FlatListVIew: {
-    height: responsiveHeight(60),
+    height: responsiveHeight(75),
     width: responsiveWidth(98),
   },
   Data: {

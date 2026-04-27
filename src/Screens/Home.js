@@ -344,13 +344,7 @@ export default function Home({ route }) {
             </TouchableOpacity>
 
             <Modal
-              isVisible={isUserModalVisible}
-              animationIn="zoomIn"
-              animationOut="zoomOut"
-              animationInTiming={1000}
-              animationOutTiming={1000}
-              backdropTransitionInTiming={1000}
-              backdropTransitionOutTiming={1000}>
+              isVisible={isUserModalVisible}>
               <View style={styles.modal}>
                 <ImageBackground
                   resizeMode="cover"
@@ -358,7 +352,7 @@ export default function Home({ route }) {
                   source={require('../Images/background.jpg')}>
                   <Image
                     style={styles.modalImage}
-                    source={require('../Images/logo.png')}
+                    source={require('../Images/landscape-logo.png')}
                   />
                   <Text allowFontScaling={false} style={styles.LogOutText}>
                     Are You Sure To LogOut ?
@@ -385,10 +379,10 @@ export default function Home({ route }) {
               isVisible={isAdminModalVisible}
               animationIn="zoomIn"
               animationOut="zoomOut"
-              animationInTiming={1000}
-              animationOutTiming={1000}
-              backdropTransitionInTiming={1000}
-              backdropTransitionOutTiming={1000}>
+              animationInTiming={500}
+              animationOutTiming={500}
+              backdropTransitionInTiming={500}
+              backdropTransitionOutTiming={500}>
               <View style={styles.modal}>
                 <ImageBackground
                   resizeMode="cover"
@@ -396,7 +390,7 @@ export default function Home({ route }) {
                   source={require('../Images/background.jpg')}>
                   <Image
                     style={styles.modalImage}
-                    source={require('../Images/logo.png')}
+                    source={require('../Images/landscape-logo.png')}
                   />
                   <TextInput
                     allowFontScaling={false}
@@ -450,12 +444,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: responsiveHeight(-1),
     // backgroundColor:'red',
-    paddingVertical: responsiveHeight(1)
+    paddingVertical: responsiveHeight(-1)
   },
 
   account: {
-    height: responsiveHeight(4.5),
-    width: responsiveWidth(9.25),
+    height: responsiveHeight(4),
+    width: responsiveWidth(8.5),
   },
   logo: {
     height: responsiveHeight(4.5),
@@ -471,7 +465,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: responsiveHeight(16),
     // backgroundColor: 'blue',
-    marginTop: responsiveHeight(-4.5),
+    marginTop: responsiveHeight(-5),
   },
   squarediv: {
     display: 'flex',
@@ -479,6 +473,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-evenly',
     width: responsiveWidth(95),
+    marginTop:responsiveHeight(-1.5),
   },
   rectangletext: {
     fontFamily: 'mushaf',
@@ -487,7 +482,7 @@ const styles = StyleSheet.create({
     color: '#2e4c60',
     fontSize: responsiveFontSize(8.5),
     textAlign: 'center',
-    marginBottom: responsiveHeight(-1),
+    marginBottom: responsiveHeight(-2),
   },
   rectangletext_: {
     fontFamily: 'mushaf',
@@ -624,8 +619,8 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2.5),
   },
   modalImage: {
-    height: responsiveHeight(11),
-    width: responsiveWidth(24),
+    height: responsiveHeight(8),
+    width: responsiveWidth(80),
     marginTop: responsiveHeight(1),
   },
   ModalButtonView: {

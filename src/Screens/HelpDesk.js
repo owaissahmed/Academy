@@ -8,18 +8,18 @@ import {
   ImageBackground,
   Linking,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import FlashMessage, {showMessage} from 'react-native-flash-message';
+import React, { useEffect, useState } from 'react';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
 import {
   responsiveScreenFontSize,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
-import {responsiveHeight} from 'react-native-responsive-dimensions';
+import { responsiveHeight } from 'react-native-responsive-dimensions';
 import firestore from '@react-native-firebase/firestore';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 import NetInfo from '@react-native-community/netinfo';
-const HelpDesk = ({navigation}) => {
+const HelpDesk = ({ navigation }) => {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
@@ -132,10 +132,11 @@ const HelpDesk = ({navigation}) => {
       <View >
         <Image
           style={{
-            width: responsiveWidth(40),
-            height: responsiveHeight(15),
+            height: responsiveHeight(8),
+            width: responsiveWidth(80),
+            marginTop: responsiveHeight(1),
           }}
-          source={require('../Images/logo.png')}
+          source={require('../Images/landscape-logo.png')}
         />
       </View>
       <View>
@@ -265,8 +266,8 @@ const HelpDesk = ({navigation}) => {
               />
             </TouchableOpacity>
           </View>
-          <View style={{marginBottom: responsiveHeight(1)}}>
-            <Text allowFontScaling={false} style={{color: '#2e4c60', fontWeight: 'bold'}}>
+          <View style={{ marginBottom: responsiveHeight(1) }}>
+            <Text allowFontScaling={false} style={{ color: '#2e4c60', fontWeight: 'bold' }}>
               CONTACT US
             </Text>
           </View>

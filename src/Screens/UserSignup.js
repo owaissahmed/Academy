@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -21,9 +21,9 @@ import {
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
-import FlashMessage, {showMessage} from 'react-native-flash-message';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
 import auth from '@react-native-firebase/auth';
-const UserSignup = ({navigation}) => {
+const UserSignup = ({ navigation }) => {
   const [gmail, setgmail] = useState('');
   const [password, setpassword] = useState('');
   const [user, setUser] = useState(null);
@@ -173,10 +173,10 @@ const UserSignup = ({navigation}) => {
         </View>
       </Modal>
 
-      <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
+      <View>
         <SafeAreaView style={styles.submain}>
-          <Image style={styles.logo} source={require('../Images/logo.png')} />
-          <View style={{alignItems: 'center'}}>
+          <Image style={styles.logo} source={require('../Images/landscape-logo.png')} />
+          <View style={{ alignItems: 'center' }}>
             <TextInput
               value={gmail}
               onChangeText={gmailChange}
@@ -210,7 +210,7 @@ const UserSignup = ({navigation}) => {
             </Text>
           </View>
         </SafeAreaView>
-      </Animatable.View>
+      </View>
     </ImageBackground>
   );
 };
@@ -220,9 +220,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logo: {
-    height: responsiveHeight(15),
-    width: responsiveWidth(40),
-    marginTop: responsiveHeight(2),
+    height: responsiveHeight(8),
+    width: responsiveWidth(80),
+    marginTop: responsiveHeight(1),
   },
   phoneinput: {
     justifyContent: 'center',

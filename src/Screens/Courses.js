@@ -13,24 +13,24 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   responsiveScreenFontSize,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
-import {responsiveHeight} from 'react-native-responsive-dimensions';
-import {responsiveFontSize} from 'react-native-responsive-dimensions';
+import { responsiveHeight } from 'react-native-responsive-dimensions';
+import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import firestore from '@react-native-firebase/firestore';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import {useRoute} from '@react-navigation/native';
-const Courses = ({navigation}) => {
+import { useRoute } from '@react-navigation/native';
+const Courses = ({ navigation }) => {
   const [courses, setcourses] = useState([]);
   const [visible, setVisible] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  const CoursesForm = (title,playlist)=> {
-    navigation.navigate('Form', {TextHomeTuition: title,Playlist: playlist});
+  const CoursesForm = (title, playlist) => {
+    navigation.navigate('Form', { TextHomeTuition: title, Playlist: playlist });
   };
 
   async function Demo(Link) {
@@ -88,21 +88,17 @@ const Courses = ({navigation}) => {
               // marginBottom:responsiveHeight(5),
               backgroundColor: 'rgba(0, 0, 0, 0.100)',
             }}>
-            {loading ? (
+            {loading && (
               <ActivityIndicator size="large" color="#2e4c60" />
-            ) : (
-              <Text allowFontScaling={false} style={{color: '#ffffff'}}>
-                Loading...
-              </Text>
             )}
           </View>
         </Modal>
-        {courses.length > 0 ? (
+        {!loading && courses.length > 0 ? (
           <View>
             <View style={styles.FlatListVIew}>
               <FlatList
                 data={courses}
-                renderItem={({item}) => (
+                renderItem={({ item }) => (
                   <TouchableOpacity style={styles.DataView}>
                     <View style={styles.DataView}>
                       <Text allowFontScaling={false} style={styles.CourseName}>
@@ -126,7 +122,7 @@ const Courses = ({navigation}) => {
                         </TouchableOpacity>
                         <TouchableOpacity
                           style={styles.Button}
-                          onPress={() => CoursesForm(item.CourseName,item.Playlist)}>
+                          onPress={() => CoursesForm(item.CourseName, item.Playlist)}>
                           <Text
                             allowFontScaling={false}
                             style={styles.ButtonText}>
@@ -142,22 +138,13 @@ const Courses = ({navigation}) => {
             </View>
           </View>
         ) : (
-          // <>
-          //   {loading == true ? (
-          //     <Text allowFontScaling={false} style={styles.NoData}></Text>
-          //   ) : (
-          //     <Text allowFontScaling={false} style={styles.NoData}>
-          //       No Data!!
-          //     </Text>
-          //   )}
-          // </>
-          <>
-            {loading != true ? (
+          <View>
+            {!loading && (
               <Text allowFontScaling={false} style={styles.NoData}>
                 No Data!!
               </Text>
-            ) : null}
-          </>
+            )}
+          </View>
         )}
       </ImageBackground>
     </View>
