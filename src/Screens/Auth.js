@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -26,9 +26,9 @@ import {
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
 import * as Animatable from 'react-native-animatable';
-import FlashMessage, {showMessage} from 'react-native-flash-message';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
 import auth from '@react-native-firebase/auth';
-const Auth = ({navigation}) => {
+const Auth = ({ navigation }) => {
   const [gmail, setgmail] = useState('');
   const [password, setpassword] = useState('');
   const [user, setUser] = useState(null);
@@ -232,9 +232,9 @@ const Auth = ({navigation}) => {
       return;
     }
 
-    const {id} = selectedUser;
+    const { id } = selectedUser;
     try {
-      await firestore().collection('users').doc(id).update({FeesPaid: name});
+      await firestore().collection('users').doc(id).update({ FeesPaid: name });
       setSelectedUser(null);
     } catch (error) {
       console.log('Error updating name:', error);
@@ -293,7 +293,7 @@ const Auth = ({navigation}) => {
                 {loadinG ? (
                   <ActivityIndicator size="large" color="#2e4c60" />
                 ) : (
-                  <Text allowFontScaling={false} style={{color: '#ffffff'}}>
+                  <Text allowFontScaling={false} style={{ color: '#ffffff' }}>
                     Loading...
                   </Text>
                 )}
@@ -352,7 +352,7 @@ const Auth = ({navigation}) => {
                   </Text>
                   <TouchableOpacity
                     onPress={LogingOut}
-                    style={{width: responsiveWidth(50)}}>
+                    style={{ width: responsiveWidth(50) }}>
                     <Text style={styles.UpdButton}>LogOut</Text>
                   </TouchableOpacity>
                 </View>
@@ -364,7 +364,7 @@ const Auth = ({navigation}) => {
                 <View style={styles.FlatListVIew}>
                   <FlatList
                     data={userCourses}
-                    renderItem={({item}) => (
+                    renderItem={({ item }) => (
                       <TouchableOpacity style={styles.DataView}>
                         <View style={styles.DataView}>
                           <Text
@@ -381,13 +381,13 @@ const Auth = ({navigation}) => {
 
                           {item.Response !== 'Pending' ? (
                             <>
-                            {item.Teacher ? (
-                              <Text
-                                allowFontScaling={false}
-                                style={styles.Name}>
-                                Teacher : {item.Teacher}
-                              </Text>
-                            ) : null}
+                              {item.Teacher ? (
+                                <Text
+                                  allowFontScaling={false}
+                                  style={styles.Name}>
+                                  Teacher : {item.Teacher}
+                                </Text>
+                              ) : null}
                               {item.Subject ? (
                                 <Text
                                   allowFontScaling={false}
@@ -407,7 +407,7 @@ const Auth = ({navigation}) => {
                               </Text>
                               {item.Playlist ? (
                                 <TouchableOpacity
-                                  style={{width: responsiveWidth(100)}}
+                                  style={{ width: responsiveWidth(100) }}
                                   onPress={() => Demo(item.Playlist)}>
                                   <Text style={styles.UpdButton}>
                                     Go To Course
@@ -415,7 +415,7 @@ const Auth = ({navigation}) => {
                                 </TouchableOpacity>
                               ) : null}
                               <TouchableOpacity
-                                style={{width: responsiveWidth(100)}}
+                                style={{ width: responsiveWidth(100) }}
                                 onPress={() => handleSelectUser(item)}>
                                 <Text style={styles.UpdButton}>
                                   Update Paid Fees
@@ -459,7 +459,7 @@ const Auth = ({navigation}) => {
                 style={styles.logo}
                 source={require('../Images/landscape-logo.png')}
               />
-              <View style={{alignItems: 'center'}}>
+              <View style={{ alignItems: 'center' }}>
                 <TextInput
                   value={gmail}
                   onChangeText={gmailChange}
@@ -503,7 +503,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
- logo: {
+  logo: {
     height: responsiveHeight(8),
     width: responsiveWidth(80),
     marginTop: responsiveHeight(1),
@@ -533,8 +533,8 @@ const styles = StyleSheet.create({
   },
 
   submain: {
-    borderColor: '#2e4c60',
-    borderWidth: 1.5,
+    // borderColor: '#2e4c60',
+    // borderWidth: 1.5,
     width: responsiveWidth(90),
     alignItems: 'center',
     justifyContent: 'center',
@@ -554,8 +554,9 @@ const styles = StyleSheet.create({
     paddingVertical: responsiveHeight(2),
   },
   login: {
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
+    height: responsiveHeight(5),
+    borderRadius: 6,
+    width: responsiveWidth(90),
     backgroundColor: '#FBFCF8',
     padding: 8,
     borderColor: '#2e4c60',
@@ -566,8 +567,9 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2),
   },
   passwordGmail: {
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
+    height: responsiveHeight(5),
+    borderRadius: 6,
+    width: responsiveWidth(90),
     padding: 8,
     color: '#2e4c60',
     borderColor: '#2e4c60',

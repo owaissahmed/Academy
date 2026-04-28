@@ -473,7 +473,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-evenly',
     width: responsiveWidth(95),
-    marginTop:responsiveHeight(-1.5),
+    marginTop: responsiveHeight(-1.5),
   },
   rectangletext: {
     fontFamily: 'mushaf',
@@ -595,8 +595,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   login: {
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
+    height: responsiveHeight(5),
+    borderRadius: 6,
+    width: responsiveWidth(85),
     backgroundColor: '#FBFCF8',
     padding: 8,
     borderColor: '#2e4c60',

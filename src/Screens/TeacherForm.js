@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -13,9 +13,10 @@ import {
   Modal,
   Image,
   Linking,
+  SafeAreaView
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
@@ -27,12 +28,12 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import {useAppContext} from './AppContext';
-import {launchImageLibrary} from 'react-native-image-picker';
+import { useAppContext } from './AppContext';
+import { launchImageLibrary } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-import FlashMessage, {showMessage} from 'react-native-flash-message';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
 
-const TeacherForm = ({navigation}) => {
+const TeacherForm = ({ navigation }) => {
   const [name, setname] = useState('');
   const [father, setfather] = useState('');
   const [Cnic, setCnic] = useState('');
@@ -241,7 +242,7 @@ const TeacherForm = ({navigation}) => {
       });
   };
 
-  const {setShowAlert} = useAppContext();
+  const { setShowAlert } = useAppContext();
 
   const GoBackHome = () => {
     setShowAlert(() => {
@@ -311,7 +312,7 @@ const TeacherForm = ({navigation}) => {
               Phone: formattedValue,
               Country: countryName,
               Subject: Subject,
-              Response:'Pending',
+              Response: 'Pending',
               DayTime: firebase.firestore.FieldValue.serverTimestamp(),
             });
 
@@ -354,7 +355,7 @@ const TeacherForm = ({navigation}) => {
           {loading ? (
             <ActivityIndicator size="large" color="#2e4c60" />
           ) : (
-            <Text allowFontScaling={false} style={{color: '#ffffff'}}>
+            <Text allowFontScaling={false} style={{ color: '#ffffff' }}>
               Loading...
             </Text>
           )}
@@ -363,12 +364,10 @@ const TeacherForm = ({navigation}) => {
       <>
         <FlashMessage position={'center'} />
       </>
-      <View
-        style={{height: responsiveHeight(75)}}>
-        <ScrollView>
-          <View style={styles.submain}>
-            <Image style={styles.logo} source={require('../Images/landscape-logo.png')} />
-
+      <View>
+        <SafeAreaView style={styles.submain}>
+          <Image style={styles.logo} source={require('../Images/landscape-logo.png')} />
+          <ScrollView style={{ height: responsiveHeight(75) }}>
             <TextInput
               onChangeText={NameChange}
               allowFontScaling={false}
@@ -443,8 +442,9 @@ const TeacherForm = ({navigation}) => {
                   placeholderTextColor: 'grey',
                 }}
                 containerStyle={{
-                  width: responsiveWidth(80),
-                  height: responsiveHeight(6),
+                  width: responsiveWidth(90),
+                  height: responsiveHeight(5),
+                  borderRadius: 6,
                   marginTop: responsiveHeight(3),
                   borderColor: '#2e4c60',
                   borderWidth: 1.5,
@@ -454,7 +454,8 @@ const TeacherForm = ({navigation}) => {
                   backgroundColor: '#FBFCF8',
                 }}
                 textInputStyle={{
-                  height: responsiveHeight(6),
+                  height: responsiveHeight(5),
+                  borderRadius: 6,
                   width: responsiveWidth(70),
                   color: '#2e4c60',
                   marginTop: responsiveHeight(0.2),
@@ -480,24 +481,24 @@ const TeacherForm = ({navigation}) => {
                   setFormattedValue(text);
                   setCountryCode(phoneInput.current?.getCountryCode() || '');
                 }}
-                countryPickerProps={{withAlphaFilter: true}}
+                countryPickerProps={{ withAlphaFilter: true }}
               />
             </View>
             <Text allowFontScaling={false} style={styles.default}>
               {country && country === 'Pakistan'
                 ? 'Pakistan'
                 : country
-                ? country.name
-                : ''}
+                  ? country.name
+                  : ''}
             </Text>
             <View
               style={{
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'center',
-                width: responsiveWidth(80),
+                width: responsiveWidth(90),
                 justifyContent: selectedImage ? 'space-between' : 'center',
-                marginTop: responsiveHeight(1),
+                // marginTop: responsiveHeight(1),
               }}>
               <TouchableOpacity onPress={selectImage} style={styles.button}>
                 <Text allowFontScaling={false} style={styles.buttontext}>
@@ -507,10 +508,10 @@ const TeacherForm = ({navigation}) => {
               <View>
                 {selectedImage ? (
                   <Image
-                    source={{uri: selectedImage.assets[0].uri}}
+                    source={{ uri: selectedImage.assets[0].uri }}
                     style={{
                       width: responsiveWidth(30),
-                      marginVertical: responsiveHeight(1),
+                      marginVertical: responsiveHeight(2),
                       // height: 100,
                       height: responsiveHeight(15),
                     }}
@@ -518,77 +519,75 @@ const TeacherForm = ({navigation}) => {
                 ) : null}
               </View>
             </View>
-            <View>
-              <TouchableOpacity onPress={Check} style={styles.button}>
-                <Text allowFontScaling={false} style={styles.buttontext}>
-                  SAVE
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: responsiveWidth(55),
-                justifyContent: 'space-evenly',
-                marginBottom: responsiveHeight(1),
-              }}>
-              <TouchableOpacity onPress={openFacebook}>
-                <Image
-                  style={{
-                    width: responsiveWidth(7.25),
-                    height: responsiveHeight(3.5),
-                  }}
-                  source={require('../Images/fb.png')}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={openInstagram}>
-                <Image
-                  style={{
-                    width: responsiveWidth(7.25),
-                    height: responsiveHeight(3.5),
-                  }}
-                  source={require('../Images/instagram.png')}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={openWhatsApp}>
-                <Image
-                  style={{
-                    width: responsiveWidth(7.25),
-                    height: responsiveHeight(3.5),
-                  }}
-                  source={require('../Images/whatsapp.png')}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={openTelegram}>
-                <Image
-                  style={{
-                    width: responsiveWidth(7.25),
-                    height: responsiveHeight(3.5),
-                  }}
-                  source={require('../Images/telegram.png')}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={{marginBottom: responsiveHeight(1)}}>
-              <Text allowFontScaling={false} style={{color: '#2e4c60', fontWeight: 'bold'}}>
-                CONTACT US
+          </ScrollView>
+          <View style={styles.buttonNext}>
+            <TouchableOpacity style={styles.button} onPress={Check}>
+              <Text allowFontScaling={false} style={styles.buttontext}>
+                SAVE
               </Text>
-            </View>
+            </TouchableOpacity>
           </View>
-        </ScrollView>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: responsiveWidth(55),
+              justifyContent: 'space-evenly',
+              marginBottom: responsiveHeight(1),
+            }}>
+            <TouchableOpacity onPress={openFacebook}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/fb.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openInstagram}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/instagram.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openWhatsApp}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/whatsapp.png')}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={openTelegram}>
+              <Image
+                style={{
+                  width: responsiveWidth(7.25),
+                  height: responsiveHeight(3.5),
+                }}
+                source={require('../Images/telegram.png')}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={{ marginBottom: responsiveHeight(1) }}>
+            <Text allowFontScaling={false} style={{ color: '#2e4c60', fontWeight: 'bold' }}>
+              CONTACT US
+            </Text>
+          </View>
+
+        </SafeAreaView>
       </View>
     </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-logo: {
+  logo: {
     height: responsiveHeight(8),
-    width: responsiveWidth(80),
+    width: responsiveWidth(90),
     marginTop: responsiveHeight(1),
   },
   phoneinput: {
@@ -615,28 +614,63 @@ logo: {
     justifyContent: 'center',
   },
   submain: {
-    borderColor: '#2e4c60',
-    borderWidth: 1.5,
+    // borderColor: '#2e4c60',
+    height: responsiveHeight(90),
+    // borderWidth: 1.5,
     width: responsiveWidth(90),
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 12,
+    // borderRadius: 12,
+
+    // marginVertical: responsiveHeight(3),
+  },
+  pickergroup: {
+    alignItems: 'center',
+    backgroundColor: '#FBFCF8',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: responsiveHeight(5),
+    borderRadius: 6,
+    width: responsiveWidth(90),
     marginTop: responsiveHeight(3),
+    borderColor: '#2e4c60',
+    borderWidth: 1.5,
+  },
+  picker: {
+    color: '#2e4c60',
+    height: responsiveHeight(6.5),
+    width: responsiveWidth(90),
+  },
+  Genderpicker: {
+    backgroundColor: 'white',
+    color: '#2e4c60',
+    width: responsiveWidth(90),
+    borderColor: '#2e4c60',
+    backgroundColor: '#FBFCF8',
+    fontSize: responsiveFontSize(2),
+    borderWidth: 1.5,
+    borderRadius: 10,
+    marginBottom: responsiveHeight(1),
+    marginTop: responsiveHeight(3),
+
   },
   login: {
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
+    height: responsiveHeight(5),
+    borderRadius: 6,
     backgroundColor: '#FBFCF8',
     padding: 8,
     borderColor: '#2e4c60',
     color: '#2e4c60',
     borderWidth: 1.5,
     marginTop: responsiveHeight(2),
+    // marginBottom: responsiveHeight(2),
     fontSize: responsiveFontSize(2),
+    width: responsiveWidth(90),
   },
   password: {
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
+    height: responsiveHeight(5),
+    borderRadius: 6,
+    width: responsiveWidth(90),
     padding: 8,
     color: '#2e4c60',
     borderColor: '#2e4c60',
@@ -646,8 +680,9 @@ logo: {
     fontSize: responsiveFontSize(2),
   },
   default: {
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
+    height: responsiveHeight(5),
+    borderRadius: 6,
+    width: responsiveWidth(90),
     padding: 8,
     color: '#2e4c60',
     borderColor: '#2e4c60',
@@ -657,50 +692,95 @@ logo: {
     fontSize: responsiveFontSize(2),
     textAlignVertical: 'center',
   },
-  pickergroup: {
-    alignItems: 'center',
-    backgroundColor: '#FBFCF8',
+  buttonNext: {
+    // borderColor: '#2e4c60',
+    // borderWidth: 1.5,
+    // width: responsiveWidth(90),
     alignItems: 'center',
     justifyContent: 'center',
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
-    marginTop: responsiveHeight(3),
-    borderColor: '#2e4c60',
-    borderWidth: 1.5,
-  },
-  picker: {
-    color: '#2e4c60',
-    height: responsiveHeight(6.5),
-    width: responsiveWidth(75),
-  },
-  defaultCourse: {
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
-    paddingHorizontal: 6,
-    paddingBottom: 4,
-    color: '#2e4c60',
-    borderColor: '#2e4c60',
-    borderWidth: 1.5,
-    marginTop: responsiveHeight(3),
-    backgroundColor: '#FBFCF8',
-    fontSize: responsiveFontSize(2.8),
-    textAlignVertical: 'center',
-    fontFamily: 'mushaf',
+    // borderRadius: 12,
   },
   button: {
     backgroundColor: '#2e4c60',
     color: 'white',
     padding: 6,
-    marginVertical: responsiveHeight(2),
+    justifyContent: 'center',
+    marginTop: responsiveHeight(3),
+    marginBottom: responsiveHeight(2),
     borderRadius: 8,
-    width: responsiveWidth(38),
+    width: responsiveWidth(40),
   },
   buttontext: {
     color: '#fff',
     fontWeight: '600',
     letterSpacing: 0.7,
     textAlign: 'center',
+    fontSize: responsiveFontSize(2.25),
+  },
+  Subjectbutton: {
+    height: responsiveHeight(5),
+    borderRadius: 6,
+    width: responsiveWidth(90),
+    paddingVertical: 9,
+    paddingHorizontal: 8,
+    color: '#2e4c60',
+    borderColor: '#2e4c60',
+    borderWidth: 1.5,
+    marginTop: responsiveHeight(3),
+    backgroundColor: '#FBFCF8',
     fontSize: responsiveFontSize(2),
+  },
+  Subjectbuttontext: {
+    color: '#2e4c60',
+    fontSize: responsiveFontSize(2),
+  },
+  highlight: {
+    fontWeight: '700',
+  },
+  modalBackground: {
+    width: responsiveWidth(90),
+    height: responsiveHeight(30),
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  modal: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    borderRadius: 20,
+  },
+
+  modalImage: {
+    height: responsiveHeight(11),
+    width: responsiveWidth(24),
+    marginTop: responsiveHeight(1),
+  },
+  ModalButtonView: {
+    marginTop: responsiveHeight(1),
+
+    width: responsiveWidth(85),
+
+    marginBottom: responsiveHeight(1),
+
+    paddingHorizontal: responsiveWidth(4),
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  Btn: {
+    backgroundColor: '#2e4c60',
+    color: 'white',
+    padding: 6,
+    borderRadius: 8,
+    width: responsiveWidth(30),
+  },
+  BtnText: {
+    color: '#fff',
+    fontWeight: '600',
+    letterSpacing: 0.7,
+    textAlign: 'center',
+    fontSize: responsiveFontSize(2.25),
   },
 });
 

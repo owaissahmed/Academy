@@ -470,8 +470,9 @@ const OnlineTuition = ({ navigation }) => {
                   placeholderTextColor: 'grey',
                 }}
                 containerStyle={{
-                  width: responsiveWidth(80),
-                  height: responsiveHeight(6),
+                  width: responsiveWidth(90),
+                  height: responsiveHeight(5),
+                  borderRadius: 6,
                   marginTop: responsiveHeight(3),
                   borderColor: '#2e4c60',
                   borderWidth: 1.5,
@@ -481,7 +482,8 @@ const OnlineTuition = ({ navigation }) => {
                   backgroundColor: '#FBFCF8',
                 }}
                 textInputStyle={{
-                  height: responsiveHeight(6),
+                  height: responsiveHeight(5),
+                  borderRadius: 6,
                   width: responsiveWidth(70),
                   color: '#2e4c60',
                   marginTop: responsiveHeight(0.2),
@@ -667,7 +669,7 @@ const OnlineTuition = ({ navigation }) => {
 const styles = StyleSheet.create({
   logo: {
     height: responsiveHeight(8),
-    width: responsiveWidth(80),
+    width: responsiveWidth(90),
     marginTop: responsiveHeight(1),
   },
   phoneinput: {
@@ -694,13 +696,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   submain: {
-    borderColor: '#2e4c60',
+    // borderColor: '#2e4c60',
     height: responsiveHeight(90),
-    borderWidth: 1.5,
+    // borderWidth: 1.5,
     width: responsiveWidth(90),
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 12,
+    // borderRadius: 12,
 
     // marginVertical: responsiveHeight(3),
   },
@@ -709,8 +711,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FBFCF8',
     alignItems: 'center',
     justifyContent: 'center',
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
+    height: responsiveHeight(5),
+    borderRadius: 6,
+    width: responsiveWidth(90),
     marginTop: responsiveHeight(3),
     borderColor: '#2e4c60',
     borderWidth: 1.5,
@@ -718,12 +721,12 @@ const styles = StyleSheet.create({
   picker: {
     color: '#2e4c60',
     height: responsiveHeight(6.5),
-    width: responsiveWidth(75),
+    width: responsiveWidth(90),
   },
   Genderpicker: {
     backgroundColor: 'white',
     color: '#2e4c60',
-    width: responsiveWidth(80),
+    width: responsiveWidth(90),
     borderColor: '#2e4c60',
     backgroundColor: '#FBFCF8',
     fontSize: responsiveFontSize(2),
@@ -731,10 +734,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: responsiveHeight(1),
     marginTop: responsiveHeight(3),
+
   },
   login: {
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
+    height: responsiveHeight(5),
+    borderRadius: 6,
     backgroundColor: '#FBFCF8',
     padding: 8,
     borderColor: '#2e4c60',
@@ -745,8 +749,9 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2),
   },
   password: {
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
+    height: responsiveHeight(5),
+    borderRadius: 6,
+    width: responsiveWidth(90),
     padding: 8,
     color: '#2e4c60',
     borderColor: '#2e4c60',
@@ -756,8 +761,9 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2),
   },
   default: {
-    height: responsiveHeight(6),
-    width: responsiveWidth(80),
+    height: responsiveHeight(5),
+    borderRadius: 6,
+    width: responsiveWidth(90),
     padding: 8,
     color: '#2e4c60',
     borderColor: '#2e4c60',
@@ -793,8 +799,10 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2.25),
   },
   Subjectbutton: {
-    width: responsiveWidth(80),
-    paddingVertical: 12,
+    height: responsiveHeight(5),
+    borderRadius: 6,
+    width: responsiveWidth(90),
+    paddingVertical: 9,
     paddingHorizontal: 8,
     color: '#2e4c60',
     borderColor: '#2e4c60',

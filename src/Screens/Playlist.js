@@ -183,36 +183,97 @@ const Playlist = ({ navigation }) => {
         <>
           <FlashMessage position={'center'} />
         </>
-        <View >
-          <Image
-            style={{
-              height: responsiveHeight(8),
-              width: responsiveWidth(80),
-              marginTop: responsiveHeight(1),
-            }}
-            source={require('../Images/landscape-logo.png')}
-          />
-        </View>
         {!loading && courses.length > 0 ? (
-          <View >
-            <View style={styles.FlatListVIew}>
-              <FlatList
-                data={courses}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    onPress={() => youtube(item.Link)}
-                    style={styles.Data}>
-                    <View style={styles.DataView}>
-                      <Text allowFontScaling={false} style={styles.CourseName}>
-                        {item.Name}
-                      </Text>
-                    </View>
-                  </TouchableOpacity>
-                )}
-                keyExtractor={item => item.id}
+          <>
+            <View >
+              <Image
+                style={{
+                  height: responsiveHeight(8),
+                  width: responsiveWidth(80),
+                  marginTop: responsiveHeight(1),
+                }}
+                source={require('../Images/landscape-logo.png')}
               />
             </View>
-          </View>
+
+            <View >
+              <View style={styles.FlatListVIew}>
+                <FlatList
+                  data={courses}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      onPress={() => youtube(item.Link)}
+                      style={styles.Data}>
+                      <View style={styles.DataView}>
+                        <Text allowFontScaling={false} style={styles.CourseName}>
+                          {item.Name}
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                  keyExtractor={item => item.id}
+                />
+              </View>
+            </View>
+            <View
+              style={{
+                width: 'auto',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginTop: responsiveHeight(1),
+              }}>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  width: responsiveWidth(55),
+                  justifyContent: 'space-evenly',
+                  marginBottom: responsiveHeight(1),
+                }}>
+                <TouchableOpacity onPress={openFacebook}>
+                  <Image
+                    style={{
+                      width: responsiveWidth(7.25),
+                      height: responsiveHeight(3.5),
+                    }}
+                    source={require('../Images/fb.png')}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={openInstagram}>
+                  <Image
+                    style={{
+                      width: responsiveWidth(7.25),
+                      height: responsiveHeight(3.5),
+                    }}
+                    source={require('../Images/instagram.png')}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={openWhatsApp}>
+                  <Image
+                    style={{
+                      width: responsiveWidth(7.25),
+                      height: responsiveHeight(3.5),
+                    }}
+                    source={require('../Images/whatsapp.png')}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={openTelegram}>
+                  <Image
+                    style={{
+                      width: responsiveWidth(7.25),
+                      height: responsiveHeight(3.5),
+                    }}
+                    source={require('../Images/telegram.png')}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={{ marginBottom: responsiveHeight(1) }}>
+                <Text allowFontScaling={false} style={{ color: '#2e4c60', fontWeight: 'bold' }}>
+                  CONTACT US
+                </Text>
+              </View>
+            </View>
+          </>
         ) : (
           <View>
             {!loading && (
@@ -221,67 +282,11 @@ const Playlist = ({ navigation }) => {
               </Text>
             )}
           </View>
+
         )}
-        <View
-          style={{
-            width: 'auto',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: responsiveHeight(1),
-          }}>
-          <View
-            style={{
-              display: 'flex',
-              flexDirection: 'row',
-              width: responsiveWidth(55),
-              justifyContent: 'space-evenly',
-              marginBottom: responsiveHeight(1),
-            }}>
-            <TouchableOpacity onPress={openFacebook}>
-              <Image
-                style={{
-                  width: responsiveWidth(7.25),
-                  height: responsiveHeight(3.5),
-                }}
-                source={require('../Images/fb.png')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={openInstagram}>
-              <Image
-                style={{
-                  width: responsiveWidth(7.25),
-                  height: responsiveHeight(3.5),
-                }}
-                source={require('../Images/instagram.png')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={openWhatsApp}>
-              <Image
-                style={{
-                  width: responsiveWidth(7.25),
-                  height: responsiveHeight(3.5),
-                }}
-                source={require('../Images/whatsapp.png')}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={openTelegram}>
-              <Image
-                style={{
-                  width: responsiveWidth(7.25),
-                  height: responsiveHeight(3.5),
-                }}
-                source={require('../Images/telegram.png')}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={{ marginBottom: responsiveHeight(1) }}>
-            <Text allowFontScaling={false} style={{ color: '#2e4c60', fontWeight: 'bold' }}>
-              CONTACT US
-            </Text>
-          </View>
-        </View>
+
       </ImageBackground>
-    </View>
+    </View >
   );
 };
 
