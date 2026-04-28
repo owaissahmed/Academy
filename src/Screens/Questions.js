@@ -229,8 +229,8 @@ const Questions = ({navigation}) => {
             </ImageBackground>
           </View>
         </Modal>
-        {courses.length > 0 ? (
-          <Animatable.View animation={'fadeInUp'} delay={1000} duration={2000}>
+        {!loading && courses.length > 0 ? (
+          <View >
             <View style={styles.FlatListVIew}>
               <FlatList
                 data={courses}
@@ -251,19 +251,17 @@ const Questions = ({navigation}) => {
                 keyExtractor={item => item.id}
               />
             </View>
-          </Animatable.View>
+          </View>
         ) : (
           <View>
-            {loading == true ? (
-              <Text allowFontScaling={false} style={styles.NoData}></Text>
-            ) : (
+           {!loading && (
               <Text allowFontScaling={false} style={styles.NoData}>
                 No Questions!!
               </Text>
             )}
           </View>
         )}
-        <Animatable.View
+        <View
           style={{
             width: responsiveWidth(100),
             // justifyContent: 'center',
@@ -273,9 +271,7 @@ const Questions = ({navigation}) => {
             position: 'absolute',
             // marginBottom:responsiveHeight(),
           }}
-          animation={'fadeInDown'}
-          delay={1000}
-          duration={2000}>
+         >
           <View style={styles.category}>
             <View style={styles.categorypickergroup}>
               <Picker
@@ -356,8 +352,8 @@ const Questions = ({navigation}) => {
               </Picker>
             </View>
           </View>
-        </Animatable.View>
-        <Animatable.View
+        </View>
+        <View
           style={{
             width: responsiveWidth(100),
             // height: responsiveHeight(15),
@@ -369,9 +365,7 @@ const Questions = ({navigation}) => {
             bottom: 0,
             position: 'absolute',
           }}
-          animation={'fadeInUp'}
-          delay={1000}
-          duration={2000}>
+         >
           <TouchableOpacity onPress={openModal} style={styles.rectangle}>
             <View>
               <Image
@@ -389,7 +383,7 @@ const Questions = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
-        </Animatable.View>
+        </View>
       </ImageBackground>
     </View>
   );

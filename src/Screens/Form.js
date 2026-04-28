@@ -298,7 +298,7 @@ const Form = ({navigation}) => {
       <>
         <FlashMessage position={'center'} />
       </>
-      <Animatable.View animation={'zoomIn'} delay={1000} duration={2000}>
+      <View>
         <SafeAreaView style={styles.submain}>
           <Image style={styles.logo} source={require('../Images/logo.png')} />
           <TextInput
@@ -429,7 +429,7 @@ const Form = ({navigation}) => {
             </Text>
           </View>
         </SafeAreaView>
-      </Animatable.View>
+      </View>
     </ImageBackground>
   );
 };

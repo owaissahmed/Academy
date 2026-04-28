@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -20,7 +20,7 @@ import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
 import NetInfo from '@react-native-community/netinfo';
 import auth from '@react-native-firebase/auth';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -28,11 +28,11 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import {useAppContext} from './AppContext';
-import FlashMessage, {showMessage} from 'react-native-flash-message';
-import {useRoute} from '@react-navigation/native';
+import { useAppContext } from './AppContext';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
+import { useRoute } from '@react-navigation/native';
 
-const HomeTuition = ({navigation}) => {
+const HomeTuition = ({ navigation }) => {
   const [isTeacherModalVisible, setTeacherModalVisible] = useState(false);
   const [name, setname] = useState('');
   const [father, setfather] = useState('');
@@ -212,7 +212,7 @@ const HomeTuition = ({navigation}) => {
     });
   }
 
-  const {setShowAlert} = useAppContext();
+  const { setShowAlert } = useAppContext();
 
   const GoBackHome = () => {
     setShowAlert(() => {
@@ -412,7 +412,7 @@ const HomeTuition = ({navigation}) => {
           {loading ? (
             <ActivityIndicator size="large" color="#2e4c60" />
           ) : (
-            <Text allowFontScaling={false} style={{color: '#ffffff'}}>
+            <Text allowFontScaling={false} style={{ color: '#ffffff' }}>
               Loading...
             </Text>
           )}
@@ -423,8 +423,8 @@ const HomeTuition = ({navigation}) => {
       </>
       <View>
         <SafeAreaView style={styles.submain}>
-          <Image style={styles.logo} source={require('../Images/logo.png')} />
-          <ScrollView style={{height: responsiveHeight(75)}}>
+          <Image style={styles.logo} source={require('../Images/landscape-logo.png')} />
+          <ScrollView style={{ height: responsiveHeight(75) }}>
             <TextInput
               onChangeText={NameChange}
               allowFontScaling={false}
@@ -525,15 +525,15 @@ const HomeTuition = ({navigation}) => {
                   setFormattedValue(text);
                   setCountryCode(phoneInput.current?.getCountryCode() || '');
                 }}
-                countryPickerProps={{withAlphaFilter: true}}
+                countryPickerProps={{ withAlphaFilter: true }}
               />
             </View>
             <Text allowFontScaling={false} style={styles.default}>
               {country && country === 'Pakistan'
                 ? 'Pakistan'
                 : country
-                ? country.name
-                : ''}
+                  ? country.name
+                  : ''}
             </Text>
             <TouchableOpacity style={styles.Subjectbutton} onPress={openModal}>
               <Text allowFontScaling={false} style={styles.Subjectbuttontext}>
@@ -669,8 +669,8 @@ const HomeTuition = ({navigation}) => {
               />
             </TouchableOpacity>
           </View>
-          <View style={{marginBottom: responsiveHeight(1)}}>
-            <Text allowFontScaling={false} style={{color: '#2e4c60', fontWeight: 'bold'}}>
+          <View style={{ marginBottom: responsiveHeight(1) }}>
+            <Text allowFontScaling={false} style={{ color: '#2e4c60', fontWeight: 'bold' }}>
               CONTACT US
             </Text>
           </View>
@@ -682,10 +682,9 @@ const HomeTuition = ({navigation}) => {
 
 const styles = StyleSheet.create({
   logo: {
-    height: responsiveHeight(13),
-    width: responsiveWidth(33),
-    marginTop: responsiveHeight(2),
-    // backgroundColor: '#F57777',
+    height: responsiveHeight(8),
+    width: responsiveWidth(80),
+    marginTop: responsiveHeight(1),
   },
   phoneinput: {
     justifyContent: 'center',

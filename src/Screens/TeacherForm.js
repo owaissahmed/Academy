@@ -367,7 +367,7 @@ const TeacherForm = ({navigation}) => {
         style={{height: responsiveHeight(75)}}>
         <ScrollView>
           <View style={styles.submain}>
-            <Image style={styles.logo} source={require('../Images/logo.png')} />
+            <Image style={styles.logo} source={require('../Images/landscape-logo.png')} />
 
             <TextInput
               onChangeText={NameChange}
@@ -586,10 +586,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  logo: {
-    height: responsiveHeight(15),
-    width: responsiveWidth(40),
-    marginTop: responsiveHeight(2),
+logo: {
+    height: responsiveHeight(8),
+    width: responsiveWidth(80),
+    marginTop: responsiveHeight(1),
   },
   phoneinput: {
     justifyContent: 'center',

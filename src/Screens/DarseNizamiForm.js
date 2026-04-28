@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -15,9 +15,9 @@ import {
   Linking,
   ScrollView,
 } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 import storage from '@react-native-firebase/storage';
-import {launchImageLibrary} from 'react-native-image-picker';
+import { launchImageLibrary } from 'react-native-image-picker';
 import PhoneInput from 'react-native-phone-number-input';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
@@ -29,11 +29,11 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import {useAppContext} from './AppContext';
+import { useAppContext } from './AppContext';
 import auth from '@react-native-firebase/auth';
-import FlashMessage, {showMessage} from 'react-native-flash-message';
-import {useRoute} from '@react-navigation/native';
-const DarseNizamiForm = ({navigation}) => {
+import FlashMessage, { showMessage } from 'react-native-flash-message';
+import { useRoute } from '@react-navigation/native';
+const DarseNizamiForm = ({ navigation }) => {
   const [name, setname] = useState('');
   const [father, setfather] = useState('');
   const [course, setcourse] = useState('');
@@ -174,7 +174,7 @@ const DarseNizamiForm = ({navigation}) => {
     });
   }
 
-  const {setShowAlert} = useAppContext();
+  const { setShowAlert } = useAppContext();
 
   const GoBackHome = () => {
     setShowAlert(() => {
@@ -420,7 +420,7 @@ const DarseNizamiForm = ({navigation}) => {
             GoBackHome();
           }, 1000);
         }, 5000);
-      } 
+      }
     }
   };
 
@@ -440,7 +440,7 @@ const DarseNizamiForm = ({navigation}) => {
           {loading ? (
             <ActivityIndicator size="large" color="#2e4c60" />
           ) : (
-            <Text allowFontScaling={false} style={{color: '#ffffff'}}>
+            <Text allowFontScaling={false} style={{ color: '#ffffff' }}>
               Loading...
             </Text>
           )}
@@ -451,8 +451,8 @@ const DarseNizamiForm = ({navigation}) => {
       </>
       <View>
         <SafeAreaView style={styles.submain}>
-          <Image style={styles.logo} source={require('../Images/logo.png')} />
-          <ScrollView style={{height: responsiveHeight(75)}}>
+          <Image style={styles.logo} source={require('../Images/landscape-logo.png')} />
+          <ScrollView style={{ height: responsiveHeight(75) }}>
             <TextInput
               onChangeText={NameChange}
               allowFontScaling={false}
@@ -510,8 +510,8 @@ const DarseNizamiForm = ({navigation}) => {
               </Picker>
             </View>
             {ClassselectedValue ===
-            'Select Class To Get Addmission' ? null : ClassselectedValue ===
-              'عامہ سالِ اول' ? null : (
+              'Select Class To Get Addmission' ? null : ClassselectedValue ===
+                'عامہ سالِ اول' ? null : (
               <View
                 style={{
                   display: 'flex',
@@ -531,7 +531,7 @@ const DarseNizamiForm = ({navigation}) => {
                 <View>
                   {selectedImage ? (
                     <Image
-                      source={{uri: selectedImage.assets[0].uri}}
+                      source={{ uri: selectedImage.assets[0].uri }}
                       style={{
                         width: responsiveWidth(30),
                         marginVertical: responsiveHeight(1),
@@ -586,15 +586,15 @@ const DarseNizamiForm = ({navigation}) => {
                   setFormattedValue(text);
                   setCountryCode(phoneInput.current?.getCountryCode() || '');
                 }}
-                countryPickerProps={{withAlphaFilter: true}}
+                countryPickerProps={{ withAlphaFilter: true }}
               />
             </View>
             <Text allowFontScaling={false} style={styles.default}>
               {country && country === 'Pakistan'
                 ? 'Pakistan'
                 : country
-                ? country.name
-                : ''}
+                  ? country.name
+                  : ''}
             </Text>
           </ScrollView>
           <TouchableOpacity style={styles.button} onPress={Check}>
@@ -647,8 +647,8 @@ const DarseNizamiForm = ({navigation}) => {
               />
             </TouchableOpacity>
           </View>
-          <View style={{marginBottom: responsiveHeight(1)}}>
-            <Text allowFontScaling={false} style={{color: '#2e4c60', fontWeight: 'bold'}}>
+          <View style={{ marginBottom: responsiveHeight(1) }}>
+            <Text allowFontScaling={false} style={{ color: '#2e4c60', fontWeight: 'bold' }}>
               CONTACT US
             </Text>
           </View>
@@ -660,10 +660,9 @@ const DarseNizamiForm = ({navigation}) => {
 
 const styles = StyleSheet.create({
   logo: {
-    height: responsiveHeight(13),
-    width: responsiveWidth(33),
-    marginTop: responsiveHeight(2),
-    // backgroundColor: '#F57777',
+    height: responsiveHeight(8),
+    width: responsiveWidth(80),
+    marginTop: responsiveHeight(1),
   },
   phoneinput: {
     justifyContent: 'center',
@@ -710,7 +709,7 @@ const styles = StyleSheet.create({
     borderColor: '#2e4c60',
     borderWidth: 1.5,
   },
- picker: {
+  picker: {
     color: '#2e4c60',
     height: responsiveHeight(6.5),
     width: responsiveWidth(75),

@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -25,13 +25,13 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import {useAppContext} from './AppContext';
-import FlashMessage, {showMessage} from 'react-native-flash-message';
-import {useRoute} from '@react-navigation/native';
-const OnlineTuition = ({navigation}) => {
+import { useAppContext } from './AppContext';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
+import { useRoute } from '@react-navigation/native';
+const OnlineTuition = ({ navigation }) => {
   const [isTeacherModalVisible, setTeacherModalVisible] = useState(false);
   const [name, setname] = useState('');
   const [father, setfather] = useState('');
@@ -84,7 +84,7 @@ const OnlineTuition = ({navigation}) => {
   const IslamicChange = newIslamic => {
     setislamiceducation(newIslamic);
   };
-  
+
   const fetchData = async () => {
     try {
       const querySnapshot = await firestore()
@@ -219,7 +219,7 @@ const OnlineTuition = ({navigation}) => {
     });
   }
 
-  const {setShowAlert} = useAppContext();
+  const { setShowAlert } = useAppContext();
 
   const GoBackHome = () => {
     setShowAlert(() => {
@@ -401,7 +401,7 @@ const OnlineTuition = ({navigation}) => {
           {loading ? (
             <ActivityIndicator size="large" color="#2e4c60" />
           ) : (
-            <Text allowFontScaling={false} style={{color: '#ffffff'}}>
+            <Text allowFontScaling={false} style={{ color: '#ffffff' }}>
               Loading...
             </Text>
           )}
@@ -412,8 +412,8 @@ const OnlineTuition = ({navigation}) => {
       </>
       <View>
         <SafeAreaView style={styles.submain}>
-          <Image style={styles.logo} source={require('../Images/logo.png')} />
-          <ScrollView style={{height: responsiveHeight(75)}}>
+          <Image style={styles.logo} source={require('../Images/landscape-logo.png')} />
+          <ScrollView style={{ height: responsiveHeight(75) }}>
             <TextInput
               onChangeText={NameChange}
               allowFontScaling={false}
@@ -451,21 +451,21 @@ const OnlineTuition = ({navigation}) => {
               {buttonText}
             </Text>
             <TextInput
-            onChangeText={EducationChange}
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Your Education"
-            placeholderTextColor={'grey'}
+              onChangeText={EducationChange}
+              allowFontScaling={false}
+              style={styles.password}
+              placeholder="Enter Your Education"
+              placeholderTextColor={'grey'}
             />
             <TextInput
-            onChangeText={IslamicChange}
-            allowFontScaling={false}
-            style={styles.password}
-            placeholder="Enter Your Islamic Education"
-            placeholderTextColor={'grey'}
+              onChangeText={IslamicChange}
+              allowFontScaling={false}
+              style={styles.password}
+              placeholder="Enter Your Islamic Education"
+              placeholderTextColor={'grey'}
             />
             <View>
-            <PhoneInput
+              <PhoneInput
                 textInputProps={{
                   placeholderTextColor: 'grey',
                 }}
@@ -503,19 +503,19 @@ const OnlineTuition = ({navigation}) => {
                 onChangeText={text => {
                   setValue(text);
                 }}
-                onChangeFormattedText={text => {  
+                onChangeFormattedText={text => {
                   setFormattedValue(text);
                   setCountryCode(phoneInput.current?.getCountryCode() || '');
                 }}
-                countryPickerProps={{withAlphaFilter: true}}
+                countryPickerProps={{ withAlphaFilter: true }}
               />
             </View>
             <Text allowFontScaling={false} style={styles.default}>
               {country && country === 'Pakistan'
                 ? 'Pakistan'
                 : country
-                ? country.name
-                : ''}
+                  ? country.name
+                  : ''}
             </Text>
             <TouchableOpacity style={styles.Subjectbutton} onPress={openModal}>
               <Text allowFontScaling={false} style={styles.Subjectbuttontext}>
@@ -653,8 +653,8 @@ const OnlineTuition = ({navigation}) => {
               />
             </TouchableOpacity>
           </View>
-          <View style={{marginBottom: responsiveHeight(1)}}>
-            <Text  allowFontScaling={false} style={{color: '#2e4c60', fontWeight: 'bold'}}>
+          <View style={{ marginBottom: responsiveHeight(1) }}>
+            <Text allowFontScaling={false} style={{ color: '#2e4c60', fontWeight: 'bold' }}>
               CONTACT US
             </Text>
           </View>
@@ -666,10 +666,9 @@ const OnlineTuition = ({navigation}) => {
 
 const styles = StyleSheet.create({
   logo: {
-    height: responsiveHeight(13),
-    width: responsiveWidth(33),
-    marginTop: responsiveHeight(2),
-    // backgroundColor: '#F57777',
+    height: responsiveHeight(8),
+    width: responsiveWidth(80),
+    marginTop: responsiveHeight(1),
   },
   phoneinput: {
     justifyContent: 'center',
@@ -702,7 +701,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 12,
-    
+
     // marginVertical: responsiveHeight(3),
   },
   pickergroup: {

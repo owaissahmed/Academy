@@ -72,7 +72,7 @@ const UpcomingCourses = ({navigation}) => {
         </View>
       </Modal>
 
-      {courses.length > 0 ? (
+      {!loading && courses.length > 0 ? (
         <View>
           <View style={styles.Description_View}>
             <FlatList
@@ -155,11 +155,11 @@ const UpcomingCourses = ({navigation}) => {
         </View>
       ) : (
         <>
-          {loading != true ? (
+         {!loading && (
             <Text allowFontScaling={false} style={styles.NoData}>
               No Courses!!
             </Text>
-          ) : null}
+          )}
         </>
       )}
     </ImageBackground>
@@ -188,8 +188,12 @@ const styles = StyleSheet.create({
     marginBottom: responsiveHeight(-0.5),
   },
   NoData: {
-    fontSize: responsiveFontSize(3),
+    fontSize: responsiveScreenFontSize(4),
     color: 'red',
+    textAlign: 'center',
+    fontFamily: 'good',
+    letterSpacing: 3,
+    textTransform: 'uppercase',
   },
   Description_View: {
     width: responsiveWidth(95),
