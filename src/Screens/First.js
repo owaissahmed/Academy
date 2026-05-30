@@ -1,12 +1,12 @@
+import React, { useEffect } from 'react';
 import {
   View,
-  Text,
-  Image,
   ImageBackground,
   Dimensions,
   StyleSheet,
 } from 'react-native';
-import {React, useLayoutEffect} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Animatable from 'react-native-animatable';
 import {
   responsiveFontSize,
   responsiveHeight,
@@ -14,33 +14,36 @@ import {
 } from 'react-native-responsive-dimensions';
 const devicewidth = Dimensions.get('window').width;
 const deviceheight = Dimensions.get('window').height;
-import auth from '@react-native-firebase/auth';
-import * as Animatable from 'react-native-animatable';
+export default function First({ navigation }) {
 
-export default function First({navigation}) {
-  useLayoutEffect(() => {
-    gotoHome();
+  useEffect(() => {
+    checkAuth();
   }, []);
-  function gotoHome() {
-    // Firebase check karo
-    try {
-      const app = auth().app;
-      console.log('✅ Firebase ready:', app.name);
-    } catch (e) {
-      console.log('❌ Firebase NOT ready:', e.message);
-    }
 
-    setTimeout(() => {
-      navigation.replace('Home');
-    }, 4000);
-  }
+  const checkAuth = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+
+      setTimeout(() => {
+        if (token) {
+          navigation.replace('Home');
+        } else {
+          navigation.replace('Login');
+        }
+      }, 3000);
+
+    } catch (error) {
+      navigation.replace('Login');
+    }
+  };
 
   return (
     <View>
       <ImageBackground
         resizeMode="cover"
         style={styles.background}
-        source={require('../Images/background.jpg')}>
+        source={require('../Images/background.jpg')}
+      >
         <View style={styles.div}>
           <Animatable.Image
             animation="fadeInDown"
@@ -49,20 +52,21 @@ export default function First({navigation}) {
             style={styles.calligraphy}
             source={require('../Images/calligraphy.png')}
           />
+
           <Animatable.Text
             animation="fadeInUp"
             duration={3000}
-            allowFontScaling={false}
             delay={250}
-            style={styles.Knowledge}>
+            style={styles.Knowledge}
+          >
             The Knowledge Is Light
           </Animatable.Text>
+
         </View>
       </ImageBackground>
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   background: {
     width: devicewidth,

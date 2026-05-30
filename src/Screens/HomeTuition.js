@@ -56,6 +56,9 @@ const HomeTuition = ({ navigation }) => {
   const [age, setage] = useState('');
   const [address, setaddress] = useState('');
   const phoneInput = useRef(null);
+  const [genderModal, setGenderModal] = useState(false);
+
+const genderOptions = ['Select Gender', 'Male', 'Female'];
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -447,17 +450,84 @@ const HomeTuition = ({ navigation }) => {
               placeholderTextColor={'grey'}
               onChangeText={AgeChange}
             />
-            <View style={styles.pickergroup}>
-              <Picker
-                style={styles.picker}
-                selectedValue={GenderselectedValue}
-                dropdownIconColor={'#2e4c60'}
-                onValueChange={handleValueChange}>
-                <Picker.Item label="Select Gender" value="Select Gender" />
-                <Picker.Item label="Male" value="Male" />
-                <Picker.Item label="Female" value="Female" />
-              </Picker>
-            </View>
+           {/* Picker ki jagah yeh lagao */}
+<TouchableOpacity
+  style={styles.pickergroup}
+  onPress={() => setGenderModal(true)}>
+  <Text style={{
+    color: GenderselectedValue === 'Select Gender' ? 'grey' : '#2e4c60',
+    fontSize: responsiveFontSize(2),
+  }}>
+    {GenderselectedValue}
+  </Text>
+</TouchableOpacity>
+
+{/* Bottom Sheet Modal */}
+<Modal
+  visible={genderModal}
+  transparent={true}
+  animationType="slide"
+  onRequestClose={() => setGenderModal(false)}>
+  
+  {/* Background overlay */}
+  <TouchableOpacity
+    style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.4)' }}
+    onPress={() => setGenderModal(false)}
+  />
+
+  {/* Sheet */}
+  <View style={{
+    backgroundColor: '#FBFCF8',
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+  }}>
+    <Text style={{
+      color: '#2e4c60',
+      fontSize: responsiveFontSize(2),
+      fontWeight: 'bold',
+      marginBottom: 10,
+      textAlign: 'center',
+    }}>
+      Select Gender
+    </Text>
+
+    {genderOptions.filter(g => g !== 'Select Gender').map((item) => (
+      <TouchableOpacity
+        key={item}
+        onPress={() => {
+          handleValueChange(item);
+          setGenderModal(false);
+        }}
+        style={{
+          paddingVertical: 14,
+          borderBottomWidth: 0.5,
+          borderBottomColor: '#ddd',
+        }}>
+        <Text style={{
+          color: '#2e4c60',
+          fontSize: responsiveFontSize(2),
+          textAlign: 'center',
+        }}>
+          {item}
+        </Text>
+      </TouchableOpacity>
+    ))}
+
+    <TouchableOpacity
+      onPress={() => setGenderModal(false)}
+      style={{ paddingVertical: 14, marginTop: 4 }}>
+      <Text style={{
+        color: 'grey',
+        fontSize: responsiveFontSize(1.8),
+        textAlign: 'center',
+      }}>
+        Cancel
+      </Text>
+    </TouchableOpacity>
+  </View>
+</Modal>
             <TextInput
               allowFontScaling={false}
               style={styles.password}
@@ -495,25 +565,29 @@ const HomeTuition = ({ navigation }) => {
                   borderColor: '#2e4c60',
                   borderWidth: 1.5,
                   backgroundColor: '#FBFCF8',
+                  overflow: 'hidden',  // yeh add karo
+                  alignItems: 'center', // yeh add karo
                 }}
                 flagButtonStyle={{
                   backgroundColor: '#FBFCF8',
                 }}
                 textInputStyle={{
-                  height: responsiveHeight(5),
+                  height: responsiveHeight(6),
                   borderRadius: 6,
-                  width: responsiveWidth(70),
+                  width: responsiveWidth(60),  // thoda kam karo
                   color: '#2e4c60',
-                  marginTop: responsiveHeight(0.2),
                   fontSize: responsiveFontSize(2),
                   textAlignVertical: 'center',
+                  paddingVertical: 0,   // yeh add karo
+                  marginTop: 0,         // yeh hata do
                 }}
                 codeTextStyle={{
                   color: '#2e4c60',
                   fontSize: responsiveFontSize(2),
-                  height: responsiveHeight(7),
+                  height: responsiveHeight(6),  // container jitni
                   fontWeight: 'normal',
                   textAlignVertical: 'center',
+                  paddingVertical: 0,   // yeh add karo
                 }}
                 ref={phoneInput}
                 onChangeCountry={handleOnCountryChange}
@@ -544,6 +618,7 @@ const HomeTuition = ({ navigation }) => {
             </TouchableOpacity>
             <View style={styles.pickergroup}>
               <Picker
+              
                 style={styles.picker}
                 dropdownIconColor={'#2e4c60'}
                 selectedValue={selectedValue}
@@ -723,7 +798,6 @@ const styles = StyleSheet.create({
     // marginVertical: responsiveHeight(3),
   },
   pickergroup: {
-    alignItems: 'center',
     backgroundColor: '#FBFCF8',
     alignItems: 'center',
     justifyContent: 'center',
@@ -733,11 +807,15 @@ const styles = StyleSheet.create({
     marginTop: responsiveHeight(3),
     borderColor: '#2e4c60',
     borderWidth: 1.5,
+    // overflow: 'hidden',  // yeh add karo
   },
   picker: {
     color: '#2e4c60',
-    height: responsiveHeight(6.5),
+    height: responsiveHeight(6),   // pickergroup jitni height
     width: responsiveWidth(90),
+    marginTop: -responsiveHeight(0),   // upar karo
+    marginBottom: -responsiveHeight(0), // neeche karo
+     fontSize: responsiveFontSize(2),
   },
   Genderpicker: {
     backgroundColor: 'white',
@@ -756,19 +834,21 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     width: responsiveWidth(90),
     backgroundColor: '#FBFCF8',
-    padding: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 0,
     borderColor: '#2e4c60',
     color: '#2e4c60',
     borderWidth: 1.5,
     marginTop: responsiveHeight(2),
-    // marginBottom: responsiveHeight(2),
     fontSize: responsiveFontSize(2),
+    // textAlignVertical: 'centr',  // yeh add karo
   },
   password: {
     height: responsiveHeight(5),
     borderRadius: 6,
     width: responsiveWidth(90),
-    padding: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 0,
     color: '#2e4c60',
     borderColor: '#2e4c60',
     borderWidth: 1.5,
@@ -780,7 +860,8 @@ const styles = StyleSheet.create({
     height: responsiveHeight(5),
     borderRadius: 6,
     width: responsiveWidth(90),
-    padding: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 0,
     color: '#2e4c60',
     borderColor: '#2e4c60',
     borderWidth: 1.5,
@@ -814,18 +895,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: responsiveFontSize(2.25),
   },
-  Subjectbutton: {
+  
+   Subjectbutton: {
+    backgroundColor: '#FBFCF8',
+    alignItems: 'flex-start',
+    paddingHorizontal:8,
+    justifyContent: 'center',
     height: responsiveHeight(5),
     borderRadius: 6,
     width: responsiveWidth(90),
-    paddingVertical: 9,
-    paddingHorizontal: 8,
-    color: '#2e4c60',
+    marginTop: responsiveHeight(3),
     borderColor: '#2e4c60',
     borderWidth: 1.5,
-    marginTop: responsiveHeight(3),
-    backgroundColor: '#FBFCF8',
-    fontSize: responsiveFontSize(2),
+    // overflow: 'hidden',  // yeh add karo
   },
   Subjectbuttontext: {
     color: '#2e4c60',

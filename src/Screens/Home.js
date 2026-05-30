@@ -1,665 +1,433 @@
-import { View, Text, Image, ImageBackground, Dimensions, StyleSheet, TouchableOpacity, TextInput, Button, Alert, Linking, ActivityIndicator, } from 'react-native';
-import { React, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {
-  responsiveFontSize,
-  responsiveHeight,
-  responsiveWidth,
-  responsiveScreenFontSize,
-} from 'react-native-responsive-dimensions';
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Image,
+  Animated,
+  TextInput,
+  Alert,
+} from 'react-native';
+import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+import Icon from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
-import NetInfo from '@react-native-community/netinfo';
-const devicewidth = Dimensions.get('window').width;
-const deviceheight = Dimensions.get('window').height;
-import { useAppContext } from './AppContext';
-import { useNavigation } from '@react-navigation/native';
-import auth from '@react-native-firebase/auth';
-export default function Home({ route }) {
-  const [isConnected, setIsConnected] = useState(false);
-  const [username, setusername] = useState([]);
-  const { showAlert } = useAppContext();
-  const navigation = useNavigation();
-  // const [isTeacherModalVisible, setTeacherModalVisible] = useState(false);
-  const [isAdminModalVisible, setAdminModalVisible] = useState(false);
-  const [isUserModalVisible, setUserModalVisible] = useState(false);
-  const [name, setname] = useState();
-  const [visiblE, setVisiblE] = useState(true);
-  const [loadinG, setloadinG] = useState(true);
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Container from '../components/Container';
+import { api } from '../utlis/api';
+const BRAND = '#2e4c60';
+
+// ─── 8 Menu items — purane code se liye ──────────────────────────────────────
+const MENU_ITEMS = [
+  { key: 'HelpDesk', label: 'DARS-e-NIZAMI\nHELP DESK', image: require('../Images/youtube.png') },
+  { key: 'Courses', label: 'SHORT\nCOURSES', image: require('../Images/books.png') },
+  { key: 'OnlineTuition', label: 'ONLINE\nTUITION', image: require('../Images/online.png') },
+  { key: 'HomeTuition', label: 'HOME\nTUITION', image: require('../Images/home.png') },
+  { key: 'NizamiCourse', label: 'DARS-e-NIZAMI\nCOURSE', image: require('../Images/quran.png') },
+  { key: 'UpcomingCourses', label: 'UPCOMING\nCOURSES', image: require('../Images/coming.png') },
+  { key: 'TeacherApplication', label: 'BECOME A\nTEACHER', image: require('../Images/teacher.png') },
+  { key: 'About', label: 'ABOUT OUR\nACADEMY', image: require('../Images/info.png') },
+];
+
+// ─── Single menu box ──────────────────────────────────────────────────────────
+const MenuBox = ({ item, onPress, delay }) => {
+  const scaleAnim = useRef(new Animated.Value(0)).current;
+  const opacityAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    let subscriber;
-    try {
-      subscriber = auth().onAuthStateChanged(user => {
-        if (user) {
-          const userEmail = user.email;
-          const uname = userEmail.split(/\d|@/)[0];
-          setusername(uname);
-        } else {
-          setusername('');
-        }
-      });
-    } catch (error) {
-      console.log('Firebase not ready:', error);
-    }
-
-    const unsubscribe = NetInfo.addEventListener(state => {
-      setIsConnected(state.isConnected);
-    });
-    setloadinG(false);
-    setVisiblE(false);
-
-    return () => {
-      if (subscriber) subscriber();
-      unsubscribe();
-    };
+    Animated.parallel([
+      Animated.timing(opacityAnim, { toValue: 1, duration: 350, delay, useNativeDriver: true }),
+      Animated.spring(scaleAnim, { toValue: 1, delay, tension: 70, friction: 8, useNativeDriver: true }),
+    ]).start();
   }, []);
 
-  // const TeacherChange = newname => {
-  //   setname(newname);
-  // };
-  const AdminChange = newadmin => {
-    setname(newadmin);
-  };
+  const handlePressIn = () =>
+    Animated.spring(scaleAnim, { toValue: 0.93, useNativeDriver: true, tension: 200 }).start();
+
+  const handlePressOut = () =>
+    Animated.spring(scaleAnim, { toValue: 1, useNativeDriver: true, tension: 200 }).start();
+
+  return (
+    <Animated.View style={[styles.boxWrapper, { opacity: opacityAnim, transform: [{ scale: scaleAnim }] }]}>
+      <TouchableOpacity
+        onPress={() => onPress(item.key)}
+        onPressIn={handlePressIn}
+        onPressOut={handlePressOut}
+        activeOpacity={1}
+        style={styles.box}
+      >
+        <Image source={item.image} style={styles.boxImage} resizeMode="contain" />
+        <Text allowFontScaling={false} style={styles.boxLabel}>{item.label}</Text>
+      </TouchableOpacity>
+    </Animated.View>
+  );
+};
+
+// ─── Main Screen ──────────────────────────────────────────────────────────────
+const Home = ({ navigation }) => {
+  const [userName, setUserName] = useState('');
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    if (showAlert) {
-      showAlert();
-    }
-  }, [showAlert]);
+    getName();
+    loadProfile()
+  }, []);
 
-  function Internet() {
-    Alert.alert('⚫ Warning', 'No Internet Connection!');
-  }
-
-  function Courses() {
-    if (isConnected == true) {
-      navigation.navigate('Courses');
-    } else Internet();
-  }
-  function UpcomingCourses() {
-    if (isConnected == true) {
-      navigation.navigate('UpcomingCourses');
-    } else Internet();
-  }
-  function UserAccount() {
-    if (isConnected == true) {
-      navigation.navigate('UserAccount');
-    } else Internet();
-  }
-
-  function Login() {
-    navigation.navigate('Auth');
-  }
-  function Admin() {
-    navigation.navigate('Admin');
-  }
-
-  const OnlineTuition = () => {
-    if (isConnected == false) {
-      Internet();
-    } else navigation.navigate('OnlineTuition', { buttonText: 'Online Tuition' });
+  const getName = async () => {
+    const name = await AsyncStorage.getItem('name');
+    // console.log(name)
+    setUserName(name);
   };
+  const loadProfile = async () => {
+    try {
+      const res = await api.get('/students/profile');
 
-  const HomeTuition = () => {
-    if (isConnected == false) {
-      Internet();
-    } else
-      navigation.navigate('HomeTuition', { TextHomeTuition: 'Home Tuition' });
-  };
-  const HelpDesk = () => {
-    if (isConnected == false) {
-      Internet();
-    } else navigation.navigate('HelpDesk');
-  };
+      setProfile(res.data);
 
-  const DarseNizamiForm = () => {
-    if (isConnected == false) {
-      Internet();
-    } else
-      navigation.navigate('DarseNizamiForm', {
-        TextDarseNizami: 'Dars-e-Nizami',
-      });
-  };
-  const About = () => {
-    navigation.navigate('CompletedProject');
-  };
+      console.log(res.data.profilePic);
 
-  const LogingOut = async () => {
-    if (isConnected == false) {
-      Internet();
-    } else {
-      try {
-        setUserModalVisible(!isUserModalVisible);
-        setloadinG(true);
-        setVisiblE(true);
-        setTimeout(async () => {
-          await auth().signOut();
-          navigation.replace('First');
-        }, 1000);
-      } catch (error) {
-        console.log(error.message);
-      }
+    } catch (error) {
+      console.log('Profile load nahi ho saki.');
     }
   };
+  // Modal states — purane code se
 
-  const closeAdminModal = () => {
-    setUserModalVisible(!isUserModalVisible);
-  };
-  const openModal = () => {
-    if (isConnected == false) {
-      Internet();
-    } else {
-      navigation.navigate('TeacherForm');
+  const headerOpacity = useRef(new Animated.Value(0)).current;
+  const headerSlide = useRef(new Animated.Value(-20)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(headerOpacity, { toValue: 1, duration: 400, useNativeDriver: true }),
+      Animated.spring(headerSlide, { toValue: 0, tension: 60, useNativeDriver: true }),
+    ]).start();
+  }, []);
+
+  // ─── Handlers ─────────────────────────────────────────────────────────────
+  const handleMenuPress = (key) => {
+    if (key === 'BecomeTeacher') {
+      setAdminModalVisible(true);  // Become a teacher → admin modal
+      return;
     }
-  };
-  const UseropenModal = () => {
-    if (isConnected == false) {
-      Internet();
-    } else {
-      setUserModalVisible(true);
-    }
-  };
-  const CheckPasswordAdmin = () => {
-    if (name === 'Azhar8304') {
-      setAdminModalVisible(!isAdminModalVisible);
-      setTimeout(() => {
-        navigation.navigate('Admin');
-      }, 1000);
-    } else {
-      Alert.alert('⚫ Warning', 'Wrong Password!');
-    }
+    navigation.navigate(key);
   };
 
-  const closeModalAdmin = () => {
-    setAdminModalVisible(!isAdminModalVisible);
-  };
-  const openModalAdmin = () => {
-    if (isConnected == false) {
-      Internet();
+
+  const checkAdminPassword = () => {
+    if (adminPassword === 'your_admin_pass') {   // ← apna password yahan
+      setAdminModalVisible(false);
+      setAdminPassword('');
+      navigation.navigate('AdminPanel');
     } else {
-      setAdminModalVisible(true);
+      Alert.alert('Error', 'Incorrect password');
     }
   };
 
   return (
-    <View>
-      <Modal visible={visiblE} animationType="fade" transparent={true}>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          {loadinG ? <ActivityIndicator size="large" color="#2e4c60" /> : null}
-        </View>
-      </Modal>
-      <ImageBackground
-        resizeMode="cover"
-        style={styles.background}
-        source={require('../Images/background.jpg')}>
-        <View
-          style={{
-            // backgroundColor: 'red',
-            alignItems: 'center',
-            // alignSelf:'center',
-            // alignContent:'space-evenly',
-            width: devicewidth,
-            height: deviceheight,
-            justifyContent: 'space-evenly',
-          }}>
-          <View
-            style={styles.navbar}>
-            <TouchableOpacity onPress={openModalAdmin}>
-              <Image
-                style={styles.logo}
-                source={require('../Images/round.png')}
-              />
-            </TouchableOpacity>
-            {username != '' ? (
-              <TouchableOpacity onPress={UseropenModal}>
-                <View
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    width: responsiveWidth(70),
-                  }}>
-                  <Text allowFontScaling={false} style={styles.Welcometext}>
-                    {username != '' ? `Hi, ${username}` : null}
-                  </Text>
-                  <Image
-                    style={styles.down}
-                    source={require('../Images/down.png')}
-                  />
-                </View>
-              </TouchableOpacity>
-            ) : null}
-            <TouchableOpacity onPress={Login}>
-              <Image
-                style={styles.account}
-                source={require('../Images/account.png')}
-              />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.submain}>
-            <View
-              style={styles.rectangle}>
-              <Text allowFontScaling={false} style={styles.rectangletext}>
-                ازھارالاسلام اکیڈمی
-              </Text>
-              <Text allowFontScaling={false} style={styles.rectangletext_}>
-                آن لائن دینی تعلیم کا مستند ادارہ
-              </Text>
-            </View>
-          </View>
+    <Container
+      showHeader={false}
+      showFooter={true}
+      activeTab="Home"
+      onTabPress={(key) => navigation.navigate(key)}
+    >
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
 
-          <View
-            style={styles.squarediv}>
-            <TouchableOpacity onPress={HelpDesk}>
-              <View style={styles.square}>
+        {/* ── TOP BAR ─────────────────────────────────────────── */}
+        <Animated.View
+          style={[styles.topBar, { opacity: headerOpacity, transform: [{ translateY: headerSlide }] }]}
+        >
+          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+            <View style={{ flexDirection: 'row' ,alignItems:'center'}}>
+              {profile?.profilePic ? (
                 <Image
-                  style={styles.youtube}
-                  source={require('../Images/youtube.png')}
+                  source={{ uri: profile.profilePic }}
+                  style={styles.avatar}
                 />
-                <Text allowFontScaling={false} style={styles.squaretext__}>
-                  DARS-e-NIZAMI HELP DESK
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={Courses}>
-              <View style={styles.square}>
-                <Image
-                  style={styles.books}
-                  source={require('../Images/books.png')}
-                />
-                <Text allowFontScaling={false} style={styles.squaretext}>
-                  SHORT COURSES
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={OnlineTuition}>
-              <View style={styles.square}>
-                <Image
-                  style={styles.online}
-                  source={require('../Images/online.png')}
-                />
-                <Text allowFontScaling={false} style={styles.squaretext___}>
-                  ONLINE TUITION
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={HomeTuition}>
-              <View style={styles.square}>
-                <Image
-                  style={styles.home}
-                  source={require('../Images/home.png')}
-                />
-                <Text allowFontScaling={false} style={styles.squaretext___}>
-                  HOME TUITION
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={DarseNizamiForm}>
-              <View style={styles.square}>
-                <Image
-                  style={styles.quran}
-                  source={require('../Images/quran.png')}
-                />
-                <Text allowFontScaling={false} style={styles.squaretext__}>
-                  DARS-e-NIZAMI COURSE
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={UpcomingCourses}>
-              <View style={styles.square}>
-                <Image
-                  style={styles.coming}
-                  source={require('../Images/coming.png')}
-                />
-                <Text allowFontScaling={false} style={styles.squaretext__}>
-                  UPCOMING COURSES
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={openModal}>
-              <View style={styles.square}>
-                <Image
-                  style={styles.teacher}
-                  source={require('../Images/teacher.png')}
-                />
-                <Text allowFontScaling={false} style={styles.squaretext}>
-                  BECOME A TEACHER
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={About}>
-              <View style={styles.square}>
-                <Image
-                  style={styles.info}
-                  source={require('../Images/info.png')}
-                />
-                <Text allowFontScaling={false} style={styles.squaretext}>
-                  ABOUT OUR ACADEMY
-                </Text>
-              </View>
-            </TouchableOpacity>
-
-            <Modal
-              isVisible={isUserModalVisible}>
-              <View style={styles.modal}>
-                <ImageBackground
-                  resizeMode="cover"
-                  style={styles.logoutmodalBackground}
-                  source={require('../Images/background.jpg')}>
-                  <Image
-                    style={styles.modalImage}
-                    source={require('../Images/landscape-logo.png')}
-                  />
-                  <Text allowFontScaling={false} style={styles.LogOutText}>
-                    Are You Sure To LogOut ?
-                  </Text>
-                  <TextInput />
-                  <View style={styles.LogOutModalButtonView}>
-                    <TouchableOpacity
-                      style={styles.Btn}
-                      onPress={closeAdminModal}>
-                      <Text allowFontScaling={false} style={styles.BtnText}>
-                        Close
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.Btn} onPress={LogingOut}>
-                      <Text allowFontScaling={false} style={styles.BtnText}>
-                        LogOut
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </ImageBackground>
-              </View>
-            </Modal>
-            <Modal
-              isVisible={isAdminModalVisible}
-              animationIn="zoomIn"
-              animationOut="zoomOut"
-              animationInTiming={500}
-              animationOutTiming={500}
-              backdropTransitionInTiming={500}
-              backdropTransitionOutTiming={500}>
-              <View style={styles.modal}>
-                <ImageBackground
-                  resizeMode="cover"
-                  style={styles.modalBackground}
-                  source={require('../Images/background.jpg')}>
-                  <Image
-                    style={styles.modalImage}
-                    source={require('../Images/landscape-logo.png')}
-                  />
-                  <TextInput
+              ) : (
+                <View style={styles.avatarFallback}>
+                  <Text
                     allowFontScaling={false}
-                    autoFocus
-                    style={styles.login}
-                    onChangeText={AdminChange}
-                    placeholder="Enter Password"
-                    placeholderTextColor={'grey'}
-                  />
-                  <View style={styles.ModalButtonView}>
-                    <TouchableOpacity
-                      style={styles.Btn}
-                      onPress={closeModalAdmin}>
-                      <Text allowFontScaling={false} style={styles.BtnText}>
-                        Close
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.Btn}
-                      onPress={CheckPasswordAdmin}>
-                      <Text allowFontScaling={false} style={styles.BtnText}>
-                        Next
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </ImageBackground>
+                    style={styles.avatarInitial}
+                  >
+                    {userName?.[0]?.toUpperCase() || '?'}
+                  </Text>
+                </View>
+              )}
+              <View style={{marginLeft:scale(8)}}>
+                <Text
+                  allowFontScaling={false}
+                  style={styles.welcomeText}
+                >
+                  Welcome back
+                </Text>
+
+                <Text
+                  allowFontScaling={false}
+                  style={styles.userName}
+                >
+                  {userName}
+                </Text>
               </View>
-            </Modal>
+            </View>
+          </TouchableOpacity>
+
+          <View style={styles.topRight}>
+            {/* Notification */}
+            <TouchableOpacity
+              style={styles.iconBtn}
+              onPress={() => navigation.navigate('Login')}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            >
+              <Icon name="bell" size={moderateScale(18)} color={BRAND} />
+              <View style={styles.notifDot} />
+            </TouchableOpacity>
+
+
           </View>
+        </Animated.View>
+
+        {/* ── LOGO + TITLE ─────────────────────────────────────── */}
+        <Animated.View
+          style={[styles.logoArea, { opacity: headerOpacity, transform: [{ translateY: headerSlide }] }]}
+        >
+          <Image
+            source={require('../Images/landscape-logo.png')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <Text allowFontScaling={false} style={styles.tagline}>
+            آن لائن دینی تعلیم کا مستند ادارہ
+          </Text>
+        </Animated.View>
+
+        {/* ── MENU GRID ─────────────────────────────────────────── */}
+        <View style={styles.grid}>
+          {MENU_ITEMS.map((item, index) => (
+            <MenuBox
+              key={item.key}
+              item={item}
+              onPress={handleMenuPress}
+              delay={index * 55}
+            />
+          ))}
         </View>
-      </ImageBackground>
-    </View>
+
+      </ScrollView>
+
+
+
+    </Container>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  background: {
-    width: devicewidth,
-    height: deviceheight,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    // backgroundColor:'red'
+  scroll: {
+    paddingBottom: verticalScale(16),
   },
 
-  navbar: {
-    width: responsiveWidth(100),
-    paddingHorizontal: responsiveWidth(4),
-    display: 'flex',
+  // ── Top bar
+  topBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: responsiveHeight(-1),
-    // backgroundColor:'red',
-    paddingVertical: responsiveHeight(-1)
+    backgroundColor: '#ffffff',
+    paddingHorizontal: scale(18),
+    paddingTop: verticalScale(14),
+    paddingBottom: verticalScale(12),
+    borderBottomWidth: 1,
+    borderBottomColor: '#f1f5f9',
+  },
+  welcomeText: {
+    fontSize: moderateScale(11),
+    color: '#94a3b8',
+    fontWeight: '500',
+  },
+  userName: {
+    fontSize: moderateScale(15),
+    fontWeight: '700',
+    color: '#0f172a',
+    marginTop: verticalScale(1),
+  },
+  topRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: scale(8),
+  },
+  iconBtn: {
+    width: scale(38),
+    height: scale(38),
+    borderRadius: scale(19),
+    backgroundColor: '#f0f4f8',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  notifDot: {
+    position: 'absolute',
+    top: scale(7),
+    right: scale(7),
+    width: scale(8),
+    height: scale(8),
+    borderRadius: scale(4),
+    backgroundColor: '#e05c5c',
+    borderWidth: 1.5,
+    borderColor: '#f0f4f8',
   },
 
-  account: {
-    height: responsiveHeight(4),
-    width: responsiveWidth(8.5),
+  // ── Logo area
+  logoArea: {
+    backgroundColor: '#ffffff',
+    alignItems: 'center',
+    paddingVertical: verticalScale(7),
+    borderBottomWidth: 1,
+    borderBottomColor: '#f1f5f9',
+    marginBottom: verticalScale(10),
   },
   logo: {
-    height: responsiveHeight(4.5),
-    width: responsiveWidth(9.25),
+    width: scale(280),
+    height: verticalScale(60),
+    // backgroundColor: 'red'
   },
-  down: {
-    height: responsiveHeight(3),
-    width: responsiveWidth(6),
+  tagline: {
+    fontFamily: 'mushaf',
+    fontSize: moderateScale(30),
+    color: '#64748b',
+    textAlign: 'center',
+    // backgroundColor: 'yellow'
+
   },
-  rectangle: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: responsiveHeight(16),
-    // backgroundColor: 'blue',
-    marginTop: responsiveHeight(-5),
-  },
-  squarediv: {
-    display: 'flex',
+
+  // ── Grid
+  grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-evenly',
-    width: responsiveWidth(95),
-    marginTop: responsiveHeight(-1.5),
+    paddingHorizontal: scale(8),
   },
-  rectangletext: {
-    fontFamily: 'mushaf',
-    height: responsiveHeight(12.5),
-    textTransform: 'uppercase',
-    color: '#2e4c60',
-    fontSize: responsiveFontSize(8.5),
-    textAlign: 'center',
-    marginBottom: responsiveHeight(-2),
+  boxWrapper: {
+    width: '46%',
+    marginBottom: verticalScale(10),
   },
-  rectangletext_: {
-    fontFamily: 'mushaf',
-    height: responsiveHeight(7),
-    textTransform: 'uppercase',
-    color: '#2e4c60',
-    fontSize: responsiveFontSize(4.5),
-    textAlign: 'center',
-    // marginBottom: responsiveHeight(1),
-  },
-  squaretext: {
-    fontSize: responsiveScreenFontSize(2),
-    marginBottom: responsiveHeight(0.5),
-    color: '#2e4c60',
-    textAlign: 'center',
-    fontFamily: 'good',
-    marginTop: responsiveHeight(1),
-    paddingHorizontal: responsiveWidth(0.5),
-  },
-  squaretext___: {
-    fontSize: responsiveScreenFontSize(2),
-    color: '#2e4c60',
-    textAlign: 'center',
-    fontFamily: 'good',
-    marginTop: responsiveHeight(1),
-    paddingHorizontal: responsiveWidth(0.5),
-  },
-  Welcometext: {
-    fontSize: responsiveScreenFontSize(2),
-    color: '#2e4c60',
-    textAlign: 'center',
-    fontFamily: 'good',
-    letterSpacing: 1,
-    paddingHorizontal: responsiveWidth(2.25),
-  },
-  squaretext__: {
-    fontSize: responsiveScreenFontSize(2),
-    color: '#2e4c60',
-    textAlign: 'center',
-    fontFamily: 'good',
-    marginTop: responsiveHeight(0.5),
-    lineHeight: 20,
-  },
-  square: {
-    marginTop: responsiveHeight(1.25),
-    borderColor: '#2e4c60',
-    borderWidth: 1.5,
-    height: responsiveHeight(16),
-    width: responsiveWidth(40),
+  box: {
+    backgroundColor: '#ffffff',
+    borderRadius: moderateScale(14),
+    paddingVertical: verticalScale(16),
+    paddingHorizontal: scale(8),
+    alignItems: 'center',
     justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 12,
-    marginHorizontal: responsiveWidth(3),
-    marginBottom: responsiveHeight(1),
-  },
-  info: {
-    height: responsiveHeight(8),
-    width: responsiveWidth(10),
-    marginVertical: responsiveHeight(0.75),
-  },
-  quran: {
-    height: responsiveHeight(8),
-    width: responsiveWidth(24),
-    marginTop: responsiveHeight(1),
-  },
-  coming: {
-    height: responsiveHeight(9),
-    width: responsiveWidth(30),
-  },
-  online: {
-    height: responsiveHeight(9),
-    width: responsiveWidth(24),
-    marginBottom: responsiveHeight(0.5),
-  },
-  home: {
-    height: responsiveHeight(9),
-    width: responsiveWidth(35),
-    marginTop: responsiveHeight(0.5),
-  },
-  books: {
-    height: responsiveHeight(8),
-    width: responsiveWidth(19),
-    marginTop: responsiveHeight(1),
-  },
-  teacher: {
-    height: responsiveHeight(9.5),
-    width: responsiveWidth(26),
-  },
-  youtube: {
-    height: responsiveHeight(9),
-    width: responsiveWidth(20),
-    marginTop: responsiveHeight(0.5),
-  },
-
-  logoutmodalBackground: {
-    width: responsiveWidth(90),
-    height: responsiveHeight(28),
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-  },
-  modalBackground: {
-    width: responsiveWidth(90),
-    height: responsiveHeight(30),
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-  },
-  modal: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderRadius: 20,
-  },
-  login: {
-    height: responsiveHeight(5),
-    borderRadius: 6,
-    width: responsiveWidth(85),
-    backgroundColor: '#FBFCF8',
-    padding: 8,
-    borderColor: '#2e4c60',
-    color: '#2e4c60',
     borderWidth: 1.5,
-    fontFamily: 'good',
-    borderRadius: 6,
-    letterSpacing: 1,
-    marginTop: responsiveHeight(0.5),
-    fontSize: responsiveFontSize(2),
+    borderColor: '#d4dde5',
+    minHeight: verticalScale(110),
   },
-  LogOutText: {
-    width: responsiveWidth(80),
-    color: '#2e4c60',
-    fontFamily: 'good',
-    borderRadius: 6,
-    letterSpacing: 1,
-    textAlign: 'center',
-    marginTop: responsiveHeight(4),
-    fontSize: responsiveFontSize(2.5),
+  boxImage: {
+    width: scale(60),
+    height: verticalScale(48),
+    marginBottom: verticalScale(8),
   },
-  modalImage: {
-    height: responsiveHeight(8),
-    width: responsiveWidth(80),
-    marginTop: responsiveHeight(1),
-  },
-  ModalButtonView: {
-    marginTop: responsiveHeight(1),
-
-    width: responsiveWidth(85),
-
-    marginBottom: responsiveHeight(1),
-
-    paddingHorizontal: responsiveWidth(4),
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  LogOutModalButtonView: {
-    width: responsiveWidth(85),
-
-    marginBottom: responsiveHeight(2),
-
-    paddingHorizontal: responsiveWidth(4),
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  Btn: {
-    backgroundColor: '#2e4c60',
-    color: 'white',
-    padding: 6,
-    borderRadius: 8,
-    width: responsiveWidth(30),
-  },
-  BtnText: {
-    color: '#fff',
+  boxLabel: {
+    fontFamily: 'good',                     // purana font
+    fontSize: moderateScale(11),
     fontWeight: '600',
-    letterSpacing: 0.7,
+    color: BRAND,
     textAlign: 'center',
-    fontSize: responsiveFontSize(2.25),
+    lineHeight: moderateScale(16),
+  },
+
+  // ── Modals
+  modalWrap: {
+    backgroundColor: '#ffffff',
+    borderRadius: moderateScale(20),
+    paddingHorizontal: scale(24),
+    paddingTop: verticalScale(24),
+    paddingBottom: verticalScale(20),
+    alignItems: 'center',
+  },
+  modalLogo: {
+    width: scale(160),
+    height: verticalScale(36),
+    marginBottom: verticalScale(12),
+  },
+  modalIcon: {
+    marginBottom: verticalScale(8),
+  },
+  modalTitle: {
+    fontSize: moderateScale(17),
+    fontWeight: '800',
+    color: '#0f172a',
+    marginBottom: verticalScale(4),
+  },
+  modalSubtitle: {
+    fontSize: moderateScale(12.5),
+    color: '#64748b',
+    textAlign: 'center',
+    marginBottom: verticalScale(16),
+    fontFamily: 'good',
+  },
+  modalInput: {
+    width: '100%',
+    height: verticalScale(46),
+    borderRadius: moderateScale(12),
+    borderWidth: 1.5,
+    borderColor: '#d4dde5',
+    paddingHorizontal: scale(14),
+    color: BRAND,
+    fontFamily: 'good',
+    fontSize: moderateScale(13),
+    marginBottom: verticalScale(16),
+    backgroundColor: '#f8fafc',
+  },
+  modalBtns: {
+    flexDirection: 'row',
+    width: '100%',
+    gap: scale(10),
+  },
+  btnOutline: {
+    flex: 1,
+    paddingVertical: verticalScale(12),
+    borderRadius: moderateScale(12),
+    borderWidth: 1.5,
+    borderColor: BRAND,
+    alignItems: 'center',
+  },
+  btnOutlineText: {
+    color: BRAND,
+    fontWeight: '700',
+    fontSize: moderateScale(13),
+  },
+  btnFill: {
+    flex: 1,
+    paddingVertical: verticalScale(12),
+    borderRadius: moderateScale(12),
+    backgroundColor: BRAND,
+    alignItems: 'center',
+  },
+  btnFillText: {
+    color: '#ffffff',
+    fontWeight: '700',
+    fontSize: moderateScale(13),
+  },
+ 
+  avatar: {
+    width: scale(40),
+    height: scale(40),
+    borderRadius: scale(45),
+    borderWidth: 3,
+    borderColor: '#e8f0f5',
+  },
+  avatarFallback: {
+    width: scale(40),
+    height: scale(40),
+    borderRadius: scale(45),
+    backgroundColor: '#e8f0f5',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  avatarInitial: {
+    fontSize: moderateScale(16),
+    fontWeight: '800',
+    color: BRAND,
   },
 });
+
+export default Home;
