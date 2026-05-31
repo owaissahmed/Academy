@@ -90,13 +90,22 @@ const EditProfile = ({ navigation }) => {
             }
         });
     };
+    const formatCnic = raw => {
+        const digits = raw.replace(/\D/g, '').slice(0, 13);
+        if (digits.length <= 5) return digits;
+        if (digits.length <= 12) return `${digits.slice(0, 5)}-${digits.slice(5)}`;
+        return `${digits.slice(0, 5)}-${digits.slice(5, 12)}-${digits.slice(12)}`;
+    };
 
+    const formatPhone = raw => raw.replace(/\D/g, '').slice(0, 11);
+
+    const formatAge = raw => raw.replace(/\D/g, '').slice(0, 2);
     const validate = () => {
         const e = {};
         if (!fatherName.trim()) e.fatherName = 'Father name is required.';
-        if (!phone.trim()) e.phone = 'Phone number is required.';
-        if (!cnic.trim()) e.cnic = 'CNIC is required.';
-        if (!age.trim()) e.age = 'Age is required.';
+        if (!phone.trim() || phone.length < 11) e.phone = 'Enter a valid 11-digit phone number.';
+        if (!cnic.trim() || cnic.replace(/\D/g, '').length < 13) e.cnic = 'Enter a valid CNIC.';
+        if (!age.trim() || isNaN(age) || age < 5 || age > 99) e.age = 'Enter a valid age.';
         if (!address.trim()) e.address = 'Address is required.';
         if (!gender.trim()) e.gender = 'Gender is required.';
         if (!education.trim()) e.education = 'Education is required.';
@@ -235,26 +244,27 @@ const EditProfile = ({ navigation }) => {
                         <TextField
                             label="CNIC"
                             value={cnic}
-                            onChangeText={t => { setCnic(t); setErrors(e => ({ ...e, cnic: '' })); }}
+                            onChangeText={t => { setCnic(formatCnic(t)); setErrors(e => ({ ...e, cnic: '' })); }}
                             icon="credit-card"
                             keyboardType="numeric"
                             error={errors.cnic}
+                            maxLength={15}
                         />
                         <TextField
                             label="Age"
                             value={age}
-                            onChangeText={t => { setAge(t); setErrors(e => ({ ...e, age: '' })); }}
-                            icon="calendar"
+                            onChangeText={v => { setAge(formatAge(v)); setErr('age')(); }}
                             keyboardType="numeric"
+                            icon="calendar"
                             error={errors.age}
                         />
-                        <TextField
+                        {/* <TextField
                             label="Gender"
                             value={gender}
                             onChangeText={t => { setGender(t); setErrors(e => ({ ...e, gender: '' })); }}
                             icon="user-check"
                             error={errors.gender}
-                        />
+                        /> */}
                         <TextField
                             label="Address"
                             value={address}

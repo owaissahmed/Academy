@@ -90,7 +90,7 @@ const Signup = ({ navigation }) => {
                     visible: true,
                     type: 'success',
                     title: 'Account Created!',
-                    message: 'Mubarak ho! Aapka account ban gaya. Ab profile complete karein.',
+                    message: 'Congratulations! Your account has been successfully created. Complete your profile to get started',
                     onPrimary: () => {
                         closeModal();
                         navigation.navigate('CompleteProfile');

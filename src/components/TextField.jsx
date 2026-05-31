@@ -17,6 +17,7 @@ const TextField = ({
   secureTextEntry = false,
   keyboardType = 'default',
   error = '',
+  maxLength,
   icon = null,          // Feather icon name (optional left icon)
 }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -87,6 +88,7 @@ const TextField = ({
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           autoCapitalize="none"
+          maxLength={maxLength}
           style={[
             styles.input,
             { paddingLeft: icon ? scale(15) : scale(10) },
