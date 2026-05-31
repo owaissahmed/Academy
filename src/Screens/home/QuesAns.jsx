@@ -49,9 +49,13 @@ const TabBar = ({ activeTab, onChange }) => (
 );
 
 // ─── Question Card ────────────────────────────────────────────────────────────
-const QuestionCard = ({ item, index }) => {
+const QuestionCard = ({ item, index, onDeleted }) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideAnim = useRef(new Animated.Value(24)).current;
+    const [deleting, setDeleting] = useState(false);
+    const [modal, setModal] = useState({ visible: false, type: 'error', title: '', message: '', onPrimary: null });
+
+    const closeModal = () => setModal(m => ({ ...m, visible: false }));
 
     useEffect(() => {
         Animated.parallel([
@@ -60,6 +64,35 @@ const QuestionCard = ({ item, index }) => {
         ]).start();
     }, []);
 
+    const confirmDelete = () => {
+        setModal({
+            visible: true,
+            type: 'warning',
+            title: 'Delete Question?',
+            message: 'Are you sure you want to delete this question?',
+            onPrimary: handleDelete,
+        });
+    };
+
+    const handleDelete = async () => {
+        closeModal();
+        setDeleting(true);
+        try {
+            await api.post(`/question/delete/${item._id}`);
+            onDeleted?.(item._id);
+        } catch (err) {
+            setModal({
+                visible: true,
+                type: 'error',
+                title: 'Error',
+                message: err.response?.data?.message || 'Failed to delete question. Please try again.',
+                onPrimary: closeModal,
+            });
+        } finally {
+            setDeleting(false);
+        }
+    };
+
     const date = item.createdAt
         ? new Date(item.createdAt).toLocaleDateString('en-PK', {
             day: 'numeric', month: 'short', year: 'numeric',
@@ -67,52 +100,77 @@ const QuestionCard = ({ item, index }) => {
         : '—';
 
     return (
-        <Animated.View style={[styles.card, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
+        <>
+            <Animated.View style={[styles.card, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
 
-            {/* Top row */}
-            <View style={styles.cardTop}>
-                <View style={styles.subjectBadge}>
-                    <Icon name="book-open" size={moderateScale(11)} color={BRAND} />
-                    <Text allowFontScaling={false} style={styles.subjectBadgeText}>
-                        {item.subject?.name || '—'}
-                    </Text>
-                </View>
-                <Text allowFontScaling={false} style={styles.cardDate}>{date}</Text>
-            </View>
-
-            {/* Question text */}
-            <Text allowFontScaling={false} style={styles.questionText}>
-                {item.questionText}
-            </Text>
-
-            {/* Answer or pending */}
-            {item.answerText ? (
-                <View style={styles.answerWrap}>
-                    <View style={styles.answerHeader}>
-                        <Icon name="check-circle" size={moderateScale(13)} color="#10b981" />
-                        <Text allowFontScaling={false} style={styles.answerLabel}>Answer</Text>
+                {/* Top row */}
+                <View style={styles.cardTop}>
+                    <View style={styles.subjectBadge}>
+                        <Icon name="book-open" size={moderateScale(11)} color={BRAND} />
+                        <Text allowFontScaling={false} style={styles.subjectBadgeText}>
+                            {item.subject?.name || '—'}
+                        </Text>
                     </View>
-                    <Text allowFontScaling={false} style={styles.answerText}>
-                        {item.answerText}
-                    </Text>
+                    <Text allowFontScaling={false} style={styles.cardDate}>{date}</Text>
                 </View>
-            ) : (
-                <View style={styles.pendingWrap}>
-                    <Icon name="clock" size={moderateScale(12)} color="#f59e0b" />
-                    <Text allowFontScaling={false} style={styles.pendingText}>Awaiting answer</Text>
-                </View>
-            )}
 
-            {/* Asked by — visible on community tab */}
-            {item.user?.name && (
-                <View style={styles.askedByRow}>
-                    <Icon name="user" size={moderateScale(11)} color="#94a3b8" />
-                    <Text allowFontScaling={false} style={styles.askedByText}>
-                        {item.user.name}
-                    </Text>
-                </View>
-            )}
-        </Animated.View>
+                {/* Question text */}
+                <Text allowFontScaling={false} style={styles.questionText}>
+                    {item.questionText}
+                </Text>
+
+                {/* Answer or pending */}
+                {item.answerText ? (
+                    <View style={styles.answerWrap}>
+                        <View style={styles.answerHeader}>
+                            <Icon name="check-circle" size={moderateScale(13)} color="#10b981" />
+                            <Text allowFontScaling={false} style={styles.answerLabel}>Answer</Text>
+                        </View>
+                        <Text allowFontScaling={false} style={styles.answerText}>
+                            {item.answerText}
+                        </Text>
+                    </View>
+                ) : (
+                    <View style={styles.statusRow}>
+                        <View style={styles.pendingWrap}>
+                            <Icon name="clock" size={moderateScale(12)} color="#f59e0b" />
+                            <Text allowFontScaling={false} style={styles.pendingText}>
+                                Awaiting answer
+                            </Text>
+                        </View>
+
+                        <TouchableOpacity
+                            onPress={confirmDelete}
+                            disabled={deleting}
+                            activeOpacity={0.7}
+                            style={styles.deleteBtn}
+                        >
+                            <Icon name="trash-2" size={moderateScale(14)} color="#ef4444" />
+                        </TouchableOpacity>
+                    </View>
+                )}
+
+                {/* Asked by */}
+                {item.user?.name && (
+                    <View style={styles.askedByRow}>
+                        <Icon name="user" size={moderateScale(11)} color="#94a3b8" />
+                        <Text allowFontScaling={false} style={styles.askedByText}>
+                            {item.user.name}
+                        </Text>
+                    </View>
+                )}
+            </Animated.View>
+
+            <AppModal
+                visible={modal.visible}
+                onClose={closeModal}
+                type={modal.type}
+                title={modal.title}
+                message={modal.message}
+                primaryBtn={{ label: modal.type === 'warning' ? 'Delete' : 'OK', onPress: modal.onPrimary || closeModal }}
+                secondaryBtn={modal.type === 'warning' ? { label: 'Cancel', onPress: closeModal } : undefined}
+            />
+        </>
     );
 };
 
@@ -142,7 +200,9 @@ const QuestionsList = ({ endpoint, emptyMessage }) => {
     const closeModal = () => setModal(m => ({ ...m, visible: false }));
 
     useEffect(() => { loadData(); }, [endpoint]);
-
+    const handleDeleted = (id) => {
+        setData(prev => prev.filter(q => q._id !== id));
+    };
     const loadData = async () => {
         setLoading(true);
         try {
@@ -167,7 +227,7 @@ const QuestionsList = ({ endpoint, emptyMessage }) => {
                 contentContainerStyle={styles.scroll}
             >
                 {data.map((item, index) => (
-                    <QuestionCard key={item._id} item={item} index={index} />
+                    <QuestionCard key={item._id} item={item} index={index} onDeleted={handleDeleted} />
                 ))}
             </ScrollView>
 
@@ -367,7 +427,7 @@ const QuesAns = ({ navigation }) => {
                 title="Ask a Question"
                 scrollable={true}
                 heightPercent={0.6}
-                 primaryBtn={{
+                primaryBtn={{
                     label: 'Submit Question',
                     icon: 'send',
                     onPress: handleSubmit,
@@ -688,6 +748,15 @@ const styles = StyleSheet.create({
         height: scale(10),
         borderRadius: scale(5),
         backgroundColor: BRAND,
+    },
+    statusRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: scale(8),
+    },
+    deleteBtn: {
+        marginLeft: 'auto',
+        paddingLeft: scale(8),
     },
 });
 

@@ -24,32 +24,42 @@ const MENU_ITEMS = [
   { key: 'Courses', label: 'SHORT\nCOURSES', image: require('../Images/books.png') },
   { key: 'OnlineTuition', label: 'ONLINE\nTUITION', image: require('../Images/online.png') },
   { key: 'HomeTuition', label: 'HOME\nTUITION', image: require('../Images/home.png') },
-  { key: 'NizamiCourse', label: 'DARS-e-NIZAMI\nCOURSE', image: require('../Images/quran.png') },
+  { key: 'DarseNizamiForm', label: 'DARS-e-NIZAMI\nCOURSE', image: require('../Images/quran.png') },
   { key: 'UpcomingCourses', label: 'UPCOMING\nCOURSES', image: require('../Images/coming.png') },
   { key: 'TeacherApplication', label: 'BECOME A\nTEACHER', image: require('../Images/teacher.png') },
   { key: 'About', label: 'ABOUT OUR\nACADEMY', image: require('../Images/info.png') },
 ];
 
-// ─── Single menu box ──────────────────────────────────────────────────────────
-const MenuBox = ({ item, onPress, delay }) => {
-  const scaleAnim = useRef(new Animated.Value(0)).current;
+// ─── Single menu box — List Style ─────────────────────────────────────────────
+const ICON_COLORS = [
+  '#5b6ef5', '#10b981', '#f59e0b', '#ef4444',
+  '#8b5cf6', '#06b6d4', '#f97316', '#64748b',
+];
+
+const MenuBox = ({ item, onPress, delay, colorIndex }) => {
+  const translateX = useRef(new Animated.Value(-30)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     Animated.parallel([
-      Animated.timing(opacityAnim, { toValue: 1, duration: 350, delay, useNativeDriver: true }),
-      Animated.spring(scaleAnim, { toValue: 1, delay, tension: 70, friction: 8, useNativeDriver: true }),
+      Animated.timing(opacityAnim, { toValue: 1, duration: 300, delay, useNativeDriver: true }),
+      Animated.spring(translateX, { toValue: 0, delay, tension: 70, friction: 9, useNativeDriver: true }),
     ]).start();
   }, []);
 
+  const scaleAnim = useRef(new Animated.Value(1)).current;
   const handlePressIn = () =>
-    Animated.spring(scaleAnim, { toValue: 0.93, useNativeDriver: true, tension: 200 }).start();
-
+    Animated.spring(scaleAnim, { toValue: 0.97, useNativeDriver: true, tension: 200 }).start();
   const handlePressOut = () =>
     Animated.spring(scaleAnim, { toValue: 1, useNativeDriver: true, tension: 200 }).start();
 
+  const color = ICON_COLORS[colorIndex % ICON_COLORS.length];
+
   return (
-    <Animated.View style={[styles.boxWrapper, { opacity: opacityAnim, transform: [{ scale: scaleAnim }] }]}>
+    <Animated.View style={[
+      styles.boxWrapper,
+      { opacity: opacityAnim, transform: [{ translateX }, { scale: scaleAnim }] }
+    ]}>
       <TouchableOpacity
         onPress={() => onPress(item.key)}
         onPressIn={handlePressIn}
@@ -57,22 +67,35 @@ const MenuBox = ({ item, onPress, delay }) => {
         activeOpacity={1}
         style={styles.box}
       >
-        <Image source={item.image} style={styles.boxImage} resizeMode="contain" />
-        <Text allowFontScaling={false} style={styles.boxLabel}>{item.label}</Text>
+        {/* Colored icon circle */}
+        <View style={[styles.iconCircle, { backgroundColor: color + '18' }]}>
+          <Image source={item.image} style={styles.boxImage} resizeMode="contain" />
+        </View>
+
+        {/* Label */}
+        <Text allowFontScaling={false} style={styles.boxLabel}>
+          {item.label.replace('\n', ' ')}
+        </Text>
+
+        {/* Arrow */}
+        <Icon name="chevron-right" size={moderateScale(16)} color="#cbd5e1" />
       </TouchableOpacity>
     </Animated.View>
   );
 };
-
 // ─── Main Screen ──────────────────────────────────────────────────────────────
 const Home = ({ navigation }) => {
   const [userName, setUserName] = useState('');
   const [profile, setProfile] = useState(null);
 
   useEffect(() => {
-    getName();
-    loadProfile()
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      getName();
+      loadProfile();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const getName = async () => {
     const name = await AsyncStorage.getItem('name');
@@ -137,7 +160,7 @@ const Home = ({ navigation }) => {
           style={[styles.topBar, { opacity: headerOpacity, transform: [{ translateY: headerSlide }] }]}
         >
           <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-            <View style={{ flexDirection: 'row' ,alignItems:'center'}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               {profile?.profilePic ? (
                 <Image
                   source={{ uri: profile.profilePic }}
@@ -153,7 +176,7 @@ const Home = ({ navigation }) => {
                   </Text>
                 </View>
               )}
-              <View style={{marginLeft:scale(8)}}>
+              <View style={{ marginLeft: scale(8) }}>
                 <Text
                   allowFontScaling={false}
                   style={styles.welcomeText}
@@ -208,6 +231,7 @@ const Home = ({ navigation }) => {
               item={item}
               onPress={handleMenuPress}
               delay={index * 55}
+              colorIndex={index}   // ← add karo
             />
           ))}
         </View>
@@ -234,8 +258,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: scale(18),
     paddingTop: verticalScale(14),
     paddingBottom: verticalScale(12),
-    borderBottomWidth: 1,
-    borderBottomColor: '#f1f5f9',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#f1f5f9',
   },
   welcomeText: {
     fontSize: moderateScale(11),
@@ -280,58 +304,70 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     alignItems: 'center',
     paddingVertical: verticalScale(7),
-    borderBottomWidth: 1,
-    borderBottomColor: '#f1f5f9',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#f1f5f9',
     marginBottom: verticalScale(10),
   },
   logo: {
     width: scale(280),
     height: verticalScale(60),
-    // backgroundColor: 'red'
+    // backgroundColor: 'red',
+    marginBottom: verticalScale(-12),
+    marginTop: verticalScale(-10),
   },
   tagline: {
     fontFamily: 'mushaf',
     fontSize: moderateScale(30),
     color: '#64748b',
     textAlign: 'center',
+
     // backgroundColor: 'yellow'
 
   },
 
   // ── Grid
   grid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-evenly',
-    paddingHorizontal: scale(8),
+    paddingHorizontal: scale(12),
+    // paddingTop: verticalScale(4),
+    gap: verticalScale(6),
   },
   boxWrapper: {
-    width: '46%',
-    marginBottom: verticalScale(10),
+    width: '100%',
   },
   box: {
     backgroundColor: '#ffffff',
-    borderRadius: moderateScale(14),
-    paddingVertical: verticalScale(16),
-    paddingHorizontal: scale(8),
+    borderRadius: moderateScale(10),
+    paddingVertical: verticalScale(10),
+    paddingHorizontal: scale(14),
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#e8edf2',
+    gap: scale(14),
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 4,
+    elevation: 1,
+  },
+  iconCircle: {
+    width: scale(44),
+    height: scale(44),
+    borderRadius: scale(12),
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1.5,
-    borderColor: '#d4dde5',
-    minHeight: verticalScale(110),
   },
   boxImage: {
-    width: scale(60),
-    height: verticalScale(48),
-    marginBottom: verticalScale(8),
+    width: scale(30),
+    height: scale(30),
   },
   boxLabel: {
-    fontFamily: 'good',                     // purana font
-    fontSize: moderateScale(11),
+    fontFamily: 'good',
+    fontSize: moderateScale(12.5),
     fontWeight: '600',
-    color: BRAND,
-    textAlign: 'center',
-    lineHeight: moderateScale(16),
+    color: '#0f172a',
+    flex: 1,
+    lineHeight: moderateScale(18),
   },
 
   // ── Modals
@@ -407,7 +443,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: moderateScale(13),
   },
- 
+
   avatar: {
     width: scale(40),
     height: scale(40),
