@@ -129,8 +129,7 @@ const ApplyTab = () => {
             showModal(
                 'error',
                 'Error',
-                err.message || 'Kuch masla aa gaya. Dobara try karein.'
-            );
+                err.message || 'Something went wrong. Please try again.');
         } finally {
             setSubmitting(false);
         }
@@ -282,7 +281,7 @@ const StatusTab = () => {
             if (err.response?.status === 404) {
                 setApplications([]);
             } else {
-                showError('Error', 'Application load nahi ho saki. Dobara try karein.');
+                showError('Error', 'The application could not be loaded. Please try again.');
             }
         } finally {
             setLoading(false);

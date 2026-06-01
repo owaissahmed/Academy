@@ -202,6 +202,7 @@ const Enrollments = ({ navigation }) => {
         setLoading(true);
         try {
             const response = await api.get('/enrollments/my-enrollments');
+            console.log(response)
             const finalData = response?.data || [];
             setData(finalData);
             console.log(finalData)

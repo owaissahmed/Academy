@@ -144,7 +144,7 @@ const UpcomingCourses = ({ navigation }) => {
         } catch {
             setModal({
                 visible: true, type: 'error',
-                title: 'Error', message: 'Courses load nahi ho sake. Dobara try karein.',
+                title: 'Error', message: 'Failed to load courses. Please try again.',
                 onPrimary: closeModal,
             });
         } finally {
@@ -213,20 +213,20 @@ const UpcomingCourses = ({ navigation }) => {
                 setModal({
                     visible: true, type: 'success',
                     title: 'Enrolled!',
-                    message: 'Aapki enrollment request submit ho gayi. Admin review ke baad approve karega.',
+                    message: res.message,
                     onPrimary: closeModal,
                 });
             } else {
                 setModal({
                     visible: true, type: 'error',
-                    title: 'Failed', message: res.message || 'Enrollment fail ho gayi.',
+                    title: 'Failed', message: res.message || 'Enrollment failed.',
                     onPrimary: closeModal,
                 });
             }
         } catch (err) {
             setModal({
                 visible: true, type: 'error',
-                title: 'Error', message: err.response?.data?.message || 'Kuch masla aa gaya.',
+                title: 'Error', message: err.response?.data?.message || 'Something went wrong',
                 onPrimary: closeModal,
             });
         } finally {

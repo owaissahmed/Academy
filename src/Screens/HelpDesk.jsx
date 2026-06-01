@@ -107,7 +107,7 @@ const Helpdesk = ({ navigation }) => {
             setModal({
                 visible: true,
                 title: 'Error',
-                message: 'Helpdesk load nahi ho saka. Dobara try karein.',
+                message: 'Failed to load Helpdesk. Please try again.',
             });
         } finally {
             setLoading(false);

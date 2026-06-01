@@ -4,7 +4,7 @@ import Form from './Screens/Form';
 import Home from './Screens/Home';
 import OnlineTuition from './Screens/OnlineTuition';
 import HomeTuition from './Screens/HomeTuition';
-import DarseNizamiForm from './Screens/DarseNizamiForm';
+import DarseNizamiForm from './Screens/DarseNizami';
 import Courses from './Screens/Courses';
 import About from './Screens/About';
 import CompletedProject from './Screens/CompletedProject';

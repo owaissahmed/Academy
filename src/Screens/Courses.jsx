@@ -234,8 +234,7 @@ const Courses = ({ navigation }) => {
             showModal(
                 'error',
                 'Error',
-                err.message || 'Kuch masla aa gaya. Dobara try karein.'
-            );
+                err.message || 'Something went wrong. Please try again.');
         } finally {
             setSubmitting(false);
         }
