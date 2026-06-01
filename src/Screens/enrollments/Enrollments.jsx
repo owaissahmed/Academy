@@ -20,17 +20,17 @@ const BRAND = '#2e4c60';
 
 // ─── Filter tabs config ───────────────────────────────────────────────────────
 const FILTERS = [
-    { key: 'all',      label: 'All'      },
-    { key: 'pending',  label: 'Pending'  },
+    { key: 'all', label: 'All' },
+    { key: 'pending', label: 'Pending' },
     { key: 'approved', label: 'Approved' },
     { key: 'rejected', label: 'Rejected' },
 ];
 
 // ─── Status config ────────────────────────────────────────────────────────────
 const STATUS = {
-    pending:  { label: 'Pending',  color: '#f59e0b', bg: '#fef3c7', icon: 'clock'        },
+    pending: { label: 'Pending', color: '#f59e0b', bg: '#fef3c7', icon: 'clock' },
     approved: { label: 'Approved', color: '#10b981', bg: '#d1fae5', icon: 'check-circle' },
-    rejected: { label: 'Rejected', color: '#e05c5c', bg: '#fee2e2', icon: 'x-circle'     },
+    rejected: { label: 'Rejected', color: '#e05c5c', bg: '#fee2e2', icon: 'x-circle' },
 };
 
 // ─── Filter Tab ───────────────────────────────────────────────────────────────
@@ -62,7 +62,7 @@ const EnrollmentCard = ({ item, index, onScreenshotPress }) => {
     const course = item.item;
     const isApproved = item.status === 'approved';
     const isRejected = item.status === 'rejected';
-    const Type = item.enrollmentType ;
+    const Type = item.enrollmentType;
 
     return (
         <Animated.View style={[styles.card, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
@@ -89,10 +89,12 @@ const EnrollmentCard = ({ item, index, onScreenshotPress }) => {
 
             {/* ── Course info row ── */}
             <View style={styles.infoRow}>
-                <View style={styles.infoItem}>
-                    <Icon name="video" size={moderateScale(12)} color="#94a3b8" />
-                    <Text allowFontScaling={false} style={styles.infoText}>{course?.videos} Videos</Text>
-                </View>
+                {course?.videos &&
+                    <View style={styles.infoItem}>
+                        <Icon name="video" size={moderateScale(12)} color="#94a3b8" />
+                        <Text allowFontScaling={false} style={styles.infoText}>{course?.videos} Videos</Text>
+                    </View>
+                }
                 {/* <View style={styles.infoItem}>
                     <Icon name="type" size={moderateScale(12)} color="#94a3b8" />
                     <Text allowFontScaling={false} style={styles.infoText}>{Type} Videos</Text>
@@ -172,10 +174,10 @@ const EnrollmentCard = ({ item, index, onScreenshotPress }) => {
 // ─── Empty State ──────────────────────────────────────────────────────────────
 const EmptyState = ({ filter }) => {
     const messages = {
-        all:      { icon: 'inbox',     title: 'No Enrollments Yet',    sub: 'Browse courses and apply to get started.' },
-        pending:  { icon: 'clock',     title: 'No Pending Enrollments', sub: 'All caught up!' },
-        approved: { icon: 'award',     title: 'No Approved Courses',   sub: 'Your approvals will appear here.' },
-        rejected: { icon: 'x-circle',  title: 'No Rejections',         sub: "You're all good!" },
+        all: { icon: 'inbox', title: 'No Enrollments Yet', sub: 'Browse courses and apply to get started.' },
+        pending: { icon: 'clock', title: 'No Pending Enrollments', sub: 'All caught up!' },
+        approved: { icon: 'award', title: 'No Approved Courses', sub: 'Your approvals will appear here.' },
+        rejected: { icon: 'x-circle', title: 'No Rejections', sub: "You're all good!" },
     };
     const m = messages[filter] || messages.all;
     return (
@@ -277,26 +279,26 @@ const Enrollments = ({ navigation }) => {
                     ))}
                 </ScrollView>
             )}
-        {/* ── Screenshot Modal ── */}
-        <AppModal
-            visible={screenshotModal.visible}
-            onClose={() => setScreenshotModal({ visible: false, uri: null })}
-            title="Payment Screenshot"
-            closeOnBackdrop={true}
-            primaryBtn={{
-                label: 'Close',
-                onPress: () => setScreenshotModal({ visible: false, uri: null }),
-                variant: 'outline',
-            }}
-        >
-            {screenshotModal.uri && (
-                <Image
-                    source={{ uri: screenshotModal.uri }}
-                    style={screenshotStyles.fullImg}
-                    resizeMode="contain"
-                />
-            )}
-        </AppModal>
+            {/* ── Screenshot Modal ── */}
+            <AppModal
+                visible={screenshotModal.visible}
+                onClose={() => setScreenshotModal({ visible: false, uri: null })}
+                title="Payment Screenshot"
+                closeOnBackdrop={true}
+                primaryBtn={{
+                    label: 'Close',
+                    onPress: () => setScreenshotModal({ visible: false, uri: null }),
+                    variant: 'outline',
+                }}
+            >
+                {screenshotModal.uri && (
+                    <Image
+                        source={{ uri: screenshotModal.uri }}
+                        style={screenshotStyles.fullImg}
+                        resizeMode="contain"
+                    />
+                )}
+            </AppModal>
 
         </Container>
     );
