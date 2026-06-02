@@ -27,6 +27,7 @@ const MENU_ITEMS = [
   { key: 'DarseNizamiForm', label: 'DARS-e-NIZAMI COURSE', image: require('../Images/quran.png') },
   { key: 'UpcomingCourses', label: 'UPCOMING COURSES', image: require('../Images/coming.png') },
   { key: 'TeacherApplication', label: 'BECOME A TEACHER', image: require('../Images/teacher.png') },
+  { key: 'Complaint', label: ' Add Complaint', image: require('../Images/info.png') },
   { key: 'About', label: 'ABOUT US', image: require('../Images/info.png') },
 ];
 
@@ -109,7 +110,10 @@ const Home = ({ navigation }) => {
       setProfile(res.data);
 
       console.log(res.data.profilePic);
-
+      if (!res.data.profilePic || !res.data.fatherName || !res.data.cnic || !res.data.gender || !res.data.phone) {
+        console.log('data shhat')
+          navigation.replace('Profile')
+      }
     } catch (error) {
       console.log('Profile load nahi ho saki.');
     }

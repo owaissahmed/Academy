@@ -253,7 +253,7 @@ const EditProfile = ({ navigation }) => {
                         <TextField
                             label="Age"
                             value={age}
-                            onChangeText={v => { setAge(formatAge(v)); setErr('age')(); }}
+                            onChangeText={v => { setAge(formatAge(v)); setErrors('age')(); }}
                             keyboardType="numeric"
                             icon="calendar"
                             error={errors.age}

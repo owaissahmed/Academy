@@ -45,6 +45,9 @@ import TeacherApplication from './Screens/home/TeacherApplication';
 import Enrollments from './Screens/enrollments/Enrollments';
 import DarseNizamiFees from './Screens/enrollments/DarseNizamiFees';
 import QuesAns from './Screens/home/QuesAns';
+import Complaint from './Screens/home/Complaint';
+import Announcements from './Screens/home/Announcements';
+
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
@@ -61,6 +64,8 @@ export default function AppNavigator() {
           <Stack.Screen name="DarseNizamiFees" component={DarseNizamiFees} options={{ headerShown: false }} />
           <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
           <Stack.Screen name="QuesAns" component={QuesAns} options={{ headerShown: false }} />
+          <Stack.Screen name="Complaint" component={Complaint} options={{ headerShown: false }} />
+          <Stack.Screen name="Announcements" component={Announcements} options={{ headerShown: false }} />
           <Stack.Screen
             name="First"
             component={First}

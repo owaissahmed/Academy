@@ -36,8 +36,8 @@ const STATUS_CONFIG = {
 
 const DarseNizamiFees = ({ route, navigation }) => {
     // ─── Route Params ────────────────────────────────────────────────────────
-    const { enrollmentId, classId } = route.params || {};
-
+    const { data } = route.params || {};
+    console.log(data)
     // ─── States ──────────────────────────────────────────────────────────────
     const [history, setHistory] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -77,10 +77,10 @@ const DarseNizamiFees = ({ route, navigation }) => {
 
     // ─── API: Fetch History ──────────────────────────────────────────────────
     const loadPaymentHistory = async () => {
-        if (!enrollmentId) return;
+        if (!data._id) return;
         setLoading(true);
         try {
-            const response = await api.get(`/fee-payment/my?enrollmentId=${enrollmentId}`);
+            const response = await api.get(`/fee-payment/my?enrollmentId=${data._id}`);
             const finalData = Array.isArray(response) ? response : (response.data || []);
             setHistory(finalData);
 
@@ -110,7 +110,7 @@ const DarseNizamiFees = ({ route, navigation }) => {
         setSubmitting(true);
         try {
             const formData = new FormData();
-            formData.append('enrollmentId', enrollmentId);
+            formData.append('enrollmentId', data._id);
             formData.append('month', `${selectedMonth} ${CURRENT_YEAR}`);
             formData.append('paymentScreenshot', {
                 uri: screenshot.uri,
@@ -179,23 +179,52 @@ const DarseNizamiFees = ({ route, navigation }) => {
             {!loading && (
                 <Animated.View style={[{ flex: 1, opacity: listFadeAnim }]}>
                     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
-                        
+
                         {/* ── Enrollment Info Top Banner ── */}
+
+                        {/* ── Enrollment Course & Fees Details Banner ── */}
                         <View style={styles.headerCard}>
                             <View style={styles.headerTitleWrap}>
                                 <View style={styles.cardIconCircle}>
                                     <Icon name="book-open" size={moderateScale(15)} color={BRAND} />
                                 </View>
-                                <View>
-                                    <Text allowFontScaling={false} style={styles.headerLabel}>Enrollment Ref ID</Text>
-                                    <Text allowFontScaling={false} style={styles.headerValue}>{enrollmentId}</Text>
+                                <View style={{ flex: 1 }}>
+                                    <Text allowFontScaling={false} style={styles.courseNameLabel}>
+                                        {data?.item?.name || 'Dars-e-Nizami Class'}
+                                    </Text>
+
+                                </View>
+                            </View>
+
+                            <View style={styles.feeDetailsDivider} />
+
+                            {/* Fees Breakdown Grid */}
+                            <View style={styles.feeBreakdownRow}>
+                                <View style={styles.feeBreakdownItem}>
+                                    <Text allowFontScaling={false} style={styles.feeSubLabel}>Total Fees</Text>
+                                    <Text allowFontScaling={false} style={styles.feeValueText}>
+                                        Rs {data?.item?.fees?.toLocaleString() || '0'}
+                                    </Text>
+                                </View>
+
+                                <View style={styles.feeBreakdownItem}>
+                                    <Text allowFontScaling={false} style={styles.feeSubLabel}>Discount</Text>
+                                    <Text allowFontScaling={false} style={[styles.feeValueText, { color: '#e05c5c' }]}>
+                                         Rs {data?.discountAmount?.toLocaleString() || '0'}
+                                    </Text>
+                                </View>
+
+                                <View style={styles.feeBreakdownItem}>
+                                    <Text allowFontScaling={false} style={styles.feeSubLabel}>Net Monthly Fee</Text>
+                                    <Text allowFontScaling={false} style={[styles.feeValueText, { color: '#10b981', fontWeight: '800' }]}>
+                                        Rs {((data?.item?.fees || 0) - (data?.discountAmount || 0)).toLocaleString()}
+                                    </Text>
                                 </View>
                             </View>
                         </View>
-
                         {/* ── Payment History Section ── */}
                         <Text allowFontScaling={false} style={styles.sectionTitle}>Payment History</Text>
-                        
+
                         {history.length === 0 ? (
                             <View style={styles.emptyHistory}>
                                 <Icon name="credit-card" size={moderateScale(28)} color="#cbd5e1" />
@@ -206,7 +235,7 @@ const DarseNizamiFees = ({ route, navigation }) => {
                                 const s = getStatusStyle(item.status);
                                 return (
                                     <View key={item._id || index} style={styles.card}>
-                                        
+
                                         {/* ── Top: Month Name + Status Badge ── */}
                                         <View style={styles.cardTop}>
                                             <View style={styles.cardTitleWrap}>
@@ -280,8 +309,8 @@ const DarseNizamiFees = ({ route, navigation }) => {
 
                     {/* ── Fixed Bottom Button Bar ── */}
                     <View style={styles.fixedBottom}>
-                        <TouchableOpacity 
-                            style={styles.submitPayBtn} 
+                        <TouchableOpacity
+                            style={styles.submitPayBtn}
                             activeOpacity={0.85}
                             onPress={() => { resetForm(); setPaySheetVisible(true); }}
                         >
@@ -316,7 +345,7 @@ const DarseNizamiFees = ({ route, navigation }) => {
                     <Text allowFontScaling={false} style={styles.pickerLabel}>
                         Select Month <Text style={styles.required}>*</Text>
                     </Text>
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         style={styles.dropdownTrigger}
                         activeOpacity={0.7}
                         onPress={() => setMonthSheetVisible(true)}
@@ -406,10 +435,10 @@ const DarseNizamiFees = ({ route, navigation }) => {
                 }}
             >
                 {previewImage && (
-                    <Image 
-                        source={{ uri: previewImage }} 
-                        style={styles.fullViewImage} 
-                        resizeMode="contain" 
+                    <Image
+                        source={{ uri: previewImage }}
+                        style={styles.fullViewImage}
+                        resizeMode="contain"
                     />
                 )}
             </AppModal>
@@ -433,49 +462,96 @@ const DarseNizamiFees = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
     scroll: { padding: scale(16), paddingBottom: verticalScale(95) },
-    
+
     // Top Enrollment Banner Look
-    headerCard: { backgroundColor: '#f8fafc', borderRadius: moderateScale(12), padding: scale(12), borderWidth: 1, borderColor: '#e2e8f0', marginBottom: verticalScale(16) },
-    headerTitleWrap: { flexDirection: 'row', alignItems: 'center', gap: scale(10) },
-    headerLabel: { fontSize: moderateScale(11), color: '#64748b', fontWeight: '600', textTransform: 'uppercase' },
-    headerValue: { fontSize: moderateScale(13), color: '#0f172a', fontWeight: '700', marginTop: verticalScale(2) },
-    
+    // Updated Header & Fees Grid Styles
+    headerCard: {
+        backgroundColor: '#f8fafc',
+        borderRadius: moderateScale(14),
+        padding: scale(14),
+        borderWidth: 1,
+        borderColor: '#e2e8f0',
+        marginBottom: verticalScale(18)
+    },
+    headerTitleWrap: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: scale(10)
+    },
+    courseNameLabel: {
+        fontSize: moderateScale(14),
+        color: '#0f172a',
+        fontWeight: '700'
+    },
+    headerIdSub: {
+        fontSize: moderateScale(10.5),
+        color: '#64748b',
+        marginTop: verticalScale(1)
+    },
+    feeDetailsDivider: {
+        height: 1,
+        backgroundColor: '#e2e8f0',
+        marginVertical: verticalScale(12),
+        borderStyle: 'dashed',
+        borderRadius: 1
+    },
+    feeBreakdownRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    feeBreakdownItem: {
+        flex: 1,
+        alignItems: 'flex-start'
+    },
+    feeSubLabel: {
+        fontSize: moderateScale(10.5),
+        color: '#64748b',
+        fontWeight: '600',
+        textTransform: 'uppercase',
+        marginBottom: verticalScale(2)
+    },
+    feeValueText: {
+        fontSize: moderateScale(13),
+        color: '#1e293b',
+        fontWeight: '700'
+    },
     sectionTitle: { fontSize: moderateScale(14), fontWeight: '700', color: '#1e293b', marginBottom: verticalScale(12) },
-    
+
     // Upgraded Reference Styling (From Parent Cards Layout)
     card: { backgroundColor: '#ffffff', borderRadius: moderateScale(14), padding: scale(14), marginBottom: verticalScale(12), borderWidth: 1, borderColor: '#e2e8f0', elevation: 1 },
     cardTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
     cardTitleWrap: { flexDirection: 'row', alignItems: 'center', gap: scale(8), flex: 1, paddingRight: scale(10) },
     cardIconCircle: { width: scale(28), height: scale(28), borderRadius: scale(14), backgroundColor: '#f0f4f8', alignItems: 'center', justifyContent: 'center' },
     cardTitle: { fontSize: moderateScale(13.5), fontWeight: '700', color: '#1e293b' },
-    
+
     statusBadge: { flexDirection: 'row', alignItems: 'center', gap: scale(4), paddingHorizontal: scale(10), paddingVertical: verticalScale(4), borderRadius: moderateScale(12) },
     statusText: { fontSize: moderateScale(11), fontWeight: '700', textTransform: 'capitalize' },
-    
+
     divider: { height: 1, backgroundColor: '#f1f5f9', marginVertical: verticalScale(12) },
-    
+
     infoRow: { flexDirection: 'row', alignItems: 'center', gap: scale(16), marginBottom: verticalScale(10) },
     infoItem: { flexDirection: 'row', alignItems: 'center', gap: scale(4) },
     infoText: { fontSize: moderateScale(12), fontWeight: '600', color: '#475569' },
-    
+
     noteBox: { flexDirection: 'row', gap: scale(6), padding: scale(10), borderRadius: moderateScale(8), marginTop: verticalScale(2), marginBottom: verticalScale(10), alignItems: 'center' },
     noteText: { fontSize: moderateScale(11.5), fontWeight: '500', flex: 1 },
-    
+
     // Thumbnail Preview Box Matching Layout
     screenshotRow: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#f8fafc', padding: scale(8), borderRadius: moderateScale(10), borderWidth: 1, borderColor: '#e2e8f0', marginTop: verticalScale(4) },
     screenshotThumb: { width: scale(38), height: scale(38), borderRadius: moderateScale(6), backgroundColor: '#e2e8f0' },
     screenshotInfo: { flex: 1, marginLeft: scale(10) },
     screenshotLabel: { fontSize: moderateScale(12), fontWeight: '700', color: '#1e293b' },
     screenshotSub: { fontSize: moderateScale(10.5), color: '#64748b', marginTop: verticalScale(1) },
-    
+
     emptyHistory: { alignItems: 'center', justifyContent: 'center', paddingVertical: verticalScale(50), gap: verticalScale(8) },
     emptyText: { fontSize: moderateScale(12.5), color: '#94a3b8', fontWeight: '500' },
-    
+
     // Bottom Sticky Button Box
     fixedBottom: { position: 'absolute', bottom: 0, left: 0, right: 0, padding: scale(14), backgroundColor: '#ffffff', borderTopWidth: 1, borderColor: '#f1f5f9' },
     submitPayBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: verticalScale(11), borderRadius: moderateScale(12), backgroundColor: BRAND, gap: scale(6), elevation: 2 },
     submitPayBtnText: { fontSize: moderateScale(13), fontWeight: '700', color: '#ffffff' },
-    
+
     // Bottom Sheet Forms Components
     sheetContent: { paddingBottom: verticalScale(10) },
     pickerLabel: { fontSize: moderateScale(12.5), fontWeight: '600', color: '#334155', marginBottom: verticalScale(8), marginTop: verticalScale(10) },
@@ -483,7 +559,7 @@ const styles = StyleSheet.create({
     dropdownTrigger: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderWidth: 1.5, borderColor: '#dde3ea', borderRadius: moderateScale(10), paddingHorizontal: scale(12), paddingVertical: verticalScale(11), backgroundColor: '#fafbfc', marginBottom: verticalScale(14) },
     dropdownValue: { fontSize: moderateScale(13), fontWeight: '600', color: '#0f172a' },
     placeholderText: { color: '#94a3b8' },
-    
+
     pickerBox: { borderWidth: 2, borderColor: '#dde3ea', borderStyle: 'dashed', borderRadius: moderateScale(12), height: verticalScale(130), overflow: 'hidden', backgroundColor: '#fafbfc' },
     pickerBoxFilled: { borderStyle: 'solid', borderColor: '#10b981' },
     pickerPlaceholder: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: verticalScale(6) },
@@ -501,7 +577,7 @@ const styles = StyleSheet.create({
     monthItemActive: { backgroundColor: '#e8f0f5' },
     monthItemText: { fontSize: moderateScale(13), color: '#334155', fontWeight: '500' },
     monthItemTextActive: { color: BRAND, fontWeight: '700' },
-    
+
     fullViewImage: { width: '100%', height: verticalScale(320), borderRadius: moderateScale(8), marginTop: verticalScale(10) }
 });
 

@@ -11,7 +11,7 @@ const DEFAULT_TABS = [
     { key: 'Home',    label: 'Home',    icon: 'home' },
     { key: 'Enrollments', label: 'Enrollments', icon: 'book-open' },
     { key: 'QuesAns', label: 'Ask Mufti', icon: 'message-circle' },
-    { key: 'About',label: 'About Us',icon: 'info' },
+    { key: 'Announcements',label: 'Announcements',icon: 'volume-2' },
     { key: 'Profile', label: 'Profile', icon: 'user' },
 ];
 
@@ -32,7 +32,7 @@ const Footer = ({ tabs = DEFAULT_TABS, activeTab, onTabPress }) => {
 
                         <Icon
                             name={tab.icon}
-                            size={moderateScale(20)}
+                            size={moderateScale(19)}
                             color={isActive ? BRAND : INACTIVE}
                         />
                         <Text style={[styles.label, isActive && styles.labelActive]}>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         backgroundColor: BRAND,
     },
     label: {
-        fontSize: moderateScale(10.5),
+        fontSize: moderateScale(8),
         color: INACTIVE,
         marginTop: verticalScale(3),
         fontWeight: '500',

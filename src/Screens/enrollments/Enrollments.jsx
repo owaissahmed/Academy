@@ -63,7 +63,7 @@ const EnrollmentCard = ({ item, index, onScreenshotPress, navigation }) => {
     const isApproved = item.status === 'approved';
     const isRejected = item.status === 'rejected';
     const Type = item.enrollmentType;
-    const Discount = item.discountAmount
+    const Discount = item.discountAmount;
     return (
         <Animated.View style={[styles.card, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
 
@@ -132,6 +132,14 @@ const EnrollmentCard = ({ item, index, onScreenshotPress, navigation }) => {
                     </Text>
                 </View>
             )}
+            {item.isActive == false && (
+                <View style={styles.removedBox}>
+                    <Icon name="x-circle" size={moderateScale(13)} color="#e05c5c" />
+                    <Text allowFontScaling={false} style={styles.removedText}>
+                        Removed By Admin
+                    </Text>
+                </View>
+            )}
 
             {/* ── Payment screenshot thumbnail — click pe modal ── */}
             {item.paymentScreenshot && (
@@ -180,8 +188,7 @@ const EnrollmentCard = ({ item, index, onScreenshotPress, navigation }) => {
                     fullWidth
                     onPress={() =>
                         navigation.navigate("DarseNizamiFees", {
-                            classId: item?.item?._id,
-                            enrollmentId: item?._id,
+                            data: item
                         })
                     }
                 />
@@ -497,6 +504,21 @@ const styles = StyleSheet.create({
     approvedText: {
         fontSize: moderateScale(12),
         color: '#10b981',
+        fontWeight: '600',
+    },
+    removedBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: scale(6),
+        backgroundColor: '#fee2e2',
+        borderRadius: moderateScale(10),
+        paddingHorizontal: scale(12),
+        paddingVertical: verticalScale(8),
+        marginBottom: verticalScale(10),
+    },
+    removedText: {
+        fontSize: moderateScale(12),
+        color: '#e05c5c',
         fontWeight: '600',
     },
 
