@@ -43,6 +43,7 @@ import CompleteProfile from './Screens/auth/CompleteProfile';
 import MainScreen from './Screens/home/MainScreen';
 import TeacherApplication from './Screens/home/TeacherApplication';
 import Enrollments from './Screens/enrollments/Enrollments';
+import DarseNizamiFees from './Screens/enrollments/DarseNizamiFees';
 import QuesAns from './Screens/home/QuesAns';
 const Stack = createStackNavigator();
 
@@ -57,6 +58,7 @@ export default function AppNavigator() {
           <Stack.Screen name="MainScreen" component={MainScreen} options={{ headerShown: false }} />
           <Stack.Screen name="TeacherApplication" component={TeacherApplication} options={{ headerShown: false }} />
           <Stack.Screen name="Enrollments" component={Enrollments} options={{ headerShown: false }} />
+          <Stack.Screen name="DarseNizamiFees" component={DarseNizamiFees} options={{ headerShown: false }} />
           <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
           <Stack.Screen name="QuesAns" component={QuesAns} options={{ headerShown: false }} />
           <Stack.Screen

@@ -20,14 +20,14 @@ const BRAND = '#2e4c60';
 
 // ─── 8 Menu items — purane code se liye ──────────────────────────────────────
 const MENU_ITEMS = [
-  { key: 'HelpDesk', label: 'DARS-e-NIZAMI\nHELP DESK', image: require('../Images/youtube.png') },
-  { key: 'Courses', label: 'SHORT\nCOURSES', image: require('../Images/books.png') },
-  { key: 'OnlineTuition', label: 'ONLINE\nTUITION', image: require('../Images/online.png') },
-  { key: 'HomeTuition', label: 'HOME\nTUITION', image: require('../Images/home.png') },
-  { key: 'DarseNizamiForm', label: 'DARS-e-NIZAMI\nCOURSE', image: require('../Images/quran.png') },
-  { key: 'UpcomingCourses', label: 'UPCOMING\nCOURSES', image: require('../Images/coming.png') },
-  { key: 'TeacherApplication', label: 'BECOME A\nTEACHER', image: require('../Images/teacher.png') },
-  { key: 'About', label: 'ABOUT OUR\nACADEMY', image: require('../Images/info.png') },
+  { key: 'HelpDesk', label: 'DARS-e-NIZAMI HELP DESK', image: require('../Images/youtube.png') },
+  { key: 'Courses', label: 'SHORT COURSES', image: require('../Images/books.png') },
+  // { key: 'OnlineTuition', label: 'ONLINE TUITION', image: require('../Images/online.png') },
+  // { key: 'HomeTuition', label: 'HOME TUITION', image: require('../Images/home.png') },
+  { key: 'DarseNizamiForm', label: 'DARS-e-NIZAMI COURSE', image: require('../Images/quran.png') },
+  { key: 'UpcomingCourses', label: 'UPCOMING COURSES', image: require('../Images/coming.png') },
+  { key: 'TeacherApplication', label: 'BECOME A TEACHER', image: require('../Images/teacher.png') },
+  { key: 'About', label: 'ABOUT US', image: require('../Images/info.png') },
 ];
 
 // ─── Single menu box — List Style ─────────────────────────────────────────────

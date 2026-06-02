@@ -290,7 +290,7 @@ const StatusTab = () => {
 
     if (loading) return <Loader message="Loading application..." />;
 
-    if (applications.length === 0) {
+    if (!applications) {
         return (
             <View style={styles.emptyWrap}>
                 <View style={styles.emptyIconCircle}>

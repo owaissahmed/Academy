@@ -47,7 +47,7 @@ const FilterTab = ({ tab, active, count, onPress }) => (
 );
 
 // ─── Enrollment Card ──────────────────────────────────────────────────────────
-const EnrollmentCard = ({ item, index, onScreenshotPress }) => {
+const EnrollmentCard = ({ item, index, onScreenshotPress, navigation }) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideAnim = useRef(new Animated.Value(24)).current;
 
@@ -63,7 +63,7 @@ const EnrollmentCard = ({ item, index, onScreenshotPress }) => {
     const isApproved = item.status === 'approved';
     const isRejected = item.status === 'rejected';
     const Type = item.enrollmentType;
-
+    const Discount = item.discountAmount
     return (
         <Animated.View style={[styles.card, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
 
@@ -102,7 +102,7 @@ const EnrollmentCard = ({ item, index, onScreenshotPress }) => {
                 <View style={styles.infoItem}>
                     <Icon name="tag" size={moderateScale(12)} color="#94a3b8" />
                     <Text allowFontScaling={false} style={styles.infoText}>
-                        Rs {course?.fees?.toLocaleString()}
+                        Rs {(course?.fees - Discount).toLocaleString()}
                     </Text>
                 </View>
                 <View style={styles.infoItem}>
@@ -128,7 +128,7 @@ const EnrollmentCard = ({ item, index, onScreenshotPress }) => {
                 <View style={styles.approvedBox}>
                     <Icon name="check-circle" size={moderateScale(13)} color="#10b981" />
                     <Text allowFontScaling={false} style={styles.approvedText}>
-                        Approved on {new Date(item.approvedAt).toLocaleDateString('en-PK', { day: '2-digit', month: 'short', year: 'numeric' })}
+                        Approved on {new Date(item.updatedAt).toLocaleDateString('en-PK', { day: '2-digit', month: 'short', year: 'numeric' })}
                     </Text>
                 </View>
             )}
@@ -154,6 +154,7 @@ const EnrollmentCard = ({ item, index, onScreenshotPress }) => {
             )}
 
             {/* ── Action buttons — sirf approved walo ko Start Course ── */}
+            {/* Normal Courses */}
             {isApproved && course?.accessLink && (
                 <Button
                     label="Start Course"
@@ -164,6 +165,25 @@ const EnrollmentCard = ({ item, index, onScreenshotPress }) => {
                     color="#10b981"
                     fullWidth
                     onPress={() => Linking.openURL(course.accessLink)}
+                />
+            )}
+
+            {/* Dars-e-Nizami Classes */}
+            {isApproved && item?.itemModel === "DarseNizamiClass" && (
+                <Button
+                    label="View Course"
+                    icon="book-open"
+                    iconPosition="left"
+                    variant="filled"
+                    size="sm"
+                    color="#10b981"
+                    fullWidth
+                    onPress={() =>
+                        navigation.navigate("DarseNizamiFees", {
+                            classId: item?.item?._id,
+                            enrollmentId: item?._id,
+                        })
+                    }
                 />
             )}
 
@@ -271,6 +291,7 @@ const Enrollments = ({ navigation }) => {
                     </Text>
                     {filtered.map((item, index) => (
                         <EnrollmentCard
+                            navigation={navigation}
                             key={item._id}
                             item={item}
                             index={index}
