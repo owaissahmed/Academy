@@ -88,10 +88,11 @@ const dl = StyleSheet.create({
 });
 
 // ─── Size presets ─────────────────────────────────────────────────────────────
+// SIZE presets mein minHeight add karo
 const SIZE = {
-    sm: { paddingVertical: verticalScale(9),  paddingHorizontal: scale(16), fontSize: moderateScale(12.5) },
-    md: { paddingVertical: verticalScale(13), paddingHorizontal: scale(20), fontSize: moderateScale(14)   },
-    lg: { paddingVertical: verticalScale(16), paddingHorizontal: scale(24), fontSize: moderateScale(15.5) },
+    sm: { paddingVertical: verticalScale(9), paddingHorizontal: scale(16), fontSize: moderateScale(12.5), minHeight: verticalScale(38) },
+    md: { paddingVertical: verticalScale(13), paddingHorizontal: scale(20), fontSize: moderateScale(14), minHeight: verticalScale(46) },
+    lg: { paddingVertical: verticalScale(16), paddingHorizontal: scale(24), fontSize: moderateScale(15.5), minHeight: verticalScale(52) },
 };
 
 // ─── Main component ───────────────────────────────────────────────────────────
@@ -137,6 +138,7 @@ const Button = ({
             paddingVertical: sz.paddingVertical,
             paddingHorizontal: sz.paddingHorizontal,
             borderRadius: borderRadius ?? moderateScale(13),
+            minHeight: sz.minHeight,
         },
         // Variant styles
         variant === 'filled' && { backgroundColor: color },

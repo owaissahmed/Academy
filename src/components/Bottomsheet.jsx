@@ -43,17 +43,35 @@ const BottomSheet = ({
 
     useEffect(() => {
         if (visible) {
+            // Spring animation starts instantly with parallel execution parameters
             Animated.parallel([
-                Animated.spring(slideAnim, { toValue: 0, tension: 65, friction: 11, useNativeDriver: true }),
-                Animated.timing(backdropAnim, { toValue: backdropOpacity, duration: 250, useNativeDriver: true }),
+                Animated.spring(slideAnim, { 
+                    toValue: 0, 
+                    tension: 65, 
+                    friction: 11, 
+                    useNativeDriver: true 
+                }),
+                Animated.timing(backdropAnim, { 
+                    toValue: backdropOpacity, 
+                    duration: 220, 
+                    useNativeDriver: true 
+                }),
             ]).start();
         } else {
             Animated.parallel([
-                Animated.timing(slideAnim, { toValue: SCREEN_HEIGHT, duration: 250, useNativeDriver: true }),
-                Animated.timing(backdropAnim, { toValue: 0, duration: 200, useNativeDriver: true }),
+                Animated.timing(slideAnim, { 
+                    toValue: SCREEN_HEIGHT, 
+                    duration: 200, 
+                    useNativeDriver: true 
+                }),
+                Animated.timing(backdropAnim, { 
+                    toValue: 0, 
+                    duration: 180, 
+                    useNativeDriver: true 
+                }),
             ]).start();
         }
-    }, [visible]);
+    }, [visible, backdropOpacity]);
 
     const sheetHeight = height
         ? height
@@ -73,6 +91,15 @@ const BottomSheet = ({
             contentContainerStyle: scrollProps?.contentContainerStyle,
         }
         : { style: [styles.content, contentStyle] };
+
+    // ── KEY GLITCH FIX ────────────────────────────────────────────────────────
+    // Interpolate opacity directly from the height translation position.
+    // Jab tak sheet upar nahi aayegi, yeh invisible rahegi (No Top Left Flashes).
+    const sheetOpacity = slideAnim.interpolate({
+        inputRange: [0, SCREEN_HEIGHT * 0.5, SCREEN_HEIGHT],
+        outputRange: [1, 0, 0],
+        extrapolate: 'clamp',
+    });
 
     return (
         <Modal
@@ -94,10 +121,13 @@ const BottomSheet = ({
                 >
                     <Animated.View
                         style={[
-                            styles.sheet,
-                            sheetHeight ? { height: sheetHeight } : {},
-                            sheetStyle,
-                            { transform: [{ translateY: slideAnim }] },
+                            styles.sheet, 
+                            sheetHeight ? { height: sheetHeight } : {}, 
+                            sheetStyle, 
+                            { 
+                                opacity: sheetOpacity, 
+                                transform: [{ translateY: slideAnim }] 
+                            }
                         ]}
                     >
                         {showHandle && <View style={styles.handle} />}
@@ -219,8 +249,6 @@ const styles = StyleSheet.create({
         borderTopColor: '#f1f5f9',
     },
     footerBtns: { flexDirection: 'row', gap: scale(10) },
-
-    // ── Key fix: Button ko View mein wrap karo flex:1 se ──
     btnWrap: { flex: 1 },
 });
 

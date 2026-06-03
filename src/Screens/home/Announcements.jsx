@@ -127,8 +127,6 @@ const Announcements = ({ navigation }) => {
                 visible={!!selectedImg}
                 onClose={() => setSelectedImg(null)}
                 closeOnBackdrop={true}
-                type="success"
-                title="View Attachment"
                 primaryBtn={{ 
                     label: 'Close', 
                     onPress: () => setSelectedImg(null) 
