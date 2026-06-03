@@ -76,13 +76,21 @@ const EmptyState = ({ onRetry }) => (
         <View style={styles.emptyIconCircle}>
             <Icon name="inbox" size={moderateScale(32)} color="#cbd5e1" />
         </View>
-        <Text allowFontScaling={false} style={styles.emptyTitle}>No Helpdesk Found</Text>
-        <Text allowFontScaling={false} style={styles.emptySubtitle}>
-            Abhi koi helpdesk available nahi.{'\n'}Baad mein dobara check karein.
+        <Text allowFontScaling={false} style={styles.emptyTitle}>
+            No Helpdesk Found
         </Text>
-        <TouchableOpacity style={styles.retryBtn} onPress={onRetry} activeOpacity={0.8}>
+        <Text allowFontScaling={false} style={styles.emptySubtitle}>
+            No helpdesk is available at the moment.{'\n'}Please check again later.
+        </Text>
+        <TouchableOpacity
+            style={styles.retryBtn}
+            onPress={onRetry}
+            activeOpacity={0.8}
+        >
             <Icon name="refresh-cw" size={moderateScale(14)} color={BRAND} />
-            <Text allowFontScaling={false} style={styles.retryText}>Retry</Text>
+            <Text allowFontScaling={false} style={styles.retryText}>
+                Retry
+            </Text>
         </TouchableOpacity>
     </View>
 );

@@ -14,45 +14,12 @@ import Button from './Button';
 
 const BRAND = '#2e4c60';
 
-/**
- * AppModal — Reusable Component  (sab kuch optional hai)
- *
- * ─── Props ───────────────────────────────────────────────────────────────────
- *
- * VISIBILITY:
- *   visible          (bool)      — open/close  [required]
- *   onClose          (func)      — backdrop ya close tap par
- *   closeOnBackdrop  (bool)      — backdrop tap se close hoga  [default: true]
- *
- * ICON:
- *   icon             (string)    — Feather icon name
- *   iconColor        (string)    — icon color  [default: BRAND]
- *   iconBg           (string)    — icon circle background
- *
- * TEXT:
- *   title            (string)    — heading
- *   message          (string)    — body text
- *
- * BUTTONS:  (Button component wale sare props support karta hai)
- *   primaryBtn       (object)    — { label, onPress, loading, disabled, icon, color, variant, ... }
- *   secondaryBtn     (object)    — { label, onPress, disabled, icon, color, variant, ... }
- *   btnLayout        (string)    — 'row' | 'column'  [default: 'row']
- *
- * STYLE:
- *   backdropOpacity  (number)    — [default: 0.45]
- *   modalStyle       (object)    — modal card extra style
- *   children                     — custom content (title/message k baad render hoga)
- *
- * PRESET TYPES  (icon + colors auto set ho jaate hain):
- *   type             (string)    — 'success' | 'error' | 'warning' | 'info' | 'confirm'
- */
-
 const PRESETS = {
     success: { icon: 'check-circle', iconColor: '#10b981', iconBg: '#d1fae5' },
-    error:   { icon: 'x-circle',     iconColor: '#e05c5c', iconBg: '#fee2e2' },
+    error: { icon: 'x-circle', iconColor: '#e05c5c', iconBg: '#fee2e2' },
     warning: { icon: 'alert-triangle', iconColor: '#f59e0b', iconBg: '#fef3c7' },
-    info:    { icon: 'info',          iconColor: BRAND,     iconBg: '#e8f0f5' },
-    confirm: { icon: 'help-circle',   iconColor: '#7c3aed', iconBg: '#ede9fe' },
+    info: { icon: 'info', iconColor: BRAND, iconBg: '#e8f0f5' },
+    confirm: { icon: 'help-circle', iconColor: '#7c3aed', iconBg: '#ede9fe' },
 };
 
 const AppModal = ({
@@ -85,33 +52,54 @@ const AppModal = ({
     // Custom content
     children,
 }) => {
+    // Initial scale is 0.85 to maintain the layout spring effect smoothly
     const scaleAnim = useRef(new Animated.Value(0.85)).current;
-    const opacityAnim = useRef(new Animated.Value(0)).current;
     const backdropAnim = useRef(new Animated.Value(0)).current;
 
     useEffect(() => {
         if (visible) {
             Animated.parallel([
-                Animated.timing(backdropAnim, { toValue: backdropOpacity, duration: 220, useNativeDriver: true }),
-                Animated.spring(scaleAnim, { toValue: 1, tension: 65, friction: 9, useNativeDriver: true }),
-                Animated.timing(opacityAnim, { toValue: 1, duration: 220, useNativeDriver: true }),
+                Animated.timing(backdropAnim, {
+                    toValue: backdropOpacity,
+                    duration: 220,
+                    useNativeDriver: true
+                }),
+                Animated.spring(scaleAnim, {
+                    toValue: 1,
+                    tension: 65,
+                    friction: 9,
+                    useNativeDriver: true
+                }),
             ]).start();
         } else {
             Animated.parallel([
-                Animated.timing(backdropAnim, { toValue: 0, duration: 180, useNativeDriver: true }),
-                Animated.timing(scaleAnim, { toValue: 0.85, duration: 180, useNativeDriver: true }),
-                Animated.timing(opacityAnim, { toValue: 0, duration: 180, useNativeDriver: true }),
+                Animated.timing(backdropAnim, {
+                    toValue: 0,
+                    duration: 180,
+                    useNativeDriver: true
+                }),
+                Animated.timing(scaleAnim, {
+                    toValue: 0.85,
+                    duration: 180,
+                    useNativeDriver: true
+                }),
             ]).start();
         }
-    }, [visible]);
+    }, [visible, backdropOpacity]);
 
     // Resolve preset
     const preset = type ? PRESETS[type] : null;
-    const resolvedIcon    = icon     || preset?.icon;
+    const resolvedIcon = icon || preset?.icon;
     const resolvedIconColor = iconColor || preset?.iconColor || BRAND;
-    const resolvedIconBg  = iconBg   || preset?.iconBg  || '#e8f0f5';
+    const resolvedIconBg = iconBg || preset?.iconBg || '#e8f0f5';
 
     const hasButtons = primaryBtn || secondaryBtn;
+
+    const modalOpacity = scaleAnim.interpolate({
+        inputRange: [0.85, 0.92, 1],
+        outputRange: [0, 0, 1],
+        extrapolate: 'clamp',
+    });
 
     return (
         <RNModal
@@ -131,7 +119,10 @@ const AppModal = ({
                 <Animated.View
                     style={[
                         styles.card,
-                        { opacity: opacityAnim, transform: [{ scale: scaleAnim }] },
+                        {
+                            opacity: modalOpacity,
+                            transform: [{ scale: scaleAnim }]
+                        },
                         modalStyle,
                     ]}
                 >

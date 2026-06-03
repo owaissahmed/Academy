@@ -21,6 +21,7 @@ const BRAND = '#2e4c60';
 const MENU_ITEMS = [
   { key: 'DarseNizamiForm', label: 'DARS-e-NIZAMI COURSE', icon: 'book' },
   { key: 'Courses', label: 'SHORT COURSES', icon: 'folder-video' },
+  { key: 'MyTests', label: 'My Tests', icon: 'clipboard' },
   { key: 'HelpDesk', label: 'DARS-e-NIZAMI HELP DESK', icon: 'youtube' },
   { key: 'UpcomingCourses', label: 'UPCOMING COURSES', icon: 'megaphone' },
   { key: 'TeacherApplication', label: 'JOIN AS TEACHER', icon: 'graduation-cap' },
