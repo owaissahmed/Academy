@@ -23,6 +23,7 @@ const MENU_ITEMS = [
   { key: 'Courses', label: 'SHORT COURSES', icon: 'folder-video' },
   { key: 'MyTests', label: 'My Tests', icon: 'clipboard' },
   { key: 'ExamResults', label: 'My Results', icon: 'trophy' },
+  { key: 'MyCertificates', label: 'My Certificates', icon: 'trophy' },
   { key: 'HelpDesk', label: 'DARS-e-NIZAMI HELP DESK', icon: 'youtube' },
   { key: 'UpcomingCourses', label: 'UPCOMING COURSES', icon: 'megaphone' },
   { key: 'TeacherApplication', label: 'JOIN AS TEACHER', icon: 'graduation-cap' },

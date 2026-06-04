@@ -105,10 +105,10 @@ const ClassCard = ({ item, onEnroll, enrollingId }) => {
 
 // ─── Main Screen ──────────────────────────────────────────────────────────────
 const DarseNizami = ({ navigation }) => {
-    const [classes, setClasses]       = useState([]);
-    const [loading, setLoading]       = useState(true);
+    const [classes, setClasses] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [enrollingId, setEnrollingId] = useState(null);
-    const [modal, setModal]           = useState({
+    const [modal, setModal] = useState({
         visible: false, type: 'error', title: '', message: '', onPrimary: null,
     });
 
@@ -121,7 +121,7 @@ const DarseNizami = ({ navigation }) => {
         try {
             // 1. All classes
             const classRes = await api.get('/darse-nizami/class/all');
-            const classList = Array.isArray(classRes) ? classRes : (classRes.data || []);
+            const classList = Array.isArray(classRes) ? classRes : (classRes.data.filter(e => e.isActive) || []);
 
             // 2. For each class — subjects + fees in parallel
             const enriched = await Promise.all(
@@ -230,7 +230,7 @@ const DarseNizami = ({ navigation }) => {
                     onPress: modal.onPrimary || closeModal,
                     color: modal.type === 'error' ? '#e05c5c'
                         : modal.type === 'warning' ? '#f59e0b'
-                        : BRAND,
+                            : BRAND,
                 }}
             />
         </Container>
