@@ -48,6 +48,7 @@ import QuesAns from './Screens/home/QuesAns';
 import Complaint from './Screens/home/Complaint';
 import Announcements from './Screens/home/Announcements';
 import MyTests from './Screens/home/MyTests';
+import ExamResults from './Screens/home/ExamResults';
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
@@ -67,6 +68,7 @@ export default function AppNavigator() {
           <Stack.Screen name="Complaint" component={Complaint} options={{ headerShown: false }} />
           <Stack.Screen name="Announcements" component={Announcements} options={{ headerShown: false }} />
           <Stack.Screen name="MyTests" component={MyTests} options={{ headerShown: false }} />
+          <Stack.Screen name="ExamResults" component={ExamResults} options={{ headerShown: false }} />
           <Stack.Screen
             name="First"
             component={First}
