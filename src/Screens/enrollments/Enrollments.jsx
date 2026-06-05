@@ -16,6 +16,8 @@ import Loader from '../../components/Loader';
 import Button from '../../components/Button';
 import { api } from '../../utlis/api';
 import AppModal from '../../components/Appmodal';
+import RoundLogo from '../../Images/new-logo-blue.png'
+
 const BRAND = '#2e4c60';
 
 // ─── Filter tabs config ───────────────────────────────────────────────────────
@@ -33,6 +35,109 @@ const STATUS = {
     rejected: { label: 'Rejected', color: '#e05c5c', bg: '#fee2e2', icon: 'x-circle' },
 };
 
+const RegistrationCard = ({ data, user }) => {
+    const student = data?.studentId;
+    const course = data?.item;
+    console.log(data)
+    console.log(user.data.userId)
+    const admissionDate = new Date(data?.createdAt).toLocaleDateString('en-PK', {
+        day: '2-digit', month: 'short', year: 'numeric'
+    });
+
+    return (
+        <View style={rc.card}>
+            {/* Header */}
+            <View style={rc.header}>
+                <Text allowFontScaling={false} style={rc.headerSub}>Student Registration Card</Text>
+                <Text allowFontScaling={false} style={rc.headerTitle}>Dars-e-Nizami</Text>
+
+                <Image source={{ uri: user.data.profilePic }} style={rc.avatar} />
+
+
+                <Text allowFontScaling={false} style={rc.name}>{user.data?.userId.name || 'Student'}</Text>
+                <Text allowFontScaling={false} style={rc.fatherName}>
+                    son/daughter of {user.data?.fatherName || '—'}
+                </Text>
+            </View>
+
+            {/* Body */}
+            <View style={rc.body}>
+                <View style={rc.row2}>
+                    <View style={rc.infoBox}>
+                        <Text allowFontScaling={false} style={rc.infoLabel}>CLASS</Text>
+                        <Text allowFontScaling={false} style={rc.infoValue}>{course?.name || '—'}</Text>
+                    </View>
+                    <View style={rc.infoBox}>
+                        <Text allowFontScaling={false} style={rc.infoLabel}>REG ID</Text>
+                        <Text allowFontScaling={false} style={rc.infoValue}>{data?.regId || '—'}</Text>
+                    </View>
+                </View>
+
+
+                <View style={rc.phoneBox}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: scale(6) }}>
+                        <Text allowFontScaling={false} style={rc.phoneLabel}>PHONE</Text>
+                    </View>
+                    <Text allowFontScaling={false} style={rc.phoneValue}> {user.data?.phone || '—'}</Text>
+                </View>
+
+
+            </View>
+            <View style={rc.admissionBox}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: scale(6) }}>
+                    <Icon name="check" size={moderateScale(13)} color="#10b981" />
+                    <Text allowFontScaling={false} style={rc.admissionLabel}>ADMISSION DATE</Text>
+                </View>
+                <Text allowFontScaling={false} style={rc.admissionValue}>{admissionDate}</Text>
+            </View>
+            <Image
+                source={RoundLogo}
+                style={rc.monogram}
+                resizeMode="contain"
+            />
+        </View>
+    );
+};
+
+const rc = StyleSheet.create({
+    monogram: {
+        width: scale(160),
+        height: scale(145),
+        opacity: 0.05,
+        position: 'absolute',
+        top: '70%',
+        left: '50%',
+        marginTop: -scale(80),   // height/2
+        marginLeft: -scale(80),  // width/2
+    },
+    card: { borderRadius: moderateScale(16), overflow: 'hidden', borderWidth: 1, borderColor: '#e2e8f0' },
+    header: { backgroundColor: BRAND, padding: scale(16), alignItems: 'center' },
+    headerSub: { fontSize: moderateScale(10), color: '#a8c4d4', letterSpacing: 1.2, marginBottom: verticalScale(2) },
+    headerTitle: { fontSize: moderateScale(13), color: '#fff', marginBottom: verticalScale(14) },
+    avatar: { width: scale(68), height: scale(68), borderRadius: scale(34), borderWidth: 2.5, borderColor: 'rgba(255,255,255,0.25)', marginBottom: verticalScale(10) },
+    avatarPlaceholder: { backgroundColor: '#4a7a96', alignItems: 'center', justifyContent: 'center' },
+    name: { fontSize: moderateScale(17), fontWeight: '700', color: '#fff', marginBottom: verticalScale(2) },
+    fatherName: { fontSize: moderateScale(12), color: '#a8c4d4' },
+    body: { backgroundColor: '#fff', padding: scale(14), gap: verticalScale(10) },
+    row2: { flexDirection: 'row', gap: scale(10) },
+    infoBox: { flex: 1, backgroundColor: '#f8fafc', borderRadius: moderateScale(8), padding: scale(10) },
+    fullBox: { flex: 0 },
+    infoLabel: { fontSize: moderateScale(9.5), color: '#94a3b8', letterSpacing: 0.8, marginBottom: verticalScale(3) },
+    infoValue: { fontSize: moderateScale(13), fontWeight: '600', color: '#0f172a' },
+    phoneBox: {
+        backgroundColor: '#f8fafc', borderRadius: moderateScale(8), padding: scale(10),
+        flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    },
+    phoneLabel: { fontSize: moderateScale(10), color: '#94a3b8', letterSpacing: 0.8, fontWeight: '600' },
+    phoneValue: { fontSize: moderateScale(13), fontWeight: '700', },
+    admissionBox: {
+        backgroundColor: BRAND, borderRadius: moderateScale(8), padding: scale(10),
+        flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    },
+    admissionLabel: { fontSize: moderateScale(10), color: '#a8c4d4', letterSpacing: 0.8, fontWeight: '600' },
+    admissionValue: { fontSize: moderateScale(13), fontWeight: '700', color: '#ffffff' },
+});
+
 // ─── Filter Tab ───────────────────────────────────────────────────────────────
 const FilterTab = ({ tab, active, count, onPress }) => (
     <TouchableOpacity
@@ -47,7 +152,7 @@ const FilterTab = ({ tab, active, count, onPress }) => (
 );
 
 // ─── Enrollment Card ──────────────────────────────────────────────────────────
-const EnrollmentCard = ({ item, index, onScreenshotPress, navigation }) => {
+const EnrollmentCard = ({ item, index, onScreenshotPress, navigation, onCardPress }) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideAnim = useRef(new Animated.Value(24)).current;
 
@@ -178,20 +283,36 @@ const EnrollmentCard = ({ item, index, onScreenshotPress, navigation }) => {
 
             {/* Dars-e-Nizami Classes */}
             {isApproved && item?.itemModel === "DarseNizamiClass" && (
-                <Button
-                    label="View Course"
-                    icon="book-open"
-                    iconPosition="left"
-                    variant="filled"
-                    size="sm"
-                    color="#10b981"
-                    fullWidth
-                    onPress={() =>
-                        navigation.navigate("DarseNizamiFees", {
-                            data: item
-                        })
-                    }
-                />
+                <View style={{ flexDirection: 'row', gap: 10 }}>
+
+                    <View style={{ flex: 1 }}>
+                        <Button
+                            label="Manage Fees"
+                            icon="tag"
+                            iconPosition="left"
+                            variant="filled"
+                            size="sm"
+                            color="#10b981"
+                            fullWidth
+                            onPress={() =>
+                                navigation.navigate("DarseNizamiFees", { data: item })
+                            }
+                        />
+                    </View>
+
+                    <View style={{ flex: 1 }}>
+                        <Button
+                            label="View Card"
+                            icon="eye"
+                            iconPosition="left"
+                            variant="outline"
+                            size="sm"
+                            fullWidth
+                            onPress={() => onCardPress(item)}
+                        />
+                    </View>
+
+                </View>
             )}
 
         </Animated.View>
@@ -221,11 +342,12 @@ const EmptyState = ({ filter }) => {
 // ─── Main Screen ──────────────────────────────────────────────────────────────
 const Enrollments = ({ navigation }) => {
     const [data, setData] = useState([]);
+    const [userData, setuserData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [activeFilter, setActiveFilter] = useState('all');
     const [screenshotModal, setScreenshotModal] = useState({ visible: false, uri: null });
-
-    useEffect(() => { loadEnrollments(); }, []);
+    const [cardModal, setCardModal] = useState({ visible: false, data: null });
+    useEffect(() => { loadEnrollments(), loadProfile(); }, []);
 
     const loadEnrollments = async () => {
         setLoading(true);
@@ -239,6 +361,15 @@ const Enrollments = ({ navigation }) => {
             setData([]);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const loadProfile = async () => {
+        try {
+            const res = await api.get('/students/profile');
+            setuserData(res)
+        } catch {
+            console.log('failed to load profile')
         }
     };
 
@@ -303,6 +434,7 @@ const Enrollments = ({ navigation }) => {
                             item={item}
                             index={index}
                             onScreenshotPress={(uri) => setScreenshotModal({ visible: true, uri })}
+                            onCardPress={(item) => setCardModal({ visible: true, data: item })}
                         />
                     ))}
                 </ScrollView>
@@ -327,7 +459,20 @@ const Enrollments = ({ navigation }) => {
                     />
                 )}
             </AppModal>
-
+            <AppModal
+                visible={cardModal.visible}
+                onClose={() => setCardModal({ visible: false, data: null })}
+                title="Student Registration Card"
+                closeOnBackdrop={true}
+                modalStyle={{ width: '90%', paddingHorizontal: moderateScale(10), }}
+                primaryBtn={{
+                    label: 'Close',
+                    onPress: () => setCardModal({ visible: false, data: null }),
+                    variant: 'outline',
+                }}
+            >
+                {cardModal.data && <RegistrationCard data={cardModal.data} user={userData} />}
+            </AppModal>
         </Container>
     );
 };
