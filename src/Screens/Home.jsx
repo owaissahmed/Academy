@@ -97,7 +97,7 @@ const Home = ({ navigation }) => {
       setProfile(res.data);
       setUserName(res.data.userId.name);
       if (!res.data.profilePic || !res.data.fatherName || !res.data.cnic || !res.data.gender || !res.data.phone) {
-        navigation.replace('Profile');
+        navigation.replace('CompleteProfile');
       }
     } catch (error) {
       console.log('Profile load nahi ho saki.');

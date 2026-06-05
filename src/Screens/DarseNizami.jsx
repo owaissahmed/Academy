@@ -166,10 +166,11 @@ const DarseNizami = ({ navigation }) => {
                 onPrimary: closeModal,
             });
         } catch (err) {
+            console.log(err)
             setModal({
                 visible: true, type: 'error',
                 title: 'Enrollment Failed',
-                message: err.response?.data?.message || 'Could not enroll. Please try again.',
+                message: err.message || 'Could not enroll. Please try again.',
                 onPrimary: closeModal,
             });
         } finally {

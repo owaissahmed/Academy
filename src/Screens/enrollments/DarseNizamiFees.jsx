@@ -210,7 +210,7 @@ const DarseNizamiFees = ({ route, navigation }) => {
                                 <View style={styles.feeBreakdownItem}>
                                     <Text allowFontScaling={false} style={styles.feeSubLabel}>Discount</Text>
                                     <Text allowFontScaling={false} style={[styles.feeValueText, { color: '#e05c5c' }]}>
-                                         Rs {data?.discountAmount?.toLocaleString() || '0'}
+                                        Rs {data?.discountAmount?.toLocaleString() || '0'}
                                     </Text>
                                 </View>
 
@@ -310,8 +310,11 @@ const DarseNizamiFees = ({ route, navigation }) => {
                     {/* ── Fixed Bottom Button Bar ── */}
                     <View style={styles.fixedBottom}>
                         <TouchableOpacity
-                            style={styles.submitPayBtn}
-                            activeOpacity={0.85}
+                            style={[
+                                styles.submitPayBtn,
+                                { backgroundColor: data.isActive ? BRAND : 'grey' }
+                            ]} activeOpacity={0.85}
+                            disabled={data.isActive ? false : true}
                             onPress={() => { resetForm(); setPaySheetVisible(true); }}
                         >
                             <Icon name="plus-circle" size={moderateScale(16)} color="#fff" />
@@ -549,7 +552,7 @@ const styles = StyleSheet.create({
 
     // Bottom Sticky Button Box
     fixedBottom: { position: 'absolute', bottom: 0, left: 0, right: 0, padding: scale(14), backgroundColor: '#ffffff', borderTopWidth: 1, borderColor: '#f1f5f9' },
-    submitPayBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: verticalScale(11), borderRadius: moderateScale(12), backgroundColor: BRAND, gap: scale(6), elevation: 2 },
+    submitPayBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingVertical: verticalScale(11), borderRadius: moderateScale(12), gap: scale(6), elevation: 2 },
     submitPayBtnText: { fontSize: moderateScale(13), fontWeight: '700', color: '#ffffff' },
 
     // Bottom Sheet Forms Components

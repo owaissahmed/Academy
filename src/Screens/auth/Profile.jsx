@@ -166,7 +166,7 @@ const EditProfile = ({ navigation }) => {
             setModal({
                 visible: true, type: 'error',
                 title: 'Error',
-                message: err.response?.data?.message || 'Something went wrong. Please try again.',
+                message: err.message || 'Something went wrong. Please try again.',
                 onPrimary: closeModal,
             });
         } finally {

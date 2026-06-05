@@ -85,7 +85,7 @@ const QuestionCard = ({ item, index, onDeleted }) => {
                 visible: true,
                 type: 'error',
                 title: 'Error',
-                message: err.response?.data?.message || 'Failed to delete question. Please try again.',
+                message: err?.message || 'Failed to delete question. Please try again.',
                 onPrimary: closeModal,
             });
         } finally {
@@ -339,7 +339,7 @@ const QuesAns = ({ navigation }) => {
             setModal({
                 visible: true, type: 'error',
                 title: 'Error',
-                message: err.response?.data?.message || 'Something went wrong. Please try again.',
+                message: err.message || 'Something went wrong. Please try again.',
                 onPrimary: closeModal,
             });
         } finally {

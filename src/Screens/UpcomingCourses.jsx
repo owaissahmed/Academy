@@ -226,7 +226,7 @@ const UpcomingCourses = ({ navigation }) => {
         } catch (err) {
             setModal({
                 visible: true, type: 'error',
-                title: 'Error', message: err.response?.data?.message || 'Something went wrong',
+                title: 'Error', message: err.message || 'Something went wrong',
                 onPrimary: closeModal,
             });
         } finally {
