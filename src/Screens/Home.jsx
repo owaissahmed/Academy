@@ -84,21 +84,18 @@ const Home = ({ navigation }) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      getName();
       loadProfile();
     });
     return unsubscribe;
   }, [navigation]);
 
-  const getName = async () => {
-    const name = await AsyncStorage.getItem('name');
-    setUserName(name);
-  };
+ 
 
   const loadProfile = async () => {
     try {
       const res = await api.get('/students/profile');
       setProfile(res.data);
+      setUserName(res.data.userId.name);
       if (!res.data.profilePic || !res.data.fatherName || !res.data.cnic || !res.data.gender || !res.data.phone) {
         navigation.replace('Profile');
       }
@@ -212,10 +209,9 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   userName: {
-    fontSize: moderateScale(15),
-    fontWeight: '700',
+    fontSize: moderateScale(14),
+    fontWeight: '500',
     color: '#0f172a',
-    marginTop: verticalScale(1),
   },
   topRight: {
     flexDirection: 'row',

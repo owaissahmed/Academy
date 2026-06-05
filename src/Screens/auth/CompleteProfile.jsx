@@ -19,6 +19,7 @@ import TextField from '../../components/TextField';
 import AppModal from '../../components/Appmodal';
 import Button from '../../components/Button';
 import BottomSheet from '../../components/Bottomsheet';
+import DatePicker from '../../components/DatePicker';
 import { api } from '../../utlis/api';
 
 const BRAND = '#2e4c60';
@@ -155,6 +156,8 @@ const sp = StyleSheet.create({
 // ─── Main Component ───────────────────────────────────────────────────────────
 const CompleteProfile = ({ navigation }) => {
     const [fatherName, setFatherName] = useState('');
+    const [dob, setDob] = useState(null);
+    const [calVisible, setCalVisible] = useState(false);
     const [phone, setPhone] = useState('');
     const [cnic, setCnic] = useState('');
     const [age, setAge] = useState('');
@@ -219,6 +222,7 @@ const CompleteProfile = ({ navigation }) => {
         const e = {};
         if (step === 0) {
             if (!fatherName.trim()) e.fatherName = "Father's name is required.";
+            if (!dob) e.dob = "Date of Birth is required.";
             if (!phone || phone.length < 11) e.phone = 'Enter a valid 11-digit phone number.';
             if (!cnic || cnic.replace(/\D/g, '').length < 13) e.cnic = 'Enter a valid CNIC.';
             if (!age || isNaN(age) || age < 5 || age > 99) e.age = 'Enter a valid age.';
@@ -245,6 +249,7 @@ const CompleteProfile = ({ navigation }) => {
         try {
             const formData = new FormData();
             formData.append('fatherName', fatherName.trim());
+            formData.append('dob', dob instanceof Date ? dob.toISOString().split('T')[0] : dob);
             formData.append('phone', phone);
             formData.append('cnic', cnic);
             formData.append('age', age.toString());
@@ -258,7 +263,7 @@ const CompleteProfile = ({ navigation }) => {
                 type: profilePic.type,
             });
             const response = await api.postFormData('/students/complete-profile', formData);
-            if (response) {
+            if (response?.isSuccess) {
                 setModal({
                     visible: true, type: 'success',
                     title: 'Profile Complete!',
@@ -277,7 +282,7 @@ const CompleteProfile = ({ navigation }) => {
             setModal({
                 visible: true, type: 'error',
                 title: 'Error',
-                message: err.response?.data?.message || 'Failed to save profile. Please try again.',
+                message: err.response?.message || 'Failed to save profile. Please try again.',
                 onPrimary: closeModal,
             });
         } finally {
@@ -310,6 +315,25 @@ const CompleteProfile = ({ navigation }) => {
                 icon="credit-card"
                 error={errors.cnic}
             />
+            <TouchableOpacity
+                onPress={() => setCalVisible(true)}
+                activeOpacity={0.8}
+            >
+                <View pointerEvents="none">
+                    <TextField
+                        label="Date of Birth"
+                        value={dob
+                            ? dob.toLocaleDateString('en-PK', { day: 'numeric', month: 'long', year: 'numeric' })
+                            : ''
+                        }
+                        icon="calendar"
+                        editable={false}
+                        error={errors.dob}
+                        placeholder="Select date of birth"
+                    />
+                </View>
+            </TouchableOpacity>
+
             <TextField
                 label="Age"
                 value={age}
@@ -317,6 +341,17 @@ const CompleteProfile = ({ navigation }) => {
                 keyboardType="numeric"
                 icon="calendar"
                 error={errors.age}
+            />
+            <DatePicker
+                visible={calVisible}
+                onClose={() => setCalVisible(false)}
+                onSelect={(date) => {
+                    setDob(date); // Date object store karo
+                    setErr('dob')();
+                }}
+                value={dob instanceof Date ? dob : dob ? new Date(dob) : null} // ✅ string ko Date object mein convert
+                dob={true}
+                title="Date of Birth"
             />
             <TouchableOpacity
                 style={[dd.box, { borderColor: errors.gender ? '#e05c5c' : gender ? BRAND : '#dde3ea' }]}

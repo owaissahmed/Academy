@@ -92,3 +92,41 @@ export const api = {
     putFormData: (path, formData) =>
         apiRequest(path, 'PUT', formData, true),
 };
+
+export const formatToYYYYMMDD = (value) => {
+    if (!value) return '';
+
+    // If already Date object
+    if (value instanceof Date) {
+        return value.toISOString().split('T')[0];
+    }
+
+    // Try direct parse (YYYY-MM-DD etc.)
+    const date = new Date(value);
+
+    if (!isNaN(date.getTime())) {
+        return date.toISOString().split('T')[0];
+    }
+
+    // Manual parsing for "26 June 1997"
+    const parts = value.split(' ');
+    if (parts.length === 3) {
+        const day = parts[0];
+        const monthName = parts[1];
+        const year = parts[2];
+
+        const months = {
+            January: 1, February: 2, March: 3, April: 4,
+            May: 5, June: 6, July: 7, August: 8,
+            September: 9, October: 10, November: 11, December: 12
+        };
+
+        const month = months[monthName];
+
+        if (!month) return '';
+
+        return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    }
+
+    return '';
+};

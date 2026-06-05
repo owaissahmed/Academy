@@ -15,8 +15,9 @@ import Container from '../../components/Container';
 import Loader from '../../components/Loader';
 import AppModal from '../../components/Appmodal';
 import Button from '../../components/Button';
-import { api } from '../../utlis/api';
+import { api, formatToYYYYMMDD } from '../../utlis/api';
 import TextField from '../../components/TextField';
+import DatePicker from '../../components/DatePicker';
 const BRAND = '#2e4c60';
 
 const EditProfile = ({ navigation }) => {
@@ -39,7 +40,8 @@ const EditProfile = ({ navigation }) => {
     const [existingName, setExistingName] = useState('');
     const [existingEmail, setExistingEmail] = useState('');
     const [existingRole, setExistingRole] = useState('');
-
+    const [dob, setDob] = useState(null);
+    const [calVisible, setCalVisible] = useState(false);
     const closeModal = () => setModal(m => ({ ...m, visible: false }));
 
     useEffect(() => { loadProfile(); }, []);
@@ -48,6 +50,7 @@ const EditProfile = ({ navigation }) => {
         setLoading(true);
         try {
             const res = await api.get('/students/profile');
+            console.log(res)
             const user = res.data.userId;
             const p = res.data;
             setExistingName(user?.name || '');
@@ -62,6 +65,7 @@ const EditProfile = ({ navigation }) => {
             setEducation(p.education || '');
             setIslamicEducation(p.islamicEducation || '');
             setExistingPic(p.profilePic || null);
+            setDob(p.dob || null)
         } catch {
             setModal({
                 visible: true, type: 'error',
@@ -103,6 +107,7 @@ const EditProfile = ({ navigation }) => {
     const validate = () => {
         const e = {};
         if (!fatherName.trim()) e.fatherName = 'Father name is required.';
+        if (!dob) e.dob = "Date of Birth is required.";
         if (!phone.trim() || phone.length < 11) e.phone = 'Enter a valid 11-digit phone number.';
         if (!cnic.trim() || cnic.replace(/\D/g, '').length < 13) e.cnic = 'Enter a valid CNIC.';
         if (!age.trim() || isNaN(age) || age < 5 || age > 99) e.age = 'Enter a valid age.';
@@ -116,9 +121,12 @@ const EditProfile = ({ navigation }) => {
 
     const handleSubmit = async () => {
         if (!validate()) return;
+        console.log('DOB:', dob);
+        console.log('Formatted DOB:', formatToYYYYMMDD(dob));
         setSubmitting(true);
         try {
             const formData = new FormData();
+
             formData.append('fatherName', fatherName.trim());
             formData.append('phone', phone.trim());
             formData.append('cnic', cnic.trim());
@@ -127,6 +135,7 @@ const EditProfile = ({ navigation }) => {
             formData.append('address', address.trim());
             formData.append('education', education.trim());
             formData.append('islamicEducation', islamicEducation.trim());
+            formData.append('dob', formatToYYYYMMDD(dob));
 
             if (profilePic) {
                 formData.append('profilePic', {
@@ -137,13 +146,13 @@ const EditProfile = ({ navigation }) => {
             }
 
             const response = await api.postFormData('/students/edit-profile', formData);
-
+            console.log(response)
             if (response.isSuccess || response.success) {
                 setModal({
                     visible: true, type: 'success',
                     title: 'Profile Updated',
                     message: 'Your profile has been updated successfully.',
-                    onPrimary: () => { closeModal(); navigation.goBack(); },
+                    onPrimary: () => { closeModal();  },
                 });
             } else {
                 setModal({
@@ -250,10 +259,25 @@ const EditProfile = ({ navigation }) => {
                             error={errors.cnic}
                             maxLength={15}
                         />
+                        <TouchableOpacity
+                            onPress={() => setCalVisible(true)}
+                            activeOpacity={0.8}
+                        >
+                            <View pointerEvents="none">
+                                <TextField
+                                    label="Date of Birth"
+                                    value={dob}
+                                    icon="calendar"
+                                    editable={false}
+                                    error={errors.dob}
+                                    placeholder="Select date of birth"
+                                />
+                            </View>
+                        </TouchableOpacity>
                         <TextField
                             label="Age"
                             value={age}
-                            onChangeText={v => { setAge(formatAge(v)); setErrors('age')(); }}
+                            onChangeText={v => { setAge(formatAge(v)); setErrors(e => ({ ...e, age: '' })); }}
                             keyboardType="numeric"
                             icon="calendar"
                             error={errors.age}
@@ -311,6 +335,20 @@ const EditProfile = ({ navigation }) => {
                     />
                 </ScrollView>
             )}
+            <DatePicker
+                visible={calVisible}
+                onClose={() => setCalVisible(false)}
+                onSelect={(date) => {
+                    // ✅ String store karo state mein
+                    const formatted = date.toLocaleDateString('en-PK', {
+                        day: 'numeric', month: 'long', year: 'numeric'
+                    });
+                    setDob(formatted);
+                }}
+                value={dob ? new Date(dob) : null}
+                dob={true}
+                title="Date of Birth"
+            />
             <AppModal
                 visible={isLogoutModalVisible}
                 onClose={() => setLogoutModalVisible(false)}
