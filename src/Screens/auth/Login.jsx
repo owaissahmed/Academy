@@ -59,6 +59,7 @@ const Login = ({ navigation }) => {
             console.log("FULL RESPONSE:", response);
             console.log("DATA:", response.data);
             if (response.isSuccess) {
+                await AsyncStorage.setItem('userId', response.data.userId);
                 await AsyncStorage.setItem('token', response.data.token);
                 await AsyncStorage.setItem('name', response.data.name);
                 await AsyncStorage.setItem('role', response.data.role);

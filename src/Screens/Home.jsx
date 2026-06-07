@@ -23,6 +23,7 @@ const MENU_ITEMS = [
   { key: 'Courses', label: 'SHORT COURSES', icon: 'folder-video' },
   { key: 'MyTests', label: 'My Tests', icon: 'clipboard' },
   { key: 'ExamResults', label: 'My Results', icon: 'trophy' },
+  { key: 'TeacherSalary', label: 'Teacher Salary', icon: 'trophy' },
   { key: 'MyCertificates', label: 'My Certificates', icon: 'trophy' },
   { key: 'HelpDesk', label: 'DARS-e-NIZAMI HELP DESK', icon: 'youtube' },
   { key: 'UpcomingCourses', label: 'UPCOMING COURSES', icon: 'megaphone' },
@@ -86,16 +87,20 @@ const Home = ({ navigation }) => {
     const unsubscribe = navigation.addListener('focus', () => {
       loadProfile();
     });
+
     return unsubscribe;
   }, [navigation]);
 
- 
+
 
   const loadProfile = async () => {
     try {
+
       const res = await api.get('/students/profile');
       setProfile(res.data);
       setUserName(res.data.userId.name);
+      const data = await AsyncStorage.getItem('userId');
+      console.log('data', data);
       if (!res.data.profilePic || !res.data.fatherName || !res.data.cnic || !res.data.gender || !res.data.phone) {
         navigation.replace('CompleteProfile');
       }
@@ -150,11 +155,11 @@ const Home = ({ navigation }) => {
           <View style={styles.topRight}>
             <TouchableOpacity
               style={styles.iconBtn}
-              onPress={() => navigation.navigate('Login')}
+              onPress={() => navigation.navigate('Notification')}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
               <Icon name="bell" size={moderateScale(18)} color={BRAND} />
-              <View style={styles.notifDot} />
+              {/* <View style={styles.notifDot} /> */}
             </TouchableOpacity>
           </View>
         </Animated.View>

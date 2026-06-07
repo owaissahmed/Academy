@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         width: scale(28),
         height: 3,
         borderRadius: 2,
-        backgroundColor: BRAND,
+        // backgroundColor: BRAND,
     },
     label: {
         fontSize: moderateScale(8),

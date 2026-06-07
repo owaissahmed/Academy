@@ -71,7 +71,7 @@ const ApplyTab = () => {
             const list = Array.isArray(res) ? res : (res.data || []);
             setSubjects(list);
         } catch {
-            showModal('error', 'Error', 'Subjects load nahi ho sake. Dobara try karein.');
+            showModal('error', 'Error', 'Failed to load subjects. Please try again.');
         } finally {
             setLoadingSubjects(false);
         }
@@ -351,15 +351,15 @@ const StatusTab = () => {
                                 {subjectNames}
                             </Text>
                         </View>
-
-                        <View style={[styles.infoRow, { alignItems: 'flex-start' }]}>
-                            <Icon name="edit-3" size={moderateScale(13)} color="#64748b" style={{ marginTop: 2 }} />
-                            <Text allowFontScaling={false} style={styles.infoLabel}>Experience</Text>
-                            <Text allowFontScaling={false} style={[styles.infoVal, { flex: 1, lineHeight: moderateScale(18) }]}>
-                                {application.experience}
-                            </Text>
-                        </View>
-
+                        {application.status === 'approved' &&
+                            <View style={[styles.infoRow, { alignItems: 'flex-start' }]}>
+                                <Icon name="tag" size={moderateScale(13)} color="#64748b" style={{ marginTop: 2 }} />
+                                <Text allowFontScaling={false} style={styles.infoLabel}>Salary</Text>
+                                <Text allowFontScaling={false} style={[styles.infoVal, { flex: 1, lineHeight: moderateScale(18) }]}>
+                                    Rs. {application.monthlySalary}
+                                </Text>
+                            </View>
+                        }
                         {/* Rejection reason — sirf tab dikhega jab rejected ho */}
                         {application.status === 'rejected' && application.rejectionReason && (
                             <>

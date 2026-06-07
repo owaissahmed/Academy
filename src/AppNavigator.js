@@ -50,6 +50,8 @@ import Announcements from './Screens/home/Announcements';
 import MyTests from './Screens/home/MyTests';
 import ExamResults from './Screens/home/ExamResults';
 import MyCertificates from './Screens/home/MyCertificates';
+import Notification from './Screens/home/Notification';
+import TeacherSalary from './Screens/home/TeacherSalary';
 
 const Stack = createStackNavigator();
 
@@ -72,6 +74,8 @@ export default function AppNavigator() {
           <Stack.Screen name="MyTests" component={MyTests} options={{ headerShown: false }} />
           <Stack.Screen name="ExamResults" component={ExamResults} options={{ headerShown: false }} />
           <Stack.Screen name="MyCertificates" component={MyCertificates} options={{ headerShown: false }} />
+          <Stack.Screen name="Notification" component={Notification} options={{ headerShown: false }} />
+          <Stack.Screen name="TeacherSalary" component={TeacherSalary} options={{ headerShown: false }} />
           <Stack.Screen
             name="First"
             component={First}
