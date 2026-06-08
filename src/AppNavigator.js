@@ -1,7 +1,7 @@
 import React from 'react';
 import First from './Screens/First';
 import Form from './Screens/Form';
-import Home from './Screens/Home';
+import Home from './Screens/home/Home';
 import OnlineTuition from './Screens/OnlineTuition';
 import HomeTuition from './Screens/HomeTuition';
 import DarseNizamiForm from './Screens/DarseNizami';
@@ -38,6 +38,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Login from './Screens/auth/Login';
 import Signup from './Screens/auth/Signup';
+import UpdatePassword from './Screens/auth/UpdatePassword';
+import ForgotPassword from './Screens/auth/ForgotPassword';
 import Profile from './Screens/auth/Profile';
 import CompleteProfile from './Screens/auth/CompleteProfile';
 import MainScreen from './Screens/home/MainScreen';
@@ -76,6 +78,8 @@ export default function AppNavigator() {
           <Stack.Screen name="MyCertificates" component={MyCertificates} options={{ headerShown: false }} />
           <Stack.Screen name="Notification" component={Notification} options={{ headerShown: false }} />
           <Stack.Screen name="TeacherSalary" component={TeacherSalary} options={{ headerShown: false }} />
+          <Stack.Screen name="UpdatePassword" component={UpdatePassword} options={{ headerShown: false }} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ headerShown: false }} />
           <Stack.Screen
             name="First"
             component={First}

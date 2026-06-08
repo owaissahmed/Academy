@@ -183,6 +183,10 @@ const EditProfile = ({ navigation }) => {
             onBack={() => navigation.goBack()}
             rightIcons={[
                 {
+                    icon: "lock",
+                    onPress: () =>navigation.navigate('UpdatePassword'),
+                },
+                {
                     icon: "log-out",
                     onPress: () => setLogoutModalVisible(true),
                 },

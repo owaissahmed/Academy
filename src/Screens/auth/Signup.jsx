@@ -34,42 +34,42 @@ const sbStyles = StyleSheet.create({
         gap: scale(8),
     },
     bars: { flexDirection: 'row', gap: scale(4), flex: 1 },
-    bar:  { flex: 1, height: 4, borderRadius: 4 },
+    bar: { flex: 1, height: 4, borderRadius: 4 },
     label: { fontSize: moderateScale(11), fontWeight: '700', minWidth: scale(40) },
 });
 
 const Signup = ({ navigation }) => {
-    const [name, setName]         = useState('');
-    const [email, setEmail]       = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading]   = useState(false);
-    const [errors, setErrors]     = useState({});
-    const [modal, setModal]       = useState({
+    const [loading, setLoading] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [modal, setModal] = useState({
         visible: false, type: 'error',
         title: '', message: '',
         onPrimary: null,
     });
 
-    const fadeCard  = useRef(new Animated.Value(0)).current;
+    const fadeCard = useRef(new Animated.Value(0)).current;
     const slideCard = useRef(new Animated.Value(40)).current;
 
     const closeModal = () => setModal(m => ({ ...m, visible: false }));
 
     useEffect(() => {
         Animated.parallel([
-            Animated.timing(fadeCard,  { toValue: 1, duration: 500, useNativeDriver: true }),
+            Animated.timing(fadeCard, { toValue: 1, duration: 500, useNativeDriver: true }),
             Animated.spring(slideCard, { toValue: 0, useNativeDriver: true, tension: 60 }),
         ]).start();
     }, []);
 
     const validate = () => {
         const e = {};
-        if (!name.trim())          e.name     = 'Full name required';
+        if (!name.trim()) e.name = 'Full name required';
         else if (name.trim().length < 2) e.name = 'Enter a valid name';
-        if (!email)                e.email    = 'Email required';
+        if (!email) e.email = 'Email required';
         else if (!validateEmail(email)) e.email = 'Enter a valid email';
-        if (!password)             e.password = 'Password required';
-        else if (password.length < 3)   e.password = 'Min 3 characters';
+        if (!password) e.password = 'Password required';
+        else if (password.length < 3) e.password = 'Min 3 characters';
         setErrors(e);
         return !Object.keys(e).length;
     };
@@ -227,9 +227,9 @@ const Signup = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    flex:   { flex: 1, backgroundColor: '#f8fafc' },
+    flex: { flex: 1, backgroundColor: '#f8fafc' },
     scroll: { flexGrow: 1 },
-    inner:  {
+    inner: {
         flex: 1,
         justifyContent: 'center',
         paddingHorizontal: scale(22),
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#f1f5f9',
     },
-    footer:     { alignItems: 'center', marginTop: verticalScale(22) },
+    footer: { alignItems: 'center', marginTop: verticalScale(22) },
     footerText: { fontSize: moderateScale(13.5), color: '#64748b' },
     footerLink: { color: BRAND, fontWeight: '800' },
 });

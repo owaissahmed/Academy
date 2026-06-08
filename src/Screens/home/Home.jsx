@@ -13,24 +13,11 @@ import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
 import Entypto from 'react-native-vector-icons/Entypo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Container from '../components/Container';
-import { api } from '../utlis/api';
+import Container from '../../components/Container';
+import { api } from '../../utlis/api';
 
 const BRAND = '#2e4c60';
 
-const MENU_ITEMS = [
-  { key: 'DarseNizamiForm', label: 'DARS-e-NIZAMI COURSE', icon: 'book' },
-  { key: 'Courses', label: 'SHORT COURSES', icon: 'folder-video' },
-  { key: 'MyTests', label: 'My Tests', icon: 'clipboard' },
-  { key: 'ExamResults', label: 'My Results', icon: 'trophy' },
-  { key: 'TeacherSalary', label: 'Teacher Salary', icon: 'trophy' },
-  { key: 'MyCertificates', label: 'My Certificates', icon: 'trophy' },
-  { key: 'HelpDesk', label: 'DARS-e-NIZAMI HELP DESK', icon: 'youtube' },
-  { key: 'UpcomingCourses', label: 'UPCOMING COURSES', icon: 'megaphone' },
-  { key: 'TeacherApplication', label: 'JOIN AS TEACHER', icon: 'graduation-cap' },
-  { key: 'Complaint', label: 'REPORT AN ISSUE', icon: 'flag' },
-  { key: 'About', label: 'ABOUT US', icon: 'info' },
-];
 
 // ─── Single menu box ──────────────────────────────────────────────────────────
 const MenuBox = ({ item, onPress, delay }) => {
@@ -82,6 +69,7 @@ const MenuBox = ({ item, onPress, delay }) => {
 const Home = ({ navigation }) => {
   const [userName, setUserName] = useState('');
   const [profile, setProfile] = useState(null);
+  const [role, setRole] = useState(null);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -91,6 +79,21 @@ const Home = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]);
 
+  const MENU_ITEMS = [
+    { key: 'DarseNizamiForm', label: 'DARS-e-NIZAMI COURSE', icon: 'book' },
+    { key: 'Courses', label: 'SHORT COURSES', icon: 'folder-video' },
+    { key: 'MyTests', label: 'My Tests', icon: 'clipboard' },
+    { key: 'ExamResults', label: 'My Results', icon: 'trophy' },
+    ...(role === 'teacher'
+      ? [{ key: 'TeacherSalary', label: 'Teacher Salary', icon: 'trophy' }]
+      : []),
+    { key: 'MyCertificates', label: 'My Certificates', icon: 'trophy' },
+    { key: 'HelpDesk', label: 'DARS-e-NIZAMI HELP DESK', icon: 'youtube' },
+    { key: 'UpcomingCourses', label: 'UPCOMING COURSES', icon: 'megaphone' },
+    { key: 'TeacherApplication', label: 'JOIN AS TEACHER', icon: 'graduation-cap' },
+    { key: 'Complaint', label: 'REPORT AN ISSUE', icon: 'flag' },
+    { key: 'About', label: 'ABOUT US', icon: 'info' },
+  ];
 
 
   const loadProfile = async () => {
@@ -99,6 +102,7 @@ const Home = ({ navigation }) => {
       const res = await api.get('/students/profile');
       setProfile(res.data);
       setUserName(res.data.userId.name);
+      setRole(res.data.userId.role);
       const data = await AsyncStorage.getItem('userId');
       console.log('data', data);
       if (!res.data.profilePic || !res.data.fatherName || !res.data.cnic || !res.data.gender || !res.data.phone) {
@@ -167,7 +171,7 @@ const Home = ({ navigation }) => {
         {/* ── LOGO + TITLE ─────────────────────────────────────── */}
         <Animated.View style={[styles.logoArea, { opacity: headerOpacity, transform: [{ translateY: headerSlide }] }]}>
           <Image
-            source={require('../Images/landscape-logo.png')}
+            source={require('../../Images/landscape-logo.png')}
             style={styles.logo}
             resizeMode="contain"
           />
