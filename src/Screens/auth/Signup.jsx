@@ -149,7 +149,7 @@ const Signup = ({ navigation }) => {
                             source={require('../../Images/landscape-logo.png')}
                             resizeMode="contain"
                         />
-                        <Text style={styles.subtitle}>Join thousands of learners today</Text>
+                        <Text allowFontScaling={false} style={styles.subtitle}>Join thousands of learners today</Text>
                     </Animated.View>
 
                     {/* ── Card ─────────────────────────────────────────── */}
@@ -199,9 +199,9 @@ const Signup = ({ navigation }) => {
                         onPress={() => navigation.navigate('Login')}
                         style={styles.footer}
                     >
-                        <Text style={styles.footerText}>
+                        <Text allowFontScaling={false} style={styles.footerText}>
                             Already have an account?{'  '}
-                            <Text style={styles.footerLink}>Sign In</Text>
+                            <Text allowFontScaling={false} style={styles.footerLink}>Sign In</Text>
                         </Text>
                     </TouchableOpacity>
 

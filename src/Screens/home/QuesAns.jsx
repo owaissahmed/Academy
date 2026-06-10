@@ -350,7 +350,7 @@ const QuesAns = ({ navigation }) => {
     return (
         <Container
             showHeader={true}
-            headerTitle="Q & A"
+            headerTitle="Ask Mufti"
             onBack={() => navigation.goBack()}
             showFooter={false}
         >

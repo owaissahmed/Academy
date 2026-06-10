@@ -108,7 +108,7 @@ const Login = ({ navigation }) => {
                             source={require('../../Images/landscape-logo.png')}
                             resizeMode="contain"
                         />
-                        <Text style={styles.subtitle}>Sign in to continue learning</Text>
+                        <Text  allowFontScaling={false} style={styles.subtitle}>Sign in to continue learning</Text>
                     </Animated.View>
 
                     {/* ── Card ─────────────────────────────────────────── */}
@@ -140,7 +140,7 @@ const Login = ({ navigation }) => {
                             onPress={() => navigation.navigate('ForgotPassword')}
                             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
                         >
-                            <Text style={styles.forgotText}>Forgot password?</Text>
+                            <Text  allowFontScaling={false} style={styles.forgotText}>Forgot password?</Text>
                         </TouchableOpacity>
 
                         <Button
@@ -159,7 +159,7 @@ const Login = ({ navigation }) => {
                         onPress={() => navigation.navigate('Signup')}
                         style={styles.footer}
                     >
-                        <Text style={styles.footerText}>
+                        <Text  allowFontScaling={false} style={styles.footerText}>
                             Don't have an account?{'  '}
                             <Text style={styles.footerLink}>Sign Up</Text>
                         </Text>
