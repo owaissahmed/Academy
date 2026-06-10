@@ -10,12 +10,12 @@ import {
 } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
-import Container from '../components/Container';
-import Loader from '../components/Loader';
-import BottomSheet from '../components/Bottomsheet';
-import Button from '../components/Button';
-import { api } from '../utlis/api';
-import AppModal from '../components/Appmodal';
+import Container from '../../components/Container';
+import Loader from '../../components/Loader';
+import BottomSheet from '../../components/Bottomsheet';
+import Button from '../../components/Button';
+import { api } from '../../utlis/api';
+import AppModal from '../../components/Appmodal';
 const BRAND = '#2e4c60';
 
 // ─── Single Helpdesk Card ─────────────────────────────────────────────────────

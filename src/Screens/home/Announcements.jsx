@@ -11,6 +11,25 @@ import { api } from '../../utlis/api';
 
 const BRAND = '#2e4c60';
 
+const EmptyState = ({ onRetry }) => (
+    <View style={styles.emptyWrap}>
+        <View style={styles.emptyIconCircle}>
+            <Icon name="bell-off" size={moderateScale(26)} color="#cbd5e1" />
+        </View>
+        <Text allowFontScaling={false} style={styles.emptyTitle}>No Announcements</Text>
+        <Text allowFontScaling={false} style={styles.emptySubtitle}>
+            No Announcements Found
+        </Text>
+        <TouchableOpacity
+            style={styles.retryBtn}
+            onPress={onRetry}
+            activeOpacity={0.8}
+        >
+            <Icon name="refresh-cw" size={moderateScale(14)} color={BRAND} />
+            <Text allowFontScaling={false} style={styles.retryText}>Retry</Text>
+        </TouchableOpacity>
+    </View>
+);
 const Announcements = ({ navigation }) => {
     const [loading, setLoading] = useState(true);
     const [announcements, setAnnouncements] = useState([]);
@@ -30,18 +49,17 @@ const Announcements = ({ navigation }) => {
             const res = await api.get('/announcement/all');
             // Safe extraction pattern for wrapper response structure
             const list = res.isSuccess ? (res.data || []) : (Array.isArray(res) ? res : []);
-            
+
             // Filtering out inactive notices if needed
             const activeItems = list.filter(item => item.isActive !== false);
             setAnnouncements(activeItems);
         } catch (err) {
-            showError('Error', 'Announcements load nahi ho sakin. Dobara try karein.');
+            showError('Error', 'Could not load announcements. Please try again.');
         } finally {
             setLoading(false);
         }
     };
 
-    if (loading) return <Loader message="Fetching announcements..." />;
 
     return (
         <Container
@@ -50,19 +68,14 @@ const Announcements = ({ navigation }) => {
             onBack={() => navigation.goBack()}
             showFooter={false}
         >
-            {announcements.length === 0 ? (
-                <View style={styles.emptyWrap}>
-                    <View style={styles.emptyIconCircle}>
-                        <Icon name="bell-off" size={moderateScale(26)} color="#cbd5e1" />
-                    </View>
-                    <Text allowFontScaling={false} style={styles.emptyTitle}>No Announcements</Text>
-                    <Text allowFontScaling={false} style={styles.emptySubtitle}>
-                        Abhi koi naya notice ya announcement maujood nahi hai.
-                    </Text>
-                </View>
-            ) : (
-                <ScrollView 
-                    showsVerticalScrollIndicator={false} 
+            {loading && <Loader message="Loading Announcements..." />}
+            {!loading && announcements.length === 0 && (
+                <EmptyState onRetry={loadAnnouncements} />
+            )}
+
+            {!loading && announcements.length > 0 && (
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
                     contentContainerStyle={styles.scrollBody}
                 >
                     {announcements.map((item) => {
@@ -127,17 +140,17 @@ const Announcements = ({ navigation }) => {
                 visible={!!selectedImg}
                 onClose={() => setSelectedImg(null)}
                 closeOnBackdrop={true}
-                primaryBtn={{ 
-                    label: 'Close', 
-                    onPress: () => setSelectedImg(null) 
+                primaryBtn={{
+                    label: 'Close',
+                    onPress: () => setSelectedImg(null)
                 }}
             >
                 <View style={styles.fullImageContainer}>
                     {selectedImg && (
-                        <Image 
-                            source={{ uri: selectedImg }} 
-                            style={styles.fullViewImage} 
-                            resizeMode="contain" 
+                        <Image
+                            source={{ uri: selectedImg }}
+                            style={styles.fullViewImage}
+                            resizeMode="contain"
                         />
                     )}
                 </View>
@@ -158,16 +171,16 @@ const Announcements = ({ navigation }) => {
 
 // ─── Design Sheet Styles ──────────────────────────────────────────────────────
 const styles = StyleSheet.create({
-    scrollBody: { 
-        padding: scale(16), 
-        paddingBottom: verticalScale(32) 
+    scrollBody: {
+        padding: scale(16),
+        paddingBottom: verticalScale(32)
     },
-    announcementCard: { 
-        backgroundColor: '#ffffff', 
-        borderRadius: moderateScale(14), 
-        padding: scale(14), 
-        marginBottom: verticalScale(14), 
-        borderWidth: 1, 
+    announcementCard: {
+        backgroundColor: '#ffffff',
+        borderRadius: moderateScale(14),
+        padding: scale(14),
+        marginBottom: verticalScale(14),
+        borderWidth: 1,
         borderColor: '#e2e8f0',
         shadowColor: '#0f172a',
         shadowOffset: { width: 0, height: 2 },
@@ -175,39 +188,39 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 2
     },
-    cardHeader: { 
-        flexDirection: 'row', 
-        alignItems: 'center', 
+    cardHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
         gap: scale(10),
         marginBottom: verticalScale(10)
     },
-    bellIconBox: { 
-        width: scale(36), 
-        height: scale(36), 
-        borderRadius: scale(18), 
-        backgroundColor: '#e8f0f5', 
-        alignItems: 'center', 
-        justifyContent: 'center' 
+    bellIconBox: {
+        width: scale(36),
+        height: scale(36),
+        borderRadius: scale(18),
+        backgroundColor: '#e8f0f5',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-    cardTitle: { 
-        fontSize: moderateScale(14.5), 
-        fontWeight: '700', 
-        color: '#0f172a' 
+    cardTitle: {
+        fontSize: moderateScale(14.5),
+        fontWeight: '700',
+        color: '#0f172a'
     },
-    dateRow: { 
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        gap: scale(4), 
-        marginTop: verticalScale(2) 
+    dateRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: scale(4),
+        marginTop: verticalScale(2)
     },
-    dateText: { 
-        fontSize: moderateScale(11), 
-        color: '#64748b', 
-        fontWeight: '500' 
+    dateText: {
+        fontSize: moderateScale(11),
+        color: '#64748b',
+        fontWeight: '500'
     },
-    cardDescription: { 
-        fontSize: moderateScale(13), 
-        color: '#334155', 
+    cardDescription: {
+        fontSize: moderateScale(13),
+        color: '#334155',
         lineHeight: moderateScale(19),
     },
 
@@ -260,32 +273,48 @@ const styles = StyleSheet.create({
     },
 
     // Empty state handlers
-    emptyWrap: { 
-        flex: 1, 
-        alignItems: 'center', 
-        justifyContent: 'center', 
-        paddingHorizontal: scale(32), 
-        gap: verticalScale(10) 
+    emptyWrap: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: scale(32),
+        gap: verticalScale(10)
     },
-    emptyIconCircle: { 
-        width: scale(64), 
-        height: scale(64), 
-        borderRadius: scale(32), 
-        backgroundColor: '#f1f5f9', 
-        alignItems: 'center', 
-        justifyContent: 'center', 
-        marginBottom: verticalScale(4) 
+    emptyIconCircle: {
+        width: scale(64),
+        height: scale(64),
+        borderRadius: scale(32),
+        backgroundColor: '#f1f5f9',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: verticalScale(4)
     },
-    emptyTitle: { 
-        fontSize: moderateScale(16), 
-        fontWeight: '800', 
-        color: '#334155' 
+    emptyTitle: {
+        fontSize: moderateScale(16),
+        fontWeight: '800',
+        color: '#334155'
     },
-    emptySubtitle: { 
-        fontSize: moderateScale(12.5), 
-        color: '#94a3b8', 
-        textAlign: 'center', 
-        lineHeight: moderateScale(19) 
+    emptySubtitle: {
+        fontSize: moderateScale(12.5),
+        color: '#94a3b8',
+        textAlign: 'center',
+        lineHeight: moderateScale(19)
+    },
+    retryBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: scale(6),
+        marginTop: verticalScale(8),
+        paddingVertical: verticalScale(9),
+        paddingHorizontal: scale(20),
+        borderRadius: moderateScale(20),
+        borderWidth: 1.5,
+        borderColor: BRAND,
+    },
+    retryText: {
+        fontSize: moderateScale(13),
+        fontWeight: '700',
+        color: BRAND,
     },
 });
 

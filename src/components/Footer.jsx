@@ -12,7 +12,7 @@ const DEFAULT_TABS = [
     { key: 'Enrollments', label: 'Enrollments', icon: 'book-open' },
     { key: 'QuesAns', label: 'Ask Mufti', icon: 'message-circle' },
     { key: 'Announcements',label: 'Announcements',icon: 'volume-2' },
-    { key: 'Profile', label: 'Profile', icon: 'user' },
+    { key: 'Contact', label: 'Contact Us', icon: 'phone' },
 ];
 
 const Footer = ({ tabs = DEFAULT_TABS, activeTab, onTabPress }) => {

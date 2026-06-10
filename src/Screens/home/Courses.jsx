@@ -14,12 +14,12 @@ import {
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
 import { launchImageLibrary } from 'react-native-image-picker';
-import Container from '../components/Container';
-import Loader from '../components/Loader';
-import BottomSheet from '../components/Bottomsheet';
-import Button from '../components/Button';
-import AppModal from '../components/Appmodal';
-import { api } from '../utlis/api';
+import Container from '../../components/Container';
+import Loader from '../../components/Loader';
+import BottomSheet from '../../components/Bottomsheet';
+import Button from '../../components/Button';
+import AppModal from '../../components/Appmodal';
+import { api } from '../../utlis/api';
 
 const BRAND = '#2e4c60';
 const ACCOUNT_NUMBER = '0312-3456789';

@@ -44,6 +44,27 @@ const formatMonth = (monthStr) => {
     return `${monthName} ${year}`;
 };
 
+const EmptyState = ({ onRetry }) => (
+    <View style={styles.emptyWrap}>
+        <View style={styles.emptyIconCircle}>
+            <Icon name="credit-card" size={moderateScale(28)} color="#cbd5e1" />
+        </View>
+        <Text allowFontScaling={false} style={styles.emptyTitle}>
+            No Salary Records
+        </Text>
+        <Text allowFontScaling={false} style={styles.emptySubtitle}>
+            No salary records found.{'\n'}Please check again later.
+        </Text>
+        <TouchableOpacity
+            style={styles.retryBtn}
+            onPress={onRetry}
+            activeOpacity={0.8}
+        >
+            <Icon name="refresh-cw" size={moderateScale(14)} color={BRAND} />
+            <Text allowFontScaling={false} style={styles.retryText}>Retry</Text>
+        </TouchableOpacity>
+    </View>
+);
 const TeacherSalary = ({ navigation }) => {
     // ─── States ──────────────────────────────────────────────────────────────
     const [history, setHistory] = useState([]);
@@ -156,75 +177,71 @@ const TeacherSalary = ({ navigation }) => {
                         {/* ── Payment History ── */}
                         <Text allowFontScaling={false} style={styles.sectionTitle}>Payment Records</Text>
 
-                        {history.length === 0 ? (
-                            <View style={styles.emptyHistory}>
-                                <Icon name="credit-card" size={moderateScale(28)} color="#cbd5e1" />
-                                <Text allowFontScaling={false} style={styles.emptyText}>
-                                    No salary records found
-                                </Text>
-                            </View>
-                        ) : (
-                            history.map((item, index) => {
-                                const tag = getPaymentTag(item);
-                                return (
-                                    <View key={item._id || index} style={styles.card}>
+                        {history.length === 0 && (
+                            <EmptyState onRetry={loadSalaryHistory} />
+                        )}
 
-                                        {/* ── Top: Month + Tag Badge ── */}
-                                        <View style={styles.cardTop}>
-                                            <View style={styles.cardTitleWrap}>
-                                                <View style={styles.cardIconCircle}>
-                                                    <Icon name="calendar" size={moderateScale(14)} color={BRAND} />
-                                                </View>
-                                                <Text allowFontScaling={false} style={styles.cardTitle} numberOfLines={1}>
-                                                    {formatMonth(item.month)}
-                                                </Text>
+                        {history.length > 0 && history.map((item, index) => {
+                            const tag = getPaymentTag(item);
+                            return (
+                                <View key={item._id || index} style={styles.card}>
+
+                                    {/* ── Top: Month + Tag Badge ── */}
+                                    <View style={styles.cardTop}>
+                                        <View style={styles.cardTitleWrap}>
+                                            <View style={styles.cardIconCircle}>
+                                                <Icon name="calendar" size={moderateScale(14)} color={BRAND} />
                                             </View>
-                                            <View style={styles.infoItem}>
-                                                <Icon name="clock" size={moderateScale(12)} color="#94a3b8" />
-                                                <Text allowFontScaling={false} style={styles.infoText}>
-                                                    {item.paidAt
-                                                        ? new Date(item.paidAt).toLocaleDateString('en-PK', {
-                                                            day: '2-digit',
-                                                            month: 'short',
-                                                            year: 'numeric',
-                                                        })
-                                                        : ''}
-                                                </Text>
-                                            </View>
+                                            <Text allowFontScaling={false} style={styles.cardTitle} numberOfLines={1}>
+                                                {formatMonth(item.month)}
+                                            </Text>
                                         </View>
-
-                                        <View style={styles.divider} />
-
-                                        {/* ── Salary Breakdown Grid ── */}
-                                        <View style={styles.salaryGrid}>
-                                            <View style={styles.salaryGridItem}>
-                                                <Text allowFontScaling={false} style={styles.salaryGridLabel}>Base Salary</Text>
-                                                <Text allowFontScaling={false} style={styles.salaryGridValue}>
-                                                    Rs {item.baseSalary?.toLocaleString() || '0'}
-                                                </Text>
-                                            </View>
-                                            <View style={styles.salaryGridItem}>
-                                                <Text allowFontScaling={false} style={styles.salaryGridLabel}>Paid Amount</Text>
-                                                <Text allowFontScaling={false} style={[styles.salaryGridValue, { color: '#10b981', fontWeight: '800' }]}>
-                                                    Rs {item.paidAmount?.toLocaleString() || '0'}
-                                                </Text>
-                                            </View>
-                                            <View style={styles.salaryGridItem}>
-                                                <Text allowFontScaling={false} style={styles.salaryGridLabel}>Bonus</Text>
-                                                <Text allowFontScaling={false} style={[styles.salaryGridValue, { color: item.bonus > 0 ? BRAND : '#94a3b8' }]}>
-                                                    Rs {item.bonus?.toLocaleString() || '0'}
-                                                </Text>
-                                            </View>
-                                            <View style={styles.salaryGridItem}>
-                                                <Text allowFontScaling={false} style={styles.salaryGridLabel}>Deduction</Text>
-                                                <Text allowFontScaling={false} style={[styles.salaryGridValue, { color: item.deduction > 0 ? '#e05c5c' : '#94a3b8' }]}>
-                                                    Rs {item.deduction?.toLocaleString() || '0'}
-                                                </Text>
-                                            </View>
+                                        <View style={styles.infoItem}>
+                                            <Icon name="clock" size={moderateScale(12)} color="#94a3b8" />
+                                            <Text allowFontScaling={false} style={styles.infoText}>
+                                                {item.paidAt
+                                                    ? new Date(item.paidAt).toLocaleDateString('en-PK', {
+                                                        day: '2-digit',
+                                                        month: 'short',
+                                                        year: 'numeric',
+                                                    })
+                                                    : ''}
+                                            </Text>
                                         </View>
+                                    </View>
 
-                                        {/* ── Paid At Row ── */}
-                                        {/* <View style={styles.infoRow}>
+                                    <View style={styles.divider} />
+
+                                    {/* ── Salary Breakdown Grid ── */}
+                                    <View style={styles.salaryGrid}>
+                                        <View style={styles.salaryGridItem}>
+                                            <Text allowFontScaling={false} style={styles.salaryGridLabel}>Base Salary</Text>
+                                            <Text allowFontScaling={false} style={styles.salaryGridValue}>
+                                                Rs {item.baseSalary?.toLocaleString() || '0'}
+                                            </Text>
+                                        </View>
+                                        <View style={styles.salaryGridItem}>
+                                            <Text allowFontScaling={false} style={styles.salaryGridLabel}>Paid Amount</Text>
+                                            <Text allowFontScaling={false} style={[styles.salaryGridValue, { color: '#10b981', fontWeight: '800' }]}>
+                                                Rs {item.paidAmount?.toLocaleString() || '0'}
+                                            </Text>
+                                        </View>
+                                        <View style={styles.salaryGridItem}>
+                                            <Text allowFontScaling={false} style={styles.salaryGridLabel}>Bonus</Text>
+                                            <Text allowFontScaling={false} style={[styles.salaryGridValue, { color: item.bonus > 0 ? BRAND : '#94a3b8' }]}>
+                                                Rs {item.bonus?.toLocaleString() || '0'}
+                                            </Text>
+                                        </View>
+                                        <View style={styles.salaryGridItem}>
+                                            <Text allowFontScaling={false} style={styles.salaryGridLabel}>Deduction</Text>
+                                            <Text allowFontScaling={false} style={[styles.salaryGridValue, { color: item.deduction > 0 ? '#e05c5c' : '#94a3b8' }]}>
+                                                Rs {item.deduction?.toLocaleString() || '0'}
+                                            </Text>
+                                        </View>
+                                    </View>
+
+                                    {/* ── Paid At Row ── */}
+                                    {/* <View style={styles.infoRow}>
                                             <View style={styles.infoItem}>
                                                 <Icon name="clock" size={moderateScale(12)} color="#94a3b8" />
                                                 <Text allowFontScaling={false} style={styles.infoText}>
@@ -239,43 +256,42 @@ const TeacherSalary = ({ navigation }) => {
                                             </View>
                                         </View> */}
 
-                                        {/* ── Admin Note ── */}
-                                        {item.note ? (
-                                            <View style={[styles.noteBox, { backgroundColor: tag.bg + '60' }]}>
-                                                <Icon name="message-square" size={moderateScale(13)} color={tag.text} />
-                                                <Text allowFontScaling={false} style={[styles.noteText, { color: tag.text }]}>
-                                                    {item.note}
+                                    {/* ── Admin Note ── */}
+                                    {item.note ? (
+                                        <View style={[styles.noteBox, { backgroundColor: tag.bg + '60' }]}>
+                                            <Icon name="message-square" size={moderateScale(13)} color={tag.text} />
+                                            <Text allowFontScaling={false} style={[styles.noteText, { color: tag.text }]}>
+                                                {item.note}
+                                            </Text>
+                                        </View>
+                                    ) : null}
+
+                                    {/* ── Screenshot Thumbnail ── */}
+                                    {item.screenshotUrl ? (
+                                        <TouchableOpacity
+                                            style={styles.screenshotRow}
+                                            onPress={() => setPreviewImage(item.screenshotUrl)}
+                                            activeOpacity={0.8}
+                                        >
+                                            <Image
+                                                source={{ uri: item.screenshotUrl }}
+                                                style={styles.screenshotThumb}
+                                                resizeMode="cover"
+                                            />
+                                            <View style={styles.screenshotInfo}>
+                                                <Text allowFontScaling={false} style={styles.screenshotLabel}>
+                                                    Payment Screenshot
+                                                </Text>
+                                                <Text allowFontScaling={false} style={styles.screenshotSub}>
+                                                    Tap to view full receipt
                                                 </Text>
                                             </View>
-                                        ) : null}
-
-                                        {/* ── Screenshot Thumbnail ── */}
-                                        {item.screenshotUrl ? (
-                                            <TouchableOpacity
-                                                style={styles.screenshotRow}
-                                                onPress={() => setPreviewImage(item.screenshotUrl)}
-                                                activeOpacity={0.8}
-                                            >
-                                                <Image
-                                                    source={{ uri: item.screenshotUrl }}
-                                                    style={styles.screenshotThumb}
-                                                    resizeMode="cover"
-                                                />
-                                                <View style={styles.screenshotInfo}>
-                                                    <Text allowFontScaling={false} style={styles.screenshotLabel}>
-                                                        Payment Screenshot
-                                                    </Text>
-                                                    <Text allowFontScaling={false} style={styles.screenshotSub}>
-                                                        Tap to view full receipt
-                                                    </Text>
-                                                </View>
-                                                <Icon name="eye" size={moderateScale(15)} color="#94a3b8" />
-                                            </TouchableOpacity>
-                                        ) : null}
-                                    </View>
-                                );
-                            })
-                        )}
+                                            <Icon name="eye" size={moderateScale(15)} color="#94a3b8" />
+                                        </TouchableOpacity>
+                                    ) : null}
+                                </View>
+                            );
+                        })}
                     </ScrollView>
                 </Animated.View>
             )}
@@ -516,16 +532,50 @@ const styles = StyleSheet.create({
         marginTop: verticalScale(1),
     },
 
-    emptyHistory: {
+    // Replace emptyHistory & emptyText with these:
+    emptyWrap: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: verticalScale(50),
-        gap: verticalScale(8),
+        paddingHorizontal: scale(32),
+        gap: verticalScale(10),
     },
-    emptyText: {
+    emptyIconCircle: {
+        width: scale(72),
+        height: scale(72),
+        borderRadius: scale(36),
+        backgroundColor: '#f1f5f9',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: verticalScale(4),
+    },
+    emptyTitle: {
+        fontSize: moderateScale(16),
+        fontWeight: '800',
+        color: '#334155',
+    },
+    emptySubtitle: {
         fontSize: moderateScale(12.5),
         color: '#94a3b8',
-        fontWeight: '500',
+        textAlign: 'center',
+        lineHeight: moderateScale(19),
+    },
+    retryBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: scale(6),
+        marginTop: verticalScale(8),
+        paddingVertical: verticalScale(9),
+        paddingHorizontal: scale(20),
+        borderRadius: moderateScale(20),
+        borderWidth: 1.5,
+        borderColor: BRAND,
+    },
+    retryText: {
+        fontSize: moderateScale(13),
+        fontWeight: '700',
+        color: BRAND,
     },
 
     fullViewImage: {

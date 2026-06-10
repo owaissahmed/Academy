@@ -1,13 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  Image,
-  Animated,
-  Alert,
+  View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Animated, Alert, Linking
 } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
@@ -80,19 +73,19 @@ const Home = ({ navigation }) => {
   }, [navigation]);
 
   const MENU_ITEMS = [
-    { key: 'DarseNizamiForm', label: 'DARS-e-NIZAMI COURSE', icon: 'book' },
-    { key: 'Courses', label: 'SHORT COURSES', icon: 'folder-video' },
+    { key: 'DarseNizami', label: 'Darse Nizami Course', icon: 'book' },
+    { key: 'Courses', label: 'Short Courses', icon: 'folder-video' },
     { key: 'MyTests', label: 'My Tests', icon: 'clipboard' },
-    { key: 'ExamResults', label: 'My Results', icon: 'trophy' },
-    ...(role === 'teacher'
-      ? [{ key: 'TeacherSalary', label: 'Teacher Salary', icon: 'trophy' }]
-      : []),
+    { key: 'ExamResults', label: 'My Results', icon: 'bar-graph' },
     { key: 'MyCertificates', label: 'My Certificates', icon: 'trophy' },
-    { key: 'HelpDesk', label: 'DARS-e-NIZAMI HELP DESK', icon: 'youtube' },
-    { key: 'UpcomingCourses', label: 'UPCOMING COURSES', icon: 'megaphone' },
-    { key: 'TeacherApplication', label: 'JOIN AS TEACHER', icon: 'graduation-cap' },
-    { key: 'Complaint', label: 'REPORT AN ISSUE', icon: 'flag' },
-    { key: 'About', label: 'ABOUT US', icon: 'info' },
+    { key: 'HelpDesk', label: 'Darse Nizami Help Desk', icon: 'youtube' },
+    { key: 'TeacherApplication', label: 'Join As Teacher', icon: 'graduation-cap' },
+    ...(role === 'teacher'
+      ? [{ key: 'TeacherSalary', label: 'Teacher Salary', icon: 'wallet' }]
+      : []),
+    { key: 'UpcomingCourses', label: 'Upcoming Courses', icon: 'megaphone' },
+    { key: 'Complaint', label: 'Report An Issue', icon: 'flag' },
+    { key: 'About', label: 'About Us', icon: 'info' },
   ];
 
 
@@ -124,6 +117,11 @@ const Home = ({ navigation }) => {
   }, []);
 
   const handleMenuPress = (key) => {
+    if (key === 'About') {
+      Linking.openURL('https://www.azhaarulislam.com');
+      return;
+    }
+
     navigation.navigate(key);
   };
 
@@ -309,7 +307,8 @@ const styles = StyleSheet.create({
   },
   boxLabel: {
     fontFamily: 'good',
-    fontSize: moderateScale(12.5),
+    fontSize: moderateScale(14),
+    letterSpacing: scale(0.5),
     fontWeight: '600',
     color: '#0f172a',
     flex: 1,

@@ -157,7 +157,6 @@ const MyCertificates = ({ navigation }) => {
         setPreviewData(null);
     };
 
-    if (loading) return <Loader message="Loading certificates..." />;
 
     return (
         <Container
@@ -166,9 +165,13 @@ const MyCertificates = ({ navigation }) => {
             onBack={() => navigation.goBack()}
             showFooter={false}
         >
-            {certificates.length === 0 ? (
-                <EmptyState />
-            ) : (
+            {loading && <Loader message="Loading certificates..." />}
+
+            {!loading && certificates.length === 0 && (
+                <EmptyState  />
+            )}
+
+            {!loading && certificates.length > 0 && (
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={styles.scroll}

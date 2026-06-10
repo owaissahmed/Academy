@@ -8,11 +8,11 @@ import {
 } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
-import Container from '../components/Container';
-import Loader from '../components/Loader';
-import AppModal from '../components/Appmodal';
-import Button from '../components/Button';
-import { api } from '../utlis/api';
+import Container from '../../components/Container';
+import Loader from '../../components/Loader';
+import AppModal from '../../components/Appmodal';
+import Button from '../../components/Button';
+import { api } from '../../utlis/api';
 
 const BRAND = '#2e4c60';
 
