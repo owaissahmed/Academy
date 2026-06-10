@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         // backgroundColor: BRAND,
     },
     label: {
-        fontSize: moderateScale(8),
+        fontSize: moderateScale(5),
         color: INACTIVE,
         marginTop: verticalScale(3),
         fontWeight: '500',
