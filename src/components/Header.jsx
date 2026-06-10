@@ -24,7 +24,7 @@ const Header = ({
             </TouchableOpacity>
 
             {/* TITLE */}
-            <Text style={styles.title} numberOfLines={1}>
+            <Text allowFontScaling={false} style={styles.title} numberOfLines={1}>
                 {title}
             </Text>
 
@@ -81,9 +81,9 @@ const styles = StyleSheet.create({
     invisible: {
         opacity: 0,         // space hold kare, dikhne nahi de
     },
-    rightContainer:{
-        display:"flex",
-        flexDirection:'row'
+    rightContainer: {
+        display: "flex",
+        flexDirection: 'row'
     }
 });
 

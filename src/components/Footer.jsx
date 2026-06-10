@@ -35,7 +35,7 @@ const Footer = ({ tabs = DEFAULT_TABS, activeTab, onTabPress }) => {
                             size={moderateScale(19)}
                             color={isActive ? BRAND : INACTIVE}
                         />
-                        <Text style={[styles.label, isActive && styles.labelActive]}>
+                        <Text allowFontScaling={false} style={[styles.label, isActive && styles.labelActive]}>
                             {tab.label}
                         </Text>
                     </TouchableOpacity>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         // backgroundColor: BRAND,
     },
     label: {
-        fontSize: moderateScale(5),
+        fontSize: moderateScale(8),
         color: INACTIVE,
         marginTop: verticalScale(3),
         fontWeight: '500',

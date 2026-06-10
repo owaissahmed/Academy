@@ -65,6 +65,7 @@ const TextField = ({
 
         {/* Floating label */}
         <Animated.Text
+          allowFontScaling={false}
           style={[
             styles.label,
             {
@@ -81,6 +82,7 @@ const TextField = ({
 
         {/* Text Input */}
         <TextInput
+          allowFontScaling={false}
           value={value}
           onChangeText={onChangeText}
           secureTextEntry={secureTextEntry && !showPassword}
@@ -116,7 +118,7 @@ const TextField = ({
       {!!error && (
         <View style={styles.errorRow}>
           <Icon name="alert-circle" size={moderateScale(12)} color={ERROR_COLOR} />
-          <Animated.Text style={styles.errorText}>{error}</Animated.Text>
+          <Animated.Text allowFontScaling={false} style={styles.errorText}>{error}</Animated.Text>
         </View>
       )}
     </View>

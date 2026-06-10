@@ -428,7 +428,7 @@ const QuesAns = ({ navigation }) => {
                 scrollable={true}
                 heightPercent={0.6}
                 primaryBtn={{
-                    label: 'Submit Question',
+                    label: 'Submit',
                     icon: 'send',
                     onPress: handleSubmit,
                     loading: submitting,

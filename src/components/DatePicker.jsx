@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect ,useRef} from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import {
     View,
     Text,
@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
-import AppModal from './Appmodal'; 
+import AppModal from './Appmodal';
 
 const BRAND = '#2e4c60';
 const DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
@@ -38,24 +38,24 @@ const DatePicker = ({
     dob = false,
     title = 'Select Date',
 }) => {
-const today = useRef(new Date()).current;
+    const today = useRef(new Date()).current;
     const [cursor, setCursor] = useState({ month: today.getMonth(), year: today.getFullYear() });
     const [selected, setSelected] = useState(null);
-    const [mode, setMode] = useState('day'); 
+    const [mode, setMode] = useState('day');
 
     // Sync state only when the modal is explicitly opened
-   useEffect(() => {
-    if (visible) {
-        if (value instanceof Date && !isNaN(value)) {
-            setCursor({ month: value.getMonth(), year: value.getFullYear() });
-            setSelected(value);
-        } else {
-            setCursor({ month: today.getMonth(), year: today.getFullYear() });
-            setSelected(null);
+    useEffect(() => {
+        if (visible) {
+            if (value instanceof Date && !isNaN(value)) {
+                setCursor({ month: value.getMonth(), year: value.getFullYear() });
+                setSelected(value);
+            } else {
+                setCursor({ month: today.getMonth(), year: today.getFullYear() });
+                setSelected(null);
+            }
+            setMode('day');
         }
-        setMode('day');
-    }
-}, [visible, value]); 
+    }, [visible, value]);
 
     const yearRange = useMemo(() => {
         const base = dob ? today.getFullYear() : today.getFullYear() + 10;
@@ -146,7 +146,7 @@ const today = useRef(new Date()).current;
                         onPress={() => { setCursor(c => ({ ...c, month: i })); setMode('day'); }}
                         style={[styles.pickerCell, isCurrent && styles.pickerCellActive, isDisabled && styles.pickerCellDisabled]}
                     >
-                        <Text style={[styles.pickerCellText, isCurrent && styles.pickerCellTextActive, isDisabled && styles.pickerCellTextDisabled]}>
+                        <Text allowFontScaling={false} style={[styles.pickerCellText, isCurrent && styles.pickerCellTextActive, isDisabled && styles.pickerCellTextDisabled]}>
                             {m.slice(0, 3)}
                         </Text>
                     </TouchableOpacity>
@@ -165,7 +165,7 @@ const today = useRef(new Date()).current;
                         onPress={() => { setCursor(c => ({ ...c, year: y })); setMode('day'); }}
                         style={[styles.pickerCell, isCurrent && styles.pickerCellActive]}
                     >
-                        <Text style={[styles.pickerCellText, isCurrent && styles.pickerCellTextActive]}>
+                        <Text allowFontScaling={false} style={[styles.pickerCellText, isCurrent && styles.pickerCellTextActive]}>
                             {y}
                         </Text>
                     </TouchableOpacity>
@@ -198,7 +198,7 @@ const today = useRef(new Date()).current;
                         >
                             {day ? (
                                 <View style={[styles.dayInner, selDay && styles.daySelected, todayDay && !selDay && styles.dayToday]}>
-                                    <Text style={[styles.dayText, selDay && styles.dayTextSelected, todayDay && !selDay && styles.dayTextToday, disabled && styles.dayTextDisabled]}>
+                                    <Text allowFontScaling={false} style={[styles.dayText, selDay && styles.dayTextSelected, todayDay && !selDay && styles.dayTextToday, disabled && styles.dayTextDisabled]}>
                                         {day}
                                     </Text>
                                 </View>
@@ -285,11 +285,11 @@ const today = useRef(new Date()).current;
 
 const styles = StyleSheet.create({
     customModalOverride: {
-        width: '92%', 
+        width: '92%',
         paddingHorizontal: scale(16),
         paddingTop: verticalScale(20),
         paddingBottom: verticalScale(16),
-        alignItems: 'stretch', 
+        alignItems: 'stretch',
     },
     calendarWrap: {
         width: '100%',

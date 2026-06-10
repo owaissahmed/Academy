@@ -42,7 +42,7 @@ const Loader = ({ message = 'Loading...' }) => {
                 <Animated.View style={[styles.dot, dotStyle(dot2)]} />
                 <Animated.View style={[styles.dot, dotStyle(dot3)]} />
             </View>
-            <Text style={styles.msg}>{message}</Text>
+            <Text  allowFontScaling={false} style={styles.msg}>{message}</Text>
         </View>
     );
 };

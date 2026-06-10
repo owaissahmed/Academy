@@ -332,7 +332,7 @@ const DarseNizamiFees = ({ route, navigation }) => {
                 heightPercent={0.65}
                 scrollable={true}
                 primaryBtn={{
-                    label: submitting ? '' : 'Submit Payment',
+                    label: submitting ? '' : 'Submit',
                     onPress: handleSubmitPayment,
                     loading: submitting,
                     icon: submitting ? undefined : 'check',
