@@ -8,6 +8,7 @@ import {
     Animated,
     Image,
     BackHandler,
+    Clipboard
 } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
@@ -20,7 +21,37 @@ import { api } from '../../utlis/api';
 
 const BRAND = '#2e4c60';
 const CURRENT_YEAR = '2026';
+const ACCOUNT_NUMBER = '03154411997';
+const BankCopyBtn = ({ value }) => {
+    const [copied, setCopied] = useState(false);
 
+    const handleCopy = () => {
+        Clipboard.setString(value);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    return (
+        <TouchableOpacity
+            onPress={handleCopy}
+            style={styles.copyBtn}
+            activeOpacity={0.7}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        >
+            <Icon
+                name={copied ? 'check' : 'copy'}
+                size={moderateScale(13)}
+                color={copied ? '#10b981' : BRAND}
+            />
+            <Text
+                allowFontScaling={false}
+                style={[styles.copyText, copied && styles.copyTextDone]}
+            >
+                {copied ? 'Copied!' : 'Copy'}
+            </Text>
+        </TouchableOpacity>
+    );
+};
 const MONTHS = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -48,6 +79,13 @@ const DarseNizamiFees = ({ route, navigation }) => {
     const [monthSheetVisible, setMonthSheetVisible] = useState(false);
     const [selectedMonth, setSelectedMonth] = useState('');
     const [screenshot, setScreenshot] = useState(null);
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = () => {
+        Clipboard.setString(ACCOUNT_NUMBER);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
 
     // ─── Custom Modal & Image View States ────────────────────────────────────
     const [previewImage, setPreviewImage] = useState(null);
@@ -83,7 +121,7 @@ const DarseNizamiFees = ({ route, navigation }) => {
             const response = await api.get(`/fee-payment/my?enrollmentId=${data._id}`);
             const finalData = Array.isArray(response) ? response : (response.data || []);
             setHistory(finalData);
-
+            console.log(finalData)
             Animated.timing(listFadeAnim, {
                 toValue: 1,
                 duration: 320,
@@ -122,6 +160,7 @@ const DarseNizamiFees = ({ route, navigation }) => {
 
             if (response.isSuccess) {
                 setPaySheetVisible(false);
+                setCopied(false);
                 resetForm();
                 showModal('success', 'Submitted', response.message || 'Fee payment submitted successfully!');
                 loadPaymentHistory();
@@ -359,7 +398,81 @@ const DarseNizamiFees = ({ route, navigation }) => {
                         </Text>
                         <Icon name="chevron-down" size={moderateScale(16)} color="#64748b" />
                     </TouchableOpacity>
+                    {/* ── Payment instructions ───────────────────── */}
+                    <View style={styles.instructionCard}>
+                        <View style={styles.instructionHeader}>
+                            <Icon name="info" size={moderateScale(14)} color={BRAND} />
+                            <Text allowFontScaling={false} style={styles.instructionTitle}>
+                                Payment Instructions
+                            </Text>
+                        </View>
+                        <Text allowFontScaling={false} style={styles.instructionText}>
+                            1. Send{' '}
+                            <Text style={styles.bold}>
+                                Rs {((data?.item?.fees || 0) - (data?.discountAmount || 0)).toLocaleString()}
+                            </Text>{' '}
+                            to our Jazzcash/Easypaisa or Bank account
+                        </Text>
 
+                        {/* ── JazzCash / EasyPaisa ── */}
+                        <View style={styles.accountRow}>
+                            <Icon name="credit-card" size={moderateScale(13)} color={BRAND} />
+                            <Text allowFontScaling={false} style={styles.accountNumber}>
+                                {ACCOUNT_NUMBER}
+                            </Text>
+                            <TouchableOpacity
+                                onPress={handleCopy}
+                                style={styles.copyBtn}
+                                activeOpacity={0.7}
+                                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                            >
+                                <Icon
+                                    name={copied ? 'check' : 'copy'}
+                                    size={moderateScale(13)}
+                                    color={copied ? '#10b981' : BRAND}
+                                />
+                                <Text
+                                    allowFontScaling={false}
+                                    style={[styles.copyText, copied && styles.copyTextDone]}
+                                >
+                                    {copied ? 'Copied!' : 'Copy'}
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        {/* ── Bank Account ── */}
+                        <View style={styles.bankCard}>
+                            <View style={styles.bankCardHeader}>
+                                <Icon name="credit-card" size={moderateScale(13)} color={BRAND} />
+                                <Text allowFontScaling={false} style={styles.bankCardTitle}>Bank Transfer</Text>
+                            </View>
+
+                            <View style={styles.bankDivider} />
+
+                            {[
+                                { label: 'Account Name', value: 'AZHAR ALI', copyKey: null },
+                                { label: 'Bank', value: 'Meezan Bank — Godhra Camp Branch', copyKey: null },
+                                { label: 'Account No.', value: '99990107155985', copyKey: 'acc' },
+                                { label: 'IBAN', value: 'PK72MEZN0099990107155985', copyKey: 'iban' },
+                            ].map(({ label, value, copyKey }) => (
+                                <View key={label} style={styles.bankRow}>
+                                    <View style={styles.bankRowLeft}>
+                                        <Text allowFontScaling={false} style={styles.bankLabel}>{label}</Text>
+                                        <Text allowFontScaling={false} style={styles.bankValue}>{value}</Text>
+                                    </View>
+                                    {copyKey && (
+                                        <BankCopyBtn value={value} />
+                                    )}
+                                </View>
+                            ))}
+                        </View>
+                        <Text allowFontScaling={false} style={styles.instructionText}>
+                            2. Take a screenshot of the payment
+                        </Text>
+                        <Text allowFontScaling={false} style={styles.instructionText}>
+                            3. Upload screenshot below and submit
+                        </Text>
+                    </View>
                     <Text allowFontScaling={false} style={styles.pickerLabel}>
                         Payment Screenshot <Text style={styles.required}>*</Text>
                     </Text>
@@ -581,7 +694,65 @@ const styles = StyleSheet.create({
     monthItemText: { fontSize: moderateScale(13), color: '#334155', fontWeight: '500' },
     monthItemTextActive: { color: BRAND, fontWeight: '700' },
 
-    fullViewImage: { width: '100%', height: verticalScale(320), borderRadius: moderateScale(8), marginTop: verticalScale(10) }
+    fullViewImage: { width: '100%', height: verticalScale(320), borderRadius: moderateScale(8), marginTop: verticalScale(10) },
+
+
+    instructionHeader: { flexDirection: 'row', alignItems: 'center', gap: scale(6), marginBottom: verticalScale(4) },
+    instructionTitle: { fontSize: moderateScale(13), fontWeight: '700', color: BRAND },
+    instructionText: { fontSize: moderateScale(12), color: '#475569', lineHeight: moderateScale(18) },
+    bold: { fontWeight: '700', color: '#0f172a' },
+
+    accountRow: { flexDirection: 'row', alignItems: 'center', gap: scale(8), backgroundColor: '#f0f6fa', borderRadius: moderateScale(10), paddingHorizontal: scale(10), paddingVertical: verticalScale(8), borderWidth: 1, borderColor: '#d4e4ef', marginVertical: verticalScale(4) },
+    accountNumber: { flex: 1, fontSize: moderateScale(13), fontWeight: '700', color: '#0f172a', letterSpacing: 0.5 },
+    copyBtn: { flexDirection: 'row', alignItems: 'center', gap: scale(4), paddingHorizontal: scale(8), paddingVertical: verticalScale(4), borderRadius: moderateScale(8), backgroundColor: '#e8f0f5' },
+    copyText: { fontSize: moderateScale(11), fontWeight: '700', color: BRAND },
+    copyTextDone: { color: '#10b981' },
+
+    bankCard: {
+        backgroundColor: '#f8fafc',
+        borderRadius: moderateScale(12),
+        borderWidth: 1,
+        borderColor: '#e2e8f0',
+        padding: scale(12),
+        marginVertical: verticalScale(6),
+    },
+    bankCardHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: scale(7),
+    },
+    bankCardTitle: {
+        fontSize: moderateScale(12.5),
+        fontWeight: '700',
+        color: BRAND,
+    },
+    bankDivider: {
+        height: 1,
+        backgroundColor: '#e2e8f0',
+        marginVertical: verticalScale(10),
+    },
+    bankRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingVertical: verticalScale(5),
+    },
+    bankRowLeft: {
+        flex: 1,
+        paddingRight: scale(8),
+    },
+    bankLabel: {
+        fontSize: moderateScale(10),
+        color: '#94a3b8',
+        fontWeight: '600',
+        textTransform: 'uppercase',
+        marginBottom: verticalScale(1),
+    },
+    bankValue: {
+        fontSize: moderateScale(12.5),
+        color: '#1e293b',
+        fontWeight: '600',
+    },
 });
 
 export default DarseNizamiFees;

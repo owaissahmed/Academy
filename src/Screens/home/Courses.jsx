@@ -22,8 +22,37 @@ import AppModal from '../../components/Appmodal';
 import { api } from '../../utlis/api';
 
 const BRAND = '#2e4c60';
-const ACCOUNT_NUMBER = '0312-3456789';
+const ACCOUNT_NUMBER = '03154411997';
+const BankCopyBtn = ({ value }) => {
+    const [copied, setCopied] = useState(false);
 
+    const handleCopy = () => {
+        Clipboard.setString(value);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    return (
+        <TouchableOpacity
+            onPress={handleCopy}
+            style={styles.copyBtn}
+            activeOpacity={0.7}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        >
+            <Icon
+                name={copied ? 'check' : 'copy'}
+                size={moderateScale(13)}
+                color={copied ? '#10b981' : BRAND}
+            />
+            <Text
+                allowFontScaling={false}
+                style={[styles.copyText, copied && styles.copyTextDone]}
+            >
+                {copied ? 'Copied!' : 'Copy'}
+            </Text>
+        </TouchableOpacity>
+    );
+};
 // ─── Single Course Card ───────────────────────────────────────────────────────
 const CourseCard = ({ course, index, onApply }) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -318,7 +347,7 @@ const Courses = ({ navigation }) => {
                                 <Text style={styles.bold}>
                                     Rs {selectedCourse.fees?.toLocaleString()}
                                 </Text>{' '}
-                                to our Jazzcash/Easypaisa account
+                                to our Jazzcash/Easypaisa or Bank account
                             </Text>
 
                             <View style={styles.accountRow}>
@@ -346,6 +375,32 @@ const Courses = ({ navigation }) => {
                                 </TouchableOpacity>
                             </View>
 
+                            {/* ── Bank Account ── */}
+                            <View style={styles.bankCard}>
+                                <View style={styles.bankCardHeader}>
+                                    <Icon name="credit-card" size={moderateScale(13)} color={BRAND} />
+                                    <Text allowFontScaling={false} style={styles.bankCardTitle}>Bank Transfer</Text>
+                                </View>
+
+                                <View style={styles.bankDivider} />
+
+                                {[
+                                    { label: 'Account Name', value: 'AZHAR ALI', copyKey: null },
+                                    { label: 'Bank', value: 'Meezan Bank — Godhra Camp Branch', copyKey: null },
+                                    { label: 'Account No.', value: '99990107155985', copyKey: 'acc' },
+                                    { label: 'IBAN', value: 'PK72MEZN0099990107155985', copyKey: 'iban' },
+                                ].map(({ label, value, copyKey }) => (
+                                    <View key={label} style={styles.bankRow}>
+                                        <View style={styles.bankRowLeft}>
+                                            <Text allowFontScaling={false} style={styles.bankLabel}>{label}</Text>
+                                            <Text allowFontScaling={false} style={styles.bankValue}>{value}</Text>
+                                        </View>
+                                        {copyKey && (
+                                            <BankCopyBtn value={value} />
+                                        )}
+                                    </View>
+                                ))}
+                            </View>
                             <Text allowFontScaling={false} style={styles.instructionText}>
                                 2. Take a screenshot of the payment
                             </Text>
@@ -509,6 +564,52 @@ const styles = StyleSheet.create({
     attachedText: { fontSize: moderateScale(12), color: '#10b981', fontWeight: '600' },
 
     submittingRow: { marginTop: verticalScale(16), height: verticalScale(80) },
+
+    bankCard: {
+        backgroundColor: '#f8fafc',
+        borderRadius: moderateScale(12),
+        borderWidth: 1,
+        borderColor: '#e2e8f0',
+        padding: scale(12),
+        marginVertical: verticalScale(6),
+    },
+    bankCardHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: scale(7),
+    },
+    bankCardTitle: {
+        fontSize: moderateScale(12.5),
+        fontWeight: '700',
+        color: BRAND,
+    },
+    bankDivider: {
+        height: 1,
+        backgroundColor: '#e2e8f0',
+        marginVertical: verticalScale(10),
+    },
+    bankRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingVertical: verticalScale(5),
+    },
+    bankRowLeft: {
+        flex: 1,
+        paddingRight: scale(8),
+    },
+    bankLabel: {
+        fontSize: moderateScale(10),
+        color: '#94a3b8',
+        fontWeight: '600',
+        textTransform: 'uppercase',
+        marginBottom: verticalScale(1),
+    },
+    bankValue: {
+        fontSize: moderateScale(12.5),
+        color: '#1e293b',
+        fontWeight: '600',
+    },
 });
 
 export default Courses;
