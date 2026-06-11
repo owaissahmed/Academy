@@ -1,13 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    StyleSheet,
-    ScrollView,
-    Animated,
-    BackHandler,
-} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Animated, BackHandler, Linking, Image } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
 import Container from '../../components/Container';
@@ -53,6 +45,7 @@ const QuestionCard = ({ item, index, onDeleted }) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideAnim = useRef(new Animated.Value(24)).current;
     const [deleting, setDeleting] = useState(false);
+    const [previewImage, setPreviewImage] = useState(null); // ← ADD
     const [modal, setModal] = useState({ visible: false, type: 'error', title: '', message: '', onPrimary: null });
 
     const closeModal = () => setModal(m => ({ ...m, visible: false }));
@@ -120,15 +113,62 @@ const QuestionCard = ({ item, index, onDeleted }) => {
                 </Text>
 
                 {/* Answer or pending */}
-                {item.answerText ? (
+                {item.answerText || item.answerPic || item.answerLink ? (
                     <View style={styles.answerWrap}>
                         <View style={styles.answerHeader}>
                             <Icon name="check-circle" size={moderateScale(13)} color="#10b981" />
                             <Text allowFontScaling={false} style={styles.answerLabel}>Answer</Text>
                         </View>
-                        <Text allowFontScaling={false} style={styles.answerText}>
-                            {item.answerText}
-                        </Text>
+
+                        {item.answerText ? (
+                            <Text allowFontScaling={false} style={styles.answerText}>
+                                {item.answerText}
+                            </Text>
+                        ) : null}
+
+                        {item.answerPic ? (
+                            <>
+                                <TouchableOpacity
+                                    style={styles.screenshotRow}
+                                    onPress={() => setPreviewImage(item.answerPic)} // ← ab yeh kaam karega
+                                    activeOpacity={0.8}
+                                >
+                                    <Image
+                                        source={{ uri: item.answerPic }}
+                                        style={styles.screenshotThumb}
+                                        resizeMode="cover"
+                                    />
+                                    <View style={styles.screenshotInfo}>
+                                        <Text allowFontScaling={false} style={styles.screenshotLabel}>
+                                            Answer Screenshot
+                                        </Text>
+                                        <Text allowFontScaling={false} style={styles.screenshotSub}>
+                                            Tap to view full image
+                                        </Text>
+                                    </View>
+                                    <Icon name="eye" size={moderateScale(15)} color="#94a3b8" />
+                                </TouchableOpacity>
+                            </>
+                        ) : null}
+
+                        {item.answerLink ? (
+                            <>
+                                <TouchableOpacity
+                                    style={styles.answerLinkRow}
+                                    onPress={() => Linking.openURL(item.answerLink)}
+                                    activeOpacity={0.8}
+                                >
+                                    <Text
+                                        allowFontScaling={false}
+                                        style={styles.answerLinkText}
+                                        numberOfLines={1}
+                                    >
+                                        View 
+                                    </Text>
+                                    <Icon name="external-link" size={moderateScale(13)} color="#2563eb" />
+                                </TouchableOpacity>
+                            </>
+                        ) : null}
                     </View>
                 ) : (
                     <View style={styles.statusRow}>
@@ -138,7 +178,6 @@ const QuestionCard = ({ item, index, onDeleted }) => {
                                 Awaiting answer
                             </Text>
                         </View>
-
                         <TouchableOpacity
                             onPress={confirmDelete}
                             disabled={deleting}
@@ -150,7 +189,6 @@ const QuestionCard = ({ item, index, onDeleted }) => {
                     </View>
                 )}
 
-                {/* Asked by */}
                 {item.user?.name && (
                     <View style={styles.askedByRow}>
                         <Icon name="user" size={moderateScale(11)} color="#94a3b8" />
@@ -161,6 +199,28 @@ const QuestionCard = ({ item, index, onDeleted }) => {
                 )}
             </Animated.View>
 
+            {/* ── Image Preview Modal ── */}
+            <AppModal
+                visible={!!previewImage}
+                onClose={() => setPreviewImage(null)}
+                closeOnBackdrop={true}
+                primaryBtn={{
+                    label: 'Close',
+                    onPress: () => setPreviewImage(null),
+                }}
+            >
+                {previewImage && (
+                    <View style={styles.fullImageContainer}>
+                        <Image
+                            source={{ uri: previewImage }}
+                            style={styles.fullViewImage}
+                            resizeMode="contain"
+                        />
+                    </View>
+                )}
+            </AppModal>
+
+            {/* ── System Modal ── */}
             <AppModal
                 visible={modal.visible}
                 onClose={closeModal}
@@ -757,6 +817,87 @@ const styles = StyleSheet.create({
     deleteBtn: {
         marginLeft: 'auto',
         paddingLeft: scale(8),
+    },
+    // Screenshot / image row
+    screenshotRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#f8fafc',
+        borderWidth: 1,
+        borderColor: '#e2e8f0',
+        borderRadius: moderateScale(10),
+        padding: scale(8),
+        marginTop: verticalScale(4),
+    },
+    screenshotThumb: {
+        width: scale(42),
+        height: scale(42),
+        borderRadius: moderateScale(6),
+        backgroundColor: '#e2e8f0',
+    },
+    screenshotInfo: {
+        flex: 1,
+        marginLeft: scale(10),
+    },
+    screenshotLabel: {
+        fontSize: moderateScale(12),
+        fontWeight: '700',
+        color: '#1e293b',
+    },
+    screenshotSub: {
+        fontSize: moderateScale(10.5),
+        color: '#64748b',
+        marginTop: verticalScale(1),
+    },
+
+    // Full image modal
+    fullImageContainer: {
+        width: '100%',
+        height: verticalScale(300),
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#f8fafc',
+        borderRadius: moderateScale(12),
+        overflow: 'hidden',
+        marginTop: verticalScale(6),
+    },
+    fullViewImage: {
+        width: '100%',
+        height: '100%',
+    },
+    answerMediaLabel: {
+        fontSize: moderateScale(10.5),
+        color: '#64748b',
+        fontWeight: '700',
+        textTransform: 'uppercase',
+        letterSpacing: 0.4,
+        marginTop: verticalScale(10),
+        marginBottom: verticalScale(4),
+    },
+    answerLinkRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: scale(8),
+        padding: scale(9),
+        backgroundColor: '#eff6ff',
+        borderRadius: moderateScale(8),
+        borderWidth: 0.5,
+        borderColor: '#bfdbfe',
+         marginTop: verticalScale(4),
+    },
+    answerLinkIconWrap: {
+        width: scale(28),
+        height: scale(28),
+        borderRadius: moderateScale(6),
+        backgroundColor: '#dbeafe',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    answerLinkText: {
+        flex: 1,
+        fontSize: moderateScale(12),
+        fontWeight: '600',
+        color: '#2563eb',
     },
 });
 
