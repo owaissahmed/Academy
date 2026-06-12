@@ -74,7 +74,7 @@ const CertificatePreview = ({ data }) => {
             />
 
             {/* Academy name */}
-            <Text allowFontScaling={false} style={cert.academyName}>AZHAAR UL ISLAM ACADEMY</Text>
+            <Text allowFontScaling={false} style={cert.academyName}>AZHAR UL ISLAM ACADEMY</Text>
 
 
             {/* Certificate title */}
