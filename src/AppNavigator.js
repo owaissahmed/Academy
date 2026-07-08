@@ -27,6 +27,8 @@ import Notification from './Screens/home/Notification';
 import TeacherSalary from './Screens/home/TeacherSalary';
 import Contact from './Screens/home/Contact';
 import DarseNizami from './Screens/home/DarseNizami';
+import MarkAttendance from './Screens/home/MarkAttendance';
+import ViewAttendance from './Screens/home/ViewAttendance';
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
@@ -59,6 +61,8 @@ export default function AppNavigator() {
           <Stack.Screen name="UpcomingCourses" component={UpcomingCourses} options={{ headerShown: false }} />
           <Stack.Screen name="HelpDesk" component={HelpDesk} options={{ headerShown: false }} />
           <Stack.Screen name="DarseNizami" component={DarseNizami} options={{ headerShown: false }} />
+          <Stack.Screen name="MarkAttendance" component={MarkAttendance} options={{ headerShown: false }} />
+          <Stack.Screen name="ViewAttendance" component={ViewAttendance} options={{ headerShown: false }} />
 
         </Stack.Navigator>
       </AppProvider>

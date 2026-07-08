@@ -73,6 +73,8 @@ const Home = ({ navigation }) => {
   }, [navigation]);
 
   const MENU_ITEMS = [
+    { key: 'MarkAttendance', label: 'Mark Attendance', icon: 'book' },
+    { key: 'ViewAttendance', label: 'View Attendance', icon: 'book' },
     { key: 'DarseNizami', label: 'Darse Nizami Course', icon: 'book' },
     { key: 'Courses', label: 'Short Courses', icon: 'folder-video' },
     { key: 'MyTests', label: 'My Tests', icon: 'clipboard' },

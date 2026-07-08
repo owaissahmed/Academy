@@ -45,8 +45,8 @@ const DropdownField = ({ label, value, options, onSelect, error, icon }) => {
                         <Icon name={icon} size={moderateScale(16)} color={value ? BRAND : '#94a3b8'} style={dd.icon} />
                     )}
                     <View style={dd.textWrap}>
-                        <Text style={dd.floatLabel}>{label}</Text>
-                        <Text style={[dd.selected, !value && { color: '#94a3b8' }]}>
+                        <Text allowFontScaling={false} style={dd.floatLabel}>{label}</Text>
+                        <Text allowFontScaling={false} style={[dd.selected, !value && { color: '#94a3b8' }]}>
                             {value || 'Select...'}
                         </Text>
                     </View>
@@ -56,7 +56,7 @@ const DropdownField = ({ label, value, options, onSelect, error, icon }) => {
                 {!!error && (
                     <View style={dd.errorRow}>
                         <Icon name="alert-circle" size={moderateScale(12)} color="#e05c5c" />
-                        <Text style={dd.errorText}>{error}</Text>
+                        <Text allowFontScaling={false} style={dd.errorText}>{error}</Text>
                     </View>
                 )}
             </View>
@@ -88,7 +88,7 @@ const DropdownField = ({ label, value, options, onSelect, error, icon }) => {
                                 onPress={() => setTemp(opt)}
                                 activeOpacity={0.7}
                             >
-                                <Text style={[dd.optionText, isSel && dd.optionTextActive]}>
+                                <Text allowFontScaling={false} style={[dd.optionText, isSel && dd.optionTextActive]}>
                                     {opt}
                                 </Text>
                                 <View style={[dd.radioCircle, isSel && dd.radioCircleSel]}>
@@ -360,8 +360,8 @@ const CompleteProfile = ({ navigation }) => {
             >
                 <Icon name="user-check" size={moderateScale(16)} color={gender ? BRAND : '#94a3b8'} style={dd.icon} />
                 <View style={dd.textWrap}>
-                    <Text style={dd.floatLabel}>Gender</Text>
-                    <Text style={[dd.selected, !gender && { color: '#94a3b8' }]}>
+                    <Text allowFontScaling={false} style={dd.floatLabel}>Gender</Text>
+                    <Text allowFontScaling={false} style={[dd.selected, !gender && { color: '#94a3b8' }]}>
                         {gender || 'Select'}
                     </Text>
                 </View>
@@ -370,7 +370,7 @@ const CompleteProfile = ({ navigation }) => {
             {!!errors.gender && (
                 <View style={dd.errorRow}>
                     <Icon name="alert-circle" size={moderateScale(12)} color="#e05c5c" />
-                    <Text style={dd.errorText}>{errors.gender}</Text>
+                    <Text allowFontScaling={false} style={dd.errorText}>{errors.gender}</Text>
                 </View>
             )}
             <TextField
@@ -387,7 +387,7 @@ const CompleteProfile = ({ navigation }) => {
         <>
             <View style={styles.stepInfo}>
                 <Icon name="book-open" size={moderateScale(32)} color={BRAND} />
-                <Text style={styles.stepInfoTitle}>Education Details</Text>
+                <Text allowFontScaling={false} style={styles.stepInfoTitle}>Education Details</Text>
             </View>
             <TextField
                 label="Education Level"
@@ -410,8 +410,8 @@ const CompleteProfile = ({ navigation }) => {
         <>
             <View style={styles.stepInfo}>
                 <Icon name="camera" size={moderateScale(32)} color={BRAND} />
-                <Text style={styles.stepInfoTitle}>Profile Photo</Text>
-                <Text style={styles.stepInfoSub}>Add a clear photo of yourself</Text>
+                <Text allowFontScaling={false} style={styles.stepInfoTitle}>Profile Photo</Text>
+                <Text allowFontScaling={false} style={styles.stepInfoSub}>Add a clear photo of yourself</Text>
             </View>
 
             <TouchableOpacity
@@ -424,7 +424,7 @@ const CompleteProfile = ({ navigation }) => {
                         <Image source={{ uri: profilePic.uri }} style={styles.previewImg} />
                         <View style={styles.changeOverlay}>
                             <Icon name="edit-2" size={moderateScale(18)} color="#fff" />
-                            <Text style={styles.changeText}>Change Photo</Text>
+                            <Text allowFontScaling={false} style={styles.changeText}>Change Photo</Text>
                         </View>
                     </>
                 ) : (
@@ -432,8 +432,8 @@ const CompleteProfile = ({ navigation }) => {
                         <View style={styles.pickerIconCircle}>
                             <Icon name="upload" size={moderateScale(28)} color={BRAND} />
                         </View>
-                        <Text style={styles.pickerTitle}>Tap to select photo</Text>
-                        <Text style={styles.pickerSub}>JPG, PNG • Max 5MB</Text>
+                        <Text allowFontScaling={false} style={styles.pickerTitle}>Tap to select photo</Text>
+                        <Text allowFontScaling={false} style={styles.pickerSub}>JPG, PNG • Max 5MB</Text>
                     </View>
                 )}
             </TouchableOpacity>
@@ -441,7 +441,7 @@ const CompleteProfile = ({ navigation }) => {
             {!!errors.profilePic && (
                 <View style={styles.imgError}>
                     <Icon name="alert-circle" size={moderateScale(12)} color="#e05c5c" />
-                    <Text style={styles.imgErrorText}>{errors.profilePic}</Text>
+                    <Text allowFontScaling={false} style={styles.imgErrorText}>{errors.profilePic}</Text>
                 </View>
             )}
         </>
@@ -475,7 +475,7 @@ const CompleteProfile = ({ navigation }) => {
                     ))}
                 </View>
 
-                <Text style={styles.stepCount}>{step + 1}/3</Text>
+                <Text allowFontScaling={false} style={styles.stepCount}>{step + 1}/3</Text>
             </View>
 
             <ScrollView
@@ -484,7 +484,7 @@ const CompleteProfile = ({ navigation }) => {
                 showsVerticalScrollIndicator={false}
             >
                 <View style={styles.header}>
-                    <Text style={styles.subtitle}>
+                    <Text allowFontScaling={false} style={styles.subtitle}>
                         {step === 0
                             ? 'Fill in your personal details'
                             : step === 1
@@ -539,7 +539,7 @@ const CompleteProfile = ({ navigation }) => {
                         const isSel = tempGender === opt;
                         return (
                             <TouchableOpacity key={opt} style={dd.optionRow} onPress={() => setTempGender(opt)} activeOpacity={0.7}>
-                                <Text style={[dd.optionText, isSel && dd.optionTextActive]}>{opt}</Text>
+                                <Text allowFontScaling={false} style={[dd.optionText, isSel && dd.optionTextActive]}>{opt}</Text>
                                 <View style={[dd.radioCircle, isSel && dd.radioCircleSel]}>
                                     {isSel && <View style={dd.radioDot} />}
                                 </View>
