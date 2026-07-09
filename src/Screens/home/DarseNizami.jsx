@@ -13,7 +13,7 @@ import Loader from '../../components/Loader';
 import AppModal from '../../components/Appmodal';
 import Button from '../../components/Button';
 import { api } from '../../utlis/api';
-
+import SearchBar from '../../components/SearchBar';
 const BRAND = '#2e4c60';
 
 // ─── Subject Chip ─────────────────────────────────────────────────────────────
@@ -108,6 +108,7 @@ const DarseNizami = ({ navigation }) => {
     const [classes, setClasses] = useState([]);
     const [loading, setLoading] = useState(true);
     const [enrollingId, setEnrollingId] = useState(null);
+    const [search, setSearch] = useState('');
     const [modal, setModal] = useState({
         visible: false, type: 'error', title: '', message: '', onPrimary: null,
     });
@@ -154,7 +155,9 @@ const DarseNizami = ({ navigation }) => {
             setLoading(false);
         }
     };
-
+    const filteredClasses = classes.filter(item =>
+        item.name?.toLowerCase().includes(search.trim().toLowerCase())
+    );
     const handleEnroll = async (classId) => {
         setEnrollingId(classId);
         try {
@@ -187,29 +190,45 @@ const DarseNizami = ({ navigation }) => {
         >
             {loading && <Loader message="Loading classes..." />}
 
-            {!loading && classes.length === 0 && (
-                <View style={styles.emptyWrap}>
-                    <View style={styles.emptyIconCircle}>
-                        <Icon name="inbox" size={moderateScale(32)} color="#cbd5e1" />
-                    </View>
-                    <Text allowFontScaling={false} style={styles.emptyTitle}>No Classes Found</Text>
-                    <Text allowFontScaling={false} style={styles.emptySubtitle}>
-                        No classes are available at the moment.
-                    </Text>
-                    <TouchableOpacity style={styles.retryBtn} onPress={loadAll} activeOpacity={0.8}>
-                        <Icon name="refresh-cw" size={moderateScale(14)} color={BRAND} />
-                        <Text allowFontScaling={false} style={styles.retryText}>Retry</Text>
-                    </TouchableOpacity>
+            {!loading && (
+                <View style={styles.searchWrap}>
+                    <SearchBar
+                        value={search}
+                        onChangeText={setSearch}
+                        placeholder="Search class..."
+                    />
                 </View>
             )}
 
-            {!loading && classes.length > 0 && (
+            {!loading && filteredClasses.length === 0 && (
+                <View style={styles.emptyWrap}>
+                    <View style={styles.emptyIconCircle}>
+                        <Icon name={classes.length > 0 ? 'search' : 'inbox'} size={moderateScale(32)} color="#cbd5e1" />
+                    </View>
+                    <Text allowFontScaling={false} style={styles.emptyTitle}>
+                        {classes.length > 0 ? 'No Results Found' : 'No Classes Found'}
+                    </Text>
+                    <Text allowFontScaling={false} style={styles.emptySubtitle}>
+                        {classes.length > 0
+                            ? 'Try searching with a different keyword.'
+                            : 'No classes are available at the moment.'}
+                    </Text>
+                    {classes.length === 0 && (
+                        <TouchableOpacity style={styles.retryBtn} onPress={loadAll} activeOpacity={0.8}>
+                            <Icon name="refresh-cw" size={moderateScale(14)} color={BRAND} />
+                            <Text allowFontScaling={false} style={styles.retryText}>Retry</Text>
+                        </TouchableOpacity>
+                    )}
+                </View>
+            )}
+
+            {!loading && filteredClasses.length > 0 && (
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={styles.scroll}
+                    keyboardShouldPersistTaps="handled"
                 >
-
-                    {classes.map(item => (
+                    {filteredClasses.map(item => (
                         <ClassCard
                             key={item._id}
                             item={item}
@@ -241,7 +260,12 @@ const DarseNizami = ({ navigation }) => {
 const styles = StyleSheet.create({
     scroll: {
         padding: scale(16),
-        paddingBottom: verticalScale(32),
+        paddingTop: verticalScale(0),
+        paddingBottom: verticalScale(24),
+    },
+    searchWrap: {
+        paddingHorizontal: scale(16),
+        paddingTop: verticalScale(12),
     },
     screenSubtitle: {
         fontSize: moderateScale(13),

@@ -14,6 +14,7 @@ import Container from '../../components/Container';
 import Loader from '../../components/Loader';
 import BottomSheet from '../../components/Bottomsheet';
 import Button from '../../components/Button';
+import SearchBar from '../../components/SearchBar';
 import { api } from '../../utlis/api';
 import AppModal from '../../components/Appmodal';
 const BRAND = '#2e4c60';
@@ -71,27 +72,31 @@ const HelpdeskCard = ({ item, index }) => {
 };
 
 // ─── Empty State ──────────────────────────────────────────────────────────────
-const EmptyState = ({ onRetry }) => (
+const EmptyState = ({ onRetry, isSearch }) => (
     <View style={styles.emptyWrap}>
         <View style={styles.emptyIconCircle}>
-            <Icon name="inbox" size={moderateScale(32)} color="#cbd5e1" />
+            <Icon name={isSearch ? 'search' : 'inbox'} size={moderateScale(32)} color="#cbd5e1" />
         </View>
         <Text allowFontScaling={false} style={styles.emptyTitle}>
-            No Helpdesk Found
+            {isSearch ? 'No Results Found' : 'No Helpdesk Found'}
         </Text>
         <Text allowFontScaling={false} style={styles.emptySubtitle}>
-            No helpdesk is available at the moment.{'\n'}Please check again later.
+            {isSearch
+                ? 'Try searching with a different keyword.'
+                : <>No helpdesk is available at the moment.{'\n'}Please check again later.</>}
         </Text>
-        <TouchableOpacity
-            style={styles.retryBtn}
-            onPress={onRetry}
-            activeOpacity={0.8}
-        >
-            <Icon name="refresh-cw" size={moderateScale(14)} color={BRAND} />
-            <Text allowFontScaling={false} style={styles.retryText}>
-                Retry
-            </Text>
-        </TouchableOpacity>
+        {!isSearch && (
+            <TouchableOpacity
+                style={styles.retryBtn}
+                onPress={onRetry}
+                activeOpacity={0.8}
+            >
+                <Icon name="refresh-cw" size={moderateScale(14)} color={BRAND} />
+                <Text allowFontScaling={false} style={styles.retryText}>
+                    Retry
+                </Text>
+            </TouchableOpacity>
+        )}
     </View>
 );
 
@@ -99,6 +104,7 @@ const EmptyState = ({ onRetry }) => (
 const Helpdesk = ({ navigation }) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [search, setSearch] = useState('');
     const [modal, setModal] = useState({ visible: false, title: '', message: '' });
 
     const closeModal = () => setModal(m => ({ ...m, visible: false }));
@@ -122,6 +128,11 @@ const Helpdesk = ({ navigation }) => {
         }
     };
 
+    // Local filter — search by name (case-insensitive)
+    const filteredData = data.filter(item =>
+        item.name?.toLowerCase().includes(search.trim().toLowerCase())
+    );
+
     return (
         <Container
             showHeader={true}
@@ -131,16 +142,27 @@ const Helpdesk = ({ navigation }) => {
         >
             {loading && <Loader message="Loading helpdesk..." />}
 
-            {!loading && data.length === 0 && (
-                <EmptyState onRetry={loadData} />
+            {!loading && (
+                <View style={styles.searchWrap}>
+                    <SearchBar
+                        value={search}
+                        onChangeText={setSearch}
+                        placeholder="Search helpdesk..."
+                    />
+                </View>
             )}
 
-            {!loading && data.length > 0 && (
+            {!loading && filteredData.length === 0 && (
+                <EmptyState onRetry={loadData} isSearch={data.length > 0 && search.length > 0} />
+            )}
+
+            {!loading && filteredData.length > 0 && (
                 <ScrollView
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={styles.scroll}
+                    keyboardShouldPersistTaps="handled"
                 >
-                    {data.map((item, index) => (
+                    {filteredData.map((item, index) => (
                         <HelpdeskCard key={item._id} item={item} index={index} />
                     ))}
                 </ScrollView>
@@ -159,8 +181,13 @@ const Helpdesk = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+    searchWrap: {
+        paddingHorizontal: scale(16),
+        paddingTop: verticalScale(12),
+    },
     scroll: {
         padding: scale(16),
+        paddingTop: verticalScale(0),
         paddingBottom: verticalScale(24),
     },
 

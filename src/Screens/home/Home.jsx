@@ -162,8 +162,8 @@ const Home = ({ navigation }) => {
               onPress={() => navigation.navigate('Notification')}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
-              <Icon name="bell" size={moderateScale(18)} color={BRAND} />
-              {/* <View style={styles.notifDot} /> */}
+              <Entypto name="open-book" size={moderateScale(18)} color={BRAND} />
+              <Text allowFontScaling={false} style={styles.btnText}>Books</Text>
             </TouchableOpacity>
           </View>
         </Animated.View>
@@ -228,14 +228,21 @@ const styles = StyleSheet.create({
     gap: scale(8),
   },
   iconBtn: {
-    width: scale(38),
     height: scale(38),
+    paddingHorizontal: scale(12), // Text fit hone ke liye padding di hai
     borderRadius: scale(19),
     backgroundColor: '#f0f4f8',
+    flexDirection: 'row',       // Icon aur Text ko ek line me lane ke liye
     alignItems: 'center',
     justifyContent: 'center',
+    gap: scale(6),               // Icon aur Text ke darmiyan ka fasla
     borderWidth: 1,
     borderColor: '#e2e8f0',
+  },
+  btnText: {
+    fontSize: moderateScale(13),
+    fontWeight: '700',
+    color: BRAND,
   },
   notifDot: {
     position: 'absolute',

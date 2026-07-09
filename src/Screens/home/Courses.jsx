@@ -20,7 +20,7 @@ import BottomSheet from '../../components/Bottomsheet';
 import Button from '../../components/Button';
 import AppModal from '../../components/Appmodal';
 import { api } from '../../utlis/api';
-
+import SearchBar from '../../components/SearchBar';
 const BRAND = '#2e4c60';
 const ACCOUNT_NUMBER = '03154411997';
 const BankCopyBtn = ({ value }) => {
@@ -118,19 +118,25 @@ const CourseCard = ({ course, index, onApply }) => {
 };
 
 // ─── Empty State ──────────────────────────────────────────────────────────────
-const EmptyState = ({ onRetry }) => (
+const EmptyState = ({ onRetry, isSearch }) => (
     <View style={styles.emptyWrap}>
         <View style={styles.emptyIconCircle}>
-            <Icon name="inbox" size={moderateScale(32)} color="#cbd5e1" />
+            <Icon name={isSearch ? 'search' : 'inbox'} size={moderateScale(32)} color="#cbd5e1" />
         </View>
-        <Text allowFontScaling={false} style={styles.emptyTitle}>No Courses Found</Text>
-        <Text allowFontScaling={false} style={styles.emptySubtitle}>
-            No courses available right now.{'\n'}Please check back later.
+        <Text allowFontScaling={false} style={styles.emptyTitle}>
+            {isSearch ? 'No Results Found' : 'No Courses Found'}
         </Text>
-        <TouchableOpacity style={styles.retryBtn} onPress={onRetry} activeOpacity={0.8}>
-            <Icon name="refresh-cw" size={moderateScale(14)} color={BRAND} />
-            <Text allowFontScaling={false} style={styles.retryText}>Retry</Text>
-        </TouchableOpacity>
+        <Text allowFontScaling={false} style={styles.emptySubtitle}>
+            {isSearch
+                ? 'Try searching with a different keyword.'
+                : <>No courses available right now.{'\n'}Please check back later.</>}
+        </Text>
+        {!isSearch && (
+            <TouchableOpacity style={styles.retryBtn} onPress={onRetry} activeOpacity={0.8}>
+                <Icon name="refresh-cw" size={moderateScale(14)} color={BRAND} />
+                <Text allowFontScaling={false} style={styles.retryText}>Retry</Text>
+            </TouchableOpacity>
+        )}
     </View>
 );
 
@@ -138,7 +144,7 @@ const EmptyState = ({ onRetry }) => (
 const Courses = ({ navigation }) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const [search, setSearch] = useState('');
     const [sheetVisible, setSheetVisible] = useState(false);
     const [selectedCourse, setSelectedCourse] = useState(null);
     const [screenshot, setScreenshot] = useState(null);
@@ -186,6 +192,9 @@ const Courses = ({ navigation }) => {
         }
     };
 
+    const filteredData = data.filter(course =>
+        course.name?.toLowerCase().includes(search.trim().toLowerCase())
+    );
     const handleApply = (course) => {
         setSelectedCourse(course);
         setScreenshot(null);
@@ -277,12 +286,28 @@ const Courses = ({ navigation }) => {
             showFooter={false}
         >
             {loading && <Loader message="Loading courses..." />}
-            {!loading && data.length === 0 && <EmptyState onRetry={loadCourses} />}
 
-            {!loading && data.length > 0 && (
-                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
-                    <View style={styles.countRow} />
-                    {data.map((course, index) => (
+            {!loading && (
+                <View style={styles.searchWrap}>
+                    <SearchBar
+                        value={search}
+                        onChangeText={setSearch}
+                        placeholder="Search courses..."
+                    />
+                </View>
+            )}
+
+            {!loading && filteredData.length === 0 && (
+                <EmptyState onRetry={loadCourses} isSearch={data.length > 0 && search.length > 0} />
+            )}
+
+            {!loading && filteredData.length > 0 && (
+                <ScrollView
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={styles.scroll}
+                    keyboardShouldPersistTaps="handled"
+                >
+                    {filteredData.map((course, index) => (
                         <CourseCard key={course._id} course={course} index={index} onApply={handleApply} />
                     ))}
                 </ScrollView>
@@ -487,8 +512,11 @@ const Courses = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-    scroll: { padding: scale(16), paddingBottom: verticalScale(24) },
-    countRow: { marginBottom: verticalScale(12) },
+    searchWrap: {
+        paddingHorizontal: scale(16),
+        paddingTop: verticalScale(12),
+    },
+    scroll: { padding: scale(16), paddingBottom: verticalScale(24), paddingTop: verticalScale(0), },
 
     card: {
         backgroundColor: '#ffffff',
