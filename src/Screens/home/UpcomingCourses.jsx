@@ -137,7 +137,7 @@ const EmptyState = ({ onRetry }) => (
         </View>
         <Text allowFontScaling={false} style={styles.emptyTitle}>No Upcoming Courses</Text>
         <Text allowFontScaling={false} style={styles.emptySubtitle}>
-            Abhi koi upcoming course nahi hai.{'\n'}Baad mein dobara check karein.
+            There are no upcoming courses at the moment.{'\n'}Please check back later.
         </Text>
         <TouchableOpacity style={styles.retryBtn} onPress={onRetry} activeOpacity={0.8}>
             <Icon name="refresh-cw" size={moderateScale(14)} color={BRAND} />

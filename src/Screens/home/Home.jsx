@@ -159,7 +159,7 @@ const Home = ({ navigation }) => {
           <View style={styles.topRight}>
             <TouchableOpacity
               style={styles.iconBtn}
-              onPress={() => navigation.navigate('Notification')}
+              onPress={() => navigation.navigate('Books')}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
               <Entypto name="open-book" size={moderateScale(18)} color={BRAND} />
