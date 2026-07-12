@@ -29,8 +29,11 @@ import Contact from './Screens/home/Contact';
 import DarseNizami from './Screens/home/DarseNizami';
 import MarkAttendance from './Screens/home/MarkAttendance';
 import ViewAttendance from './Screens/home/ViewAttendance';
+import UserAttendance from './Screens/home/UserAttendance';
 import Books from './Screens/home/Books';
 import PdfViewer from './Screens/home/PdfViewer';
+import PrivateClass from './Screens/home/PrivateClass';
+import SpecialClass from './Screens/home/SpecialClass';
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
@@ -65,8 +68,11 @@ export default function AppNavigator() {
           <Stack.Screen name="DarseNizami" component={DarseNizami} options={{ headerShown: false }} />
           <Stack.Screen name="MarkAttendance" component={MarkAttendance} options={{ headerShown: false }} />
           <Stack.Screen name="ViewAttendance" component={ViewAttendance} options={{ headerShown: false }} />
+          <Stack.Screen name="UserAttendance" component={UserAttendance} options={{ headerShown: false }} />
           <Stack.Screen name="Books" component={Books} options={{ headerShown: false }} />
           <Stack.Screen name="PdfViewer" component={PdfViewer} options={{ headerShown: false }} />
+          <Stack.Screen name="PrivateClass" component={PrivateClass} options={{ headerShown: false }} />
+          <Stack.Screen name="SpecialClass" component={SpecialClass} options={{ headerShown: false }} />
 
         </Stack.Navigator>
       </AppProvider>

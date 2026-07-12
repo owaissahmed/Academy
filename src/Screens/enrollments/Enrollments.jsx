@@ -204,12 +204,14 @@ const EnrollmentCard = ({ item, index, onScreenshotPress, navigation, onCardPres
                     <Icon name="type" size={moderateScale(12)} color="#94a3b8" />
                     <Text allowFontScaling={false} style={styles.infoText}>{Type} Videos</Text>
                 </View> */}
-                <View style={styles.infoItem}>
-                    <Icon name="tag" size={moderateScale(12)} color="#94a3b8" />
-                    <Text allowFontScaling={false} style={styles.infoText}>
-                        Rs {(course?.fees - Discount).toLocaleString()}
-                    </Text>
-                </View>
+                {course?.fees &&
+                    <View style={styles.infoItem}>
+                        <Icon name="tag" size={moderateScale(12)} color="#94a3b8" />
+                        <Text allowFontScaling={false} style={styles.infoText}>
+                            Rs {(course?.fees - Discount).toLocaleString()}
+                        </Text>
+                    </View>
+                }
                 <View style={styles.infoItem}>
                     <Icon name="calendar" size={moderateScale(12)} color="#94a3b8" />
                     <Text allowFontScaling={false} style={styles.infoText}>

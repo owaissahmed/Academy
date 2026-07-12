@@ -73,6 +73,9 @@ const Home = ({ navigation }) => {
   }, [navigation]);
 
   const MENU_ITEMS = [
+    { key: 'SpecialClass', label: 'Special Class', icon: 'book' },
+    { key: 'PrivateClass', label: 'Private Class', icon: 'book' },
+    { key: 'UserAttendance', label: 'User Attendance', icon: 'book' },
     { key: 'MarkAttendance', label: 'Mark Attendance', icon: 'book' },
     { key: 'ViewAttendance', label: 'View Attendance', icon: 'book' },
     { key: 'DarseNizami', label: 'Darse Nizami Course', icon: 'book' },

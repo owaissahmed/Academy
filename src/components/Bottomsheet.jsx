@@ -27,7 +27,7 @@ const BottomSheet = ({
     showCloseBtn = true,
     height,
     heightPercent,
-    scrollable = false,
+    scrollable = true,
     scrollProps = {},
     primaryBtn,
     secondaryBtn,
