@@ -34,6 +34,7 @@ import Books from './Screens/home/Books';
 import PdfViewer from './Screens/home/PdfViewer';
 import PrivateClass from './Screens/home/PrivateClass';
 import SpecialClass from './Screens/home/SpecialClass';
+import Enroll from './Screens/home/Enroll';
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
@@ -73,6 +74,7 @@ export default function AppNavigator() {
           <Stack.Screen name="PdfViewer" component={PdfViewer} options={{ headerShown: false }} />
           <Stack.Screen name="PrivateClass" component={PrivateClass} options={{ headerShown: false }} />
           <Stack.Screen name="SpecialClass" component={SpecialClass} options={{ headerShown: false }} />
+          <Stack.Screen name="Enroll" component={Enroll} options={{ headerShown: false }} />
 
         </Stack.Navigator>
       </AppProvider>

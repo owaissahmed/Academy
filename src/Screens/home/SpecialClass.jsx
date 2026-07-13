@@ -169,7 +169,7 @@ const SpecialClass = ({ navigation }) => {
     return (
         <Container
             showHeader={true}
-            headerTitle="Dars-e-Nizami"
+            headerTitle="Special Class"
             onBack={() => navigation.goBack()}
             showFooter={false}
         >

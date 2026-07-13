@@ -73,26 +73,32 @@ const Home = ({ navigation }) => {
   }, [navigation]);
 
   const MENU_ITEMS = [
-    { key: 'SpecialClass', label: 'Special Class', icon: 'book' },
-    { key: 'PrivateClass', label: 'Private Class', icon: 'book' },
-    { key: 'UserAttendance', label: 'User Attendance', icon: 'book' },
-    { key: 'MarkAttendance', label: 'Mark Attendance', icon: 'book' },
-    { key: 'ViewAttendance', label: 'View Attendance', icon: 'book' },
-    { key: 'DarseNizami', label: 'Darse Nizami Course', icon: 'book' },
-    { key: 'Courses', label: 'Short Courses', icon: 'folder-video' },
-    { key: 'MyTests', label: 'My Tests', icon: 'clipboard' },
-    { key: 'ExamResults', label: 'My Results', icon: 'bar-graph' },
-    { key: 'MyCertificates', label: 'My Certificates', icon: 'trophy' },
-    { key: 'HelpDesk', label: 'Darse Nizami Help Desk', icon: 'youtube' },
-    { key: 'TeacherApplication', label: 'Join As Teacher', icon: 'graduation-cap' },
-    ...(role === 'teacher'
-      ? [{ key: 'TeacherSalary', label: 'Teacher Salary', icon: 'wallet' }]
-      : []),
-    { key: 'UpcomingCourses', label: 'Upcoming Courses', icon: 'megaphone' },
-    { key: 'Complaint', label: 'Report An Issue', icon: 'flag' },
-    { key: 'About', label: 'About Us', icon: 'info' },
-  ];
+    { key: 'Enroll', label: 'Enroll Now', icon: 'book', roles: ['user', 'student'] },
+    { key: 'HelpDesk', label: 'Darse Nizami Help Desk', icon: 'youtube', roles: ['user', 'student', 'teacher'] },
+    { key: 'Courses', label: 'Short Courses', icon: 'folder-video', roles: ['teacher'] },
 
+    // { key: 'SpecialClass', label: 'Special Class', icon: 'book', roles: ['teacher'] },
+    // { key: 'PrivateClass', label: 'Private Class', icon: 'book', roles: ['teacher'] },
+
+    { key: 'UserAttendance', label: 'My Attendance', icon: 'check', roles: ['student'] },
+    { key: 'MarkAttendance', label: 'Mark Attendance', icon: 'check', roles: ['teacher'] },
+    { key: 'ViewAttendance', label: 'View Attendance', icon: 'eye', roles: ['teacher'] },
+
+    // { key: 'DarseNizami', label: 'Darse Nizami Course', icon: 'book', roles: ['teacher'] },
+
+    { key: 'MyTests', label: 'My Tests', icon: 'clipboard', roles: ['student'] },
+    { key: 'ExamResults', label: 'My Results', icon: 'bar-graph', roles: ['student',] },
+    { key: 'MyCertificates', label: 'My Certificates', icon: 'trophy', roles: ['student'] },
+
+    { key: 'TeacherApplication', label: 'Join As Teacher', icon: 'graduation-cap', roles: ['user', 'student'] },
+    { key: 'TeacherSalary', label: 'Teacher Salary', icon: 'wallet', roles: ['teacher'] },
+    { key: 'UpcomingCourses', label: 'Upcoming Courses', icon: 'megaphone', roles: ['user', 'student', 'teacher'] },
+    { key: 'Complaint', label: 'Report An Issue', icon: 'flag', roles: ['user', 'student', 'teacher'] },
+    { key: 'About', label: 'About Us', icon: 'info', roles: ['user', 'student', 'teacher'] },
+  ];
+  const visibleMenuItems = MENU_ITEMS.filter(item =>
+    item.roles.includes(role)
+  );
 
   const loadProfile = async () => {
     try {
@@ -185,7 +191,7 @@ const Home = ({ navigation }) => {
 
         {/* ── MENU LIST ─────────────────────────────────────────── */}
         <View style={styles.grid}>
-          {MENU_ITEMS.map((item, index) => (
+          {visibleMenuItems.map((item, index) => (
             <MenuBox
               key={item.key}
               item={item}

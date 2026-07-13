@@ -40,38 +40,54 @@ const BottomSheet = ({
 }) => {
     const slideAnim = useRef(new Animated.Value(SCREEN_HEIGHT)).current;
     const backdropAnim = useRef(new Animated.Value(0)).current;
+    // Dedicated visibility control, decoupled from slideAnim.
+    // Sheet stays fully transparent until the Modal has ACTUALLY mounted natively (onShow),
+    // so there's no top-left corner flash on the first frame.
+    const contentOpacity = useRef(new Animated.Value(0)).current;
+
+    const runOpenAnim = () => {
+        contentOpacity.setValue(1);
+        Animated.parallel([
+            Animated.spring(slideAnim, {
+                toValue: 0,
+                tension: 65,
+                friction: 11,
+                useNativeDriver: true,
+            }),
+            Animated.timing(backdropAnim, {
+                toValue: backdropOpacity,
+                duration: 220,
+                useNativeDriver: true,
+            }),
+        ]).start();
+    };
+
+    const runCloseAnim = () => {
+        Animated.parallel([
+            Animated.timing(slideAnim, {
+                toValue: SCREEN_HEIGHT,
+                duration: 200,
+                useNativeDriver: true,
+            }),
+            Animated.timing(backdropAnim, {
+                toValue: 0,
+                duration: 180,
+                useNativeDriver: true,
+            }),
+        ]).start(() => {
+            // fully hide + reset offscreen so next open starts clean
+            contentOpacity.setValue(0);
+            slideAnim.setValue(SCREEN_HEIGHT);
+        });
+    };
 
     useEffect(() => {
-        if (visible) {
-            // Spring animation starts instantly with parallel execution parameters
-            Animated.parallel([
-                Animated.spring(slideAnim, { 
-                    toValue: 0, 
-                    tension: 65, 
-                    friction: 11, 
-                    useNativeDriver: true 
-                }),
-                Animated.timing(backdropAnim, { 
-                    toValue: backdropOpacity, 
-                    duration: 220, 
-                    useNativeDriver: true 
-                }),
-            ]).start();
-        } else {
-            Animated.parallel([
-                Animated.timing(slideAnim, { 
-                    toValue: SCREEN_HEIGHT, 
-                    duration: 200, 
-                    useNativeDriver: true 
-                }),
-                Animated.timing(backdropAnim, { 
-                    toValue: 0, 
-                    duration: 180, 
-                    useNativeDriver: true 
-                }),
-            ]).start();
+        if (!visible) {
+            runCloseAnim();
         }
-    }, [visible, backdropOpacity]);
+        // NOTE: open animation is triggered by Modal's onShow, not here.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [visible]);
 
     const sheetHeight = height
         ? height
@@ -92,21 +108,13 @@ const BottomSheet = ({
         }
         : { style: [styles.content, contentStyle] };
 
-    // ── KEY GLITCH FIX ────────────────────────────────────────────────────────
-    // Interpolate opacity directly from the height translation position.
-    // Jab tak sheet upar nahi aayegi, yeh invisible rahegi (No Top Left Flashes).
-    const sheetOpacity = slideAnim.interpolate({
-        inputRange: [0, SCREEN_HEIGHT * 0.5, SCREEN_HEIGHT],
-        outputRange: [1, 0, 0],
-        extrapolate: 'clamp',
-    });
-
     return (
         <Modal
             visible={visible}
             transparent
             animationType="none"
             statusBarTranslucent
+            onShow={runOpenAnim}
             onRequestClose={onClose}
         >
             <View style={styles.overlay}>
@@ -120,14 +128,19 @@ const BottomSheet = ({
                     style={styles.kavWrap}
                 >
                     <Animated.View
+                        // renderToHardwareTextureAndroid / needsOffscreenAlphaCompositing
+                        // stop Android from compositing the raw (pre-transform) frame, which is
+                        // the other common cause of this corner-flash glitch.
+                        renderToHardwareTextureAndroid
+                        needsOffscreenAlphaCompositing
                         style={[
-                            styles.sheet, 
-                            sheetHeight ? { height: sheetHeight } : {}, 
-                            sheetStyle, 
-                            { 
-                                opacity: sheetOpacity, 
-                                transform: [{ translateY: slideAnim }] 
-                            }
+                            styles.sheet,
+                            sheetHeight ? { height: sheetHeight } : {},
+                            sheetStyle,
+                            {
+                                opacity: contentOpacity,
+                                transform: [{ translateY: slideAnim }],
+                            },
                         ]}
                     >
                         {showHandle && <View style={styles.handle} />}
@@ -155,7 +168,6 @@ const BottomSheet = ({
                             {children}
                         </ContentWrapper>
 
-                        {/* ── Footer ───────────────────────────────────── */}
                         {hasFooter && (
                             <View style={styles.footer}>
                                 {footerComponent ? (
