@@ -749,7 +749,7 @@ const styles = StyleSheet.create({
     // FAB
     fab: {
         position: 'absolute',
-        bottom: verticalScale(24),
+        bottom: verticalScale(40),
         right: scale(20),
         width: scale(54),
         height: scale(54),

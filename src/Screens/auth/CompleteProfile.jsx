@@ -189,14 +189,14 @@ const CompleteProfile = ({ navigation }) => {
         ]).start();
     }, [step]);
 
-    const formatCnic = raw => {
-        const digits = raw.replace(/\D/g, '').slice(0, 13);
-        if (digits.length <= 5) return digits;
-        if (digits.length <= 12) return `${digits.slice(0, 5)}-${digits.slice(5)}`;
-        return `${digits.slice(0, 5)}-${digits.slice(5, 12)}-${digits.slice(12)}`;
-    };
+    // const formatCnic = raw => {
+    //     const digits = raw.replace(/\D/g, '').slice(0, 13);
+    //     if (digits.length <= 5) return digits;
+    //     if (digits.length <= 12) return `${digits.slice(0, 5)}-${digits.slice(5)}`;
+    //     return `${digits.slice(0, 5)}-${digits.slice(5, 12)}-${digits.slice(12)}`;
+    // };
 
-    const formatPhone = raw => raw.replace(/\D/g, '').slice(0, 11);
+    // const formatPhone = raw => raw.replace(/\D/g, '').slice(0, 11);
 
     const pickImage = () => {
         launchImageLibrary(
@@ -223,8 +223,8 @@ const CompleteProfile = ({ navigation }) => {
         if (step === 0) {
             if (!fatherName.trim()) e.fatherName = "Father's name is required.";
             if (!dob) e.dob = "Date of Birth is required.";
-            if (!phone || phone.length < 11) e.phone = 'Enter a valid 11-digit phone number.';
-            if (!cnic || cnic.replace(/\D/g, '').length < 13) e.cnic = 'Enter a valid CNIC.';
+            if (!phone.trim()) e.phone = 'Phone number is required.';
+            if (!cnic.trim()) e.cnic = 'CNIC is required.';
             if (!age || isNaN(age) || age < 5 || age > 99) e.age = 'Enter a valid age.';
             if (!gender) e.gender = 'Please select gender.';
             if (!address.trim()) e.address = 'Address is required.';
@@ -250,8 +250,8 @@ const CompleteProfile = ({ navigation }) => {
             const formData = new FormData();
             formData.append('fatherName', fatherName.trim());
             formData.append('dob', dob instanceof Date ? dob.toISOString().split('T')[0] : dob);
-            formData.append('phone', phone);
-            formData.append('cnic', cnic);
+            formData.append('phone', phone.trim());
+            formData.append('cnic', cnic.trim());
             formData.append('age', age.toString());
             formData.append('gender', gender);
             formData.append('address', address.trim());
@@ -302,15 +302,15 @@ const CompleteProfile = ({ navigation }) => {
             <TextField
                 label="Phone Number"
                 value={phone}
-                onChangeText={v => { setPhone(formatPhone(v)); setErr('phone')(); }}
+                onChangeText={v => { setPhone(v); setErr('phone')(); }}
                 keyboardType="phone-pad"
                 icon="phone"
                 error={errors.phone}
             />
             <TextField
-                label="CNIC (13 digits)"
+                label="CNIC"
                 value={cnic}
-                onChangeText={v => { setCnic(formatCnic(v)); setErr('cnic')(); }}
+                onChangeText={v => { setCnic(v); setErr('cnic')(); }}
                 keyboardType="numeric"
                 icon="credit-card"
                 error={errors.cnic}

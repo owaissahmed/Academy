@@ -94,22 +94,22 @@ const EditProfile = ({ navigation }) => {
             }
         });
     };
-    const formatCnic = raw => {
-        const digits = raw.replace(/\D/g, '').slice(0, 13);
-        if (digits.length <= 5) return digits;
-        if (digits.length <= 12) return `${digits.slice(0, 5)}-${digits.slice(5)}`;
-        return `${digits.slice(0, 5)}-${digits.slice(5, 12)}-${digits.slice(12)}`;
-    };
+    // const formatCnic = raw => {
+    //     const digits = raw.replace(/\D/g, '').slice(0, 13);
+    //     if (digits.length <= 5) return digits;
+    //     if (digits.length <= 12) return `${digits.slice(0, 5)}-${digits.slice(5)}`;
+    //     return `${digits.slice(0, 5)}-${digits.slice(5, 12)}-${digits.slice(12)}`;
+    // };
 
-    const formatPhone = raw => raw.replace(/\D/g, '').slice(0, 11);
+    // const formatPhone = raw => raw.replace(/\D/g, '').slice(0, 11);
 
     const formatAge = raw => raw.replace(/\D/g, '').slice(0, 2);
     const validate = () => {
         const e = {};
         if (!fatherName.trim()) e.fatherName = 'Father name is required.';
         if (!dob) e.dob = "Date of Birth is required.";
-        if (!phone.trim() || phone.length < 11) e.phone = 'Enter a valid 11-digit phone number.';
-        if (!cnic.trim() || cnic.replace(/\D/g, '').length < 13) e.cnic = 'Enter a valid CNIC.';
+        if (!phone.trim()) e.phone = 'Phone number is required.';
+        if (!cnic.trim()) e.cnic = 'CNIC is required.';
         if (!age.trim() || isNaN(age) || age < 5 || age > 99) e.age = 'Enter a valid age.';
         if (!address.trim()) e.address = 'Address is required.';
         if (!gender.trim()) e.gender = 'Gender is required.';
@@ -152,7 +152,7 @@ const EditProfile = ({ navigation }) => {
                     visible: true, type: 'success',
                     title: 'Profile Updated',
                     message: 'Your profile has been updated successfully.',
-                    onPrimary: () => { closeModal();  },
+                    onPrimary: () => { closeModal(); },
                 });
             } else {
                 setModal({
@@ -184,7 +184,7 @@ const EditProfile = ({ navigation }) => {
             rightIcons={[
                 {
                     icon: "lock",
-                    onPress: () =>navigation.navigate('UpdatePassword'),
+                    onPress: () => navigation.navigate('UpdatePassword'),
                 },
                 {
                     icon: "log-out",
@@ -257,11 +257,13 @@ const EditProfile = ({ navigation }) => {
                         <TextField
                             label="CNIC"
                             value={cnic}
-                            onChangeText={t => { setCnic(formatCnic(t)); setErrors(e => ({ ...e, cnic: '' })); }}
+                            onChangeText={t => {
+                                setCnic(t);
+                                setErrors(e => ({ ...e, cnic: '' }));
+                            }}
                             icon="credit-card"
                             keyboardType="numeric"
                             error={errors.cnic}
-                            maxLength={15}
                         />
                         <TouchableOpacity
                             onPress={() => setCalVisible(true)}
