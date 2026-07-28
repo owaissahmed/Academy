@@ -48,9 +48,16 @@ const BookCard = ({ item, index, onRead, onDownload, downloadingId }) => {
                 <View style={styles.cardIconCircle}>
                     <Icon name="book" size={moderateScale(16)} color={BRAND} />
                 </View>
-                <Text allowFontScaling={false} style={styles.cardTitle} numberOfLines={2}>
-                    {item.name}
-                </Text>
+                <View style={{ flex: 1 }}>
+                    <Text allowFontScaling={false} style={styles.cardTitle} numberOfLines={2}>
+                        {item.name}
+                    </Text>
+                    {item.subject?.name && (
+                        <Text allowFontScaling={false} style={styles.cardSubject} numberOfLines={1}>
+                            {item.subject.name}
+                        </Text>
+                    )}
+                </View>
             </View>
 
             <View style={styles.divider} />
@@ -114,12 +121,26 @@ const Books = ({ navigation }) => {
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState('');
     const [downloadingId, setDownloadingId] = useState(null);
+    const [subjects, setSubjects] = useState([]);
+    const [activeSubject, setActiveSubject] = useState(null); // null = "All"
 
     const [modal, setModal] = useState({ visible: false, type: 'info', title: '', message: '' });
     const showModal = (type, title, message) => setModal({ visible: true, type, title, message });
     const closeModal = () => setModal(m => ({ ...m, visible: false }));
 
     useEffect(() => { loadBooks(); }, []);
+
+    // Load subjects once on mount
+    useEffect(() => {
+        const loadSubjects = async () => {
+            try {
+                const res = await api.get('/subjects/all');
+                const list = Array.isArray(res) ? res : (res.data || []);
+                setSubjects(list);
+            } catch { }
+        };
+        loadSubjects();
+    }, []);
 
     const loadBooks = async () => {
         setLoading(true);
@@ -134,9 +155,13 @@ const Books = ({ navigation }) => {
         }
     };
 
-    const filteredData = data.filter(item =>
-        item.name?.toLowerCase().includes(search.trim().toLowerCase())
-    );
+    const filteredData = data
+        .filter(item =>
+            item.name?.toLowerCase().includes(search.trim().toLowerCase())
+        )
+        .filter(item =>
+            !activeSubject || item.subject?._id === activeSubject._id
+        );
 
     // ─── Read: open inside app via WebView ───────────────────────────────────
     const handleRead = (item) => {
@@ -235,8 +260,44 @@ const Books = ({ navigation }) => {
                 </View>
             )}
 
+            {!loading && subjects.length > 0 && (
+                <View style={styles.pillsWrap}>
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={styles.pillsScroll}
+                    >
+                        <TouchableOpacity
+                            style={[styles.pill, !activeSubject && styles.pillActive]}
+                            onPress={() => setActiveSubject(null)}
+                            activeOpacity={0.8}
+                        >
+                            <Text allowFontScaling={false} style={[styles.pillText, !activeSubject && styles.pillTextActive]}>
+                                All
+                            </Text>
+                        </TouchableOpacity>
+
+                        {subjects.map(s => (
+                            <TouchableOpacity
+                                key={s._id}
+                                style={[styles.pill, activeSubject?._id === s._id && styles.pillActive]}
+                                onPress={() => setActiveSubject(s)}
+                                activeOpacity={0.8}
+                            >
+                                <Text allowFontScaling={false} style={[styles.pillText, activeSubject?._id === s._id && styles.pillTextActive]}>
+                                    {s.name}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+                </View>
+            )}
+
             {!loading && filteredData.length === 0 && (
-                <EmptyState onRetry={loadBooks} isSearch={data.length > 0 && search.length > 0} />
+                <EmptyState
+                    onRetry={loadBooks}
+                    isSearch={data.length > 0 && (search.length > 0 || activeSubject !== null)}
+                />
             )}
 
             {!loading && filteredData.length > 0 && (
@@ -275,6 +336,29 @@ const styles = StyleSheet.create({
         paddingHorizontal: scale(16),
         paddingTop: verticalScale(12),
     },
+    // Pills
+    pillsWrap: {
+        backgroundColor: '#ffffff',
+        borderBottomWidth: 1,
+        borderBottomColor: '#f1f5f9',
+    },
+    pillsScroll: {
+        paddingHorizontal: scale(14),
+        paddingVertical: verticalScale(10),
+        gap: scale(8),
+        flexDirection: 'row',
+    },
+    pill: {
+        paddingHorizontal: scale(14),
+        paddingVertical: verticalScale(7),
+        borderRadius: moderateScale(20),
+        backgroundColor: '#f1f5f9',
+    },
+    pillActive: { backgroundColor: BRAND },
+    pillText: { fontSize: moderateScale(12.5), fontWeight: '600', color: '#64748b' },
+    pillTextActive: { color: '#ffffff' },
+
+    // Scroll
     scroll: {
         padding: scale(16),
         paddingTop: verticalScale(4),
@@ -313,7 +397,12 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(14.5),
         fontWeight: '700',
         color: '#0f172a',
-        flex: 1,
+    },
+    cardSubject: {
+        fontSize: moderateScale(11.5),
+        fontWeight: '600',
+        color: BRAND,
+        marginTop: verticalScale(2),
     },
     divider: {
         height: 1,

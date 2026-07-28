@@ -11,50 +11,92 @@ import { api } from '../../utlis/api';
 
 const BRAND = '#2e4c60';
 
-
-// ─── Single menu box ──────────────────────────────────────────────────────────
+// ─── Small menu item (bottom grid, bank-app style) ────────────────────────────
 const MenuBox = ({ item, onPress, delay }) => {
-  const translateX = useRef(new Animated.Value(-30)).current;
+  const translateY = useRef(new Animated.Value(14)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     Animated.parallel([
       Animated.timing(opacityAnim, { toValue: 1, duration: 300, delay, useNativeDriver: true }),
-      Animated.spring(translateX, { toValue: 0, delay, tension: 70, friction: 9, useNativeDriver: true }),
+      Animated.spring(translateY, { toValue: 0, delay, tension: 70, friction: 9, useNativeDriver: true }),
     ]).start();
   }, []);
 
-  const handlePressIn = () => Animated.spring(scaleAnim, { toValue: 0.97, useNativeDriver: true, tension: 200 }).start();
+  const handlePressIn = () => Animated.spring(scaleAnim, { toValue: 0.95, useNativeDriver: true, tension: 200 }).start();
   const handlePressOut = () => Animated.spring(scaleAnim, { toValue: 1, useNativeDriver: true, tension: 200 }).start();
 
   return (
     <Animated.View style={[
-      styles.boxWrapper,
-      { opacity: opacityAnim, transform: [{ translateX }, { scale: scaleAnim }] },
+      styles.menuItemWrapper,
+      { opacity: opacityAnim, transform: [{ translateY }, { scale: scaleAnim }] },
     ]}>
       <TouchableOpacity
         onPress={() => onPress(item.key)}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         activeOpacity={1}
-        style={styles.box}
+        style={styles.menuItem}
       >
-        <View style={styles.iconCircle}>
+        <View style={styles.menuIconCircle}>
           {item.image ? (
-            <Image source={item.image} style={styles.boxImage} resizeMode="contain" />
+            <Image source={item.image} style={styles.menuImage} resizeMode="contain" />
           ) : (
             <Entypto name={item.icon} size={moderateScale(22)} color={BRAND} />
           )}
         </View>
 
-        <Text allowFontScaling={false} style={styles.boxLabel}>
+        <Text allowFontScaling={false} numberOfLines={2} style={styles.menuLabel}>
           {item.label.replace('\n', ' ')}
         </Text>
-
-        <Icon name="chevron-right" size={moderateScale(16)} color="#cbd5e1" />
       </TouchableOpacity>
     </Animated.View>
+  );
+};
+
+// ─── Featured video card (horizontal scroll) ─────────────────────────────────
+const VideoCard = ({ video, onPress }) => {
+  const thumbUrl = `https://img.youtube.com/vi/${video.videoId}/hqdefault.jpg`;
+
+  return (
+    <TouchableOpacity
+      onPress={() => onPress(video)}
+      activeOpacity={0.85}
+      style={styles.videoCard}
+    >
+      <View style={styles.videoThumbWrapper}>
+        <Image source={{ uri: thumbUrl }} style={styles.videoThumb} resizeMode="cover" />
+        <View style={styles.playOverlay}>
+          {/* <Entypto name="controller-play" size={moderateScale(20)} color="#ffffff" /> */}
+        </View>
+      </View>
+      {/* <Text allowFontScaling={false} numberOfLines={2} style={styles.videoTitle}>
+        {video.title}
+      </Text> */}
+    </TouchableOpacity>
+  );
+};
+
+// ─── Video skeleton placeholder ───────────────────────────────────────────────
+const VideoSkeleton = () => {
+  const pulse = useRef(new Animated.Value(0.5)).current;
+
+  useEffect(() => {
+    const loop = Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulse, { toValue: 1, duration: 600, useNativeDriver: true }),
+        Animated.timing(pulse, { toValue: 0.5, duration: 600, useNativeDriver: true }),
+      ])
+    );
+    loop.start();
+    return () => loop.stop();
+  }, []);
+
+  return (
+    <View style={styles.videoCard}>
+      <Animated.View style={[styles.videoThumbWrapper, styles.skeletonBox, { opacity: pulse }]} />
+    </View>
   );
 };
 
@@ -63,10 +105,14 @@ const Home = ({ navigation }) => {
   const [userName, setUserName] = useState('');
   const [profile, setProfile] = useState(null);
   const [role, setRole] = useState(null);
+  const [featuredVideos, setFeaturedVideos] = useState([]);
+  const [videosLoading, setVideosLoading] = useState(true);
+  const [iconsReady, setIconsReady] = useState(false);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       loadProfile();
+      loadFeaturedVideos();
     });
 
     return unsubscribe;
@@ -100,6 +146,15 @@ const Home = ({ navigation }) => {
     item.roles.includes(role)
   );
 
+  // Icons ki last animation delay + duration ke baad "ready" mark karo
+  useEffect(() => {
+    if (visibleMenuItems.length === 0) return;
+    const lastDelay = (visibleMenuItems.length - 1) * 45;
+    const totalTime = lastDelay + 350; // + animation duration buffer
+    const timer = setTimeout(() => setIconsReady(true), totalTime);
+    return () => clearTimeout(timer);
+  }, [visibleMenuItems.length]);
+
   const loadProfile = async () => {
     try {
 
@@ -114,6 +169,19 @@ const Home = ({ navigation }) => {
       }
     } catch (error) {
       console.log('Profile load nahi ho saki.');
+    }
+  };
+
+  const loadFeaturedVideos = async () => {
+    try {
+      const res = await api.get('/youtube-videos/featured');
+      if (res.isSuccess) {
+        setFeaturedVideos(res.data || []);
+      }
+    } catch (error) {
+      console.log('Featured videos load nahi ho sake.');
+    } finally {
+      setVideosLoading(false);
     }
   };
 
@@ -136,6 +204,10 @@ const Home = ({ navigation }) => {
     navigation.navigate(key);
   };
 
+  const handleVideoPress = (video) => {
+    Linking.openURL(video.youtubeUrl);
+  };
+
   return (
     <Container
       showHeader={false}
@@ -145,40 +217,40 @@ const Home = ({ navigation }) => {
     >
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
 
-        {/* ── TOP BAR ─────────────────────────────────────────── */}
-        <Animated.View style={[styles.topBar, { opacity: headerOpacity, transform: [{ translateY: headerSlide }] }]}>
-          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              {profile?.profilePic ? (
-                <Image source={{ uri: profile.profilePic }} style={styles.avatar} />
-              ) : (
-                <View style={styles.avatarFallback}>
-                  <Text allowFontScaling={false} style={styles.avatarInitial}>
-                    {userName?.[0]?.toUpperCase() || '?'}
-                  </Text>
+        {/* ── TOP BAR (teal header, bank-app style) ─────────────────── */}
+        <Animated.View style={[styles.topBarSection, { opacity: headerOpacity, transform: [{ translateY: headerSlide }] }]}>
+          <View style={styles.topBar}>
+            <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={{ flex: 1 }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {profile?.profilePic ? (
+                  <Image source={{ uri: profile.profilePic }} style={styles.avatar} />
+                ) : (
+                  <View style={styles.avatarFallback}>
+                    <Text allowFontScaling={false} style={styles.avatarInitial}>
+                      {userName?.[0]?.toUpperCase() || '?'}
+                    </Text>
+                  </View>
+                )}
+                <View style={{ marginLeft: scale(10) }}>
+                  <Text allowFontScaling={false} style={styles.welcomeText}>Welcome back</Text>
+                  <Text allowFontScaling={false} style={styles.userName}>{userName}</Text>
                 </View>
-              )}
-              <View style={{ marginLeft: scale(8) }}>
-                <Text allowFontScaling={false} style={styles.welcomeText}>Welcome back</Text>
-                <Text allowFontScaling={false} style={styles.userName}>{userName}</Text>
               </View>
-            </View>
-          </TouchableOpacity>
+            </TouchableOpacity>
 
-          <View style={styles.topRight}>
             <TouchableOpacity
-              style={styles.iconBtn}
+              style={styles.booksBtn}
               onPress={() => navigation.navigate('Books')}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
-              <Entypto name="open-book" size={moderateScale(18)} color={BRAND} />
-              <Text allowFontScaling={false} style={styles.btnText}>Books</Text>
+              <Entypto name="open-book" size={moderateScale(18)} color="#ffffff" />
+              <Text allowFontScaling={false} style={styles.booksBtnText}>Books</Text>
             </TouchableOpacity>
           </View>
         </Animated.View>
 
-        {/* ── LOGO + TITLE ─────────────────────────────────────── */}
-        <Animated.View style={[styles.logoArea, { opacity: headerOpacity, transform: [{ translateY: headerSlide }] }]}>
+        {/* ── LOGO CARD (white card overlapping teal header, bank-balance-card style) ── */}
+        <Animated.View style={[styles.logoCard, { opacity: headerOpacity, transform: [{ translateY: headerSlide }] }]}>
           <Image
             source={require('../../Images/landscape-logo.png')}
             style={styles.logo}
@@ -189,17 +261,52 @@ const Home = ({ navigation }) => {
           </Text>
         </Animated.View>
 
-        {/* ── MENU LIST ─────────────────────────────────────────── */}
-        <View style={styles.grid}>
-          {visibleMenuItems.map((item, index) => (
-            <MenuBox
-              key={item.key}
-              item={item}
-              onPress={handleMenuPress}
-              delay={index * 55}
-            />
-          ))}
+        {/* ── QUICK ACTIONS GRID (small square boxes, bank-app style) ── */}
+        <View style={styles.gridWrapper}>
+          <View style={styles.grid}>
+            {visibleMenuItems.map((item, index) => (
+              <MenuBox
+                key={item.key}
+                item={item}
+                onPress={handleMenuPress}
+                delay={index * 45}
+              />
+            ))}
+          </View>
         </View>
+
+        {/* ── FEATURED VIDEOS (Discover-style horizontal scroll) ─────── */}
+        {/* Jab tak icons ki animation complete nahi hoti ya API loading hai, skeleton dikhao.
+            Agar loading khatam ho gayi aur koi video nahi mila, section hi gaib. */}
+        {(videosLoading || !iconsReady) ? (
+          <View style={styles.videosSection}>
+            <Text allowFontScaling={false} style={styles.sectionTitle}>Featured Videos</Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.videosScroll}
+              scrollEnabled={false}
+            >
+              <VideoSkeleton />
+              <VideoSkeleton />
+            </ScrollView>
+          </View>
+        ) : (
+          featuredVideos.length > 0 && (
+            <View style={styles.videosSection}>
+              <Text allowFontScaling={false} style={styles.sectionTitle}>Featured Videos</Text>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.videosScroll}
+              >
+                {featuredVideos.map((video) => (
+                  <VideoCard key={video._id} video={video} onPress={handleVideoPress} />
+                ))}
+              </ScrollView>
+            </View>
+          )
+        )}
 
       </ScrollView>
     </Container>
@@ -209,74 +316,71 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   scroll: {
     paddingBottom: verticalScale(16),
+    backgroundColor: '#f5f7f9',
   },
 
-  // ── Top bar
+  // ── Top bar (teal background section)
+  topBarSection: {
+    backgroundColor: BRAND,
+    paddingBottom: verticalScale(60),
+    borderBottomLeftRadius: moderateScale(24),
+    borderBottomRightRadius: moderateScale(24),
+  },
   topBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
     paddingHorizontal: scale(18),
-    paddingTop: verticalScale(14),
-    paddingBottom: verticalScale(12),
+    paddingTop: verticalScale(18),
   },
   welcomeText: {
     fontSize: moderateScale(11),
-    color: '#94a3b8',
+    color: '#cfe0e8',
     fontWeight: '500',
   },
   userName: {
-    fontSize: moderateScale(14),
-    fontWeight: '500',
-    color: '#0f172a',
+    fontSize: moderateScale(15),
+    fontWeight: '700',
+    color: '#ffffff',
   },
-  topRight: {
+  booksBtn: {
+    height: scale(38),
+    paddingHorizontal: scale(12),
+    borderRadius: scale(19),
+    backgroundColor: 'rgba(255,255,255,0.15)',
     flexDirection: 'row',
     alignItems: 'center',
-    gap: scale(8),
-  },
-  iconBtn: {
-    height: scale(38),
-    paddingHorizontal: scale(12), // Text fit hone ke liye padding di hai
-    borderRadius: scale(19),
-    backgroundColor: '#f0f4f8',
-    flexDirection: 'row',       // Icon aur Text ko ek line me lane ke liye
-    alignItems: 'center',
     justifyContent: 'center',
-    gap: scale(6),               // Icon aur Text ke darmiyan ka fasla
+    gap: scale(6),
     borderWidth: 1,
-    borderColor: '#e2e8f0',
+    borderColor: 'rgba(255,255,255,0.3)',
   },
-  btnText: {
+  booksBtnText: {
     fontSize: moderateScale(13),
     fontWeight: '700',
-    color: BRAND,
-  },
-  notifDot: {
-    position: 'absolute',
-    top: scale(7),
-    right: scale(7),
-    width: scale(8),
-    height: scale(8),
-    borderRadius: scale(4),
-    backgroundColor: '#e05c5c',
-    borderWidth: 1.5,
-    borderColor: '#f0f4f8',
+    color: '#ffffff',
   },
 
-  // ── Logo area
-  logoArea: {
+  // ── Logo card (overlaps header like balance card)
+  logoCard: {
     backgroundColor: '#ffffff',
+    marginHorizontal: scale(16),
+    marginTop: verticalScale(-36),
+    borderRadius: moderateScale(10),
     alignItems: 'center',
-    paddingVertical: verticalScale(7),
-    marginBottom: verticalScale(10),
+    paddingTop: verticalScale(16),
+    paddingBottom: verticalScale(10),
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    elevation: 4,
   },
   logo: {
-    width: scale(280),
+    width: scale(300),
     height: verticalScale(60),
-    marginBottom: verticalScale(-12),
-    marginTop: verticalScale(-10),
+    marginBottom: verticalScale(-10),
+    marginTop: verticalScale(-6),
   },
   tagline: {
     fontFamily: 'mushaf',
@@ -285,74 +389,118 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  // ── Menu list
-  grid: {
-    paddingHorizontal: scale(12),
-    gap: verticalScale(6),
-  },
-  boxWrapper: {
-    width: '100%',
-  },
-  box: {
-    backgroundColor: '#ffffff',
-    borderRadius: moderateScale(10),
-    paddingVertical: verticalScale(10),
+  // ── Quick actions grid
+  gridWrapper: {
+    marginTop: verticalScale(22),
     paddingHorizontal: scale(14),
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#e8edf2',
-    gap: scale(14),
-    shadowColor: '#0f172a',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.04,
-    shadowRadius: 4,
-    elevation: 1,
   },
-  iconCircle: {
-    width: scale(44),
-    height: scale(44),
-    borderRadius: scale(12),
+  sectionTitle: {
+    fontSize: moderateScale(15),
+    fontWeight: '700',
+    color: '#0f172a',
+    marginBottom: verticalScale(10),
+    paddingHorizontal: scale(16),
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+  },
+  menuItemWrapper: {
+    width: '25%',
+    paddingHorizontal: scale(4),
+    marginVertical: verticalScale(8),
+  },
+  menuItem: {
+    alignItems: 'center',
+  },
+  menuIconCircle: {
+    width: scale(52),
+    height: scale(52),
+    borderRadius: scale(16),
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f0f4f8',
-    borderWidth: 1,
-    borderColor: '#e2e8f0',
+    backgroundColor: '#ffffff',
+    marginBottom: verticalScale(6),
+    shadowColor: '#0f172a',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 6,
+    elevation: 2,
   },
-  boxImage: {
+  menuImage: {
     width: scale(26),
     height: scale(26),
   },
-  boxLabel: {
+  menuLabel: {
     fontFamily: 'good',
-    fontSize: moderateScale(14),
-    letterSpacing: scale(0.5),
+    fontSize: moderateScale(10),
+    fontWeight: '600',
+    color: '#334155',
+    textAlign: 'center',
+    lineHeight: moderateScale(14),
+  },
+
+  // ── Featured videos section
+  videosSection: {
+    marginTop: verticalScale(14),
+  },
+  videosScroll: {
+    paddingHorizontal: scale(16),
+    gap: scale(12),
+  },
+  videoCard: {
+    width: scale(260),
+  },
+  videoThumbWrapper: {
+    width: '100%',
+    height: verticalScale(140),
+    borderRadius: moderateScale(12),
+    overflow: 'hidden',
+    backgroundColor: '#e2e8f0',
+    marginBottom: verticalScale(6),
+  },
+  videoThumb: {
+    width: '100%',
+    height: '100%',
+  },
+  skeletonBox: {
+    backgroundColor: '#dbe3ea',
+  },
+  playOverlay: {
+    position: 'absolute',
+    top: 0, left: 0, right: 0, bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(15,23,42,0.25)',
+  },
+  videoTitle: {
+    fontSize: moderateScale(12.5),
     fontWeight: '600',
     color: '#0f172a',
-    flex: 1,
-    lineHeight: moderateScale(18),
+    lineHeight: moderateScale(16),
   },
 
   // ── Avatar
   avatar: {
-    width: scale(40),
-    height: scale(40),
+    width: scale(42),
+    height: scale(42),
     borderRadius: scale(45),
-    borderWidth: 3,
-    borderColor: '#e8f0f5',
+    borderWidth: 2,
+    borderColor: 'rgba(255,255,255,0.5)',
   },
   avatarFallback: {
-    width: scale(40),
-    height: scale(40),
+    width: scale(42),
+    height: scale(42),
     borderRadius: scale(45),
-    backgroundColor: '#e8f0f5',
+    backgroundColor: 'rgba(255,255,255,0.2)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   avatarInitial: {
     fontSize: moderateScale(16),
     fontWeight: '800',
-    color: BRAND,
+    color: '#ffffff',
   },
 });
 

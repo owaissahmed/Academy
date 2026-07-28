@@ -1,0 +1,928 @@
+> Task :gradle-plugin:settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:shared:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:shared:compileJava NO-SOURCE
+> Task :gradle-plugin:shared:processResources NO-SOURCE
+> Task :gradle-plugin:shared:classes UP-TO-DATE
+> Task :gradle-plugin:shared:jar UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:settings-plugin:pluginDescriptors UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:processResources UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:classes UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:jar UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:react-native-gradle-plugin:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:react-native-gradle-plugin:pluginDescriptors UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:processResources UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:classes UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:jar UP-TO-DATE
+
+> Configure project :react-native-firebase_app
+:react-native-firebase_app package.json found at D:\app\Azhaar-ul-Islam-Academy\node_modules\@react-native-firebase\app\package.json
+:react-native-firebase_app:firebase.bom using default value: 33.12.0
+:react-native-firebase_app:play.play-services-auth using default value: 21.3.0
+:react-native-firebase_app package.json found at D:\app\Azhaar-ul-Islam-Academy\node_modules\@react-native-firebase\app\package.json
+:react-native-firebase_app:version set from package.json: 21.14.0 (21,14,0 - 21014000)
+:react-native-firebase_app:android.compileSdk using custom value: 36
+:react-native-firebase_app:android.targetSdk using custom value: 36
+:react-native-firebase_app:android.minSdk using custom value: 24
+:react-native-firebase_app:reactNativeAndroidDir D:\app\Azhaar-ul-Islam-Academy\node_modules\react-native
+
+> Configure project :react-native-firebase_auth
+:react-native-firebase_auth package.json found at D:\app\Azhaar-ul-Islam-Academy\node_modules\@react-native-firebase\auth\package.json
+:react-native-firebase_app package.json found at D:\app\Azhaar-ul-Islam-Academy\node_modules\@react-native-firebase\app\package.json
+:react-native-firebase_auth:firebase.bom using default value: 33.12.0
+:react-native-firebase_auth package.json found at D:\app\Azhaar-ul-Islam-Academy\node_modules\@react-native-firebase\auth\package.json
+:react-native-firebase_auth:version set from package.json: 21.14.0 (21,14,0 - 21014000)
+:react-native-firebase_auth:android.compileSdk using custom value: 36
+:react-native-firebase_auth:android.targetSdk using custom value: 36
+:react-native-firebase_auth:android.minSdk using custom value: 24
+:react-native-firebase_auth:reactNativeAndroidDir D:\app\Azhaar-ul-Islam-Academy\node_modules\react-native
+
+> Configure project :react-native-firebase_database
+:react-native-firebase_database package.json found at D:\app\Azhaar-ul-Islam-Academy\node_modules\@react-native-firebase\database\package.json
+:react-native-firebase_app package.json found at D:\app\Azhaar-ul-Islam-Academy\node_modules\@react-native-firebase\app\package.json
+:react-native-firebase_database:firebase.bom using default value: 33.12.0
+:react-native-firebase_database package.json found at D:\app\Azhaar-ul-Islam-Academy\node_modules\@react-native-firebase\database\package.json
+:react-native-firebase_database:version set from package.json: 21.14.0 (21,14,0 - 21014000)
+:react-native-firebase_database:android.compileSdk using custom value: 36
+:react-native-firebase_database:android.targetSdk using custom value: 36
+:react-native-firebase_database:android.minSdk using custom value: 24
+:react-native-firebase_database:reactNativeAndroidDir D:\app\Azhaar-ul-Islam-Academy\node_modules\react-native
+
+> Configure project :react-native-firebase_firestore
+:react-native-firebase_firestore package.json found at D:\app\Azhaar-ul-Islam-Academy\node_modules\@react-native-firebase\firestore\package.json
+:react-native-firebase_app package.json found at D:\app\Azhaar-ul-Islam-Academy\node_modules\@react-native-firebase\app\package.json
+:react-native-firebase_firestore:firebase.bom using default value: 33.12.0
+:react-native-firebase_firestore package.json found at D:\app\Azhaar-ul-Islam-Academy\node_modules\@react-native-firebase\firestore\package.json
+:react-native-firebase_firestore:version set from package.json: 21.14.0 (21,14,0 - 21014000)
+:react-native-firebase_firestore:android.compileSdk using custom value: 36
+:react-native-firebase_firestore:android.targetSdk using custom value: 36
+:react-native-firebase_firestore:android.minSdk using custom value: 24
+:react-native-firebase_firestore:reactNativeAndroidDir D:\app\Azhaar-ul-Islam-Academy\node_modules\react-native
+
+> Configure project :react-native-firebase_storage
+:react-native-firebase_storage package.json found at D:\app\Azhaar-ul-Islam-Academy\node_modules\@react-native-firebase\storage\package.json
+:react-native-firebase_app package.json found at D:\app\Azhaar-ul-Islam-Academy\node_modules\@react-native-firebase\app\package.json
+:react-native-firebase_storage:firebase.bom using default value: 33.12.0
+:react-native-firebase_storage package.json found at D:\app\Azhaar-ul-Islam-Academy\node_modules\@react-native-firebase\storage\package.json
+:react-native-firebase_storage:version set from package.json: 21.14.0 (21,14,0 - 21014000)
+:react-native-firebase_storage:android.compileSdk using custom value: 36
+:react-native-firebase_storage:android.targetSdk using custom value: 36
+:react-native-firebase_storage:android.minSdk using custom value: 24
+:react-native-firebase_storage:reactNativeAndroidDir D:\app\Azhaar-ul-Islam-Academy\node_modules\react-native
+
+> Task :app:generateAutolinkingNewArchitectureFiles UP-TO-DATE
+> Task :app:generateAutolinkingPackageList UP-TO-DATE
+> Task :app:generateCodegenSchemaFromJavaScript SKIPPED
+> Task :app:generateCodegenArtifactsFromSchema SKIPPED
+> Task :app:generateReactNativeEntryPoint UP-TO-DATE
+> Task :react-native-async-storage_async-storage:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :react-native-async-storage_async-storage:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :react-native-async-storage_async-storage:preBuild UP-TO-DATE
+> Task :react-native-blob-util:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :react-native-blob-util:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :react-native-blob-util:preBuild UP-TO-DATE
+> Task :react-native-community_netinfo:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :react-native-community_netinfo:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :react-native-community_netinfo:preBuild UP-TO-DATE
+> Task :react-native-firebase_app:preBuild UP-TO-DATE
+> Task :react-native-firebase_auth:preBuild UP-TO-DATE
+> Task :react-native-firebase_database:preBuild UP-TO-DATE
+> Task :react-native-firebase_firestore:preBuild UP-TO-DATE
+> Task :react-native-firebase_storage:preBuild UP-TO-DATE
+> Task :react-native-gesture-handler:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :react-native-gesture-handler:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :react-native-gesture-handler:preBuild UP-TO-DATE
+> Task :react-native-image-picker:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :react-native-image-picker:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :react-native-image-picker:preBuild UP-TO-DATE
+> Task :react-native-masked-view_masked-view:preBuild UP-TO-DATE
+> Task :react-native-picker_picker:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :react-native-picker_picker:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :react-native-picker_picker:preBuild UP-TO-DATE
+> Task :react-native-safe-area-context:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :react-native-safe-area-context:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :react-native-safe-area-context:preBuild UP-TO-DATE
+> Task :react-native-screens:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :react-native-screens:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :react-native-screens:preBuild UP-TO-DATE
+> Task :react-native-vector-icons:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :react-native-vector-icons:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :react-native-vector-icons:preBuild UP-TO-DATE
+> Task :react-native-webview:generateCodegenSchemaFromJavaScript UP-TO-DATE
+> Task :react-native-webview:generateCodegenArtifactsFromSchema UP-TO-DATE
+> Task :react-native-webview:preBuild UP-TO-DATE
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-async-storage_async-storage:preDebugBuild UP-TO-DATE
+> Task :react-native-async-storage_async-storage:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-blob-util:preDebugBuild UP-TO-DATE
+> Task :react-native-blob-util:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-community_netinfo:preDebugBuild UP-TO-DATE
+> Task :react-native-community_netinfo:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-firebase_app:preDebugBuild UP-TO-DATE
+> Task :react-native-firebase_app:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-firebase_auth:preDebugBuild UP-TO-DATE
+> Task :react-native-firebase_auth:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-firebase_database:preDebugBuild UP-TO-DATE
+> Task :react-native-firebase_database:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-firebase_firestore:preDebugBuild UP-TO-DATE
+> Task :react-native-firebase_firestore:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-firebase_storage:preDebugBuild UP-TO-DATE
+> Task :react-native-firebase_storage:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-gesture-handler:preDebugBuild UP-TO-DATE
+> Task :react-native-gesture-handler:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-image-picker:preDebugBuild UP-TO-DATE
+> Task :react-native-image-picker:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-masked-view_masked-view:preDebugBuild UP-TO-DATE
+> Task :react-native-masked-view_masked-view:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-picker_picker:preDebugBuild UP-TO-DATE
+> Task :react-native-picker_picker:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-safe-area-context:preDebugBuild UP-TO-DATE
+> Task :react-native-safe-area-context:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-screens:preDebugBuild UP-TO-DATE
+> Task :react-native-screens:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-vector-icons:preDebugBuild UP-TO-DATE
+> Task :react-native-vector-icons:writeDebugAarMetadata UP-TO-DATE
+> Task :react-native-webview:preDebugBuild UP-TO-DATE
+> Task :react-native-webview:writeDebugAarMetadata UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:processDebugGoogleServices UP-TO-DATE
+> Task :react-native-async-storage_async-storage:generateDebugResValues UP-TO-DATE
+> Task :react-native-async-storage_async-storage:generateDebugResources UP-TO-DATE
+> Task :react-native-async-storage_async-storage:packageDebugResources UP-TO-DATE
+> Task :react-native-blob-util:generateDebugResValues UP-TO-DATE
+> Task :react-native-blob-util:generateDebugResources UP-TO-DATE
+> Task :react-native-blob-util:packageDebugResources UP-TO-DATE
+> Task :react-native-community_netinfo:generateDebugResValues UP-TO-DATE
+> Task :react-native-community_netinfo:generateDebugResources UP-TO-DATE
+> Task :react-native-community_netinfo:packageDebugResources UP-TO-DATE
+> Task :react-native-firebase_app:generateDebugResValues UP-TO-DATE
+> Task :react-native-firebase_app:generateDebugResources UP-TO-DATE
+> Task :react-native-firebase_app:packageDebugResources UP-TO-DATE
+> Task :react-native-firebase_auth:generateDebugResValues UP-TO-DATE
+> Task :react-native-firebase_auth:generateDebugResources UP-TO-DATE
+> Task :react-native-firebase_auth:packageDebugResources UP-TO-DATE
+> Task :react-native-firebase_database:generateDebugResValues UP-TO-DATE
+> Task :react-native-firebase_database:generateDebugResources UP-TO-DATE
+> Task :react-native-firebase_database:packageDebugResources UP-TO-DATE
+> Task :react-native-firebase_firestore:generateDebugResValues UP-TO-DATE
+> Task :react-native-firebase_firestore:generateDebugResources UP-TO-DATE
+> Task :react-native-firebase_firestore:packageDebugResources UP-TO-DATE
+> Task :react-native-firebase_storage:generateDebugResValues UP-TO-DATE
+> Task :react-native-firebase_storage:generateDebugResources UP-TO-DATE
+> Task :react-native-firebase_storage:packageDebugResources UP-TO-DATE
+> Task :react-native-gesture-handler:generateDebugResValues UP-TO-DATE
+> Task :react-native-gesture-handler:generateDebugResources UP-TO-DATE
+> Task :react-native-gesture-handler:packageDebugResources UP-TO-DATE
+> Task :react-native-image-picker:generateDebugResValues UP-TO-DATE
+> Task :react-native-image-picker:generateDebugResources UP-TO-DATE
+> Task :react-native-image-picker:packageDebugResources UP-TO-DATE
+> Task :react-native-masked-view_masked-view:generateDebugResValues UP-TO-DATE
+> Task :react-native-masked-view_masked-view:generateDebugResources UP-TO-DATE
+> Task :react-native-masked-view_masked-view:packageDebugResources UP-TO-DATE
+> Task :react-native-picker_picker:generateDebugResValues UP-TO-DATE
+> Task :react-native-picker_picker:generateDebugResources UP-TO-DATE
+> Task :react-native-picker_picker:packageDebugResources UP-TO-DATE
+> Task :react-native-safe-area-context:generateDebugResValues UP-TO-DATE
+> Task :react-native-safe-area-context:generateDebugResources UP-TO-DATE
+> Task :react-native-safe-area-context:packageDebugResources UP-TO-DATE
+> Task :react-native-screens:generateDebugResValues UP-TO-DATE
+> Task :react-native-screens:generateDebugResources UP-TO-DATE
+> Task :react-native-screens:packageDebugResources UP-TO-DATE
+> Task :react-native-vector-icons:generateDebugResValues UP-TO-DATE
+> Task :react-native-vector-icons:generateDebugResources UP-TO-DATE
+> Task :react-native-vector-icons:packageDebugResources UP-TO-DATE
+> Task :react-native-webview:generateDebugResValues UP-TO-DATE
+> Task :react-native-webview:generateDebugResources UP-TO-DATE
+> Task :react-native-webview:packageDebugResources UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-async-storage_async-storage:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-async-storage_async-storage:processDebugManifest UP-TO-DATE
+> Task :react-native-blob-util:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-blob-util:processDebugManifest UP-TO-DATE
+> Task :react-native-community_netinfo:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-community_netinfo:processDebugManifest UP-TO-DATE
+> Task :react-native-firebase_app:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-firebase_app:processDebugManifest UP-TO-DATE
+> Task :react-native-firebase_auth:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-firebase_auth:processDebugManifest UP-TO-DATE
+> Task :react-native-firebase_database:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-firebase_database:processDebugManifest UP-TO-DATE
+> Task :react-native-firebase_firestore:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-firebase_firestore:processDebugManifest UP-TO-DATE
+> Task :react-native-firebase_storage:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-firebase_storage:processDebugManifest UP-TO-DATE
+> Task :react-native-gesture-handler:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-gesture-handler:processDebugManifest UP-TO-DATE
+> Task :react-native-image-picker:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-image-picker:processDebugManifest UP-TO-DATE
+> Task :react-native-masked-view_masked-view:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-masked-view_masked-view:processDebugManifest UP-TO-DATE
+> Task :react-native-picker_picker:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-picker_picker:processDebugManifest UP-TO-DATE
+> Task :react-native-safe-area-context:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-safe-area-context:processDebugManifest UP-TO-DATE
+> Task :react-native-screens:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-screens:processDebugManifest UP-TO-DATE
+> Task :react-native-vector-icons:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-vector-icons:processDebugManifest UP-TO-DATE
+> Task :react-native-webview:extractDeepLinksDebug UP-TO-DATE
+> Task :react-native-webview:processDebugManifest UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :react-native-async-storage_async-storage:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-async-storage_async-storage:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-async-storage_async-storage:generateDebugRFile UP-TO-DATE
+> Task :react-native-blob-util:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-blob-util:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-blob-util:generateDebugRFile UP-TO-DATE
+> Task :react-native-community_netinfo:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-community_netinfo:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-community_netinfo:generateDebugRFile UP-TO-DATE
+> Task :react-native-firebase_app:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-firebase_app:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-firebase_app:generateDebugRFile UP-TO-DATE
+> Task :react-native-firebase_auth:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-firebase_auth:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-firebase_auth:generateDebugRFile UP-TO-DATE
+> Task :react-native-firebase_database:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-firebase_database:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-firebase_database:generateDebugRFile UP-TO-DATE
+> Task :react-native-firebase_firestore:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-firebase_firestore:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-firebase_firestore:generateDebugRFile UP-TO-DATE
+> Task :react-native-firebase_storage:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-firebase_storage:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-firebase_storage:generateDebugRFile UP-TO-DATE
+> Task :react-native-gesture-handler:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-gesture-handler:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-gesture-handler:generateDebugRFile UP-TO-DATE
+> Task :react-native-image-picker:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-image-picker:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-image-picker:generateDebugRFile UP-TO-DATE
+> Task :react-native-masked-view_masked-view:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-masked-view_masked-view:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-masked-view_masked-view:generateDebugRFile UP-TO-DATE
+> Task :react-native-picker_picker:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-picker_picker:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-picker_picker:generateDebugRFile UP-TO-DATE
+> Task :react-native-safe-area-context:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-safe-area-context:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-safe-area-context:generateDebugRFile UP-TO-DATE
+> Task :react-native-screens:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-screens:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-screens:generateDebugRFile UP-TO-DATE
+> Task :react-native-vector-icons:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-vector-icons:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-vector-icons:generateDebugRFile UP-TO-DATE
+> Task :react-native-webview:compileDebugLibraryResources UP-TO-DATE
+> Task :react-native-webview:parseDebugLocalResources UP-TO-DATE
+> Task :react-native-webview:generateDebugRFile UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :react-native-async-storage_async-storage:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-async-storage_async-storage:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-async-storage_async-storage:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-async-storage_async-storage:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-blob-util:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-blob-util:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-blob-util:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-blob-util:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-community_netinfo:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-community_netinfo:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-community_netinfo:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-community_netinfo:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-firebase_app:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-firebase_app:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-firebase_app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-firebase_app:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-firebase_auth:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-firebase_auth:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-firebase_auth:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-firebase_auth:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-firebase_database:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-firebase_database:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-firebase_database:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-firebase_database:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-firebase_firestore:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-firebase_firestore:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-firebase_firestore:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-firebase_firestore:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-firebase_storage:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-firebase_storage:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-firebase_storage:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-firebase_storage:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-gesture-handler:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :react-native-gesture-handler:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-gesture-handler:compileDebugKotlin UP-TO-DATE
+> Task :react-native-gesture-handler:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-gesture-handler:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-gesture-handler:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-image-picker:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-image-picker:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-image-picker:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-image-picker:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-masked-view_masked-view:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-masked-view_masked-view:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-masked-view_masked-view:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-masked-view_masked-view:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-picker_picker:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-picker_picker:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-picker_picker:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-picker_picker:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-safe-area-context:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :react-native-safe-area-context:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-safe-area-context:compileDebugKotlin UP-TO-DATE
+> Task :react-native-safe-area-context:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-safe-area-context:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-safe-area-context:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-screens:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :react-native-screens:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-screens:compileDebugKotlin UP-TO-DATE
+> Task :react-native-screens:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-screens:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-screens:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-vector-icons:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-vector-icons:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-vector-icons:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-vector-icons:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :react-native-webview:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :react-native-webview:generateDebugBuildConfig UP-TO-DATE
+> Task :react-native-webview:compileDebugKotlin UP-TO-DATE
+> Task :react-native-webview:javaPreCompileDebug UP-TO-DATE
+> Task :react-native-webview:compileDebugJavaWithJavac UP-TO-DATE
+> Task :react-native-webview:bundleLibCompileToJarDebug UP-TO-DATE
+> Task :app:compileDebugKotlin UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:compileDebugJavaWithJavac UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:copyReactNativeVectorIconFonts UP-TO-DATE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :react-native-async-storage_async-storage:mergeDebugShaders UP-TO-DATE
+> Task :react-native-async-storage_async-storage:compileDebugShaders NO-SOURCE
+> Task :react-native-async-storage_async-storage:generateDebugAssets UP-TO-DATE
+> Task :react-native-async-storage_async-storage:mergeDebugAssets UP-TO-DATE
+> Task :react-native-blob-util:mergeDebugShaders UP-TO-DATE
+> Task :react-native-blob-util:compileDebugShaders NO-SOURCE
+> Task :react-native-blob-util:generateDebugAssets UP-TO-DATE
+> Task :react-native-blob-util:mergeDebugAssets UP-TO-DATE
+> Task :react-native-community_netinfo:mergeDebugShaders UP-TO-DATE
+> Task :react-native-community_netinfo:compileDebugShaders NO-SOURCE
+> Task :react-native-community_netinfo:generateDebugAssets UP-TO-DATE
+> Task :react-native-community_netinfo:mergeDebugAssets UP-TO-DATE
+> Task :react-native-firebase_app:mergeDebugShaders UP-TO-DATE
+> Task :react-native-firebase_app:compileDebugShaders NO-SOURCE
+> Task :react-native-firebase_app:generateDebugAssets UP-TO-DATE
+> Task :react-native-firebase_app:mergeDebugAssets UP-TO-DATE
+> Task :react-native-firebase_auth:mergeDebugShaders UP-TO-DATE
+> Task :react-native-firebase_auth:compileDebugShaders NO-SOURCE
+> Task :react-native-firebase_auth:generateDebugAssets UP-TO-DATE
+> Task :react-native-firebase_auth:mergeDebugAssets UP-TO-DATE
+> Task :react-native-firebase_database:mergeDebugShaders UP-TO-DATE
+> Task :react-native-firebase_database:compileDebugShaders NO-SOURCE
+> Task :react-native-firebase_database:generateDebugAssets UP-TO-DATE
+> Task :react-native-firebase_database:mergeDebugAssets UP-TO-DATE
+> Task :react-native-firebase_firestore:mergeDebugShaders UP-TO-DATE
+> Task :react-native-firebase_firestore:compileDebugShaders NO-SOURCE
+> Task :react-native-firebase_firestore:generateDebugAssets UP-TO-DATE
+> Task :react-native-firebase_firestore:mergeDebugAssets UP-TO-DATE
+> Task :react-native-firebase_storage:mergeDebugShaders UP-TO-DATE
+> Task :react-native-firebase_storage:compileDebugShaders NO-SOURCE
+> Task :react-native-firebase_storage:generateDebugAssets UP-TO-DATE
+> Task :react-native-firebase_storage:mergeDebugAssets UP-TO-DATE
+> Task :react-native-gesture-handler:mergeDebugShaders UP-TO-DATE
+> Task :react-native-gesture-handler:compileDebugShaders NO-SOURCE
+> Task :react-native-gesture-handler:generateDebugAssets UP-TO-DATE
+> Task :react-native-gesture-handler:mergeDebugAssets UP-TO-DATE
+> Task :react-native-image-picker:mergeDebugShaders UP-TO-DATE
+> Task :react-native-image-picker:compileDebugShaders NO-SOURCE
+> Task :react-native-image-picker:generateDebugAssets UP-TO-DATE
+> Task :react-native-image-picker:mergeDebugAssets UP-TO-DATE
+> Task :react-native-masked-view_masked-view:mergeDebugShaders UP-TO-DATE
+> Task :react-native-masked-view_masked-view:compileDebugShaders NO-SOURCE
+> Task :react-native-masked-view_masked-view:generateDebugAssets UP-TO-DATE
+> Task :react-native-masked-view_masked-view:mergeDebugAssets UP-TO-DATE
+> Task :react-native-picker_picker:mergeDebugShaders UP-TO-DATE
+> Task :react-native-picker_picker:compileDebugShaders NO-SOURCE
+> Task :react-native-picker_picker:generateDebugAssets UP-TO-DATE
+> Task :react-native-picker_picker:mergeDebugAssets UP-TO-DATE
+> Task :react-native-safe-area-context:mergeDebugShaders UP-TO-DATE
+> Task :react-native-safe-area-context:compileDebugShaders NO-SOURCE
+> Task :react-native-safe-area-context:generateDebugAssets UP-TO-DATE
+> Task :react-native-safe-area-context:mergeDebugAssets UP-TO-DATE
+> Task :react-native-screens:mergeDebugShaders UP-TO-DATE
+> Task :react-native-screens:compileDebugShaders NO-SOURCE
+> Task :react-native-screens:generateDebugAssets UP-TO-DATE
+> Task :react-native-screens:mergeDebugAssets UP-TO-DATE
+> Task :react-native-vector-icons:mergeDebugShaders UP-TO-DATE
+> Task :react-native-vector-icons:compileDebugShaders NO-SOURCE
+> Task :react-native-vector-icons:generateDebugAssets UP-TO-DATE
+> Task :react-native-vector-icons:mergeDebugAssets UP-TO-DATE
+> Task :react-native-webview:mergeDebugShaders UP-TO-DATE
+> Task :react-native-webview:compileDebugShaders NO-SOURCE
+> Task :react-native-webview:generateDebugAssets UP-TO-DATE
+> Task :react-native-webview:mergeDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :react-native-gesture-handler:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-safe-area-context:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-screens:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-webview:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-vector-icons:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-async-storage_async-storage:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-community_netinfo:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-firebase_auth:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-firebase_database:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-firebase_firestore:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-firebase_storage:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-firebase_app:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-masked-view_masked-view:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-picker_picker:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-blob-util:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :react-native-image-picker:bundleLibRuntimeToJarDebug UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:dexBuilderDebug UP-TO-DATE
+> Task :app:mergeDebugGlobalSynthetics UP-TO-DATE
+> Task :app:processDebugJavaRes UP-TO-DATE
+> Task :react-native-async-storage_async-storage:processDebugJavaRes NO-SOURCE
+> Task :react-native-blob-util:processDebugJavaRes NO-SOURCE
+> Task :react-native-community_netinfo:processDebugJavaRes NO-SOURCE
+> Task :react-native-firebase_app:processDebugJavaRes NO-SOURCE
+> Task :react-native-firebase_auth:processDebugJavaRes NO-SOURCE
+> Task :react-native-firebase_database:processDebugJavaRes NO-SOURCE
+> Task :react-native-firebase_firestore:processDebugJavaRes NO-SOURCE
+> Task :react-native-firebase_storage:processDebugJavaRes NO-SOURCE
+> Task :react-native-gesture-handler:processDebugJavaRes UP-TO-DATE
+> Task :react-native-image-picker:processDebugJavaRes NO-SOURCE
+> Task :react-native-masked-view_masked-view:processDebugJavaRes NO-SOURCE
+> Task :react-native-picker_picker:processDebugJavaRes NO-SOURCE
+> Task :react-native-safe-area-context:processDebugJavaRes UP-TO-DATE
+> Task :react-native-screens:processDebugJavaRes UP-TO-DATE
+> Task :react-native-vector-icons:processDebugJavaRes NO-SOURCE
+> Task :react-native-webview:processDebugJavaRes UP-TO-DATE
+> Task :app:mergeDebugJavaResource UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :react-native-gesture-handler:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :react-native-safe-area-context:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :react-native-screens:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :react-native-webview:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :react-native-vector-icons:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :react-native-async-storage_async-storage:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :react-native-community_netinfo:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :react-native-firebase_auth:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :react-native-firebase_database:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :react-native-firebase_firestore:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :react-native-firebase_storage:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :react-native-firebase_app:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :react-native-masked-view_masked-view:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :react-native-picker_picker:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :react-native-blob-util:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :react-native-image-picker:bundleLibRuntimeToDirDebug UP-TO-DATE
+> Task :app:mergeProjectDexDebug UP-TO-DATE
+> Task :app:configureCMakeDebug[arm64-v8a]
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:buildCMakeDebug[arm64-v8a]
+C/C++: ninja: Entering directory `D:\app\Azhaar-ul-Islam-Academy\android\app\.cxx\Debug\s331g6x5\arm64-v8a'
+C/C++: C:\Users\User\AppData\Local\Android\Sdk\ndk\27.1.12297006\toolchains\llvm\prebuilt\windows-x86_64\bin\clang++.exe --target=aarch64-none-linux-android24 --sysroot=C:/Users/User/AppData/Local/Android/Sdk/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot -DRN_SERIALIZABLE_STATE -Dappmodules_EXPORTS -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native/ReactAndroid/cmake-utils/default-app-setup -ID:/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/react/renderer/components/RNVectorIconsSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/react/renderer/components/rnasyncstorage -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-community/netinfo/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-community/netinfo/android/build/generated/source/codegen/jni/react/renderer/components/RNCNetInfoSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni/../../../build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/rnpicker -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-blob-util/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-blob-util/android/build/generated/source/codegen/jni/react/renderer/components/ReactNativeBlobUtilSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-gesture-handler/android/../shared/shadowNodes -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-gesture-handler/android/./build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-image-picker/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-image-picker/android/build/generated/source/codegen/jni/react/renderer/components/RNImagePickerSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/../../../../common/cpp -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/../../../build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/safeareacontext -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../../common/cpp -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/rnscreens -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-webview/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-webview/android/build/generated/source/codegen/jni/react/renderer/components/RNCWebViewSpec -isystem C:/Users/User/.gradle/caches/8.13/transforms/a0c343e1056c61ac092350fbccf45df2/transformed/fbjni-0.7.0/prefab/modules/fbjni/include -isystem C:/Users/User/.gradle/caches/8.13/transforms/26c34dee024f40b67bfc77a75c725a67/transformed/react-android-0.81.0-debug/prefab/modules/jsi/include -isystem C:/Users/User/.gradle/caches/8.13/transforms/26c34dee024f40b67bfc77a75c725a67/transformed/react-android-0.81.0-debug/prefab/modules/reactnative/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D__BIONIC_NO_PAGE_SIZE_MACRO -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC -Wall -Werror -fexceptions -frtti -std=c++20 -DFOLLY_NO_CONFIG=1 -DLOG_TAG=\"ReactNative\" -DFOLLY_HAVE_CLOCK_GETTIME=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -DFOLLY_MOBILE=1 -DFOLLY_HAVE_RECVMMSG=1 -DFOLLY_HAVE_PTHREAD=1 -DFOLLY_HAVE_XSI_STRERROR_R=1 -MD -MT CMakeFiles/appmodules.dir/D_/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o -MF CMakeFiles\appmodules.dir\D_\app\Azhaar-ul-Islam-Academy\android\app\build\generated\autolinking\src\main\jni\autolinking.cpp.o.d -o CMakeFiles/appmodules.dir/D_/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o -c D:/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp
+C/C++: In file included from D:/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp:21:
+C/C++: In file included from D:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/rnscreens.h:19:
+C/C++: In file included from D:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../../common/cpp/react/renderer/components/rnscreens/RNSScreenComponentDescriptor.h:10:
+C/C++: D:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../../common/cpp/react/renderer/components/rnscreens/RNSScreenShadowNode.h:31:38: error: 'Shared' is deprecated: Use std::shared_ptr<const ShadowNode> instead [-Werror,-Wdeprecated-declarations]
+C/C++:    31 |   void appendChild(const ShadowNode::Shared &child) override;
+C/C++:       |                                      ^
+C/C++: C:/Users/User/.gradle/caches/8.13/transforms/26c34dee024f40b67bfc77a75c725a67/transformed/react-android-0.81.0-debug/prefab/modules/reactnative/include/react/renderer/core/ShadowNode.h:36:18: note: 'Shared' has been explicitly marked deprecated here
+C/C++:    36 |   using Shared [[deprecated("Use std::shared_ptr<const ShadowNode> instead")]] =
+C/C++:       |                  ^
+C/C++: 1 error generated.
+
+> Task :app:buildCMakeDebug[arm64-v8a] FAILED
+
+[Incubating] Problems report is available at: file:///D:/app/Azhaar-ul-Islam-Academy/android/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:buildCMakeDebug[arm64-v8a]'.
+> com.android.ide.common.process.ProcessException: ninja: Entering directory `D:\app\Azhaar-ul-Islam-Academy\android\app\.cxx\Debug\s331g6x5\arm64-v8a'
+  [0/2] Re-checking globbed directories...
+  [1/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/react/renderer/components/ReactNativeBlobUtilSpec/States.cpp.o
+  [2/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/580da70b1e0f2071a5150d74feea64a5/generated/source/codegen/jni/react/renderer/components/rnpicker/States.cpp.o
+  [3/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/96b80765c546aa74e92b4313dee4e8ac/codegen/jni/react/renderer/components/rnpicker/rnpickerJSI-generated.cpp.o
+  [4/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/773495a7106963a7e919e92882971fe4/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp.o
+  [5/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/RNCAndroidDialogPickerState.cpp.o
+  [6/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/773495a7106963a7e919e92882971fe4/source/codegen/jni/react/renderer/components/rnpicker/ShadowNodes.cpp.o
+  [7/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/96b80765c546aa74e92b4313dee4e8ac/codegen/jni/react/renderer/components/rnpicker/ComponentDescriptors.cpp.o
+  [8/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/react/renderer/components/ReactNativeBlobUtilSpec/EventEmitters.cpp.o
+  [9/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/RNCAndroidDropdownPickerShadowNode.cpp.o
+  [10/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/2361107e616b8ab90a9b526b4425e420/ReactNativeBlobUtilSpecJSI-generated.cpp.o
+  [11/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/react/renderer/components/ReactNativeBlobUtilSpec/ShadowNodes.cpp.o
+  [12/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/580da70b1e0f2071a5150d74feea64a5/generated/source/codegen/jni/react/renderer/components/rnpicker/Props.cpp.o
+  [13/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/ReactNativeBlobUtilSpec-generated.cpp.o
+  [14/67] Linking CXX shared library D:\app\Azhaar-ul-Islam-Academy\android\app\build\intermediates\cxx\Debug\s331g6x5\obj\arm64-v8a\libreact_codegen_rnpicker.so
+  [15/67] Building CXX object CMakeFiles/appmodules.dir/D_/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o
+  FAILED: CMakeFiles/appmodules.dir/D_/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o 
+  C:\Users\User\AppData\Local\Android\Sdk\ndk\27.1.12297006\toolchains\llvm\prebuilt\windows-x86_64\bin\clang++.exe --target=aarch64-none-linux-android24 --sysroot=C:/Users/User/AppData/Local/Android/Sdk/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot -DRN_SERIALIZABLE_STATE -Dappmodules_EXPORTS -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native/ReactAndroid/cmake-utils/default-app-setup -ID:/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/react/renderer/components/RNVectorIconsSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/react/renderer/components/rnasyncstorage -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-community/netinfo/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-community/netinfo/android/build/generated/source/codegen/jni/react/renderer/components/RNCNetInfoSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni/../../../build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/rnpicker -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-blob-util/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-blob-util/android/build/generated/source/codegen/jni/react/renderer/components/ReactNativeBlobUtilSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-gesture-handler/android/../shared/shadowNodes -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-gesture-handler/android/./build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-image-picker/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-image-picker/android/build/generated/source/codegen/jni/react/renderer/components/RNImagePickerSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/../../../../common/cpp -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/../../../build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/safeareacontext -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../../common/cpp -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/rnscreens -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-webview/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-webview/android/build/generated/source/codegen/jni/react/renderer/components/RNCWebViewSpec -isystem C:/Users/User/.gradle/caches/8.13/transforms/a0c343e1056c61ac092350fbccf45df2/transformed/fbjni-0.7.0/prefab/modules/fbjni/include -isystem C:/Users/User/.gradle/caches/8.13/transforms/26c34dee024f40b67bfc77a75c725a67/transformed/react-android-0.81.0-debug/prefab/modules/jsi/include -isystem C:/Users/User/.gradle/caches/8.13/transforms/26c34dee024f40b67bfc77a75c725a67/transformed/react-android-0.81.0-debug/prefab/modules/reactnative/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D__BIONIC_NO_PAGE_SIZE_MACRO -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC -Wall -Werror -fexceptions -frtti -std=c++20 -DFOLLY_NO_CONFIG=1 -DLOG_TAG=\"ReactNative\" -DFOLLY_HAVE_CLOCK_GETTIME=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -DFOLLY_MOBILE=1 -DFOLLY_HAVE_RECVMMSG=1 -DFOLLY_HAVE_PTHREAD=1 -DFOLLY_HAVE_XSI_STRERROR_R=1 -MD -MT CMakeFiles/appmodules.dir/D_/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o -MF CMakeFiles\appmodules.dir\D_\app\Azhaar-ul-Islam-Academy\android\app\build\generated\autolinking\src\main\jni\autolinking.cpp.o.d -o CMakeFiles/appmodules.dir/D_/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o -c D:/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp
+  In file included from D:/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp:21:
+  In file included from D:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/rnscreens.h:19:
+  In file included from D:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../../common/cpp/react/renderer/components/rnscreens/RNSScreenComponentDescriptor.h:10:
+  D:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../../common/cpp/react/renderer/components/rnscreens/RNSScreenShadowNode.h:31:38: error: 'Shared' is deprecated: Use std::shared_ptr<const ShadowNode> instead [-Werror,-Wdeprecated-declarations]
+     31 |   void appendChild(const ShadowNode::Shared &child) override;
+        |                                      ^
+  C:/Users/User/.gradle/caches/8.13/transforms/26c34dee024f40b67bfc77a75c725a67/transformed/react-android-0.81.0-debug/prefab/modules/reactnative/include/react/renderer/core/ShadowNode.h:36:18: note: 'Shared' has been explicitly marked deprecated here
+     36 |   using Shared [[deprecated("Use std::shared_ptr<const ShadowNode> instead")]] =
+        |                  ^
+  1 error generated.
+  [16/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/react/renderer/components/ReactNativeBlobUtilSpec/Props.cpp.o
+  [17/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/react/renderer/components/ReactNativeBlobUtilSpec/ComponentDescriptors.cpp.o
+  [18/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0289897067326e95ac87493d0b9539ee/rngesturehandler_codegen/States.cpp.o
+  [19/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0289897067326e95ac87493d0b9539ee/rngesturehandler_codegen/EventEmitters.cpp.o
+  [20/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0289897067326e95ac87493d0b9539ee/rngesturehandler_codegen/ShadowNodes.cpp.o
+  [21/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0a8997009536ccc16c0451b119acb464/rngesturehandler_codegenJSI-generated.cpp.o
+  [22/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/6451856dd4698a5ecb3e16e02822a759/RNGestureHandlerDetectorShadowNode.cpp.o
+  [23/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0289897067326e95ac87493d0b9539ee/rngesturehandler_codegen/Props.cpp.o
+  [24/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0a8997009536ccc16c0451b119acb464/ComponentDescriptors.cpp.o
+  ninja: build stopped: subcommand failed.
+  
+  C++ build system [build] failed while executing:
+      @echo off
+      "C:\\Users\\User\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe" ^
+        -C ^
+        "D:\\app\\Azhaar-ul-Islam-Academy\\android\\app\\.cxx\\Debug\\s331g6x5\\arm64-v8a" ^
+        appmodules ^
+        react_codegen_rngesturehandler_codegen ^
+        react_codegen_rnpicker ^
+        react_codegen_rnscreens ^
+        react_codegen_safeareacontext
+    from D:\app\Azhaar-ul-Islam-Academy\android\app
+
+* Try:
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+* Exception is:
+org.gradle.api.tasks.TaskExecutionException: Execution failed for task ':app:buildCMakeDebug[arm64-v8a]'.
+	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.lambda$executeIfValid$1(ExecuteActionsTaskExecuter.java:130)
+	at org.gradle.internal.Try$Failure.ifSuccessfulOrElse(Try.java:293)
+	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid(ExecuteActionsTaskExecuter.java:128)
+	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:116)
+	at org.gradle.api.internal.tasks.execution.ProblemsTaskPathTrackingTaskExecuter.execute(ProblemsTaskPathTrackingTaskExecuter.java:40)
+	at org.gradle.api.internal.tasks.execution.FinalizePropertiesTaskExecuter.execute(FinalizePropertiesTaskExecuter.java:46)
+	at org.gradle.api.internal.tasks.execution.ResolveTaskExecutionModeExecuter.execute(ResolveTaskExecutionModeExecuter.java:51)
+	at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:57)
+	at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:74)
+	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.executeTask(EventFiringTaskExecuter.java:77)
+	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:55)
+	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:52)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:210)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:205)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
+	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter.execute(EventFiringTaskExecuter.java:52)
+	at org.gradle.execution.plan.LocalTaskNodeExecutor.execute(LocalTaskNodeExecutor.java:42)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:331)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:318)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.lambda$execute$0(DefaultTaskExecutionGraph.java:314)
+	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:314)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:303)
+	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.execute(DefaultPlanExecutor.java:459)
+	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:376)
+	at org.gradle.execution.plan.DefaultPlanExecutor.process(DefaultPlanExecutor.java:111)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.executeWithServices(DefaultTaskExecutionGraph.java:138)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.execute(DefaultTaskExecutionGraph.java:123)
+	at org.gradle.execution.SelectedTaskExecutionAction.execute(SelectedTaskExecutionAction.java:35)
+	at org.gradle.execution.DryRunBuildExecutionAction.execute(DryRunBuildExecutionAction.java:51)
+	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:54)
+	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:43)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:210)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:205)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
+	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor.execute(BuildOperationFiringBuildWorkerExecutor.java:40)
+	at org.gradle.internal.build.DefaultBuildLifecycleController.lambda$executeTasks$10(DefaultBuildLifecycleController.java:313)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+	at org.gradle.internal.model.StateTransitionController.lambda$tryTransition$8(StateTransitionController.java:177)
+	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:46)
+	at org.gradle.internal.model.StateTransitionController.tryTransition(StateTransitionController.java:177)
+	at org.gradle.internal.build.DefaultBuildLifecycleController.executeTasks(DefaultBuildLifecycleController.java:304)
+	at org.gradle.internal.build.DefaultBuildWorkGraphController$DefaultBuildWorkGraph.runWork(DefaultBuildWorkGraphController.java:220)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:263)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:127)
+	at org.gradle.composite.internal.DefaultBuildController.doRun(DefaultBuildController.java:181)
+	at org.gradle.composite.internal.DefaultBuildController.access$000(DefaultBuildController.java:50)
+	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.lambda$run$0(DefaultBuildController.java:198)
+	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
+	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.run(DefaultBuildController.java:198)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
+Caused by: org.gradle.internal.UncheckedException: com.android.ide.common.process.ProcessException: ninja: Entering directory `D:\app\Azhaar-ul-Islam-Academy\android\app\.cxx\Debug\s331g6x5\arm64-v8a'
+[0/2] Re-checking globbed directories...
+[1/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/react/renderer/components/ReactNativeBlobUtilSpec/States.cpp.o
+[2/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/580da70b1e0f2071a5150d74feea64a5/generated/source/codegen/jni/react/renderer/components/rnpicker/States.cpp.o
+[3/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/96b80765c546aa74e92b4313dee4e8ac/codegen/jni/react/renderer/components/rnpicker/rnpickerJSI-generated.cpp.o
+[4/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/773495a7106963a7e919e92882971fe4/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp.o
+[5/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/RNCAndroidDialogPickerState.cpp.o
+[6/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/773495a7106963a7e919e92882971fe4/source/codegen/jni/react/renderer/components/rnpicker/ShadowNodes.cpp.o
+[7/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/96b80765c546aa74e92b4313dee4e8ac/codegen/jni/react/renderer/components/rnpicker/ComponentDescriptors.cpp.o
+[8/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/react/renderer/components/ReactNativeBlobUtilSpec/EventEmitters.cpp.o
+[9/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/RNCAndroidDropdownPickerShadowNode.cpp.o
+[10/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/2361107e616b8ab90a9b526b4425e420/ReactNativeBlobUtilSpecJSI-generated.cpp.o
+[11/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/react/renderer/components/ReactNativeBlobUtilSpec/ShadowNodes.cpp.o
+[12/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/580da70b1e0f2071a5150d74feea64a5/generated/source/codegen/jni/react/renderer/components/rnpicker/Props.cpp.o
+[13/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/ReactNativeBlobUtilSpec-generated.cpp.o
+[14/67] Linking CXX shared library D:\app\Azhaar-ul-Islam-Academy\android\app\build\intermediates\cxx\Debug\s331g6x5\obj\arm64-v8a\libreact_codegen_rnpicker.so
+[15/67] Building CXX object CMakeFiles/appmodules.dir/D_/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o
+FAILED: CMakeFiles/appmodules.dir/D_/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o 
+C:\Users\User\AppData\Local\Android\Sdk\ndk\27.1.12297006\toolchains\llvm\prebuilt\windows-x86_64\bin\clang++.exe --target=aarch64-none-linux-android24 --sysroot=C:/Users/User/AppData/Local/Android/Sdk/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot -DRN_SERIALIZABLE_STATE -Dappmodules_EXPORTS -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native/ReactAndroid/cmake-utils/default-app-setup -ID:/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/react/renderer/components/RNVectorIconsSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/react/renderer/components/rnasyncstorage -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-community/netinfo/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-community/netinfo/android/build/generated/source/codegen/jni/react/renderer/components/RNCNetInfoSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni/../../../build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/rnpicker -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-blob-util/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-blob-util/android/build/generated/source/codegen/jni/react/renderer/components/ReactNativeBlobUtilSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-gesture-handler/android/../shared/shadowNodes -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-gesture-handler/android/./build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-image-picker/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-image-picker/android/build/generated/source/codegen/jni/react/renderer/components/RNImagePickerSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/../../../../common/cpp -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/../../../build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/safeareacontext -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../../common/cpp -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/rnscreens -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-webview/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-webview/android/build/generated/source/codegen/jni/react/renderer/components/RNCWebViewSpec -isystem C:/Users/User/.gradle/caches/8.13/transforms/a0c343e1056c61ac092350fbccf45df2/transformed/fbjni-0.7.0/prefab/modules/fbjni/include -isystem C:/Users/User/.gradle/caches/8.13/transforms/26c34dee024f40b67bfc77a75c725a67/transformed/react-android-0.81.0-debug/prefab/modules/jsi/include -isystem C:/Users/User/.gradle/caches/8.13/transforms/26c34dee024f40b67bfc77a75c725a67/transformed/react-android-0.81.0-debug/prefab/modules/reactnative/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D__BIONIC_NO_PAGE_SIZE_MACRO -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC -Wall -Werror -fexceptions -frtti -std=c++20 -DFOLLY_NO_CONFIG=1 -DLOG_TAG=\"ReactNative\" -DFOLLY_HAVE_CLOCK_GETTIME=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -DFOLLY_MOBILE=1 -DFOLLY_HAVE_RECVMMSG=1 -DFOLLY_HAVE_PTHREAD=1 -DFOLLY_HAVE_XSI_STRERROR_R=1 -MD -MT CMakeFiles/appmodules.dir/D_/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o -MF CMakeFiles\appmodules.dir\D_\app\Azhaar-ul-Islam-Academy\android\app\build\generated\autolinking\src\main\jni\autolinking.cpp.o.d -o CMakeFiles/appmodules.dir/D_/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o -c D:/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp
+In file included from D:/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp:21:
+In file included from D:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/rnscreens.h:19:
+In file included from D:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../../common/cpp/react/renderer/components/rnscreens/RNSScreenComponentDescriptor.h:10:
+D:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../../common/cpp/react/renderer/components/rnscreens/RNSScreenShadowNode.h:31:38: error: 'Shared' is deprecated: Use std::shared_ptr<const ShadowNode> instead [-Werror,-Wdeprecated-declarations]
+   31 |   void appendChild(const ShadowNode::Shared &child) override;
+      |                                      ^
+C:/Users/User/.gradle/caches/8.13/transforms/26c34dee024f40b67bfc77a75c725a67/transformed/react-android-0.81.0-debug/prefab/modules/reactnative/include/react/renderer/core/ShadowNode.h:36:18: note: 'Shared' has been explicitly marked deprecated here
+   36 |   using Shared [[deprecated("Use std::shared_ptr<const ShadowNode> instead")]] =
+      |                  ^
+1 error generated.
+[16/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/react/renderer/components/ReactNativeBlobUtilSpec/Props.cpp.o
+[17/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/react/renderer/components/ReactNativeBlobUtilSpec/ComponentDescriptors.cpp.o
+[18/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0289897067326e95ac87493d0b9539ee/rngesturehandler_codegen/States.cpp.o
+[19/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0289897067326e95ac87493d0b9539ee/rngesturehandler_codegen/EventEmitters.cpp.o
+[20/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0289897067326e95ac87493d0b9539ee/rngesturehandler_codegen/ShadowNodes.cpp.o
+[21/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0a8997009536ccc16c0451b119acb464/rngesturehandler_codegenJSI-generated.cpp.o
+[22/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/6451856dd4698a5ecb3e16e02822a759/RNGestureHandlerDetectorShadowNode.cpp.o
+[23/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0289897067326e95ac87493d0b9539ee/rngesturehandler_codegen/Props.cpp.o
+[24/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0a8997009536ccc16c0451b119acb464/ComponentDescriptors.cpp.o
+ninja: build stopped: subcommand failed.
+
+C++ build system [build] failed while executing:
+    @echo off
+    "C:\\Users\\User\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe" ^
+      -C ^
+      "D:\\app\\Azhaar-ul-Islam-Academy\\android\\app\\.cxx\\Debug\\s331g6x5\\arm64-v8a" ^
+      appmodules ^
+      react_codegen_rngesturehandler_codegen ^
+      react_codegen_rnpicker ^
+      react_codegen_rnscreens ^
+      react_codegen_safeareacontext
+  from D:\app\Azhaar-ul-Islam-Academy\android\app
+	at org.gradle.internal.UncheckedException.throwAsUncheckedException(UncheckedException.java:69)
+	at org.gradle.internal.UncheckedException.throwAsUncheckedException(UncheckedException.java:42)
+	at org.gradle.internal.reflect.JavaMethod.invoke(JavaMethod.java:128)
+	at org.gradle.api.internal.project.taskfactory.StandardTaskAction.doExecute(StandardTaskAction.java:58)
+	at org.gradle.api.internal.project.taskfactory.StandardTaskAction.execute(StandardTaskAction.java:51)
+	at org.gradle.api.internal.project.taskfactory.StandardTaskAction.execute(StandardTaskAction.java:29)
+	at org.gradle.api.internal.tasks.execution.TaskExecution$3.run(TaskExecution.java:244)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:30)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$1.execute(DefaultBuildOperationRunner.java:27)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.run(DefaultBuildOperationRunner.java:48)
+	at org.gradle.api.internal.tasks.execution.TaskExecution.executeAction(TaskExecution.java:229)
+	at org.gradle.api.internal.tasks.execution.TaskExecution.executeActions(TaskExecution.java:212)
+	at org.gradle.api.internal.tasks.execution.TaskExecution.executeWithPreviousOutputFiles(TaskExecution.java:195)
+	at org.gradle.api.internal.tasks.execution.TaskExecution.execute(TaskExecution.java:162)
+	at org.gradle.internal.execution.steps.ExecuteStep.executeInternal(ExecuteStep.java:105)
+	at org.gradle.internal.execution.steps.ExecuteStep.access$000(ExecuteStep.java:44)
+	at org.gradle.internal.execution.steps.ExecuteStep$1.call(ExecuteStep.java:59)
+	at org.gradle.internal.execution.steps.ExecuteStep$1.call(ExecuteStep.java:56)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:210)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:205)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
+	at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:56)
+	at org.gradle.internal.execution.steps.ExecuteStep.execute(ExecuteStep.java:44)
+	at org.gradle.internal.execution.steps.CancelExecutionStep.execute(CancelExecutionStep.java:42)
+	at org.gradle.internal.execution.steps.TimeoutStep.executeWithoutTimeout(TimeoutStep.java:75)
+	at org.gradle.internal.execution.steps.TimeoutStep.execute(TimeoutStep.java:55)
+	at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:50)
+	at org.gradle.internal.execution.steps.PreCreateOutputParentsStep.execute(PreCreateOutputParentsStep.java:28)
+	at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.execute(RemovePreviousOutputsStep.java:67)
+	at org.gradle.internal.execution.steps.RemovePreviousOutputsStep.execute(RemovePreviousOutputsStep.java:37)
+	at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:61)
+	at org.gradle.internal.execution.steps.BroadcastChangingOutputsStep.execute(BroadcastChangingOutputsStep.java:26)
+	at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.java:69)
+	at org.gradle.internal.execution.steps.CaptureOutputsAfterExecutionStep.execute(CaptureOutputsAfterExecutionStep.java:46)
+	at org.gradle.internal.execution.steps.ResolveInputChangesStep.execute(ResolveInputChangesStep.java:40)
+	at org.gradle.internal.execution.steps.ResolveInputChangesStep.execute(ResolveInputChangesStep.java:29)
+	at org.gradle.internal.execution.steps.BuildCacheStep.executeWithoutCache(BuildCacheStep.java:189)
+	at org.gradle.internal.execution.steps.BuildCacheStep.lambda$execute$1(BuildCacheStep.java:75)
+	at org.gradle.internal.Either$Right.fold(Either.java:175)
+	at org.gradle.internal.execution.caching.CachingState.fold(CachingState.java:62)
+	at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:73)
+	at org.gradle.internal.execution.steps.BuildCacheStep.execute(BuildCacheStep.java:48)
+	at org.gradle.internal.execution.steps.StoreExecutionStateStep.execute(StoreExecutionStateStep.java:46)
+	at org.gradle.internal.execution.steps.StoreExecutionStateStep.execute(StoreExecutionStateStep.java:35)
+	at org.gradle.internal.execution.steps.SkipUpToDateStep.executeBecause(SkipUpToDateStep.java:75)
+	at org.gradle.internal.execution.steps.SkipUpToDateStep.lambda$execute$2(SkipUpToDateStep.java:53)
+	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:53)
+	at org.gradle.internal.execution.steps.SkipUpToDateStep.execute(SkipUpToDateStep.java:35)
+	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinishedStep.java:37)
+	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsFinishedStep.execute(MarkSnapshottingInputsFinishedStep.java:27)
+	at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingStateStep.java:49)
+	at org.gradle.internal.execution.steps.ResolveIncrementalCachingStateStep.executeDelegate(ResolveIncrementalCachingStateStep.java:27)
+	at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:71)
+	at org.gradle.internal.execution.steps.AbstractResolveCachingStateStep.execute(AbstractResolveCachingStateStep.java:39)
+	at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:65)
+	at org.gradle.internal.execution.steps.ResolveChangesStep.execute(ResolveChangesStep.java:36)
+	at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:107)
+	at org.gradle.internal.execution.steps.ValidateStep.execute(ValidateStep.java:56)
+	at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExecutionStep.java:64)
+	at org.gradle.internal.execution.steps.AbstractCaptureStateBeforeExecutionStep.execute(AbstractCaptureStateBeforeExecutionStep.java:43)
+	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.executeWithNonEmptySources(AbstractSkipEmptyWorkStep.java:125)
+	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:56)
+	at org.gradle.internal.execution.steps.AbstractSkipEmptyWorkStep.execute(AbstractSkipEmptyWorkStep.java:36)
+	at org.gradle.internal.execution.steps.legacy.MarkSnapshottingInputsStartedStep.execute(MarkSnapshottingInputsStartedStep.java:38)
+	at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:36)
+	at org.gradle.internal.execution.steps.LoadPreviousExecutionStateStep.execute(LoadPreviousExecutionStateStep.java:23)
+	at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:75)
+	at org.gradle.internal.execution.steps.HandleStaleOutputsStep.execute(HandleStaleOutputsStep.java:41)
+	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.lambda$execute$0(AssignMutableWorkspaceStep.java:35)
+	at org.gradle.api.internal.tasks.execution.TaskExecution$4.withWorkspace(TaskExecution.java:289)
+	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:31)
+	at org.gradle.internal.execution.steps.AssignMutableWorkspaceStep.execute(AssignMutableWorkspaceStep.java:22)
+	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:40)
+	at org.gradle.internal.execution.steps.ChoosePipelineStep.execute(ChoosePipelineStep.java:23)
+	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.lambda$execute$2(ExecuteWorkBuildOperationFiringStep.java:67)
+	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:67)
+	at org.gradle.internal.execution.steps.ExecuteWorkBuildOperationFiringStep.execute(ExecuteWorkBuildOperationFiringStep.java:39)
+	at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:46)
+	at org.gradle.internal.execution.steps.IdentityCacheStep.execute(IdentityCacheStep.java:34)
+	at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:48)
+	at org.gradle.internal.execution.steps.IdentifyStep.execute(IdentifyStep.java:35)
+	at org.gradle.internal.execution.impl.DefaultExecutionEngine$1.execute(DefaultExecutionEngine.java:61)
+	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.executeIfValid(ExecuteActionsTaskExecuter.java:127)
+	at org.gradle.api.internal.tasks.execution.ExecuteActionsTaskExecuter.execute(ExecuteActionsTaskExecuter.java:116)
+	at org.gradle.api.internal.tasks.execution.ProblemsTaskPathTrackingTaskExecuter.execute(ProblemsTaskPathTrackingTaskExecuter.java:40)
+	at org.gradle.api.internal.tasks.execution.FinalizePropertiesTaskExecuter.execute(FinalizePropertiesTaskExecuter.java:46)
+	at org.gradle.api.internal.tasks.execution.ResolveTaskExecutionModeExecuter.execute(ResolveTaskExecutionModeExecuter.java:51)
+	at org.gradle.api.internal.tasks.execution.SkipTaskWithNoActionsExecuter.execute(SkipTaskWithNoActionsExecuter.java:57)
+	at org.gradle.api.internal.tasks.execution.SkipOnlyIfTaskExecuter.execute(SkipOnlyIfTaskExecuter.java:74)
+	at org.gradle.api.internal.tasks.execution.CatchExceptionTaskExecuter.execute(CatchExceptionTaskExecuter.java:36)
+	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.executeTask(EventFiringTaskExecuter.java:77)
+	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:55)
+	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter$1.call(EventFiringTaskExecuter.java:52)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:210)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:205)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
+	at org.gradle.api.internal.tasks.execution.EventFiringTaskExecuter.execute(EventFiringTaskExecuter.java:52)
+	at org.gradle.execution.plan.LocalTaskNodeExecutor.execute(LocalTaskNodeExecutor.java:42)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:331)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$InvokeNodeExecutorsAction.execute(DefaultTaskExecutionGraph.java:318)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.lambda$execute$0(DefaultTaskExecutionGraph.java:314)
+	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:314)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph$BuildOperationAwareExecutionAction.execute(DefaultTaskExecutionGraph.java:303)
+	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.execute(DefaultPlanExecutor.java:459)
+	at org.gradle.execution.plan.DefaultPlanExecutor$ExecutorWorker.run(DefaultPlanExecutor.java:376)
+	at org.gradle.execution.plan.DefaultPlanExecutor.process(DefaultPlanExecutor.java:111)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.executeWithServices(DefaultTaskExecutionGraph.java:138)
+	at org.gradle.execution.taskgraph.DefaultTaskExecutionGraph.execute(DefaultTaskExecutionGraph.java:123)
+	at org.gradle.execution.SelectedTaskExecutionAction.execute(SelectedTaskExecutionAction.java:35)
+	at org.gradle.execution.DryRunBuildExecutionAction.execute(DryRunBuildExecutionAction.java:51)
+	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:54)
+	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor$ExecuteTasks.call(BuildOperationFiringBuildWorkerExecutor.java:43)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:210)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$CallableBuildOperationWorker.execute(DefaultBuildOperationRunner.java:205)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:67)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner$2.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:167)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.execute(DefaultBuildOperationRunner.java:60)
+	at org.gradle.internal.operations.DefaultBuildOperationRunner.call(DefaultBuildOperationRunner.java:54)
+	at org.gradle.execution.BuildOperationFiringBuildWorkerExecutor.execute(BuildOperationFiringBuildWorkerExecutor.java:40)
+	at org.gradle.internal.build.DefaultBuildLifecycleController.lambda$executeTasks$10(DefaultBuildLifecycleController.java:313)
+	at org.gradle.internal.model.StateTransitionController.doTransition(StateTransitionController.java:266)
+	at org.gradle.internal.model.StateTransitionController.lambda$tryTransition$8(StateTransitionController.java:177)
+	at org.gradle.internal.work.DefaultSynchronizer.withLock(DefaultSynchronizer.java:46)
+	at org.gradle.internal.model.StateTransitionController.tryTransition(StateTransitionController.java:177)
+	at org.gradle.internal.build.DefaultBuildLifecycleController.executeTasks(DefaultBuildLifecycleController.java:304)
+	at org.gradle.internal.build.DefaultBuildWorkGraphController$DefaultBuildWorkGraph.runWork(DefaultBuildWorkGraphController.java:220)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.withLocks(DefaultWorkerLeaseService.java:263)
+	at org.gradle.internal.work.DefaultWorkerLeaseService.runAsWorkerThread(DefaultWorkerLeaseService.java:127)
+	at org.gradle.composite.internal.DefaultBuildController.doRun(DefaultBuildController.java:181)
+	at org.gradle.composite.internal.DefaultBuildController.access$000(DefaultBuildController.java:50)
+	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.lambda$run$0(DefaultBuildController.java:198)
+	at org.gradle.internal.operations.CurrentBuildOperationRef.with(CurrentBuildOperationRef.java:85)
+	at org.gradle.composite.internal.DefaultBuildController$BuildOpRunnable.run(DefaultBuildController.java:198)
+	at org.gradle.internal.concurrent.ExecutorPolicy$CatchAndRecordFailures.onExecute(ExecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.AbstractManagedExecutor$1.run(AbstractManagedExecutor.java:48)
+Caused by: com.android.ide.common.process.ProcessException: ninja: Entering directory `D:\app\Azhaar-ul-Islam-Academy\android\app\.cxx\Debug\s331g6x5\arm64-v8a'
+[0/2] Re-checking globbed directories...
+[1/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/react/renderer/components/ReactNativeBlobUtilSpec/States.cpp.o
+[2/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/580da70b1e0f2071a5150d74feea64a5/generated/source/codegen/jni/react/renderer/components/rnpicker/States.cpp.o
+[3/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/96b80765c546aa74e92b4313dee4e8ac/codegen/jni/react/renderer/components/rnpicker/rnpickerJSI-generated.cpp.o
+[4/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/773495a7106963a7e919e92882971fe4/source/codegen/jni/react/renderer/components/rnpicker/EventEmitters.cpp.o
+[5/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/RNCAndroidDialogPickerState.cpp.o
+[6/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/773495a7106963a7e919e92882971fe4/source/codegen/jni/react/renderer/components/rnpicker/ShadowNodes.cpp.o
+[7/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/96b80765c546aa74e92b4313dee4e8ac/codegen/jni/react/renderer/components/rnpicker/ComponentDescriptors.cpp.o
+[8/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/react/renderer/components/ReactNativeBlobUtilSpec/EventEmitters.cpp.o
+[9/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/RNCAndroidDropdownPickerShadowNode.cpp.o
+[10/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/2361107e616b8ab90a9b526b4425e420/ReactNativeBlobUtilSpecJSI-generated.cpp.o
+[11/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/react/renderer/components/ReactNativeBlobUtilSpec/ShadowNodes.cpp.o
+[12/67] Building CXX object rnpicker_autolinked_build/CMakeFiles/react_codegen_rnpicker.dir/580da70b1e0f2071a5150d74feea64a5/generated/source/codegen/jni/react/renderer/components/rnpicker/Props.cpp.o
+[13/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/ReactNativeBlobUtilSpec-generated.cpp.o
+[14/67] Linking CXX shared library D:\app\Azhaar-ul-Islam-Academy\android\app\build\intermediates\cxx\Debug\s331g6x5\obj\arm64-v8a\libreact_codegen_rnpicker.so
+[15/67] Building CXX object CMakeFiles/appmodules.dir/D_/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o
+FAILED: CMakeFiles/appmodules.dir/D_/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o 
+C:\Users\User\AppData\Local\Android\Sdk\ndk\27.1.12297006\toolchains\llvm\prebuilt\windows-x86_64\bin\clang++.exe --target=aarch64-none-linux-android24 --sysroot=C:/Users/User/AppData/Local/Android/Sdk/ndk/27.1.12297006/toolchains/llvm/prebuilt/windows-x86_64/sysroot -DRN_SERIALIZABLE_STATE -Dappmodules_EXPORTS -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native/ReactAndroid/cmake-utils/default-app-setup -ID:/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-vector-icons/android/build/generated/source/codegen/jni/react/renderer/components/RNVectorIconsSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/react/renderer/components/rnasyncstorage -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-community/netinfo/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-community/netinfo/android/build/generated/source/codegen/jni/react/renderer/components/RNCNetInfoSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni/../../../build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/@react-native-picker/picker/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/rnpicker -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-blob-util/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-blob-util/android/build/generated/source/codegen/jni/react/renderer/components/ReactNativeBlobUtilSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-gesture-handler/android/../shared/shadowNodes -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-gesture-handler/android/./build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-image-picker/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-image-picker/android/build/generated/source/codegen/jni/react/renderer/components/RNImagePickerSpec -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/../../../../common/cpp -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/../../../build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-safe-area-context/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/safeareacontext -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../../common/cpp -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../build/generated/source/codegen/jni -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../build/generated/source/codegen/jni/react/renderer/components/rnscreens -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-webview/android/build/generated/source/codegen/jni/. -ID:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-webview/android/build/generated/source/codegen/jni/react/renderer/components/RNCWebViewSpec -isystem C:/Users/User/.gradle/caches/8.13/transforms/a0c343e1056c61ac092350fbccf45df2/transformed/fbjni-0.7.0/prefab/modules/fbjni/include -isystem C:/Users/User/.gradle/caches/8.13/transforms/26c34dee024f40b67bfc77a75c725a67/transformed/react-android-0.81.0-debug/prefab/modules/jsi/include -isystem C:/Users/User/.gradle/caches/8.13/transforms/26c34dee024f40b67bfc77a75c725a67/transformed/react-android-0.81.0-debug/prefab/modules/reactnative/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D__BIONIC_NO_PAGE_SIZE_MACRO -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC -Wall -Werror -fexceptions -frtti -std=c++20 -DFOLLY_NO_CONFIG=1 -DLOG_TAG=\"ReactNative\" -DFOLLY_HAVE_CLOCK_GETTIME=1 -DFOLLY_USE_LIBCPP=1 -DFOLLY_CFG_NO_COROUTINES=1 -DFOLLY_MOBILE=1 -DFOLLY_HAVE_RECVMMSG=1 -DFOLLY_HAVE_PTHREAD=1 -DFOLLY_HAVE_XSI_STRERROR_R=1 -MD -MT CMakeFiles/appmodules.dir/D_/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o -MF CMakeFiles\appmodules.dir\D_\app\Azhaar-ul-Islam-Academy\android\app\build\generated\autolinking\src\main\jni\autolinking.cpp.o.d -o CMakeFiles/appmodules.dir/D_/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o -c D:/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp
+In file included from D:/app/Azhaar-ul-Islam-Academy/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp:21:
+In file included from D:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/rnscreens.h:19:
+In file included from D:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../../common/cpp/react/renderer/components/rnscreens/RNSScreenComponentDescriptor.h:10:
+D:/app/Azhaar-ul-Islam-Academy/node_modules/react-native-screens/android/src/main/jni/../../../../common/cpp/react/renderer/components/rnscreens/RNSScreenShadowNode.h:31:38: error: 'Shared' is deprecated: Use std::shared_ptr<const ShadowNode> instead [-Werror,-Wdeprecated-declarations]
+   31 |   void appendChild(const ShadowNode::Shared &child) override;
+      |                                      ^
+C:/Users/User/.gradle/caches/8.13/transforms/26c34dee024f40b67bfc77a75c725a67/transformed/react-android-0.81.0-debug/prefab/modules/reactnative/include/react/renderer/core/ShadowNode.h:36:18: note: 'Shared' has been explicitly marked deprecated here
+   36 |   using Shared [[deprecated("Use std::shared_ptr<const ShadowNode> instead")]] =
+      |                  ^
+1 error generated.
+[16/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/react/renderer/components/ReactNativeBlobUtilSpec/Props.cpp.o
+[17/67] Building CXX object ReactNativeBlobUtilSpec_autolinked_build/CMakeFiles/react_codegen_ReactNativeBlobUtilSpec.dir/react/renderer/components/ReactNativeBlobUtilSpec/ComponentDescriptors.cpp.o
+[18/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0289897067326e95ac87493d0b9539ee/rngesturehandler_codegen/States.cpp.o
+[19/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0289897067326e95ac87493d0b9539ee/rngesturehandler_codegen/EventEmitters.cpp.o
+[20/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0289897067326e95ac87493d0b9539ee/rngesturehandler_codegen/ShadowNodes.cpp.o
+[21/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0a8997009536ccc16c0451b119acb464/rngesturehandler_codegenJSI-generated.cpp.o
+[22/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/6451856dd4698a5ecb3e16e02822a759/RNGestureHandlerDetectorShadowNode.cpp.o
+[23/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0289897067326e95ac87493d0b9539ee/rngesturehandler_codegen/Props.cpp.o
+[24/67] Building CXX object rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/0a8997009536ccc16c0451b119acb464/ComponentDescriptors.cpp.o
+ninja: build stopped: subcommand failed.
+
+C++ build system [build] failed while executing:
+    @echo off
+    "C:\\Users\\User\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe" ^
+      -C ^
+      "D:\\app\\Azhaar-ul-Islam-Academy\\android\\app\\.cxx\\Debug\\s331g6x5\\arm64-v8a" ^
+      appmodules ^
+      react_codegen_rngesturehandler_codegen ^
+      react_codegen_rnpicker ^
+      react_codegen_rnscreens ^
+      react_codegen_safeareacontext
+  from D:\app\Azhaar-ul-Islam-Academy\android\app
+	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.execute(ExecuteProcess.kt:288)
+	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt$executeProcess$1.invoke(ExecuteProcess.kt:108)
+	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt$executeProcess$1.invoke(ExecuteProcess.kt:106)
+	at com.android.build.gradle.internal.cxx.timing.TimingEnvironmentKt.time(TimingEnvironment.kt:32)
+	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.executeProcess(ExecuteProcess.kt:106)
+	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.executeProcess$default(ExecuteProcess.kt:85)
+	at com.android.build.gradle.internal.cxx.build.CxxRegularBuilder.executeProcessBatch(CxxRegularBuilder.kt:332)
+	at com.android.build.gradle.internal.cxx.build.CxxRegularBuilder.build(CxxRegularBuilder.kt:129)
+	at com.android.build.gradle.tasks.ExternalNativeBuildTask.doTaskAction(ExternalNativeBuildTask.kt:72)
+	at com.android.build.gradle.internal.tasks.UnsafeOutputsTask$taskAction$$inlined$recordTaskAction$1.invoke(BaseTask.kt:59)
+	at com.android.build.gradle.internal.tasks.Blocks.recordSpan(Blocks.java:51)
+	at com.android.build.gradle.internal.tasks.UnsafeOutputsTask.taskAction(UnsafeOutputsTask.kt:81)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at org.gradle.internal.reflect.JavaMethod.invoke(JavaMethod.java:125)
+	... 146 more
+Caused by: com.android.ide.common.process.ProcessException: Error while executing process C:\Users\User\AppData\Local\Android\Sdk\cmake\3.22.1\bin\ninja.exe with arguments {-C D:\app\Azhaar-ul-Islam-Academy\android\app\.cxx\Debug\s331g6x5\arm64-v8a appmodules react_codegen_rngesturehandler_codegen react_codegen_rnpicker react_codegen_rnscreens react_codegen_safeareacontext}
+	at com.android.build.gradle.internal.process.GradleProcessResult.buildProcessException(GradleProcessResult.java:73)
+	at com.android.build.gradle.internal.process.GradleProcessResult.assertNormalExitValue(GradleProcessResult.java:48)
+	at com.android.build.gradle.internal.cxx.process.ExecuteProcessKt.execute(ExecuteProcess.kt:277)
+	... 161 more
+Caused by: org.gradle.process.internal.ExecException: Process 'command 'C:\Users\User\AppData\Local\Android\Sdk\cmake\3.22.1\bin\ninja.exe'' finished with non-zero exit value 1
+	at org.gradle.process.internal.DefaultExecHandle$ExecResultImpl.assertNormalExitValue(DefaultExecHandle.java:442)
+	at com.android.build.gradle.internal.process.GradleProcessResult.assertNormalExitValue(GradleProcessResult.java:46)
+	... 162 more
+
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.13/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 1m 23s
+346 actionable tasks: 2 executed, 344 up-to-date
