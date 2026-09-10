@@ -4,7 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // const BASE_URL = "http://10.245.239.143:5000/api";
 // const BASE_URL = "http://172.20.10.6:5000/api";
 // const BASE_URL = "https://uatbackend.azhaarulislam.com/api";
-const BASE_URL = "https://backend.azhaarulislam.com/api";
+// const BASE_URL = "https://backend.azhaarulislam.com/api";
+const BASE_URL = 'https://azhaar-backend.vercel.app/api';
 
 const apiRequest = async (
     endpoint,
