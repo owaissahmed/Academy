@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { AppProvider } from './Screens/AppContext';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { listenForegroundMessages } from './utlis/notifications';
 import First from './Screens/home/First';
 import Home from './Screens/home/Home';
 import Courses from './Screens//home/Courses';
@@ -38,6 +39,11 @@ import Enroll from './Screens/home/Enroll';
 const Stack = createStackNavigator();
 
 export default function AppNavigator() {
+  useEffect(() => {
+    const unsubscribe = listenForegroundMessages();
+    return unsubscribe;
+  }, []);
+
   return (
     <NavigationContainer>
       <AppProvider>

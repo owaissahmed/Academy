@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+import { requestNotificationPermission, getFcmToken } from '../../utlis/notifications';
+import { api } from '../../utlis/api'; // apna actual path check kar lena
 
 const BRAND = '#2e4c60';
 
@@ -58,9 +60,34 @@ const First = ({ navigation }) => {
     checkAuth();
   }, []);
 
+  // FCM token generate karke backend ko bhejo (silent — fail ho to bhi app na ruke)
+  const setupNotifications = async () => {
+    console.log('=== FCM Setup Started ===');
+    try {
+      const hasPermission = await requestNotificationPermission();
+      console.log('Has permission:', hasPermission);
+      if (!hasPermission) return;
+
+      const fcmToken = await getFcmToken();
+      console.log('Token in setup:', fcmToken);
+      if (fcmToken) {
+        const response = await api.post('/auth/save-fcm-token', { fcmToken });
+        console.log('Save token response:', response);
+      }
+    } catch (error) {
+      console.log('FCM setup error:', error.message);
+    }
+  };
+
   const checkAuth = async () => {
     try {
       const token = await AsyncStorage.getItem('token');
+
+      if (token) {
+        // Login hai to FCM setup bhi kar lo (background mein, await zaroori nahi navigation ke liye)
+        setupNotifications();
+      }
+
       setTimeout(() => {
         if (token) {
           navigation.replace('Home');
