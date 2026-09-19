@@ -2,7 +2,13 @@ import React, { useEffect } from 'react';
 import { AppProvider } from './Screens/AppContext';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { getApp } from '@react-native-firebase/app';
+import { getMessaging, onNotificationOpenedApp } from '@react-native-firebase/messaging';
 import { listenForegroundMessages } from './utlis/notifications';
+import { navigationRef, navigate } from './utlis/navigationRef';
+import { getScreenFromNotificationData } from './utlis/Notificationnavigation';
+import { ToastProvider, useToast } from './components/ToastNotification';
+import { notificationEvents } from './utlis/notificationEvents';
 import First from './Screens/home/First';
 import Home from './Screens/home/Home';
 import Courses from './Screens//home/Courses';
@@ -38,14 +44,46 @@ import SpecialClass from './Screens/home/SpecialClass';
 import Enroll from './Screens/home/Enroll';
 const Stack = createStackNavigator();
 
-export default function AppNavigator() {
+function AppNavigatorInner() {
+  const { showToast } = useToast();
+
   useEffect(() => {
-    const unsubscribe = listenForegroundMessages();
-    return unsubscribe;
+    const unsubscribeForeground = listenForegroundMessages((remoteMessage) => {
+      const title = remoteMessage.notification?.title || 'New Notification';
+      const body = remoteMessage.notification?.body || '';
+
+      showToast(title, body, () => {
+        if (remoteMessage.data) {
+          const screen = getScreenFromNotificationData(remoteMessage.data);
+          navigate(screen, { id: remoteMessage.data.relatedId });
+        }
+      });
+
+      // Home ke badge ko turant refresh karne ka signal
+      notificationEvents.emit();
+    });
+
+    const messagingInstance = getMessaging(getApp());
+
+    // App background mein thi, notification tap karke khola
+    const unsubscribeOpenedApp = onNotificationOpenedApp(messagingInstance, (remoteMessage) => {
+      if (remoteMessage?.data) {
+        const screen = getScreenFromNotificationData(remoteMessage.data);
+        navigate(screen, { id: remoteMessage.data.relatedId });
+      }
+    });
+
+    // Note: killed-state (getInitialNotification) First.jsx mein handle hota hai,
+    // taake checkAuth ka setTimeout(Home) isse override na kare
+
+    return () => {
+      unsubscribeForeground();
+      unsubscribeOpenedApp();
+    };
   }, []);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <AppProvider>
         <Stack.Navigator initialRouteName="First">
           <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
@@ -85,5 +123,13 @@ export default function AppNavigator() {
         </Stack.Navigator>
       </AppProvider>
     </NavigationContainer>
+  );
+}
+
+export default function AppNavigator() {
+  return (
+    <ToastProvider>
+      <AppNavigatorInner />
+    </ToastProvider>
   );
 }

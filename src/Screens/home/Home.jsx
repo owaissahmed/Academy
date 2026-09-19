@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import {
-  View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Animated, Alert, Linking
+  View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Animated, Alert, Linking, RefreshControl
 } from 'react-native';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
@@ -8,6 +8,7 @@ import Entypto from 'react-native-vector-icons/Entypo';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Container from '../../components/Container';
 import { api } from '../../utlis/api';
+import { notificationEvents } from '../../utlis/notificationEvents';
 
 const BRAND = '#2e4c60';
 
@@ -108,11 +109,22 @@ const Home = ({ navigation }) => {
   const [featuredVideos, setFeaturedVideos] = useState([]);
   const [videosLoading, setVideosLoading] = useState(true);
   const [iconsReady, setIconsReady] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    // Foreground notification aaye to badge turant refresh ho
+    const unsubscribe = notificationEvents.subscribe(() => {
+      loadUnreadCount();
+    });
+    return unsubscribe;
+  }, []);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       loadProfile();
       loadFeaturedVideos();
+      loadUnreadCount();
     });
 
     return unsubscribe;
@@ -172,6 +184,15 @@ const Home = ({ navigation }) => {
     }
   };
 
+  const loadUnreadCount = async () => {
+    try {
+      const res = await api.get('/notifications/unread-count');
+      setUnreadCount(res.data?.count || 0);
+    } catch (error) {
+      console.log('Unread count load nahi ho saka.');
+    }
+  };
+
   const loadFeaturedVideos = async () => {
     try {
       const res = await api.get('/youtube-videos/featured');
@@ -195,6 +216,12 @@ const Home = ({ navigation }) => {
     ]).start();
   }, []);
 
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await Promise.all([loadProfile(), loadFeaturedVideos(), loadUnreadCount()]);
+    setRefreshing(false);
+  };
+
   const handleMenuPress = (key) => {
     if (key === 'About') {
       Linking.openURL('https://www.azhaarulislam.com');
@@ -215,7 +242,13 @@ const Home = ({ navigation }) => {
       activeTab="Home"
       onTabPress={(key) => navigation.navigate(key)}
     >
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scroll}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[BRAND]} tintColor={BRAND} />
+        }
+      >
 
         {/* ── TOP BAR (teal header, bank-app style) ─────────────────── */}
         <Animated.View style={[styles.topBarSection, { opacity: headerOpacity, transform: [{ translateY: headerSlide }] }]}>
@@ -238,14 +271,27 @@ const Home = ({ navigation }) => {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.booksBtn}
-              onPress={() => navigation.navigate('Books')}
-              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-            >
-              <Entypto name="open-book" size={moderateScale(18)} color="#ffffff" />
-              <Text allowFontScaling={false} style={styles.booksBtnText}>Books</Text>
-            </TouchableOpacity>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: scale(8) }}>
+              <TouchableOpacity
+                style={styles.booksBtn}
+                onPress={() => navigation.navigate('Notification')}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
+                <Icon name="bell" size={moderateScale(18)} color="#ffffff" />
+                {unreadCount > 0 && (
+                  <View style={styles.badgeDot} />
+                )}
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.booksBtn}
+                onPress={() => navigation.navigate('Books')}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
+                <Entypto name="open-book" size={moderateScale(18)} color="#ffffff" />
+                {/* <Text allowFontScaling={false} style={styles.booksBtnText}>Books</Text> */}
+              </TouchableOpacity>
+            </View>
           </View>
         </Animated.View>
 
@@ -354,6 +400,18 @@ const styles = StyleSheet.create({
     gap: scale(6),
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.3)',
+    position: 'relative',
+  },
+  badgeDot: {
+    position: 'absolute',
+    top: scale(6),
+    right: scale(8),
+    width: scale(9),
+    height: scale(9),
+    borderRadius: scale(5),
+    backgroundColor: '#ef4444',
+    borderWidth: 1.5,
+    borderColor: BRAND,
   },
   booksBtnText: {
     fontSize: moderateScale(13),

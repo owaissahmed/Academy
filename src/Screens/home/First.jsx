@@ -9,7 +9,10 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
+import { getApp } from '@react-native-firebase/app';
+import { getMessaging, getInitialNotification } from '@react-native-firebase/messaging';
 import { requestNotificationPermission, getFcmToken } from '../../utlis/notifications';
+import { getScreenFromNotificationData } from '../../utlis/Notificationnavigation';
 import { api } from '../../utlis/api'; // apna actual path check kar lena
 
 const BRAND = '#2e4c60';
@@ -88,11 +91,24 @@ const First = ({ navigation }) => {
         setupNotifications();
       }
 
+      // App killed state se notification tap karke khuli thi? Check karo
+      const messagingInstance = getMessaging(getApp());
+      const initialNotification = await getInitialNotification(messagingInstance);
+
       setTimeout(() => {
-        if (token) {
-          navigation.replace('Home');
-        } else {
+        if (!token) {
           navigation.replace('Login');
+          return;
+        }
+
+        if (initialNotification?.data) {
+          const screen = getScreenFromNotificationData(initialNotification.data);
+          // Pehle Home pe replace karo (taake back button ke liye proper stack bane),
+          // phir related screen ko upar push karo
+          navigation.replace('Home');
+          navigation.navigate(screen, { id: initialNotification.data.relatedId });
+        } else {
+          navigation.replace('Home');
         }
       }, 3000);
     } catch (error) {

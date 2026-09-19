@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     View, Text, StyleSheet, ScrollView, Image, TouchableOpacity
 } from 'react-native';
@@ -30,10 +30,13 @@ const EmptyState = ({ onRetry }) => (
         </TouchableOpacity>
     </View>
 );
-const Announcements = ({ navigation }) => {
+const Announcements = ({ navigation, route }) => {
     const [loading, setLoading] = useState(true);
     const [announcements, setAnnouncements] = useState([]);
     const [selectedImg, setSelectedImg] = useState(null); // Preview Image State
+    const highlightId = route?.params?.id || null;
+    const scrollRef = useRef(null);
+    const itemPositions = useRef({});
 
     const [modal, setModal] = useState({ visible: false, title: '', message: '' });
     const showError = (title, message) => setModal({ visible: true, title, message });
@@ -42,6 +45,17 @@ const Announcements = ({ navigation }) => {
     useEffect(() => {
         loadAnnouncements();
     }, []);
+
+    // Highlighted item load hone ke baad us tak scroll karo
+    useEffect(() => {
+        if (!highlightId || announcements.length === 0) return;
+        const y = itemPositions.current[highlightId];
+        if (y !== undefined && scrollRef.current) {
+            setTimeout(() => {
+                scrollRef.current.scrollTo({ y: Math.max(y - verticalScale(16), 0), animated: true });
+            }, 300);
+        }
+    }, [highlightId, announcements]);
 
     const loadAnnouncements = async () => {
         setLoading(true);
@@ -75,6 +89,7 @@ const Announcements = ({ navigation }) => {
 
             {!loading && announcements.length > 0 && (
                 <ScrollView
+                    ref={scrollRef}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={styles.scrollBody}
                 >
@@ -86,8 +101,16 @@ const Announcements = ({ navigation }) => {
                             })
                             : '—';
 
+                        const isHighlighted = highlightId && item._id === highlightId;
+
                         return (
-                            <View key={item._id} style={styles.announcementCard}>
+                            <View
+                                key={item._id}
+                                onLayout={(e) => {
+                                    itemPositions.current[item._id] = e.nativeEvent.layout.y;
+                                }}
+                                style={[styles.announcementCard, isHighlighted && styles.announcementCardHighlighted]}
+                            >
                                 {/* Header Row: Badge Icon, Title & Stamp */}
                                 <View style={styles.cardHeader}>
                                     <View style={styles.bellIconBox}>
@@ -187,6 +210,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.04,
         shadowRadius: 4,
         elevation: 2
+    },
+    announcementCardHighlighted: {
+        borderColor: BRAND,
+        borderWidth: 2,
+        backgroundColor: '#f0f6fa',
     },
     cardHeader: {
         flexDirection: 'row',

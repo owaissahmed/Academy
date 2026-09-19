@@ -205,7 +205,7 @@ const PrivateClass = ({ navigation }) => {
             const response = await api.post('/private/request', {
                 subject: selectedSubject._id,
             });
-
+            console.log(response)
             if (response.isSuccess) {
                 setSelectedSubject(null);
                 showModal('success', 'Request Sent', response.message || 'Your private class request has been submitted.');

@@ -67,7 +67,12 @@ const STATUS_CONFIG = {
 
 const DarseNizamiFees = ({ route, navigation }) => {
     // ─── Route Params ────────────────────────────────────────────────────────
-    const { data } = route.params || {};
+    // Normal flow (Enrollments screen se): route.params.data = poora enrollment object
+    // Notification flow: route.params.id = FeePayment ID — yahan se enrollment fetch karna hoga
+    const { data: initialData, id: notificationPaymentId } = route.params || {};
+    const [data, setData] = useState(initialData || null);
+    const [resolvingFromNotification, setResolvingFromNotification] = useState(!initialData && !!notificationPaymentId);
+    const highlightPaymentId = notificationPaymentId || null;
     console.log(data)
     // ─── States ──────────────────────────────────────────────────────────────
     const [history, setHistory] = useState([]);
@@ -98,10 +103,53 @@ const DarseNizamiFees = ({ route, navigation }) => {
 
     // ─── Animation Refs ──────────────────────────────────────────────────────
     const listFadeAnim = useRef(new Animated.Value(0)).current;
+    const scrollRef = useRef(null);
+    const itemPositions = useRef({});
+
+    // Notification se aaye hain (sirf payment id mila, poora data nahi) — enrollment resolve karo
+    useEffect(() => {
+        if (initialData || !notificationPaymentId) return;
+        const resolveFromNotification = async () => {
+            try {
+                // Payment record se enrollment ID nikalo
+                const paymentRes = await api.get(`/fee-payment/my`);
+                const payments = Array.isArray(paymentRes) ? paymentRes : (paymentRes.data || []);
+                const matchedPayment = payments.find((p) => p._id === notificationPaymentId);
+
+                if (matchedPayment?.enrollment) {
+                    // Enrollment ka poora data list se nikalo
+                    const enrollmentsRes = await api.get('/enrollments/my-enrollments');
+                    const enrollments = enrollmentsRes?.data || [];
+                    const matchedEnrollment = enrollments.find(
+                        (e) => e._id === matchedPayment.enrollment._id || e._id === matchedPayment.enrollment
+                    );
+                    if (matchedEnrollment) {
+                        setData(matchedEnrollment);
+                    }
+                }
+            } catch (err) {
+                console.log('Resolve from notification error:', err.message);
+            } finally {
+                setResolvingFromNotification(false);
+            }
+        };
+        resolveFromNotification();
+    }, [notificationPaymentId, initialData]);
 
     useEffect(() => {
-        loadPaymentHistory();
-    }, []);
+        if (data?._id) loadPaymentHistory();
+    }, [data?._id]);
+
+    // Highlighted payment load hone ke baad us tak scroll karo
+    useEffect(() => {
+        if (!highlightPaymentId || history.length === 0) return;
+        const y = itemPositions.current[highlightPaymentId];
+        if (y !== undefined && scrollRef.current) {
+            setTimeout(() => {
+                scrollRef.current.scrollTo({ y: Math.max(y - verticalScale(16), 0), animated: true });
+            }, 300);
+        }
+    }, [highlightPaymentId, history]);
 
     // ─── Hardware Back Press Control ─────────────────────────────────────────
     useEffect(() => {
@@ -115,7 +163,7 @@ const DarseNizamiFees = ({ route, navigation }) => {
 
     // ─── API: Fetch History ──────────────────────────────────────────────────
     const loadPaymentHistory = async () => {
-        if (!data._id) return;
+        if (!data?._id) return;
         setLoading(true);
         try {
             const response = await api.get(`/fee-payment/my?enrollmentId=${data._id}`);
@@ -213,11 +261,20 @@ const DarseNizamiFees = ({ route, navigation }) => {
             onBack={() => !submitting && navigation.goBack()}
             showFooter={false}
         >
-            {loading && <Loader message="Loading payment records..." />}
+            {resolvingFromNotification && <Loader message="Loading enrollment..." />}
 
-            {!loading && (
+            {!resolvingFromNotification && !data && (
+                <View style={styles.emptyHistory}>
+                    <Icon name="alert-circle" size={moderateScale(28)} color="#cbd5e1" />
+                    <Text allowFontScaling={false} style={styles.emptyText}>Enrollment not found</Text>
+                </View>
+            )}
+
+            {!resolvingFromNotification && data && loading && <Loader message="Loading payment records..." />}
+
+            {!resolvingFromNotification && data && !loading && (
                 <Animated.View style={[{ flex: 1, opacity: listFadeAnim }]}>
-                    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
+                    <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false} contentContainerStyle={styles.scroll}>
 
                         {/* ── Enrollment Info Top Banner ── */}
 
@@ -272,8 +329,15 @@ const DarseNizamiFees = ({ route, navigation }) => {
                         ) : (
                             history.map((item, index) => {
                                 const s = getStatusStyle(item.status);
+                                const isHighlighted = highlightPaymentId && item._id === highlightPaymentId;
                                 return (
-                                    <View key={item._id || index} style={styles.card}>
+                                    <View
+                                        key={item._id || index}
+                                        onLayout={(e) => {
+                                            if (item._id) itemPositions.current[item._id] = e.nativeEvent.layout.y;
+                                        }}
+                                        style={[styles.card, isHighlighted && styles.cardHighlighted]}
+                                    >
 
                                         {/* ── Top: Month Name + Status Badge ── */}
                                         <View style={styles.cardTop}>
@@ -351,9 +415,9 @@ const DarseNizamiFees = ({ route, navigation }) => {
                         <TouchableOpacity
                             style={[
                                 styles.submitPayBtn,
-                                { backgroundColor: data.isActive ? BRAND : 'grey' }
+                                { backgroundColor: data?.isActive ? BRAND : 'grey' }
                             ]} activeOpacity={0.85}
-                            disabled={data.isActive ? false : true}
+                            disabled={data?.isActive ? false : true}
                             onPress={() => { resetForm(); setPaySheetVisible(true); }}
                         >
                             <Icon name="plus-circle" size={moderateScale(16)} color="#fff" />
@@ -636,6 +700,7 @@ const styles = StyleSheet.create({
 
     // Upgraded Reference Styling (From Parent Cards Layout)
     card: { backgroundColor: '#ffffff', borderRadius: moderateScale(14), padding: scale(14), marginBottom: verticalScale(12), borderWidth: 1, borderColor: '#e2e8f0', elevation: 1 },
+    cardHighlighted: { borderColor: BRAND, borderWidth: 2, backgroundColor: '#f0f6fa' },
     cardTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
     cardTitleWrap: { flexDirection: 'row', alignItems: 'center', gap: scale(8), flex: 1, paddingRight: scale(10) },
     cardIconCircle: { width: scale(28), height: scale(28), borderRadius: scale(14), backgroundColor: '#f0f4f8', alignItems: 'center', justifyContent: 'center' },

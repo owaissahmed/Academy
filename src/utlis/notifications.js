@@ -6,7 +6,7 @@ import {
     getToken,
     onMessage,
 } from '@react-native-firebase/messaging';
-import { Platform, PermissionsAndroid, Alert } from 'react-native';
+import { Platform, PermissionsAndroid } from 'react-native';
 
 // Notification permission maango (Android 13+ ke liye zaroori)
 export const requestNotificationPermission = async () => {
@@ -39,14 +39,28 @@ export const getFcmToken = async () => {
 };
 
 // Foreground mein notification aaye to listen karo (app open hote hue)
-export const listenForegroundMessages = () => {
+// onReceive callback ko remoteMessage milega — UI dikhana caller ki zimmedari (toast component)
+export const listenForegroundMessages = (onReceive) => {
     const messagingInstance = getMessaging(getApp());
     return onMessage(messagingInstance, async (remoteMessage) => {
         console.log('Foreground notification:', remoteMessage);
-        const title = remoteMessage.notification?.title || 'New Notification';
-        const body = remoteMessage.notification?.body || '';
-        Alert.alert(title, body);
+        if (onReceive) onReceive(remoteMessage);
     });
 };
 
-// dWEIVvqZSj2THdBDFkvjIf:APA91bHgIq8FTuZlm-FTSwJjcXSdwoeDjORXHvZR3rdMppXf3X7Itl75cvQZhIbBaVoppbpeMBzf3JCdA_G7SZ7Uau0QzJYK4otc-dx477gOD6QAk6vDIwc
+// Combined helper: permission maango + token lo + backend ko bhejo
+// First.jsx (app reopen) aur Login.jsx (fresh login) dono se reuse hoga
+export const setupNotifications = async (apiInstance) => {
+    try {
+        const hasPermission = await requestNotificationPermission();
+        if (!hasPermission) return;
+
+        const fcmToken = await getFcmToken();
+        if (fcmToken) {
+            await apiInstance.post('/auth/save-fcm-token', { fcmToken });
+        }
+    } catch (error) {
+        console.log('FCM setup error:', error.message);
+        // Fail ho bhi jaye to app flow nahi rokna
+    }
+};

@@ -152,7 +152,7 @@ const FilterTab = ({ tab, active, count, onPress }) => (
 );
 
 // ─── Enrollment Card ──────────────────────────────────────────────────────────
-const EnrollmentCard = ({ item, index, onScreenshotPress, navigation, onCardPress }) => {
+const EnrollmentCard = ({ item, index, onScreenshotPress, navigation, onCardPress, isHighlighted, onLayout }) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const slideAnim = useRef(new Animated.Value(24)).current;
 
@@ -170,7 +170,14 @@ const EnrollmentCard = ({ item, index, onScreenshotPress, navigation, onCardPres
     const Type = item.enrollmentType;
     const Discount = item.discountAmount;
     return (
-        <Animated.View style={[styles.card, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
+        <Animated.View
+            onLayout={onLayout}
+            style={[
+                styles.card,
+                { opacity: fadeAnim, transform: [{ translateY: slideAnim }] },
+                isHighlighted && styles.cardHighlighted,
+            ]}
+        >
 
             {/* ── Top: course name + status badge ── */}
             <View style={styles.cardTop}>
@@ -342,14 +349,28 @@ const EmptyState = ({ filter }) => {
 };
 
 // ─── Main Screen ──────────────────────────────────────────────────────────────
-const Enrollments = ({ navigation }) => {
+const Enrollments = ({ navigation, route }) => {
     const [data, setData] = useState([]);
     const [userData, setuserData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [activeFilter, setActiveFilter] = useState('all');
     const [screenshotModal, setScreenshotModal] = useState({ visible: false, uri: null });
     const [cardModal, setCardModal] = useState({ visible: false, data: null });
+    const highlightId = route?.params?.id || null;
+    const scrollRef = useRef(null);
+    const itemPositions = useRef({});
     useEffect(() => { loadEnrollments(), loadProfile(); }, []);
+
+    // Highlighted item load hone ke baad us tak scroll karo
+    useEffect(() => {
+        if (!highlightId || data.length === 0) return;
+        const y = itemPositions.current[highlightId];
+        if (y !== undefined && scrollRef.current) {
+            setTimeout(() => {
+                scrollRef.current.scrollTo({ y: Math.max(y - verticalScale(16), 0), animated: true });
+            }, 300);
+        }
+    }, [highlightId, data]);
 
     const loadEnrollments = async () => {
         setLoading(true);
@@ -423,6 +444,7 @@ const Enrollments = ({ navigation }) => {
             {/* ── List ─────────────────────────────────────────────────── */}
             {!loading && filtered.length > 0 && (
                 <ScrollView
+                    ref={scrollRef}
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={styles.scroll}
                 >
@@ -435,6 +457,10 @@ const Enrollments = ({ navigation }) => {
                             key={item._id}
                             item={item}
                             index={index}
+                            isHighlighted={highlightId && item._id === highlightId}
+                            onLayout={(e) => {
+                                itemPositions.current[item._id] = e.nativeEvent.layout.y;
+                            }}
                             onScreenshotPress={(uri) => setScreenshotModal({ visible: true, uri })}
                             onCardPress={(item) => setCardModal({ visible: true, data: item })}
                         />
@@ -564,6 +590,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.05,
         shadowRadius: 8,
         elevation: 2,
+    },
+    cardHighlighted: {
+        borderColor: BRAND,
+        borderWidth: 2,
+        backgroundColor: '#f0f6fa',
     },
     cardTop: {
         flexDirection: 'row',

@@ -78,6 +78,12 @@ const EditProfile = ({ navigation }) => {
         }
     };
     const handleLogout = async () => {
+        try {
+            await api.post('/auth/clear-fcm-token');
+        } catch (error) {
+            console.log('Clear FCM token error:', error.message);
+            // Fail ho bhi jaye to logout rokna nahi
+        }
         await AsyncStorage.removeItem('token');
         setLogoutModalVisible(false);
         navigation.replace('Login');

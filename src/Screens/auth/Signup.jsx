@@ -16,6 +16,7 @@ import TextField from '../../components/TextField';
 import Button from '../../components/Button';
 import AppModal from '../../components/Appmodal';
 import { api } from '../../utlis/api';
+import { setupNotifications } from '../../utlis/notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const BRAND = '#2e4c60';
@@ -86,6 +87,10 @@ const Signup = ({ navigation }) => {
             console.log(response);
             if (response.isSuccess) {
                 await AsyncStorage.setItem('token', response.data.token);
+
+                // FCM permission maango + token save karo (background mein)
+                setupNotifications(api);
+
                 setModal({
                     visible: true,
                     type: 'success',

@@ -18,6 +18,7 @@ import TextField from '../../components/TextField';
 import Button from '../../components/Button';
 import AppModal from '../../components/Appmodal';
 import { api } from '../../utlis/api';
+import { setupNotifications } from '../../utlis/notifications';
 const BRAND = '#2e4c60';
 
 const validateEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
@@ -63,6 +64,10 @@ const Login = ({ navigation }) => {
                 await AsyncStorage.setItem('token', response.data.token);
                 await AsyncStorage.setItem('name', response.data.name);
                 await AsyncStorage.setItem('role', response.data.role);
+
+                // FCM permission maango + token save karo (background mein, navigation ka wait nahi)
+                setupNotifications(api);
+
                 navigation.replace('Home');
             } else {
                 setModal({
@@ -108,7 +113,7 @@ const Login = ({ navigation }) => {
                             source={require('../../Images/landscape-logo.png')}
                             resizeMode="contain"
                         />
-                        <Text  allowFontScaling={false} style={styles.subtitle}>Sign in to continue learning</Text>
+                        <Text allowFontScaling={false} style={styles.subtitle}>Sign in to continue learning</Text>
                     </Animated.View>
 
                     {/* ── Card ─────────────────────────────────────────── */}
@@ -140,7 +145,7 @@ const Login = ({ navigation }) => {
                             onPress={() => navigation.navigate('ForgotPassword')}
                             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
                         >
-                            <Text  allowFontScaling={false} style={styles.forgotText}>Forgot password?</Text>
+                            <Text allowFontScaling={false} style={styles.forgotText}>Forgot password?</Text>
                         </TouchableOpacity>
 
                         <Button
@@ -159,7 +164,7 @@ const Login = ({ navigation }) => {
                         onPress={() => navigation.navigate('Signup')}
                         style={styles.footer}
                     >
-                        <Text  allowFontScaling={false} style={styles.footerText}>
+                        <Text allowFontScaling={false} style={styles.footerText}>
                             Don't have an account?{'  '}
                             <Text style={styles.footerLink}>Sign Up</Text>
                         </Text>
