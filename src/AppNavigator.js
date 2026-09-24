@@ -9,6 +9,9 @@ import { navigationRef, navigate } from './utlis/navigationRef';
 import { getScreenFromNotificationData } from './utlis/Notificationnavigation';
 import { ToastProvider, useToast } from './components/ToastNotification';
 import { notificationEvents } from './utlis/notificationEvents';
+import { ensureFirebaseAuth } from './utlis/chat';
+import ChatScreen from './Screens/home/ChatScreen';
+import ChatList from './Screens/home/ChatList';
 import First from './Screens/home/First';
 import Home from './Screens/home/Home';
 import Courses from './Screens//home/Courses';
@@ -48,6 +51,7 @@ function AppNavigatorInner() {
   const { showToast } = useToast();
 
   useEffect(() => {
+    ensureFirebaseAuth();
     const unsubscribeForeground = listenForegroundMessages((remoteMessage) => {
       const title = remoteMessage.notification?.title || 'New Notification';
       const body = remoteMessage.notification?.body || '';
@@ -119,7 +123,8 @@ function AppNavigatorInner() {
           <Stack.Screen name="PrivateClass" component={PrivateClass} options={{ headerShown: false }} />
           <Stack.Screen name="SpecialClass" component={SpecialClass} options={{ headerShown: false }} />
           <Stack.Screen name="Enroll" component={Enroll} options={{ headerShown: false }} />
-
+          <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="ChatList" component={ChatList} options={{ headerShown: false }} />
         </Stack.Navigator>
       </AppProvider>
     </NavigationContainer>

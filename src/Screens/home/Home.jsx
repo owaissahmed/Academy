@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import {
   View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Animated, Alert, Linking, RefreshControl
 } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
 import Icon from 'react-native-vector-icons/Feather';
 import Entypto from 'react-native-vector-icons/Entypo';
@@ -235,127 +236,151 @@ const Home = ({ navigation }) => {
     Linking.openURL(video.youtubeUrl);
   };
 
-  return (
-    <Container
-      showHeader={false}
-      showFooter={true}
-      activeTab="Home"
-      onTabPress={(key) => navigation.navigate(key)}
-    >
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scroll}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[BRAND]} tintColor={BRAND} />
-        }
-      >
+  const swipeGesture = Gesture.Pan()
+    .activeOffsetX([-20, 20])
+    .onEnd((event) => {
+      const { translationX, translationY, velocityX } = event;
+      // Sirf clear left-swipe (horizontal) detect karo, vertical scroll ke sath clash na ho
+      const isHorizontalSwipe = Math.abs(translationX) > Math.abs(translationY) * 2;
+      if (isHorizontalSwipe && translationX < -60 && velocityX < -300) {
+        navigation.navigate('ChatList');
+      }
+    });
 
-        {/* ── TOP BAR (teal header, bank-app style) ─────────────────── */}
-        <Animated.View style={[styles.topBarSection, { opacity: headerOpacity, transform: [{ translateY: headerSlide }] }]}>
-          <View style={styles.topBar}>
-            <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={{ flex: 1 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                {profile?.profilePic ? (
-                  <Image source={{ uri: profile.profilePic }} style={styles.avatar} />
-                ) : (
-                  <View style={styles.avatarFallback}>
-                    <Text allowFontScaling={false} style={styles.avatarInitial}>
-                      {userName?.[0]?.toUpperCase() || '?'}
-                    </Text>
+  return (
+    <GestureDetector gesture={swipeGesture}>
+      <View collapsable={false} style={{ flex: 1 }}>
+        <Container
+          showHeader={false}
+          showFooter={true}
+          activeTab="Home"
+          onTabPress={(key) => navigation.navigate(key)}
+        >
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.scroll}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[BRAND]} tintColor={BRAND} />
+            }
+          >
+
+            {/* ── TOP BAR (teal header, bank-app style) ─────────────────── */}
+            <Animated.View style={[styles.topBarSection, { opacity: headerOpacity, transform: [{ translateY: headerSlide }] }]}>
+              <View style={styles.topBar}>
+                <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={{ flex: 1 }}>
+                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    {profile?.profilePic ? (
+                      <Image source={{ uri: profile.profilePic }} style={styles.avatar} />
+                    ) : (
+                      <View style={styles.avatarFallback}>
+                        <Text allowFontScaling={false} style={styles.avatarInitial}>
+                          {userName?.[0]?.toUpperCase() || '?'}
+                        </Text>
+                      </View>
+                    )}
+                    <View style={{ marginLeft: scale(10) }}>
+                      <Text allowFontScaling={false} style={styles.welcomeText}>Welcome back</Text>
+                      <Text allowFontScaling={false} style={styles.userName}>{userName}</Text>
+                    </View>
                   </View>
-                )}
-                <View style={{ marginLeft: scale(10) }}>
-                  <Text allowFontScaling={false} style={styles.welcomeText}>Welcome back</Text>
-                  <Text allowFontScaling={false} style={styles.userName}>{userName}</Text>
+                </TouchableOpacity>
+
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: scale(8) }}>
+
+
+                  <TouchableOpacity
+                    style={styles.booksBtn}
+                    onPress={() => navigation.navigate('Notification')}
+                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                  >
+                    <Icon name="bell" size={moderateScale(18)} color="#ffffff" />
+                    {unreadCount > 0 && (
+                      <View style={styles.badgeDot} />
+                    )}
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={styles.booksBtn}
+                    onPress={() => navigation.navigate('Books')}
+                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                  >
+                    <Entypto name="open-book" size={moderateScale(18)} color="#ffffff" />
+                    {/* <Text allowFontScaling={false} style={styles.booksBtnText}>Books</Text> */}
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.booksBtn}
+                    onPress={() => navigation.navigate('ChatList')}
+                    hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+                  >
+                    <Icon name="send" size={moderateScale(18)} color="#ffffff" />
+                  </TouchableOpacity>
                 </View>
               </View>
-            </TouchableOpacity>
+            </Animated.View>
 
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: scale(8) }}>
-              <TouchableOpacity
-                style={styles.booksBtn}
-                onPress={() => navigation.navigate('Notification')}
-                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-              >
-                <Icon name="bell" size={moderateScale(18)} color="#ffffff" />
-                {unreadCount > 0 && (
-                  <View style={styles.badgeDot} />
-                )}
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.booksBtn}
-                onPress={() => navigation.navigate('Books')}
-                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-              >
-                <Entypto name="open-book" size={moderateScale(18)} color="#ffffff" />
-                {/* <Text allowFontScaling={false} style={styles.booksBtnText}>Books</Text> */}
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Animated.View>
-
-        {/* ── LOGO CARD (white card overlapping teal header, bank-balance-card style) ── */}
-        <Animated.View style={[styles.logoCard, { opacity: headerOpacity, transform: [{ translateY: headerSlide }] }]}>
-          <Image
-            source={require('../../Images/landscape-logo.png')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-          <Text allowFontScaling={false} style={styles.tagline}>
-            آن لائن دینی تعلیم کا مستند ادارہ
-          </Text>
-        </Animated.View>
-
-        {/* ── QUICK ACTIONS GRID (small square boxes, bank-app style) ── */}
-        <View style={styles.gridWrapper}>
-          <View style={styles.grid}>
-            {visibleMenuItems.map((item, index) => (
-              <MenuBox
-                key={item.key}
-                item={item}
-                onPress={handleMenuPress}
-                delay={index * 45}
+            {/* ── LOGO CARD (white card overlapping teal header, bank-balance-card style) ── */}
+            <Animated.View style={[styles.logoCard, { opacity: headerOpacity, transform: [{ translateY: headerSlide }] }]}>
+              <Image
+                source={require('../../Images/landscape-logo.png')}
+                style={styles.logo}
+                resizeMode="contain"
               />
-            ))}
-          </View>
-        </View>
+              <Text allowFontScaling={false} style={styles.tagline}>
+                آن لائن دینی تعلیم کا مستند ادارہ
+              </Text>
+            </Animated.View>
 
-        {/* ── FEATURED VIDEOS (Discover-style horizontal scroll) ─────── */}
-        {/* Jab tak icons ki animation complete nahi hoti ya API loading hai, skeleton dikhao.
-            Agar loading khatam ho gayi aur koi video nahi mila, section hi gaib. */}
-        {(videosLoading || !iconsReady) ? (
-          <View style={styles.videosSection}>
-            <Text allowFontScaling={false} style={styles.sectionTitle}>Featured Videos</Text>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.videosScroll}
-              scrollEnabled={false}
-            >
-              <VideoSkeleton />
-              <VideoSkeleton />
-            </ScrollView>
-          </View>
-        ) : (
-          featuredVideos.length > 0 && (
-            <View style={styles.videosSection}>
-              <Text allowFontScaling={false} style={styles.sectionTitle}>Featured Videos</Text>
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.videosScroll}
-              >
-                {featuredVideos.map((video) => (
-                  <VideoCard key={video._id} video={video} onPress={handleVideoPress} />
+            {/* ── QUICK ACTIONS GRID (small square boxes, bank-app style) ── */}
+            <View style={styles.gridWrapper}>
+              <View style={styles.grid}>
+                {visibleMenuItems.map((item, index) => (
+                  <MenuBox
+                    key={item.key}
+                    item={item}
+                    onPress={handleMenuPress}
+                    delay={index * 45}
+                  />
                 ))}
-              </ScrollView>
+              </View>
             </View>
-          )
-        )}
 
-      </ScrollView>
-    </Container>
+            {/* ── FEATURED VIDEOS (Discover-style horizontal scroll) ─────── */}
+            {/* Jab tak icons ki animation complete nahi hoti ya API loading hai, skeleton dikhao.
+            Agar loading khatam ho gayi aur koi video nahi mila, section hi gaib. */}
+            {(videosLoading || !iconsReady) ? (
+              <View style={styles.videosSection}>
+                <Text allowFontScaling={false} style={styles.sectionTitle}>Featured Videos</Text>
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  contentContainerStyle={styles.videosScroll}
+                  scrollEnabled={false}
+                >
+                  <VideoSkeleton />
+                  <VideoSkeleton />
+                </ScrollView>
+              </View>
+            ) : (
+              featuredVideos.length > 0 && (
+                <View style={styles.videosSection}>
+                  <Text allowFontScaling={false} style={styles.sectionTitle}>Featured Videos</Text>
+                  <ScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.videosScroll}
+                  >
+                    {featuredVideos.map((video) => (
+                      <VideoCard key={video._id} video={video} onPress={handleVideoPress} />
+                    ))}
+                  </ScrollView>
+                </View>
+              )
+            )}
+
+          </ScrollView>
+        </Container>
+      </View>
+    </GestureDetector>
   );
 };
 

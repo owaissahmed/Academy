@@ -65,20 +65,20 @@ const First = ({ navigation }) => {
 
   // FCM token generate karke backend ko bhejo (silent — fail ho to bhi app na ruke)
   const setupNotifications = async () => {
-    console.log('=== FCM Setup Started ===');
+    // console.log('=== FCM Setup Started ===');
     try {
       const hasPermission = await requestNotificationPermission();
       console.log('Has permission:', hasPermission);
       if (!hasPermission) return;
 
       const fcmToken = await getFcmToken();
-      console.log('Token in setup:', fcmToken);
+      // console.log('Token in setup:', fcmToken);
       if (fcmToken) {
         const response = await api.post('/auth/save-fcm-token', { fcmToken });
-        console.log('Save token response:', response);
+        // console.log('Save token response:', response);
       }
     } catch (error) {
-      console.log('FCM setup error:', error.message);
+      // console.log('FCM setup error:', error.message);
     }
   };
 

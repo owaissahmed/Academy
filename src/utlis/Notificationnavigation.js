@@ -9,6 +9,7 @@ export const typeToScreen = {
     certificate: 'MyCertificates',
     'upcoming-courses': 'UpcomingCourses',
     general: 'Notification', // fallback — notifications list screen
+    message: 'ChatList',
 };
 
 // remoteMessage.data se navigate karne ka helper
